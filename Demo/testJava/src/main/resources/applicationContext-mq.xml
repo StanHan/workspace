@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+	http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd  
+	http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	default-lazy-init="false">
+
+
+	<bean id="mqConnectionFactory" class="com.ibm.mq.jms.MQQueueConnectionFactory">
+		<property name="hostName">
+			<value>11.1.68.85</value>
+		</property>
+		<property name="port">
+			<value>40190</value>
+		</property>
+		<property name="queueManager">
+			<value>S1QM_EXG_1</value>
+		</property>
+		<property name="CCSID">
+			<value>819</value>
+		</property>
+		<property name="channel">
+			<value>CS_EXG_S3</value>
+		</property>
+		<property name="transportType" value="1" />
+	</bean>
+
+	<!-- JMS Queue Connection Factory -->
+	<bean id="jmsQueueConnectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="mqConnectionFactory" />
+		<!-- <property name="sessionCacheSize"> -->
+		<!-- <value></value> -->
+		<!-- </property> -->
+	</bean>
+
+	<!-- JMS Destination Resolver -->
+	<bean id="jmsDestinationResolver"
+		class="org.springframework.jms.support.destination.DynamicDestinationResolver" />
+
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsQueueConnectionFactory" />
+		<property name="destinationResolver" ref="jmsDestinationResolver" />
+		<property name="pubSubDomain" value="false" />
+	</bean>
+
+</beans>

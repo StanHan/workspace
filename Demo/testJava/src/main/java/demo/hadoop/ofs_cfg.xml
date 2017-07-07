@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Do not modify this file directly.  Instead, copy entries that you -->
+<!-- wish to modify from this file into core-site.xml and change them -->
+<!-- there.  If core-site.xml does not already exist, create it.      -->
+
+<configuration>
+
+<!--- global properties -->
+
+<property>
+	<name>output.path</name>
+	<value>/user/hdper/tmp/output/</value>
+	<description>sss</description>
+</property>
+<property>
+	<name>input.path</name>
+	<value>/user/hdper/tmp/input/</value>
+	<description>sss</description>
+</property>
+
+</configuration>

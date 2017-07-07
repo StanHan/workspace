@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cisReports batNo="2015102917000015" unitName="上海银行股份有限公司信用卡中心"
+	subOrgan="授信审核部" queryUserID="shyhwsquery" queryCount="1"
+	receiveTime="20151029 17:43:10">
+	<costCount>
+		<item>
+			<subReportType>13400</subReportType>
+			<count>0</count>
+		</item>
+		<item>
+			<subReportType>11103</subReportType>
+			<count>1</count>
+		</item>
+	</costCount>
+	<cisReport reportID="2015102917000015" buildEndTime="2015-10-29 17:43:11"
+		queryReasonID="201" subReportTypes="11103,13400" treatResult="1,0"
+		subReportTypesShortCaption="1、全国高等教育最高学历信息 2、全国个人职业资格信息 "
+		hasSystemError="false" isFrozen="false">
+		<queryConditions>
+			<item>
+				<name>name</name>
+				<caption>被查询者姓名</caption>
+				<value>韩军营</value>
+			</item>
+			<item>
+				<name>documentNo</name>
+				<caption>被查询者证件号码</caption>
+				<value>410782198610242812</value>
+			</item>
+		</queryConditions>
+		<lastEducationInfo subReportType="11103"
+			subReportTypeCost="11103" treatResult="1" errorMessage="">
+			<personBaseInfo>
+				<name>韩军营</name>
+				<documentNo>410782198610242812</documentNo>
+				<originalAddress>河南省新乡市辉县市</originalAddress>
+				<birthday>19861024</birthday>
+				<gender>1</gender>
+				<age>29</age>
+				<degree>本科</degree>
+				<specialty>计算机科学与技术(教育方向)</specialty>
+				<college>洛阳师范学院</college>
+				<graduateTime>2009</graduateTime>
+				<graduateYears>6</graduateYears>
+				<verifyResult>1</verifyResult>
+			</personBaseInfo>
+			<educationInfo>
+				<degreeInfo>
+					<college>洛阳师范学院</college>
+					<levelNo>104821200905003432</levelNo>
+					<startTime>20050901</startTime>
+					<graduateTime>2009</graduateTime>
+					<studyStyle>普通全日制</studyStyle>
+					<studyType>普通</studyType>
+					<specialty>计算机科学与技术(教育方向)</specialty>
+					<isKeySubject>N</isKeySubject>
+					<degree>本科</degree>
+					<studyResult>毕业</studyResult>
+					<photo>相片BASE64编码</photo>
+					<photoStyle>JPG</photoStyle>
+				</degreeInfo>
+				<collegeInfo>
+					<college>洛阳师范学院</college>
+					<collegeOldName>洛阳师范学院</collegeOldName>
+					<address>河南省洛阳市</address>
+					<createDate>1916</createDate>
+					<createYears>99</createYears>
+					<colgCharacter>普通高等教育</colgCharacter>
+					<colgLevel>本科</colgLevel>
+					<character>公办</character>
+					<colgType>师范</colgType>
+					<scienceBatch>本科二/三批</scienceBatch>
+					<artBatch>本科二/三批</artBatch>
+					<postDoctorNum>0</postDoctorNum>
+					<doctorDegreeNum>0</doctorDegreeNum>
+					<masterDegreeNum>0</masterDegreeNum>
+					<academicianNum>0</academicianNum>
+					<is211>N</is211>
+					<manageDept>河南省教育厅</manageDept>
+					<keySubjectNum>0</keySubjectNum>
+				</collegeInfo>
+			</educationInfo>
+			<riskAndAdviceInfo>1.此类人群工资收入处于中高水平，在有大专以上学历人群中，按工资收入水平从高到低排位，约在前10%至前35%左右。2.此类人群违约率处于中等水平，在有大专以上学历人群中，按违约率从高到低排位，约在前35%至前75%之间。3.此类人群属于中高收入、中等风险人群。4.此类人群建议给予较低程度的授信，注意风险控制。
+			</riskAndAdviceInfo>
+		</lastEducationInfo>
+		<ostaInfo subReportType="13400" subReportTypeCost="13400"
+			treatResult="2" errorMessage=""></ostaInfo>
+	</cisReport>
+</cisReports>

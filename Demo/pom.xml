@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.stan</groupId>
+    <artifactId>demo</artifactId>
+    <packaging>pom</packaging>
+    <version>0.1-snapshot</version>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <modules>
+                <module>mc</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <env>uat</env>
+            </properties>
+            <modules>
+                <module>mc</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <env>pro</env>
+            </properties>
+            <modules>
+                <module>mc</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>wuxi</id>
+            <properties>
+                <env>wuxi</env>
+            </properties>
+            <modules>
+                <module>mc</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <build>
+        <filters>
+            <filter>src/main/filters/${env}/setting.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+</project>
