@@ -17,15 +17,15 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.appinfo.InstanceInfo.InstanceStatus;
 import com.netflix.appinfo.MyDataCenterInstanceConfig;
 import com.netflix.discovery.DefaultEurekaClientConfig;
+import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.DiscoveryManager;
 import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.EurekaClientConfig;
+import com.netflix.discovery.guice.EurekaModule;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
+import com.netflix.eureka.resources.ApplicationResource;
 
-/**
- * @author liulun modify 2017.4.24 by zhangling
- */
-@SuppressWarnings("deprecation")
 public class EurekaInvokeClient {
     private static final Logger logger = LoggerFactory.getLogger(EurekaInvokeClient.class);
 
@@ -75,6 +75,15 @@ public class EurekaInvokeClient {
         client = DiscoveryManager.getInstance().getEurekaClient();
     }
 
+    public static void demo() {
+        EurekaModule eurekaModule = new EurekaModule();
+        ApplicationInfoManager applicationInfoManager = null;
+        EurekaClientConfig config = null;
+        EurekaClient eurekaClient = new DiscoveryClient(applicationInfoManager, config);
+        Applications applications = eurekaClient.getApplications();
+//        ApplicationResource
+    }
+
     /**
      * 随机轮询策略
      */
@@ -83,7 +92,6 @@ public class EurekaInvokeClient {
         int randomPos = random.nextInt(instances.size());
         return instances.get(randomPos);
     }
-
 
     /**
      * 根据服务名随机获取一个实例
@@ -119,7 +127,7 @@ public class EurekaInvokeClient {
      * @throws MalformedURLException
      */
     private String buildURL(String url) {
-        try{
+        try {
             URL vo = new URL(url);
             String host = vo.getHost();
             InstanceInfo instance = randomInstance(host);
@@ -127,8 +135,8 @@ public class EurekaInvokeClient {
             String file = vo.getFile();
             URL u = new URL(protocal, instance.getIPAddr(), instance.getPort(), file);
             return u.toString();
-        }catch (MalformedURLException e) {
-            throw new RestClientException("URL is Malformed :"+ url);
+        } catch (MalformedURLException e) {
+            throw new RestClientException("URL is Malformed :" + url);
         }
     }
 
@@ -165,29 +173,31 @@ public class EurekaInvokeClient {
         String reqUrl = buildURL(url);
         return restTemplate.postForEntity(reqUrl, request, responseType, urlVariables);
     }
-    
+
     /**
      * DELETE 请求
+     * 
      * @param url
      * @param urlVariables
      * @throws RestClientException
      * @throws MalformedURLException
      * @author hanjy
      */
-    public void delete(String url,Object... urlVariables) throws RestClientException {
+    public void delete(String url, Object... urlVariables) throws RestClientException {
         String reqUrl = buildURL(url);
         restTemplate.delete(reqUrl, urlVariables);
     }
-    
+
     /**
      * PUT请求
+     * 
      * @param url
      * @param request
      * @param urlVariables
      * @throws RestClientException
      * @throws MalformedURLException
      */
-    public void put(String url, Object request,Object... urlVariables) throws RestClientException {
+    public void put(String url, Object request, Object... urlVariables) throws RestClientException {
         String reqUrl = buildURL(url);
         restTemplate.put(reqUrl, request, urlVariables);
     }

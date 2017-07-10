@@ -11,6 +11,11 @@ public class Simple {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
+	    String userid = "883168631419179008";
+	    Long l = Long.valueOf(userid);
+	    System.out.println(l);
+	    System.out.println(Long.MAX_VALUE);
+	    
 		String a = "aa;bb;cc";
 		int idx = a.indexOf(";");
 		System.out.println(idx);
