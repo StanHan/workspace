@@ -30,6 +30,7 @@ public class DemoController {
     @GetMapping("/demo/user/id/{id}")
     public User getUserById(@PathVariable("id") Integer id) {
         logger.info("query user by id={}", id);
+        id = 0Xab;
         return new User(id, "Name" + id);
     }
 

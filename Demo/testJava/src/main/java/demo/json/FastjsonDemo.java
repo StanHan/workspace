@@ -1,14 +1,26 @@
 package demo.json;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.daikuan.ic.request.TransManageHistorySaveRequest;
 
-public class Demo {
+
+public class FastjsonDemo {
 
     public static void main(String[] args) {
-        List <RewardVO> list = Arrays.asList(new RewardVO(1, 2, 3));
+        TransManageHistorySaveRequest vo =new TransManageHistorySaveRequest();
+        vo.setRequestXml("123");
+        vo.setResponseXml("456");
+        vo.setUserId(23545);
+        vo.setTransCode("22");
+        vo.setCreateAt(new Date());
+        System.out.println(JSON.toJSONString(vo));
+        
+        
+        List <RewardVO> list = Arrays.asList(new RewardVO(0x1, 0x2, 0x3a));
         String json = JSON.toJSONString(list);
         System.out.println(json);
 

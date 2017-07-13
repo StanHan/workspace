@@ -22,19 +22,26 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class TimeDemo {
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  
-    private LocalDateTime dateTime;  
-      
-    @DateTimeFormat(pattern = "yyyy-MM-dd")  
-    private static LocalDate date;  
-      
-    @DateTimeFormat(pattern = "HH:mm:ss")  
-    private LocalTime time; 
-    
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateTime;
+
+    @DateTimeFormat(pattern = "yyyyMMdd")
+    private static LocalDate date;
+
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private LocalTime time;
+
     public static void main(String[] args) throws Exception {
-        demoClock();
-        date = LocalDate.now();
-        System.out.println(date);
+        demoDateTimeFormatter();
+    }
+    
+    private static void demoDateTimeFormatter(){
+        LocalDate now = LocalDate.now();
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        System.out.println(now);//yyyy-MM-dd
+        String formatNow = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        System.out.println(formatNow);
+        System.out.println(yesterday);
     }
 
     /**

@@ -30,6 +30,15 @@
   </properties>
 
   <dependencies>
+
+    <!-- Override Spring Data release train provided by Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-releasetrain</artifactId>
+      <version>Fowler-SR2</version>
+      <scope>import</scope>
+      <type>pom</type>
+    </dependency>
     <!-- Spring Boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -454,6 +463,14 @@
       </exclusions>
     </dependency>
 
+    <!-- mongoDB -->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver</artifactId>
+      <version>3.4.2</version>
+    </dependency>
+
+
     <!-- AO common -->
     <dependency>
       <groupId>com.daikuan.ao</groupId>
@@ -524,6 +541,14 @@
       <groupId>com.daikuan.platform</groupId>
       <artifactId>ma-common</artifactId>
       <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

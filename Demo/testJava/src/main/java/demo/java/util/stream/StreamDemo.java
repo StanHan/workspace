@@ -1,21 +1,47 @@
 package demo.java.util.stream;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.alibaba.fastjson.JSON;
+
+import demo.vo.City;
+import demo.vo.Person;
+import demo.vo.Report;
+
+/**
+ * 流底层核心其实是Spliterator接口的一个实现，而这个Spliterator接口其实本身就是Fork/Join并行框架的一个实现，所以归根结底要明白流的工作方式，就要明白一下Fork/Join框架的基本思想，
+ * 即：以递归的方式将可以并行的任务拆分成更小的子任务，然后将每个子任务的结果合并起来生成整体的最后结果，
+ *
+ */
 public class StreamDemo {
+    
+    
 
     public static void main(String[] args) {
-        demoCollection();
-//        demoSupplier();
+        // demoCollection();
+        // reduceDemo();
+       
     }
+    
+    
+
+    
 
     /**
      * JDK 中的流来源:
@@ -33,7 +59,7 @@ public class StreamDemo {
      * <li>BitSet.stream() 创建一个由 BitSet 中的设置位的索引组成的 IntStream。
      * <li>Stream.chars() 创建一个与 String 中的字符对应的 IntStream。
      */
-    public static void 流的来源() {
+    static void 流的来源() {
     }
 
     /**
@@ -51,7 +77,7 @@ public class StreamDemo {
      * <li>takeWhile(Predicate<T>) （仅限 Java 9）在第一个提供的预期不是 true 的元素处阶段的流元素
      * <li>dropWhile(Predicate<T>) （仅限 Java 9）丢弃了所提供的预期为 true 的初始元素分段的流元素
      */
-    public static void 中间操作() {
+    static void 中间操作() {
     }
 
     /**
@@ -69,8 +95,13 @@ public class StreamDemo {
      * <li>findFirst() 返回流的第一个元素（如果有）。
      * <li>findAny() 返回流的任何元素（如果有）。
      */
-    public static void 终止操作() {
+    static void 终止操作() {
+    }
 
+    /**
+     * 把输入的元素们累积到一个可变的容器中，比如Collection或者StringBuilder；可变汇聚对应的只有一个方法：collect，正如其名字显示的，它可以把Stream中的要有元素收集到一个结果容器中。
+     */
+    static void 可变汇聚() {
     }
 
     /**
@@ -85,13 +116,15 @@ public class StreamDemo {
      * 
      * 
      */
-    public static void demoCollection() {
+    static void demoCollection() {
         Collection<String> strings = Stream.generate(new Supplier<Integer>() {
             Random random = new Random();
-            public Integer get(){
+
+            public Integer get() {
                 return random.nextInt(5000);
             }
-        }).limit(10).map(String::valueOf).collect(Collectors.toList());
+        }).limit(50).map(String::valueOf).collect(Collectors.toList());
+
         StringBuilder concat = strings.stream().collect(() -> new StringBuilder(), (sb, s) -> sb.append(s),
                 (sb, sb2) -> sb.append(sb2));
         System.out.println(concat);
@@ -105,24 +138,78 @@ public class StreamDemo {
         System.out.println(concat2);
 
         Set<String> uniqueStrings = strings.stream().collect(HashSet::new, HashSet::add, HashSet::addAll);
-        
+
         String a = strings.stream().collect(Collectors.joining(","));
         System.out.println(a);
+
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya");
+
+        Map<String, Long> result = items.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        System.out.println(result);
+
+        Collection<Person> people = new ArrayList<>();
+        Map<City, Set<String>> lastNamesByCity = people.stream().collect(
+                Collectors.groupingBy(Person::getCity, Collectors.mapping(Person::getLastName, Collectors.toSet())));
+
+        Comparator<String> byLength = Comparator.comparing(String::length);
+
     }
-    
-    public static void demoSupplier(){
+
+    /**
+     * 其他汇聚操作：
+     * <p>
+     * reduce方法：reduce方法非常的通用，后面介绍的count，sum等都可以使用其实现。reduce 这个方法的主要作用是把 Stream 元素组合起来。
+     * 它提供一个起始值（种子），然后依照运算规则（BinaryOperator），和前面 Stream 的第一个、第二个、第 n 个元素组合。 从这个意义上说，字符串拼接、数值的 sum、min、max、average 都是特殊的
+     * reduce。
+     * <p>
+     * 搜索相关
+     * <li>allMatch：是不是Stream中的所有元素都满足给定的匹配条件
+     * <li>anyMatch：Stream中是否存在任何一个元素满足匹配条件
+     * <li>findFirst: 返回Stream中的第一个元素，如果Stream为空，返回空Optional
+     * <li>noneMatch：是不是Stream中的所有元素都不满足给定的匹配条件
+     * <li>max和min：使用给定的比较器（Operator），返回Stream中的最大|最小值
+     * 
+     */
+    static void reduceDemo() {
+        // reduce方法的第一种形式，其方法定义如下：Optional<T> reduce(BinaryOperator<T> accumulator);
+        // reduce方法接受一个函数，这个函数有两个参数，第一个参数是上次函数执行的返回值（也称为中间结果），第二个参数是stream中的元素，这个函数把这两个值相加，得到的和会被赋值给下次执行这个函数的第一个参数。
+        List<Integer> ints = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        System.out.println("ints sum is:" + ints.stream().reduce((sum, item) -> sum + item).get());
+        // T reduce(T identity, BinaryOperator<T> accumulator);
+        // 这个定义上上面已经介绍过的基本一致，不同的是：它允许用户提供一个循环计算的初始值，如果Stream为空，就直接返回该值。而且这个方法不会返回Optional，因为其不会出现null值。
+        System.out.println("ints sum is:" + ints.stream().reduce(0, (sum, item) -> sum + item));
+        // 搜索相关
+        System.out.println(ints.stream().allMatch(item -> item < 100));
+        ints.stream().max((o1, o2) -> o1.compareTo(o2)).ifPresent(System.out::println);
+
+        // 字符串连接，concat = "ABCD"
+        String concat = Stream.of("A", "B", "C", "D").reduce("", String::concat);
+        // 求最小值，minValue = -3.0
+        double minValue = Stream.of(-1.5, 1.0, -3.0, -2.0).reduce(Double.MAX_VALUE, Double::min);
+        // 求和，sumValue = 10, 有起始值
+        int sumValue = Stream.of(1, 2, 3, 4).reduce(0, Integer::sum);
+        // 求和，sumValue = 10, 无起始值
+        sumValue = Stream.of(1, 2, 3, 4).reduce(Integer::sum).get();
+        // 过滤，字符串连接，concat = "ace"
+        concat = Stream.of("a", "B", "c", "D", "e", "F").filter(x -> x.compareTo("Z") > 0).reduce("", String::concat);
+    }
+
+    static void demoSupplier() {
         Supplier<A> supplierA = new Supplier<A>() {
             Random random = new Random();
+
             @Override
             public A get() {
                 int i = random.nextInt(1000);
                 A a = new A();
-                a.setA("A"+i);
-                a.setB("B"+i);
+                a.setA("A" + i);
+                a.setB("B" + i);
                 return a;
             }
         };
-        
+
         Function<A, B> function = new Function<A, B>() {
 
             @Override
@@ -133,19 +220,20 @@ public class StreamDemo {
                 return b;
             }
         };
-//        peek: 生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例），新Stream每个元素被消费的时候都会执行给定的消费函数；
-        List<B> list = Stream.generate(supplierA).limit(10).map(function).peek(e -> System.out.println(e.getA())).collect(Collectors.toList());
+        // peek: 生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例），新Stream每个元素被消费的时候都会执行给定的消费函数；
+        List<B> list = Stream.generate(supplierA).limit(10).map(function).peek(e -> System.out.println(e.getA()))
+                .collect(Collectors.toList());
         for (B b : list) {
             System.out.println(b);
         }
     }
-    
+
 }
 
-class SupplierB implements Supplier<B>{
+class SupplierB implements Supplier<B> {
 
     private A a;
-    
+
     public SupplierB(A a) {
         super();
         this.a = a;
@@ -158,21 +246,25 @@ class SupplierB implements Supplier<B>{
         b.setB(a.getB());
         return b;
     }
-    
+
 }
 
 class A {
     private String a;
     private String b;
+
     public String getA() {
         return a;
     }
+
     public void setA(String a) {
         this.a = a;
     }
+
     public String getB() {
         return b;
     }
+
     public void setB(String b) {
         this.b = b;
     }
@@ -182,28 +274,34 @@ class B {
     private String a;
     private String b;
     private int c;
+
     public int getC() {
         return c;
     }
+
     public void setC(int c) {
         this.c = c;
     }
+
     public String getA() {
         return a;
     }
+
     public void setA(String a) {
         this.a = a;
     }
+
     public String getB() {
         return b;
     }
+
     public void setB(String b) {
         this.b = b;
     }
+
     @Override
     public String toString() {
         return "B [a=" + a + ", b=" + b + ", c=" + c + "]";
     }
-    
-    
+
 }
