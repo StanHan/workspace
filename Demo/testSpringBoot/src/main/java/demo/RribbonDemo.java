@@ -10,7 +10,7 @@ import com.netflix.loadbalancer.ZoneAwareLoadBalancer;
 import com.netflix.niws.client.http.RestClient;
 
 public class RribbonDemo {
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         ConfigurationManager.loadPropertiesFromResources("sample-client.properties");
         System.out.println(ConfigurationManager.getConfigInstance().getProperty("sample-client.ribbon.listOfServers"));
 
@@ -36,7 +36,7 @@ public class RribbonDemo {
             System.out.println("Status for URI:" + response.getRequestedURI() + " is :" + response.getStatus());
         }
         System.out.println(lb.getLoadBalancerStats());
-    }
+    }*/
 
 //    public static void demo(String[] args) throws Exception {
 //        ConfigurationManager.loadPropertiesFromResources("sample-client.properties"); // 1

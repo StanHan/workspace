@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import com.alibaba.fastjson.JSON;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import demo.vo.City;
 import demo.vo.Person;
 import demo.vo.Report;
@@ -30,18 +31,29 @@ import demo.vo.Report;
  *
  */
 public class StreamDemo {
-    
-    
 
     public static void main(String[] args) {
         // demoCollection();
         // reduceDemo();
-       
+        demoVersion();
     }
-    
-    
 
-    
+    static void demoVersion() {
+        String[] andoidVersion = { "5.7.1", "5.7.0", "5.6.2", "5.6.0", "5.5.0", "5.4.3", "5.4.2", "5.4.1", "5.4.0",
+                "5.3.2", "5.3.1", "5.2.1", "5.2.0", "5.1.2", "5.1.1", "5.1.0", "5.0.2", "5.0.1", "4.4.0", "4.3.0",
+                "4.2.0", "4.1.0", "4.0.0" };
+
+        String[] iosVersion = { "5.7.0", "5.6.2", "5.6.0", "5.5.0", "5.4.0", "5.3.2", "5.3.0", "5.2.1", "5.1.0",
+                "5.0.1", "5.0.0", "4.4.0", "4.3.1", "4.3.0", "4.2.1", "4.2.0", "4.1.0", "4.0.2", "4.0.1", "4.0.0",
+                "3.4.3", "3.4.2", "3.4.1", "3.4.0", "3.3.0"};
+        
+        List<String> list = new ArrayList<String>();
+        List<String> list1 = Arrays.asList(andoidVersion);
+        List<String> list2 = Arrays.asList(iosVersion);
+        list.addAll(list1);
+        list.addAll(list2);
+        list.stream().distinct().sorted().peek(e-> System.out.println(e)).collect(Collectors.toList());
+    }
 
     /**
      * JDK 中的流来源:

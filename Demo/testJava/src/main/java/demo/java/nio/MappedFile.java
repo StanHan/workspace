@@ -7,10 +7,6 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
 public class MappedFile {
-	// 文件名
-	private String fileName;
-	// 文件路径
-	private String filePath;
 	// 文件对象
 	private File file;
 
@@ -32,11 +28,8 @@ public class MappedFile {
 	// 最大的时间间隔，系统必须触发一次强制刷
 	private long MAX_FLUSH_TIME_GAP = 1000;
 
-	public MappedFile(String fileName, String filePath) {
-		super();
-		this.fileName = fileName;
-		this.filePath = filePath;
-		this.file = new File(filePath + "/" + fileName);
+	public MappedFile(String filePath) {
+		this.file = new File(filePath);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();

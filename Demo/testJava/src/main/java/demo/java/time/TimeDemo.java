@@ -32,10 +32,11 @@ public class TimeDemo {
     private LocalTime time;
 
     public static void main(String[] args) throws Exception {
-        demoDateTimeFormatter();
+//        demoDateTimeFormatter();
+        demoClock();
     }
     
-    private static void demoDateTimeFormatter(){
+    static void demoDateTimeFormatter(){
         LocalDate now = LocalDate.now();
         LocalDate yesterday = LocalDate.now().minusDays(1);
         System.out.println(now);//yyyy-MM-dd
@@ -47,10 +48,12 @@ public class TimeDemo {
     /**
      * Clock 时钟，类似于钟表的概念，提供了如系统时钟、固定时钟、特定时区的时钟
      */
-    private static void demoClock() throws InterruptedException {
+    static void demoClock() throws InterruptedException {
         // 时钟提供给我们用于访问某个特定 时区的 瞬时时间、日期 和 时间的。
         Clock c1 = Clock.systemUTC(); // 系统默认UTC时钟（当前瞬时时间 System.currentTimeMillis()）
+        long start = c1.millis();
         System.out.println(c1.millis()); // 每次调用将返回当前瞬时时间（UTC）
+        System.out.println("耗时："+(c1.millis()-start));
 
         Clock c2 = Clock.systemDefaultZone(); // 系统默认时区时钟（当前瞬时时间）
 
