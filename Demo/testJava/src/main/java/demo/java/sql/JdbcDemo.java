@@ -44,7 +44,7 @@ public class JdbcDemo {
 	public static void testProcedureC() throws SQLException {
 		CallableStatement proc = null;
 		proc = connection.prepareCall("{ call hyq.testc(?) }");
-		proc.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+//		proc.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
 		proc.execute();
 		resultSet = (ResultSet) proc.getObject(1);
 

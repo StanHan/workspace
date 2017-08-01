@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" strict="true" name="XMLConfigTest">
+  <Properties>
+    <Property name="filename">testJava</Property>
+    <!--指定log位置 tomcat会在logs文件夹下面，jetty会在项目同级目录logs -->
+    <Property name="logdir">G:/logs</Property>
+  </Properties>
+
+  <Filter type="ThresholdFilter" level="trace" />
+  <!--先定义所有的appender- -->
+  <Appenders>
+    <!--这个输出控制台的配置 -->
+    <Console name="console" target="SYSTEM_OUT">
+      <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+      <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+      <!--输出日志的格式 -->
+      <PatternLayout pattern="%d{HH:mm:ss,SSS} %5p %c{1}:%L - %m%n" />
+      <param name="Encoding" value="UTF-8" />
+    </Console>
+
+    <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
+    <File name="log" fileName="log/test.log" append="false">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+    </File>
+
+    <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+    <RollingFile name="RollingFile" fileName="logs/app.log" filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+      <SizeBasedTriggeringPolicy size="50MB" />
+    </RollingFile>
+
+    <RollingFile name="MangerInfoRollingFile" fileName="${logdir}/async-${filename}-info.log" filePattern="${logdir}/$${date:yyyy-MM}/async-${filename}-info-%d{MM-dd-yyyy}-%i.log.tar.gz">
+      <!--每日分割日志 -->
+      <CronTriggeringPolicy schedule="0 0 0 1/1 * ? " />
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n" />
+      <param name="Encoding" value="UTF-8" />
+    </RollingFile>
+
+    <RollingFile name="OtherRollingFile" fileName="${logdir}/${filename}.log" filePattern="${logdir}/$${date:yyyy-MM}/${filename}-%d{MM-dd-yyyy}-%i.log.tar.gz">
+      <CronTriggeringPolicy schedule="0 0 0 1/1 * ? " />
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n" />
+      <param name="Encoding" value="UTF-8" />
+    </RollingFile>
+  </Appenders>
+
+  <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+  <Loggers>
+    <Root level="INFO">
+      <AppenderRef ref="OtherRollingFile" level="DEBUG" />
+      <AppenderRef ref="console" level="INFO" />
+    </Root>
+    <AsyncLogger name="com.admin" level="INFO" includeLocation="true" additivity="false">
+      <AppenderRef ref="MangerInfoRollingFile" />
+      <AppenderRef ref="console" />
+    </AsyncLogger>
+    <AsyncLogger name="com.daikuan.platform.mc" level="INFO" includeLocation="true" additivity="false">
+      <AppenderRef ref="MangerInfoRollingFile" />
+      <AppenderRef ref="console" />
+    </AsyncLogger>
+  </Loggers>
+
+</Configuration>

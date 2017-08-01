@@ -12,7 +12,27 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ThreadPoolTest {
 
 	public static void main(String[] args) {
-		testScheduledThreadPool();
+//		testScheduledThreadPool();
+	    ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+	    singleThreadExecutor.execute(new Runnable() {
+            
+            @Override
+            public void run() {
+                int i = 0;
+                while(i<10){
+                    System.out.println("hello.");
+                    i++;
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+	    singleThreadExecutor.shutdown();
+	    System.out.println("over.");
 	}
 
 	public static void testScheduledThreadPool() {

@@ -1,19 +1,30 @@
 package demo.java.runtime;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 public class RuntimeTestCase {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		RuntimeTestCase.executeCMD(" java -version");
+		executeCMD(" java -version");
 		
 	}
-	public static void executeCMD(String cmd){
+	public static void executeCMD(String cmd) throws InterruptedException{
 		Runtime runtime = Runtime.getRuntime();
 		Process process = null;
 		try {
 			process = runtime.exec("cmd /c " + cmd);
+			process.waitFor();
+			OutputStream out = process.getOutputStream();
+			PrintWriter printWriter = new PrintWriter(out);
+			printWriter.println("a");
 			System.out.println(process.toString());
+			int ret = process.exitValue();
+	        System.out.println(ret);
+	        System.out.println("availableProcessors = "+runtime.availableProcessors());
+	        System.out.println("maxMemory="+runtime.maxMemory());
+	        System.out.println("freeMemory="+runtime.freeMemory());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

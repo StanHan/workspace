@@ -3,8 +3,14 @@ package demo.java.util.concurrent;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class QueueTest {
+/**
+ * @author hanjy
+ *
+ */
+public class QueueDemo {
 
+    
+    
 }
 
 class Producer implements Runnable {
