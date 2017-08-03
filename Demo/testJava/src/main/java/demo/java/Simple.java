@@ -19,25 +19,11 @@ public class Simple {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-	   System.out.println(generateInsertQuerySQL());
+	    Double a = 1.0;
+	   Object b = a;
+	   Integer c = (Integer) b;
+	   System.out.println(c);
 	}
-	
-	static String generateInsertQuerySQL() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("select uud.*, '' as invite_code, ifnull(cm.id, 19) as channel_id, ifnull(cm.channel_code, '9003') as channel_code \n");
-        sb.append("from ( \n");
-        sb.append("select u.id, u.register_date, ud.device_type, ud.device_no, ud.device_token, upper(ud.ifa) as idfa, upper(ud.imei) as imei, ud.android_id, ud.create_at, ud.update_at \n");
-        sb.append("from s_user u left join s_user_device ud on u.id=ud.user_id \n");
-        sb.append("where u.id >= ? and u.id < ? and u.id > ? \n");
-        sb.append("group by u.id \n");
-        sb.append("order by u.id \n");
-        sb.append("limit ? ) uud left join s_user_channel uc on uud.id=uc.user_id left join s_channel_master cm on uc.channel_id=cm.id \n");
-
-        return sb.toString();
-
-    }
-	
 	
 }
 

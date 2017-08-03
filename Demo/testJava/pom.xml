@@ -293,11 +293,26 @@
       <version>${slf4j.version}</version>
     </dependency>
 
-    <!-- fastdfs -->
+    <!-- ogback-classic -->
     <dependency>
-      <groupId>com.github.tobato</groupId>
-      <artifactId>fastdfs-client</artifactId>
-      <version>1.25.2-RELEASE</version>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- logback-core -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+
+    <!-- logback-access -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-access</artifactId>
+      <version>1.2.3</version>
     </dependency>
 
     <!--log4j -->
@@ -313,11 +328,7 @@
     </dependency>
 
     <!--slf4j - log4j 桥接 -->
-    <!-- <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <version>${log4j.version}</version>
-    </dependency> -->
+    <!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-slf4j-impl</artifactId> <version>${log4j.version}</version> </dependency> -->
 
     <!--log4j 2 开启async需要依赖 -->
     <dependency>
@@ -325,6 +336,16 @@
       <artifactId>disruptor</artifactId>
       <version>3.3.4</version>
     </dependency>
+
+
+
+    <!-- fastdfs -->
+    <dependency>
+      <groupId>com.github.tobato</groupId>
+      <artifactId>fastdfs-client</artifactId>
+      <version>1.25.2-RELEASE</version>
+    </dependency>
+
 
     <dependency>
       <groupId>junit</groupId>
@@ -343,25 +364,6 @@
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
       <version>${mybatis-spring.version}</version>
-    </dependency>
-
-    <!-- 通用Mapper -->
-    <dependency>
-      <groupId>com.github.abel533</groupId>
-      <artifactId>mapper</artifactId>
-      <version>2.3.4</version>
-      <exclusions>
-        <exclusion>
-          <!-- 排除传递依赖 -->
-          <groupId>javax.persistence</groupId>
-          <artifactId>persistence-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>persistence-api</artifactId>
-      <version>1.0.2</version>
     </dependency>
 
     <!-- Redis 缓存配置 -->

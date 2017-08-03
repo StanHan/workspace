@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+import javax.sql.DataSource;
+
+import demo.javax.sql.DataSourceDemo;
+
 public class JdbcDemo {
 	public static String driver = "com.microsoft.jdbc.sqlserver.SQLServerDriver";
 	public static String url = "jdbc:microsoft:sqlserver://127.0.0.1:1433;DatabaseName=MyDB";
@@ -23,10 +27,35 @@ public class JdbcDemo {
 	public static ResultSetMetaData resultSetMetaData;
 
 	public static void main(String s[]) {
-		init();
+//		init();
 		// f2();
-		f9();
-		close();
+//		f9();
+//		close();
+	    demo();
+	}
+	
+	static void demo(){
+	    String select = "SELECT id, user_id, product_id, apply_id, send_at, create_at, update_at FROM cp_send";
+	    String insert = "INSERT INTO cp_send_bak (id, user_id, product_id, apply_id, send_at, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    DataSource local = DataSourceDemo.local;
+	    try(Connection connection = local.getConnection();
+	            Statement statement = connection.createStatement();
+	            PreparedStatement pStatement = connection.prepareStatement(insert);){
+	        ResultSet rs = statement.executeQuery(select + " limit 1");
+	        if(rs.next()){
+	            pStatement.setObject(1, rs.getDouble(1));
+	            pStatement.setObject(2, rs.getDouble(2));
+	            pStatement.setObject(3, rs.getDouble(3));
+	            pStatement.setObject(4, rs.getDouble(4));
+	            pStatement.setObject(5, rs.getObject(5));
+	            pStatement.setObject(6, rs.getObject(6));
+                pStatement.setObject(7, rs.getObject(7));
+                pStatement.executeUpdate();
+	        }
+	        rs.close();
+	    } catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 
 	/**
