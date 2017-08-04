@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。 -->
+<!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
+<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+  <!-- property：用来定义变量值的标签，有两个属性，name和value；其中name的值是变量的名称，value的值时变量定义的值。通过<property>定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
+  <property name="APP_Name" value="myAppName" />
+
+  <!-- timestamp：获取时间戳字符串：两个属性, key:标识此<timestamp> 的名字；datePattern：设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循Java.txt.SimpleDateFormat的格式。 -->
+  <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss" />
+
+  <!-- contextName：设置上下文名称：每个logger都关联到logger上下文，默认上下文名称为“default”。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。 -->
+  <contextName>${APP_Name}</contextName>
+
+  <!-- 控制台输出 -->
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 时间滚动输出 level为 DEBUG 日志 -->
+  <appender name="file—debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>DEBUG</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY </onMismatch>
+    </filter>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>G:/logs/debug.%d{yyyy-MM-dd}.log</FileNamePattern>
+      <MaxHistory>30</MaxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 时间滚动输出 level为 ERROR 日志 -->
+  <appender name="file—error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY </onMismatch>
+    </filter>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>G:/logs/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+      <MaxHistory>30</MaxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 特定过滤含有某字符串的日志 -->
+  <appender name="file-str" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator>
+        <expression>message.contains("str")</expression>
+      </evaluator>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>G:/logs/contains.%d{yyyy-MM-dd}.log
+      </FileNamePattern>
+      <MaxHistory>30</MaxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 数据库输出 -->
+  <appender name="db" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+      <driverClass>com.mysql.jdbc.Driver</driverClass>
+      <url>jdbc:mysql://host_name:3306/datebase_name</url>
+      <user>username</user>
+      <password>password</password>
+    </connectionSource>
+  </appender>
+
+  <!-- logger:用来设置某一个包或者具体的某一个类的日志打印级别、以及指定<appender>。<loger>仅有一个name属性，一个可选的level和一个可选的addtivity属性。 -->
+  <!-- name:用来指定受此loger约束的某一个包或者具体的某一个类。 -->
+  <logger name="java.sql.Connection">
+    <!-- level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，还有一个特俗值INHERITED或者同义词NULL，代表强制执行上级的级别。如果未设置此属性，那么当前loger将会继承上级的级别。 -->
+    <level value="DEBUG" />
+    <!-- addtivity:是否向上级loger传递打印信息。默认是true。 -->
+    <!-- <loger>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。 -->
+  </logger>
+  <logger name="java.sql.Statement">
+    <level value="DEBUG" />
+  </logger>
+  <logger name="com.ibatis">
+    <level value="DEBUG" />
+  </logger>
+  <logger name="com.ibatis.common.jdbc.SimpleDataSource">
+    <level value="DEBUG" />
+  </logger>
+  <logger name="com.ibatis.common.jdbc.ScriptRunner">
+    <level value="DEBUG" />
+  </logger>
+  <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate">
+    <level value="DEBUG" />
+  </logger>
+  <logger name="com.danga.MemCached">
+    <level value="INFO" />
+  </logger>
+  <logger name="org.springframework.test">
+    <level value="DEBUG" />
+  </logger>
+  <logger name="org.apache.struts2">
+    <level value="DEBUG" />
+  </logger>
+
+  <!-- <root>也是<logger>元素，但是它是根logger。只有一个level属性，应为已经被命名为"root". -->
+  <!-- level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，不能设置为INHERITED或者同义词NULL。默认是DEBUG。 -->
+  <root level="DEBUG">
+    <!-- <root>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。 -->
+    <appender-ref ref="stdout" />
+    <appender-ref ref="file—debug" />
+    <appender-ref ref="file—error" />
+    <appender-ref ref="file-str" />
+    <appender-ref ref="db" />
+  </root>
+
+</configuration>

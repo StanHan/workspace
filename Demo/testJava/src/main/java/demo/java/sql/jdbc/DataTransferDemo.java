@@ -21,9 +21,11 @@ public class DataTransferDemo {
 
     public static void main(String[] args) {
         DataTransferUtils dataTransferUtils = new DataTransferUtils(DataSourceDemo.local, DataSourceDemo.local);
-        dataTransferUtils.transferAll(selectSql, insertSql);
+//        dataTransferUtils.transferAll(selectSql, insertSql);
+        dataTransferUtils.transferAll(selectSql2, insertSql, 5_0000);
     }
 
+    static String selectSql2 = "SELECT id, user_id, product_id, apply_id, send_at, create_at, update_at FROM cp_send where id>? and id<=? order by id";
     static String selectSql = "SELECT id, user_id, product_id, apply_id, send_at, create_at, update_at FROM cp_send limit ?,?";
     static String insertSql = "INSERT INTO cp_send_bak (id, user_id, product_id, apply_id, send_at, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
 

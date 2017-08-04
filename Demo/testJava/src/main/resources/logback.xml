@@ -1,115 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <configuration>
 
+  <!-- property：用来定义变量值的标签，有两个属性，name和value；其中name的值是变量的名称，value的值时变量定义的值。通过<property>定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
+  <property name="APP_Name" value="testJava" />
+  <property name="log.dir" value="G:/logs" />
+
+
+  <!-- timestamp：获取时间戳字符串：两个属性, key:标识此<timestamp> 的名字；datePattern：设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循Java.txt.SimpleDateFormat的格式。 -->
+  <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss" />
+
+  <!-- contextName：设置上下文名称：每个logger都关联到logger上下文，默认上下文名称为“default”。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。 -->
+  <contextName>${APP_Name}</contextName>
+
   <!-- 控制台输出 -->
-  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
     </encoder>
   </appender>
 
-  <!-- 时间滚动输出 level为 DEBUG 日志 -->
-  <appender name="file—debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>DEBUG</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY </onMismatch>
-    </filter>
-    
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <FileNamePattern>G:/logs/debug.%d{yyyy-MM-dd}.log</FileNamePattern>
-      <MaxHistory>30</MaxHistory>
-    </rollingPolicy>
-    
-    <encoder>
-      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
-    </encoder>
-  </appender>
-
-  <!-- 时间滚动输出 level为 ERROR 日志 -->
-  <appender name="file—error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>ERROR</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY </onMismatch>
-    </filter>
-    
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <FileNamePattern>G:/logs/error.%d{yyyy-MM-dd}.log</FileNamePattern>
-      <MaxHistory>30</MaxHistory>
-    </rollingPolicy>
-    
-    <encoder>
-      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
-    </encoder>
-  </appender>
-
-  <!-- 特定过滤含有某字符串的日志 -->
-  <appender name="file-str" class="ch.qos.logback.core.rolling.RollingFileAppender">
-  
-    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-      <evaluator>
-        <expression>message.contains("str")</expression>
-      </evaluator>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-    
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <FileNamePattern>G:/logs/contains.%d{yyyy-MM-dd}.log
-      </FileNamePattern>
-      <MaxHistory>30</MaxHistory>
-    </rollingPolicy>
-    
-    <encoder>
-      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
-    </encoder>
-  </appender>
-
-  <!-- 数据库输出 -->
-  <appender name="db" class="ch.qos.logback.classic.db.DBAppender">
-    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
-      <driverClass>com.mysql.jdbc.Driver</driverClass>
-      <url>jdbc:mysql://host_name:3306/datebase_name</url>
-      <user>username</user>
-      <password>password</password>
-    </connectionSource>
-  </appender>
-
-  <logger name="java.sql.Connection">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="java.sql.Statement">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="com.ibatis">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="com.ibatis.common.jdbc.SimpleDataSource">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="com.ibatis.common.jdbc.ScriptRunner">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="com.danga.MemCached">
-    <level value="INFO" />
-  </logger>
-  <logger name="org.springframework.test">
-    <level value="DEBUG" />
-  </logger>
-  <logger name="org.apache.struts2">
-    <level value="DEBUG" />
-  </logger>
+  <logger name="java.sql.Connection" level="DEBUG" />
+  <logger name="java.sql.Statement" level="DEBUG" />
+  <logger name="com.ibatis" level="DEBUG" />
+  <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+  <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
+  <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+  <logger name="com.danga.MemCached" level="DEBUG" />
+  <logger name="org.springframework.test" level="DEBUG" />
+  <logger name="org.apache.struts2" level="DEBUG" />
 
   <root level="DEBUG">
-    <appender-ref ref="stdout" />
-    <appender-ref ref="file—debug" />
-    <appender-ref ref="file—error" />
-    <appender-ref ref="file-str" />
-    <appender-ref ref="db" />
+    <!-- <root>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。 -->
+    <appender-ref ref="ConsoleAppender" />
   </root>
 
 </configuration>
