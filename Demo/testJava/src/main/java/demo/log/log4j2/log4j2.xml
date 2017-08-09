@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status用来指定log4j本身的打印日志的级别. -->
+<!-- monitorinterval用于指定log4j自动重新配置的监测间隔时间，单位是s,最小是5s. -->
+<Configuration status="debug" strict="true" name="XMLConfigTest" monitorInterval="300">
+
+  <Properties>
+    <Property name="filename">testJava</Property>
+    <Property name="logdir">G:/logs</Property>
+  </Properties>
+
+  <Filter type="ThresholdFilter" level="trace" />
+
+  <Appenders>
+    <!--控制台 -->
+    <!-- target:SYSTEM_OUT 或 SYSTEM_ERR,一般只设置默认:SYSTEM_OUT. -->
+    <Console name="console" target="SYSTEM_OUT">
+      <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+      <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+
+      <!-- PatternLayout定义了输出日志时的格式： -->
+      <!-- %d{HH:mm:ss.SSS} 表示输出到毫秒的时间 -->
+      <!-- %t 输出当前线程名称 -->
+      <!-- %-5level 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0 -->
+      <!-- %logger 输出logger名称，因为Root Logger没有名称，所以没有输出 -->
+      <!-- %msg 日志文本 -->
+      <!-- %n 换行 -->
+      <!-- %F 输出所在的类文件名，如Client.java -->
+      <!-- %L 输出行号 -->
+      <!-- %M 输出所在方法名 -->
+      <!-- %l 输出语句所在的行数, 包括类名、方法名、文件名、行数 -->
+      <PatternLayout pattern="%d{HH:mm:ss,SSS} %5p %c{1}:%L - %m%n" />
+    </Console>
+
+    <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
+    <!-- fileName:指定输出日志的目的文件带全路径的文件名. -->
+    <File name="file" fileName="${logdir}/test.log" append="false">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+    </File>
+
+    <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+    <!-- filePattern:指定新建日志文件的名称格式. -->
+
+    <RollingFile name="RollingFileInfo" fileName="${logdir}/info.log" filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+      <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+      <!-- Policies:指定滚动日志的策略，就是什么时候进行新建日志文件输出日志. -->
+      <Policies>
+        <!-- TimeBasedTriggeringPolicy:Policies子节点，基于时间的滚动策略，interval属性用来指定多久滚动一次，默认是1 hour。modulate=true用来调整时间：比如现在是早上3am，interval是4，那么第一次滚动是在4am，接着是8am，12am...而不是7am. -->
+        <TimeBasedTriggeringPolicy />
+        <!-- SizeBasedTriggeringPolicy:Policies子节点，基于指定文件大小的滚动策略，size属性用来定义每个日志文件的大小. -->
+        <SizeBasedTriggeringPolicy size="100 MB" />
+      </Policies>
+      <!-- DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。 -->
+      <DefaultRolloverStrategy max="20" />
+    </RollingFile>
+
+    <RollingFile name="MangerInfoRollingFile" fileName="${logdir}/async-${filename}-info.log" filePattern="${logdir}/$${date:yyyy-MM}/async-${filename}-info-%d{MM-dd-yyyy}-%i.log.tar.gz">
+      <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
+      <!--每日分割日志 -->
+      <CronTriggeringPolicy schedule="0 0 0 1/1 * ? " />
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n" />
+
+    </RollingFile>
+
+    <RollingFile name="OtherRollingFile" fileName="${logdir}/${filename}.log" filePattern="${logdir}/$${date:yyyy-MM}/${filename}-%d{MM-dd-yyyy}-%i.log.tar.gz">
+      <CronTriggeringPolicy schedule="0 0 0 1/1 * ? " />
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n" />
+    </RollingFile>
+  </Appenders>
+
+  <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+  <Loggers>
+    <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
+    <!-- level:日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF. -->
+    <Root level="DEBUG">
+      <!-- AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender. -->
+      <AppenderRef ref="console" level="DEBUG" />
+      <!-- <AppenderRef ref="OtherRollingFile" level="DEBUG" /> -->
+    </Root>
+    <!-- Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等 -->
+    <!-- name:用来指定该Logger所适用的类或者类所在的包全路径,继承自Root节点. -->
+    <!-- AppenderRef：Logger的子节点，用来指定该日志输出到哪个Appender,如果没有指定，就会默认继承自Root.如果指定了，那么会在指定的这个Appender和Root的Appender中都会输出，此时我们可以设置Logger的additivity="false"只在自定义的Appender中进行输出。 -->
+    <!--过滤掉spring和mybatis的一些无用的DEBUG信息 -->
+    <logger name="org.springframework" level="INFO"></logger>
+    <logger name="org.mybatis" level="INFO"></logger>
+    <AsyncLogger name="com.admin" level="INFO" includeLocation="true" additivity="false">
+      <AppenderRef ref="MangerInfoRollingFile" />
+      <AppenderRef ref="console" />
+    </AsyncLogger>
+    <AsyncLogger name="com.daikuan.platform.mc" level="INFO" includeLocation="true" additivity="false">
+      <AppenderRef ref="MangerInfoRollingFile" />
+      <AppenderRef ref="console" />
+    </AsyncLogger>
+  </Loggers>
+
+</Configuration>

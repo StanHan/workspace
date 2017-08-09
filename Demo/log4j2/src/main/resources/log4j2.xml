@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" name="XMLConfigTest">
+<Configuration status="debug" strict="true" name="XMLConfigTest" monitorInterval="300">
   <Properties>
     <Property name="filename">testJava</Property>
-    <!--指定log位置 tomcat会在logs文件夹下面，jetty会在项目同级目录logs -->
     <Property name="logdir">G:/logs</Property>
   </Properties>
 
   <Filter type="ThresholdFilter" level="trace" />
-  <!--先定义所有的appender- -->
+  
   <Appenders>
     <!--这个输出控制台的配置 -->
     <Console name="console" target="SYSTEM_OUT">
@@ -18,7 +17,7 @@
     </Console>
 
     <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
-    <File name="log" fileName="log/test.log" append="false">
+    <File name="log" fileName="${logdir}/test.log" append="false">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
     </File>
 
@@ -42,8 +41,8 @@
 
   <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
   <Loggers>
-    <Root level="INFO">
-      <AppenderRef ref="OtherRollingFile" level="DEBUG" />
+    <Root level="DEBUG">
+      <!-- <AppenderRef ref="OtherRollingFile" level="DEBUG" /> -->
       <AppenderRef ref="console" level="DEBUG" />
     </Root>
     <AsyncLogger name="com.admin" level="INFO" includeLocation="true" additivity="false">

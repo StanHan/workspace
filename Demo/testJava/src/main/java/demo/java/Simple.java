@@ -19,13 +19,33 @@ public class Simple {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
+	    StringBuffer sql = new StringBuffer(
+                //被认领超过5分钟无处理的进件,可以给客服重新抓取
+                "SELECT upas.id FROM s_user_product_audit_status upas  INNER JOIN s_admin_task sat " +
+                        "   ON upas.product_audit_id = sat.product_audit_id " +
+                        "   WHERE sat.claim_status = 1 " +
+                        "   AND upas.audit_status in (:auditStatus) " +
+                        "   AND upas.product_audit_id IS NOT NULL " +
+                        "   AND timestampdiff(MINUTE,sat.claim_time,now()) > 5 " +
+                        "UNION ALL " +
+                        //正常无人认领的进件
+                        "SELECT upas.id FROM s_user_product_audit_status upas " +
+                        "WHERE upas.admin_id IS NULL " +
+                        "   AND upas.audit_status in (:auditStatus) " +
+                        "   AND upas.product_audit_id IS NOT NULL");
+	    System.out.println(sql);
 	    Double a = 1.0;
 	   Object b = a;
-	   Integer c = (Integer) b;
+	   System.out.println(b);
+	   double c = (double)b;
 	   System.out.println(c);
+//	   Integer c = (Integer) b;
+//	   System.out.println(c);
 	}
 	
 }
+
+
 
 
 class SubClass extends SurperClass{

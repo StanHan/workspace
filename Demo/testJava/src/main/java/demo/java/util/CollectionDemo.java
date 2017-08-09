@@ -41,9 +41,28 @@ import java.util.Vector;
 public class CollectionDemo {
 
     public static void main(String[] args) {
+        demoSearch(19);
         Collection collection = null;
-        testTreeSet();
-        testHashSet();
+//        testTreeSet();
+//        testHashSet();
+        demo(1,2,3);
+        Integer[] array = {1,2,3};
+        System.out.println(array);
+        
+        
+        
+    }
+    
+    static void demoSearch(int a){
+        Integer[] array1 = { 20, 42,150,19 };
+        int idx = Arrays.binarySearch(array1, a);
+        System.out.println(idx);
+    }
+    
+    static void demo(int... ids){
+        Arrays.stream(ids).forEach(System.out::println);  
+        List<int[]> list = Arrays.asList(ids);
+        list.forEach(System.out::println);
     }
 
     public static void testCollection() {

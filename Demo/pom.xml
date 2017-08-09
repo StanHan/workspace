@@ -27,6 +27,7 @@
     <mybatis.version>3.2.8</mybatis.version>
     <mybatis-spring.version>1.2.2</mybatis-spring.version>
     <httpclient.version>4.3.5</httpclient.version>
+    <logback.version>1.2.3</logback.version>
   </properties>
 
   <!-- 利用profile来切换环境 maven profile可使用操作系统信息，jdk信息，文件是否存在，属性值等作为依据，来激活相应的profile，也可在编译阶段，通过mvn命令加参数 -PprofileId 来手工激活使用对应的profile -->
