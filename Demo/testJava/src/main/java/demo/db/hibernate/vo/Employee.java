@@ -4,10 +4,11 @@ public class Employee {
 
     private int id;
     private String firstName, lastName;
+    private int age;
 
     @Override
     public String toString() {
-        return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+        return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + "]";
     }
 
     public int getId() {
@@ -32,5 +33,13 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

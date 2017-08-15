@@ -2,7 +2,7 @@ package demo.java.lang;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ThreadLocalTest {
+public class ThreadLocalDemo {
 
 	public static void main(String[] args) {
 		"aaaa".toCharArray();

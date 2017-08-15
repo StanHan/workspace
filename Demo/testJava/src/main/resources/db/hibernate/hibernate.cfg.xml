@@ -21,20 +21,18 @@
     <!-- Enable Hibernate's automatic session context management -->
     <property name="current_session_context_class">thread</property>
 
-    <!-- Disable the second-level cache -->
+    <!-- Disable the second-level cache 不使用第二级缓存 -->
     <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+    <!-- <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+    <property name="hibernate.cache.use_second_level_cache">true</property> -->
 
     <!-- Echo all executed SQL to stdout -->
     <property name="show_sql">true</property>
 
-    <mapping resource="db/hbm/employee.hbm.xml"/>  
-    <mapping class="demo.db.hibernate.vo.Employee2"/>
+    <mapping resource="db/hibernate/hbm/employee.hbm.xml" />
+    <mapping class="demo.db.hibernate.vo.Employee2" />
 
-    <!-- <mapping class="com.yiibai.entities.Department" />
-    <mapping class="com.yiibai.entities.Employee" />
-    <mapping class="com.yiibai.entities.SalaryGrade" />
-    <mapping class="com.yiibai.entities.Timekeeper" />
- -->
   </session-factory>
 
 </hibernate-configuration>

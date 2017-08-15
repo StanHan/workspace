@@ -41,7 +41,7 @@ public class HibernateUtils {
     public static SessionFactory getSessionFactory() {
         // creating configuration object
         Configuration configuration = new Configuration();
-        configuration.configure("db/hibernate.cfg.xml");// populates the data of the configuration file
+        configuration.configure("db/hibernate/hibernate.cfg.xml");// populates the data of the configuration file
 
         // creating seession factory object
         SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -56,7 +56,7 @@ public class HibernateUtils {
         // 1. 配置类型安全的准服务注册类，这是当前应用的单例对象，不作修改，所以声明为final
         // 在configure("cfg/hibernate.cfg.xml")方法中，如果不指定资源路径，默认在类路径下寻找名为hibernate.cfg.xml的文件
         final StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
-        registryBuilder.configure("db/hibernate.cfg.xml");
+        registryBuilder.configure("db/hibernate/hibernate.cfg.xml");
         StandardServiceRegistry registry = registryBuilder.build();
         // 2. 根据服务注册类创建一个元数据资源集，同时构建元数据并生成应用一般唯一的的session工厂
         MetadataSources metadataSources = new MetadataSources(registry);

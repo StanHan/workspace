@@ -1,5 +1,7 @@
 package demo.db.redis;
 
+import java.util.Set;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -7,7 +9,22 @@ import redis.clients.jedis.JedisPoolConfig;
 public class JedisDemo {
 
     public static void main(String[] args) {
-        demoTransfer();
+        clearMA();
+    }
+    
+    static void clearMA(){
+        try(Jedis jedis = new Jedis("180.101.195.162", 63790);){
+            jedis.auth("daikuanwang_wuxi_test");
+            jedis.select(0);
+            Set<String> set = jedis.keys("ma*");
+            set.forEach(System.out::println);
+            String[] array = new String[set.size()];
+            set.toArray(array);
+            jedis.del(array);
+            System.out.println("------------------------------");
+            Set<String> set2 = jedis.keys("ma*");
+            set2.forEach(System.out::println);
+        }
     }
     
     static void demoTransfer(){

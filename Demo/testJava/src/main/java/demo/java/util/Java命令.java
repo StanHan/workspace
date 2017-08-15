@@ -7,19 +7,24 @@ public interface Java命令 {
      * [-l] pid 。如果java程序崩溃生成core文件，jstack工具可以用来获得core文件的java stack和native stack的信息，从而可以轻松地知道java程序是如何崩溃和在程序何处发生问题。
      * 另外，jstack工具还可以附属到正在运行的java程序中，看到当时运行的java程序的java stack和native stack的信息,如果现在运行的java程序呈现hung的状态，jstack是非常有用的。
      * 
-     * 命令格式:
-     * <ul>
-     * <li>jstack [ option ] pid。
-     * <ul>
-     * <li>-F当’jstack [-l] pid’没有相应的时候强制打印栈信息
-     * <li>-l长列表. 打印关于锁的附加信息,例如属于java.util.concurrent的ownable synchronizers列表.
-     * <li>-m打印java和native c/c++框架的所有栈信息.
-     * <li>-h | -help打印帮助信息
-     * <li>pid 需要被打印配置信息的java进程id,可以用jps查询.
-     * </ul>
-     * <li>jstack [ option ] executable core 。core 将被打印信息的core dump文件
-     * <li>jstack [ option ] [server-id@]remote-hostname-or-IP 。remote-hostname-or-IP 远程debug服务的主机名或ip
-     * </ul>
+     * <code>$ jstack -help
+    Usage:
+    jstack [-l] <pid>
+        (to connect to running process)
+    jstack -F [-m] [-l] <pid>
+        (to connect to a hung process)
+    jstack [-m] [-l] <executable> <core>
+        (to connect to a core file)
+    jstack [-m] [-l] [server_id@]<remote server IP or hostname>
+        (to connect to a remote debug server)
+    
+    Options:
+    -F  to force a thread dump. Use when jstack <pid> does not respond (process is hung)
+    -m  to print both java and native frames (mixed mode)
+    -l  long listing. Prints additional information about locks
+    -h or -help to print this help message
+    </code>
+     * 
      */
     void jstack();
 

@@ -9,18 +9,20 @@ import java.lang.reflect.Modifier;
 public class JavaReflectTest {
 
 	public static void main(String[] args) throws Exception {
-		testField();
+	    testAnnotation();
+//		testField();
 	}
 
-	public static void testAnnotation() throws Exception {
+	static void testAnnotation() throws Exception {
+	    System.out.println("HELLO");
 		Annotation[] annotations = User.class.getAnnotations();
 		for (Annotation annotation : annotations) {
-			Class _class = annotation.annotationType();
+			Class<?> _class = annotation.annotationType();
 			System.out.println(_class.getName());
 		}
 	}
 
-	public static void testField() throws Exception {
+	static void testField() throws Exception {
 		System.out.println("User.class.getName() = " + User.class.getName());
 
 		User user = User.class.newInstance();
@@ -86,7 +88,7 @@ public class JavaReflectTest {
 		}
 	}
 
-	public static void test() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	static void test() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		/*
 		 * 实列化类 方法 2
 		 */
@@ -95,7 +97,7 @@ public class JavaReflectTest {
 		user.setAddress(" 武汉 ");
 
 		// 得到类对象
-		Class class_user = (Class) user.getClass();
+		Class<? extends User> class_user = user.getClass();
 
 		/*
 		 * 得到类中的所有属性集合

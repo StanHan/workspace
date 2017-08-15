@@ -19,6 +19,22 @@ public class Employee2 {
     
     @Column(name="last_name")
     private String lastName;
+    
+    @Column(name="age")
+    private int age;
+
+    @Override
+    public String toString() {
+        return "Employee2 [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + "]";
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public int getId() {
         return id;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true" monitoring="autodetect"
+  dynamicConfig="true">
+
+  <diskStore path="java.io.tmpdir/ehcache" />
+
+  <!-- defaultCache将用于所有持久化类。 -->
+  <!-- eternal 如果我们指定eternal =“true”，则不需要定义timeToIdleSeconds和timeToLiveSeconds属性，因为它将由hibernate内部处理。 指定eternal =“false”给程序员控制，但是我们需要定义timeToIdleSeconds和timeToLiveSeconds属性 -->
+  <!-- timeToIdleSeconds它定义了二级缓存中对象可以空闲多少秒。 -->
+  <!-- timeToLiveSeconds它定义了在第二级缓存中对象可以存储多少秒，无论它是否空闲。 -->
+  <defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120" diskSpoolBufferSizeMB="30"
+    maxEntriesLocalDisk="10000000" diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" statistics="true">
+    <persistence strategy="localTempSwap" />
+  </defaultCache>
+
+  <!-- cache 元素来明确定义持久化类。 -->
+  <cache name="demo.db.hibernate.vo.Employee" maxElementsInMemory="100" eternal="false" timeToIdleSeconds="5" timeToLiveSeconds="200" />
+</ehcache>
