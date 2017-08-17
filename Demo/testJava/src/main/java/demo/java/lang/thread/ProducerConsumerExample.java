@@ -1,4 +1,4 @@
-package demo.java.lang;
+package demo.java.lang.thread;
 
 import java.util.ArrayList;
 import java.util.List;

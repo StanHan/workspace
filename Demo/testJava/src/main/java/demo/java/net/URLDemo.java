@@ -4,16 +4,86 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * URL访问过程：
+ * <p>
+ * <ol>
+ * <li>第一步：客户机提出域名解析请求,并将该请求发送给本地的域名服务器。
+ * <li>第二步：当本地的域名服务器收到请求后,就先查询本地的缓存,如果有该纪录项,则本地的域名服务器就直接把查询的结果返回。
+ * <li>第三步：如果本地的缓存中没有该纪录,则本地域名服务器就直接把请求发给根域名服务器,然后根域名服务器再返回给本地域名服务器一个所查询域(根的子域)的主域名服务器的地址。
+ * <li>第四步：本地服务器再向上一步返回的域名服务器发送请求,然后接受请求的服务器查询自己的缓存,如果没有该纪录,则返回相关的下级的域名服务器的地址。
+ * <li>第五步：重复第四步,直到找到正确的纪录。
+ * </ol>
+ * <p>
+ * <ol>
+ * <li>1.enter the url to the address bar
+ * <li>2.a request will be sent to the DNS server based on your network configuration
+ * <li>3.DNS will route you to the real IP of the domain name
+ * <li>4.a request(with complete Http header) will be sent to the server(with 3's IP to identify)'s 80 port(suppose we
+ * don't specify another port)
+ * <li>5.server will search the listening ports and forward the request to the app which is listening to 80 port(let's
+ * say nginx here) or to another server(then 3's server will be like a load balancer)
+ * <li>6.nginx will try to match the url to its configuration and serve as an static page directly, or invoke the
+ * corresponding script intepreter(e.g PHP/Python) or other app to get the dynamic content(with DB query, or other
+ * logics)
+ * <li>7.a html will be sent back to browser with a complete Http response header
+ * <li>8.browser will parse the DOM of html using its parser
+ * <li>9.external resources(JS/CSS/images/flash/videos..) will be requested in sequence(or not?)
+ * <li>10.for JS, it will be executed by JS engine
+ * <li>11.for CSS, it will be rendered by CSS engine and HTML's display will be adjusted based on the CSS(also in
+ * sequence or not?)
+ * <li>12.if there's an iframe in the DOM, then a separate same process will be executed from step 1-12
+ * </ol>
+ * <p>
+ * 
+ * <ol>
+ * <li>1.browser checks cache; if requested object is in cache and is fresh, skip to #9
+ * <li>2.browser asks OS for server's IP address
+ * <li>3.OS makes a DNS lookup and replies the IP address to the browser
+ * <li>4.browser opens a TCP connection to server (this step is much more complex with HTTPS)
+ * <li>5.browser sends the HTTP request through TCP connection
+ * <li>6.browser receives HTTP response and may close the TCP connection, or reuse it for another request
+ * <li>7.browser checks if the response is a redirect (3xx result status codes), authorization request (401), error (4xx
+ * and 5xx), etc.; these are handled differently from normal responses (2xx)
+ * <li>8.if cacheable, response is stored in cache
+ * <li>9.browser decodes response (e.g. if it's gzipped)
+ * <li>10.browser determines what to do with response (e.g. is it a HTML page, is it an image, is it a sound clip?)
+ * <li>11.browser renders response, or offers a download dialog for unrecognized types
+ * </ol>
+ * <p>
+ * <ol>
+ * <li>1. You enter a URL into the browser（输入一个url地址）
+ * <li>2.The browser looks up the IP address for the domain name（浏览器查找域名的ip地址）
+ * <li>3. The browser sends a HTTP request to the web server(浏览器给web服务器发送一个HTTP请求)
+ * <li>4. The web server responds with a permanent redirect (WEB服务的永久重定向响应)
+ * <li>5. The browser follows the redirect(浏览器跟踪重定向地址)
+ * <li>6. The server ‘handles’ the request(服务器“处理”请求)
+ * <li>7. The server sends back a HTML response(服务器发回一个HTML响应)
+ * <li>8. The browser begins rendering the HTML(浏览器开始显示HTML)
+ * <li>9. The browser sends requests for objects embedded in HTML(浏览器发送获取嵌入在HTML中的对象)
+ * <li>10. The browser sends further asynchronous (AJAX) requests(浏览器发送异步（AJAX）请求)
+ * </ol>
+ * 
+ * 
+ * 
+ * @author hanjy
+ *
+ */
 public class URLDemo {
 
     public static void main(String[] args) throws Exception {
-        String url = "http://127.0.0.1:8080/as/image/banner/2/5.2.1.0";
+        demo2();
+        // demo1();
+    }
+    
+    static void demo2() throws MalformedURLException, URISyntaxException{
+        String url = "http://localhost:8080/as/image/banner/2/5.2.1.0?id=123#99";
         printURL(new URL(url));
-//        demo1();
     }
 
     /**

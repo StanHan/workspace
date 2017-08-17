@@ -1,4 +1,4 @@
-package demo.java.lang;
+package demo.java.lang.thread;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Timer;
