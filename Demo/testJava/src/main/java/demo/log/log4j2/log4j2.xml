@@ -28,7 +28,7 @@
       <!-- %L 输出行号 -->
       <!-- %M 输出所在方法名 -->
       <!-- %l 输出语句所在的行数, 包括类名、方法名、文件名、行数 -->
-      <PatternLayout pattern="%d{HH:mm:ss,SSS} %5p %c{1}:%L - %m%n" />
+      <PatternLayout pattern="%d [%t] %5p %c{8}:%L - %m%n" />
     </Console>
 
     <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
@@ -39,7 +39,6 @@
 
     <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
     <!-- filePattern:指定新建日志文件的名称格式. -->
-
     <RollingFile name="RollingFileInfo" fileName="${logdir}/info.log" filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
       <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
       <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />

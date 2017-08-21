@@ -69,7 +69,16 @@ import java.net.URLConnection;
  * <li>10. The browser sends further asynchronous (AJAX) requests(浏览器发送异步（AJAX）请求)
  * </ol>
  * 
+ * DNS查找过程如下：
+ * <ol>
+ * <li>浏览器缓存 – 浏览器会缓存DNS记录一段时间。 有趣的是，操作系统没有告诉浏览器储存DNS记录的时间，这样不同浏览器会储存个自固定的一个时间（2分钟到30分钟不等）。
+ * <li>系统缓存 – 如果在浏览器缓存里没有找到需要的记录，浏览器会做一个系统调用（windows里是gethostbyname）。这样便可获得系统缓存中的记录。
+ * <li>路由器缓存 – 接着，前面的查询请求发向路由器，它一般会有自己的DNS缓存。
+ * <li>ISP DNS 缓存 – 接下来要check的就是ISP缓存DNS的服务器。在这一般都能找到相应的缓存记录。
+ * <li>递归搜索 – 你的ISP的DNS服务器从跟域名服务器开始进行递归搜索，从.com顶级域名服务器到Facebook的域名服务器。一般DNS服务器的缓存中会有.com域名服务器中的域名，所以到顶级服务器的匹配过程不是那么必要了。
+ * </ol>
  * 
+ * 1、本地过程
  * 
  * @author hanjy
  *
@@ -77,11 +86,12 @@ import java.net.URLConnection;
 public class URLDemo {
 
     public static void main(String[] args) throws Exception {
+        ARP
         demo2();
         // demo1();
     }
-    
-    static void demo2() throws MalformedURLException, URISyntaxException{
+
+    static void demo2() throws MalformedURLException, URISyntaxException {
         String url = "http://localhost:8080/as/image/banner/2/5.2.1.0?id=123#99";
         printURL(new URL(url));
     }

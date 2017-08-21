@@ -1,6 +1,8 @@
 package demo.web;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.service.MongoOpsService;
+import demo.vo.ApiResult;
+import demo.vo.ErrorCode;
 import demo.vo.TestMongoBean;
 import demo.vo.TestMongoBeanHis;
 import demo.vo.User;
@@ -31,31 +35,43 @@ public class DemoController {
     MongoOpsService mongoOpsService;
 
     @PostMapping("/demo/user")
-    public void saveBannerImage(@RequestBody User request) {
+    public ApiResult<Integer> saveUser(@RequestBody User request) {
+        ApiResult<Integer> result = new ApiResult<>();
         if (request == null) {
-            return;
+            result.setErrorMsg(new ErrorCode("-1","arguments is null."));
         }
         System.out.println(request.toString());
+        result.setResult(0);
+        return result;
     }
 
     @GetMapping("/demo/user/id/{id}")
-    public User getUserById(@PathVariable("id") Integer id) {
+    public ApiResult<User> getUserById(@PathVariable("id") Integer id) {
+        ApiResult<User> result = new ApiResult<>();
         logger.info("query user by id={}", id);
         id = 0Xab;
-        return new User(id, "Name" + id);
+        result.setResult(new User(id, "Name" + id));
+        return result;
     }
 
     @GetMapping(value = "/demo/user/list")
-    public User queryUserBy(@RequestParam(name = "id", required = false) Integer id,
+    public ApiResult<List<User>> queryUserBy(@RequestParam(name = "id", required = false) Integer id,
             @RequestParam(name = "name", required = false) String name) {
+        ApiResult<List<User>> result = new ApiResult<>();
         System.out.printf("find by id %d, name %s", id, name);
-        return new User(id, name);
+        List<User> list = new ArrayList<User>();
+        list.add(new User(0, "Stan0"));
+        list.add(new User(1, "Stan1"));
+        result.setResult(list);
+        return result;
     }
 
     @DeleteMapping("/demo/user/delete/{id}")
-    public User deleteUserById(@PathVariable("id") Integer id) {
+    public ApiResult<Integer> deleteUserById(@PathVariable("id") Integer id) {
+        ApiResult<Integer> result = new ApiResult<>();
         logger.info("query user by id={}", id);
-        return new User(id, "Name" + id);
+        result.setResult(0);
+        return result;
     }
     
     @GetMapping("/demo/mongo/test")

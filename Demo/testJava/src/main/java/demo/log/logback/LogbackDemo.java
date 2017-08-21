@@ -1,7 +1,13 @@
 package demo.log.logback;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.File;
+import java.io.IOException;
+
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.util.StatusPrinter;
 
 /**
  * Logback是由log4j创始人Ceki Gülcü设计的又一个开源日志组件。logback当前分成三个模块：logback-core,logback- classic和logback-access。
@@ -31,19 +37,52 @@ import org.slf4j.LoggerFactory;
  * Logback-classic提供两种类型的过滤器：常规过滤器和TuroboFilter过滤器。Logback整体流程：Logger
  * 产生日志信息；Layout修饰这条msg的显示格式；Filter过滤显示的内容；Appender具体的显示，即保存这日志信息的地方。
  * 
+ * logback的默认配置 如果配置文件 logback-test.xml 和 logback.xml 都不存在，那么 logback 默认地会调用BasicConfigurator ，创建一个最小化配置。最小化配置由一个关联到根
+ * logger 的ConsoleAppender 组成。输出用模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n 的 PatternLayoutEncoder
+ * 进行格式化。root logger 默认级别是 DEBUG。
+ * 
+ * 1、Logback的配置文件 Logback 配置文件的语法非常灵活。正因为灵活，所以无法用 DTD 或 XML schema
+ * 进行定义。尽管如此，可以这样描述配置文件的基本结构：以<configuration>开头，后面有零个或多个<appender>元素，有零个或多个<logger>元素，有最多一个<root>元素。 2、Logback默认配置的步骤
+ * (1). 尝试在 classpath下查找文件logback-test.xml； (2). 如果文件不存在，则查找文件logback.xml； (3).
+ * 如果两个文件都不存在，logback用BasicConfigurator自动对自己进行配置，这会导致记录输出到控制台。
+ * 
  * @author hanjy
  *
  */
 public class LogbackDemo {
 
-    private static Logger log = LoggerFactory.getLogger("monitor"); 
-    
-    public static void main(String[] args) {  
-        log.trace("======trace");  
-        log.debug("======debug");  
-        log.info("======info");  
-        log.warn("======warn");  
-        log.error("======error");  
-    }  
+    public static void main(String[] args) throws Exception {
+        demo();
+    }
+
+    static void demo() throws JoranException {
+        String filePath = "E:/Stan/Demo/testJava/src/main/java/demo/log/logback/logback.xml";
+        LoggerContext loggerContext = load(filePath);
+        Logger log = loggerContext.getLogger("monitor");
+        log.trace("----------------------trace");
+        log.debug("----------------------debug");
+        log.info("----------------------info");
+        log.warn("----------------------warn");
+        log.error("----------------------error");
+    }
+
+    /**
+     * 加载外部的logback配置文件
+     * 
+     * @param filePath
+     *            配置文件路径
+     * @throws IOException
+     * @throws JoranException
+     */
+    public static LoggerContext load(String filePath) throws JoranException {
+        File file = new File(filePath);
+        JoranConfigurator configurator = new JoranConfigurator();
+        LoggerContext loggerContext = new LoggerContext();
+        configurator.setContext(loggerContext);
+        loggerContext.reset();
+        configurator.doConfigure(file);
+        StatusPrinter.printInCaseOfErrorsOrWarnings(loggerContext);
+        return loggerContext;
+    }
 
 }

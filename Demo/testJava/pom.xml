@@ -42,38 +42,6 @@
       <version>2.7.5</version>
     </dependency>
 
-    <!--shiro -->
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-core</artifactId>
-      <version>${shiro.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-ehcache</artifactId>
-      <version>${shiro.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-web</artifactId>
-      <version>${shiro.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-quartz</artifactId>
-      <version>${shiro.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.opensymphony.quartz</groupId>
-          <artifactId>quartz</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring</artifactId>
-      <version>${shiro.version}</version>
-    </dependency>
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
@@ -381,28 +349,6 @@
       <version>${commons.version}</version>
     </dependency>
 
-    <!-- VO -->
-    <dependency>
-      <groupId>com.daikuan.platform.cp</groupId>
-      <artifactId>cp-request</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.daikuan.platform.cp</groupId>
-      <artifactId>cp-cm-request</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.daikuan.platform.cp</groupId>
-      <artifactId>cp-dkw-request</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.daikuan.platform.cp</groupId>
-      <artifactId>cp-promotion-request</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
-
     <!-- Fast DFS -->
 
     <dependency>
@@ -462,79 +408,6 @@
       <groupId>org.mongodb</groupId>
       <artifactId>mongodb-driver</artifactId>
       <version>3.4.2</version>
-    </dependency>
-
-
-    <!-- AO common -->
-    <dependency>
-      <groupId>com.daikuan.ao</groupId>
-      <artifactId>ao-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <!-- UC common -->
-    <dependency>
-      <groupId>com.daikuan.uc</groupId>
-      <artifactId>uc-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- BS common -->
-    <dependency>
-      <groupId>com.daikuan.bs</groupId>
-      <artifactId>bs-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- MA common -->
-    <dependency>
-      <groupId>com.daikuan.platform</groupId>
-      <artifactId>ma-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- AS common -->
-    <dependency>
-      <groupId>com.daikuan.as</groupId>
-      <artifactId>as-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-
-    <!-- BR common -->
-    <dependency>
-      <groupId>com.daikuan.br</groupId>
-      <artifactId>br-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- IC common -->
-    <dependency>
-      <groupId>com.daikuan.ic</groupId>
-      <artifactId>ic-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-
-
-    <!-- IAM common -->
-    <dependency>
-      <groupId>com.daikuan.iam</groupId>
-      <artifactId>iam-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- NC common -->
-    <dependency>
-      <groupId>com.daikuan.nc</groupId>
-      <artifactId>nc-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- MA common -->
-    <dependency>
-      <groupId>com.daikuan.platform</groupId>
-      <artifactId>ma-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
     <!-- junit -->
