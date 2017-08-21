@@ -86,7 +86,6 @@ import java.net.URLConnection;
 public class URLDemo {
 
     public static void main(String[] args) throws Exception {
-        ARP
         demo2();
         // demo1();
     }

@@ -14,11 +14,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;
- 
-import org.apache.commons.compress.archivers.ArchiveException;
+
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.hibernate.boot.archive.spi.ArchiveException;
  
 /**
  * 解压tar.gz文件包

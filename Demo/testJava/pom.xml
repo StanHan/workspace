@@ -264,7 +264,13 @@
       <artifactId>logback-access</artifactId>
       <version>${logback.version}</version>
     </dependency>
-    
+
+    <dependency>
+      <groupId>org.codehaus.janino</groupId>
+      <artifactId>janino</artifactId>
+      <version>3.0.7</version>
+    </dependency>
+
     <!--log4j -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -424,7 +430,7 @@
       <artifactId>tomcat-jdbc</artifactId>
       <version>8.5.16</version>
     </dependency>
-    
+
   </dependencies>
 
   <build>

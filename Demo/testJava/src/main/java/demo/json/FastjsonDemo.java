@@ -1,15 +1,12 @@
 package demo.json;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.daikuan.ic.request.TransManageHistorySaveRequest;
 
 import demo.vo.Course;
 import demo.vo.Student;
@@ -131,20 +128,6 @@ public class FastjsonDemo {
         System.out.println(jsonObject1.getString("studentName") + ":" + jsonObject1.getInteger("studentAge"));
     }
 
-    static void demo1() {
-        TransManageHistorySaveRequest vo = new TransManageHistorySaveRequest();
-        vo.setRequestXml("123");
-        vo.setResponseXml("456");
-        vo.setUserId(23545);
-        vo.setTransCode("22");
-        vo.setCreateAt(new Date());
-        System.out.println(JSON.toJSONString(vo));
-
-        List<RewardVO> list = Arrays.asList(new RewardVO(0x1, 0x2, 0x3a));
-        String json = JSON.toJSONString(list);
-        System.out.println(json);
-    }
-
     // json字符串-简单对象型
     private static final String JSON_OBJ_STR = "{\"studentName\":\"lily\",\"studentAge\":12}";
     // json字符串-数组类型
@@ -152,41 +135,4 @@ public class FastjsonDemo {
     // 复杂格式json字符串
     private static final String COMPLEX_JSON_STR = "{\"teacherName\":\"crystall\",\"teacherAge\":27,\"course\":{\"courseName\":\"english\",\"code\":1270},\"students\":[{\"studentName\":\"lily\",\"studentAge\":12},{\"studentName\":\"lucy\",\"studentAge\":15}]}";
 
-}
-
-class RewardVO {
-    private long userId;
-    private int invitedUserCount;
-    private long reward;
-
-    public RewardVO(long userId, int invitedUserCount, long reward) {
-        super();
-        this.userId = userId;
-        this.invitedUserCount = invitedUserCount;
-        this.reward = reward;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public int getInvitedUserCount() {
-        return invitedUserCount;
-    }
-
-    public void setInvitedUserCount(int invitedUserCount) {
-        this.invitedUserCount = invitedUserCount;
-    }
-
-    public long getReward() {
-        return reward;
-    }
-
-    public void setReward(long reward) {
-        this.reward = reward;
-    }
 }
