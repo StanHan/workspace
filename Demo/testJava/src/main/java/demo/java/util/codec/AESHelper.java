@@ -1,4 +1,4 @@
-package demo.java.codec;
+package demo.java.util.codec;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;

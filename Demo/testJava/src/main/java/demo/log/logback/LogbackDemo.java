@@ -42,9 +42,12 @@ import ch.qos.logback.core.util.StatusPrinter;
  * 进行格式化。root logger 默认级别是 DEBUG。
  * 
  * 1、Logback的配置文件 Logback 配置文件的语法非常灵活。正因为灵活，所以无法用 DTD 或 XML schema
- * 进行定义。尽管如此，可以这样描述配置文件的基本结构：以<configuration>开头，后面有零个或多个<appender>元素，有零个或多个<logger>元素，有最多一个<root>元素。 2、Logback默认配置的步骤
- * (1). 尝试在 classpath下查找文件logback-test.xml； (2). 如果文件不存在，则查找文件logback.xml； (3).
- * 如果两个文件都不存在，logback用BasicConfigurator自动对自己进行配置，这会导致记录输出到控制台。
+ * 进行定义。尽管如此，可以这样描述配置文件的基本结构：以<configuration>开头，后面有零个或多个<appender>元素，有零个或多个<logger>元素，有最多一个<root>元素。
+ * 
+ * 2、Logback默认配置的步骤
+ * <li>(1). 尝试在 classpath下查找文件logback-test.xml；
+ * <li>(2). 如果文件不存在，则查找文件logback.xml；
+ * <li>(3). 如果两个文件都不存在，logback用BasicConfigurator自动对自己进行配置，这会导致记录输出到控制台。
  * 
  * @author hanjy
  *

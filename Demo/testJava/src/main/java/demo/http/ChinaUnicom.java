@@ -8,9 +8,13 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,15 +22,11 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-
+import demo.util.DateUtil;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.util.MimeTypes;
 import jodd.util.StringPool;
-import sun.misc.BASE64Encoder;
-import test.util.DateUtil;
 
 public class ChinaUnicom {
 	/*
@@ -40,10 +40,12 @@ public class ChinaUnicom {
 	private static final String url_test = "http://10.240.97.198:20061/BigData/CreditChecking/GetUserCreditByKey/v1";
 	private static final String appKey = "5ac9eb8068b141a8bbd456e8bf308837";
 	private static final String appSecret = "6d0584c7f6a64789";
-	private static String encoding = "utf-8";
 	private static final String REALM = "SDP";
 	private static final String PROFILE = "UsernameToken";
 	private static final String TYPE = "Appkey";
+	
+	public static Encoder encoder = Base64.getEncoder();
+	public static Decoder decoder = Base64.getDecoder();
 
 	String a = "WSSE realm=\"SDP\", profile=\"UsernameToken\", type=\"AppKey\"";
 
@@ -51,16 +53,16 @@ public class ChinaUnicom {
 		String requestBody = buildRequest("13162415293,18516552831,13353739193");
 		request(requestBody, url_test);
 		System.out.println("==================================");
-		send(url_test, requestBody, encoding);
+		send(url_test, requestBody, StandardCharsets.UTF_8.name());
 	}
 
 	public static String buildRequest(String telephoneNo) {
 		return "Table=apiusercredit&KeyType=0&Keys=" + telephoneNo;
 	}
 
-	public static void testBase64() throws UnsupportedEncodingException, Base64DecodingException {
+	public static void testBase64() throws UnsupportedEncodingException {
 		String base64String = "CkBmMjRhNmY1YzUwZDNlOTI3N2UyZTRkMTQwNjBjZjQ0ZmFjZTc3Y2NmMzNlNzE2ODNjODhmODlhMmYwMjY0ZDI3EiAwMDAwMDAyMzljYmZjMjJmYjM1YWE2Mzg1NDM1ZjlkYxgAIAIoYjABOMq/AUAASABQAFgAYAdoMXAKeCeAASqIAUY=";
-		String a = new String(Base64.decode(base64String), "UTF-8");
+		String a = new String(decoder.decode(base64String), StandardCharsets.UTF_8);
 		System.out.println(a);
 	}
 
@@ -90,8 +92,8 @@ public class ChinaUnicom {
 		byte[] passwd = (nonce + create + appSecret).getBytes();
 
 		MessageDigest messageDigest = MessageDigest.getInstance(secretType);
-		BASE64Encoder base64Encoder = new BASE64Encoder();
-		String passwordDigest = base64Encoder.encode(messageDigest.digest(passwd));
+		byte[] array = messageDigest.digest(passwd);
+		byte[] passwordDigest = encoder.encode(array);
 		// 设定连接的相关参数
 		URL url = new URL(ip);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -104,7 +106,7 @@ public class ChinaUnicom {
 				"WSSE realm=\"SDP\", profile=\"UsernameToken\", type=\"Appkey\"");
 		connection.setRequestProperty("X-WSSE", "UsernameToken Username=\"" + appKey + "\", PasswordDigest=\""
 				+ passwordDigest + "\", Nonce=\"" + nonce + "\", Created=\"" + create + "\"");
-		OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+		OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8);
 
 		out.write(reqBody);
 		out.flush();
@@ -209,11 +211,11 @@ public class ChinaUnicom {
 		}
 	}
 
-	public static void parseResponse() throws UnsupportedEncodingException, Base64DecodingException {
+	public static void parseResponse() throws UnsupportedEncodingException {
 		String response = "CkBjZTBmMTY5ODk1NmEwMzJhMzhiNzU4M2JlYjVmNzNlN2FmODkyNjZjZGYxNGI4Y2VjYWQ4ZjkzNzcwODkyZDFkEiA1OWUxYmI5MTdiMmQxZTE0MjYzZTA5N2M4OTkxNGUyORoDMjAwIAEoCjABONEcQABIAFAAWABgEWgAcAB6RuS4iua1t+S4iua1t+W4gua1puS4nOaWsOWMuua9jeWdiui3rzIwMOWPt++8iOS4iua1t+mTtuihjOe9keeCuTPmpbzvvImAAQKIAQCQAQCYAUGgARCoATmwAQC4ASA=";
 		// BASE64Encoder encoder = new BASE64Encoder();
-		byte[] byte_result = Base64.decode(response.getBytes("UTF-8"));
-		String result = new String(byte_result, "UTF-8");
+		byte[] byte_result = decoder.decode(response.getBytes(StandardCharsets.UTF_8));
+		String result = new String(byte_result, StandardCharsets.UTF_8);
 		System.out.println(result);
 	}
 
@@ -231,10 +233,9 @@ public class ChinaUnicom {
 		byte[] passwd = (nonce + createTime + password).getBytes();
 
 		MessageDigest alga = MessageDigest.getInstance(secretType);
-		BASE64Encoder encoder = new BASE64Encoder();
-		String passwordDigest = encoder.encode(alga.digest(passwd));
+		byte[] passwordDigest = encoder.encode(alga.digest(passwd));
 		System.out.println("passwordDigest :" + passwordDigest);
-		return passwordDigest;
+		return new String(passwordDigest);
 	}
 
 	/**

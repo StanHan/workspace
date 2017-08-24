@@ -1,4 +1,4 @@
-package demo.java.codec;
+package demo.java.util.codec;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.binary.Base64;

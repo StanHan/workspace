@@ -45,8 +45,28 @@ public class CollectionDemo {
         Collection collection = null;
         // testTreeSet();
         // testHashSet();
-//        demo(1, 2, 3);
-        java7Demo();
+        demoArrays(1, 2, 3);
+//        java7Demo();
+    }
+    
+    static void demoArrays(int... ids) {
+        System.out.println(ids);
+        Arrays.stream(ids).forEach(System.out::println);
+        
+        List<int[]> list = Arrays.asList(ids);
+        list.forEach(System.out::println);
+        
+        System.out.println("原型数据的数组，数组对象作为参数");
+        int[] array2 = {1,2,3,4,5};
+        List<int[]> list2 = Arrays.asList(array2);
+        list2.forEach(System.out::println);
+        System.out.println("包装类型的数组，数组的每个对象作为参数");
+        Integer[] array3 = {1,2,3,4,5};
+        List<Integer> list3 = Arrays.asList(array3);
+        list3.forEach(System.out::println);
+        
+        List<Integer> list4 = Arrays.asList(1,2,3);
+        list4.forEach(System.out::println);
     }
 
     static void java7Demo(){
@@ -56,12 +76,6 @@ public class CollectionDemo {
         Integer[] array1 = { 20, 42, 150, 19 };
         int idx = Arrays.binarySearch(array1, a);
         System.out.println(idx);
-    }
-
-    static void demo(int... ids) {
-        Arrays.stream(ids).forEach(System.out::println);
-        List<int[]> list = Arrays.asList(ids);
-        list.forEach(System.out::println);
     }
 
     public static void testCollection() {

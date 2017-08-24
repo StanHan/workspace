@@ -1,4 +1,4 @@
-package demo.netflix.discovery.EurekaClient;
+package demo.netflix;
 
 import java.net.MalformedURLException;
 import java.net.URL;

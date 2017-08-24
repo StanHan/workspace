@@ -1,4 +1,4 @@
-package demo.java.codec;
+package demo.java.util.codec;
 
 import java.security.Key;
 import java.security.KeyFactory;

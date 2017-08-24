@@ -229,6 +229,13 @@
       <artifactId>commons-httpclient</artifactId>
       <version>3.1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.jodd/jodd-http -->
+    <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-http</artifactId>
+      <version>3.8.6</version>
+    </dependency>
+
 
     <dependency>
       <groupId>com.jcraft</groupId>
@@ -344,17 +351,6 @@
       <version>${spring-data-redis-version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>2345-business</groupId>
-      <artifactId>common-base</artifactId>
-      <version>${commons.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>2345-business</groupId>
-      <artifactId>common-mvc</artifactId>
-      <version>${commons.version}</version>
-    </dependency>
-
     <!-- Fast DFS -->
 
     <dependency>
@@ -430,6 +426,30 @@
       <artifactId>tomcat-jdbc</artifactId>
       <version>8.5.16</version>
     </dependency>
+
+    <!-- commons-compress -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-compress</artifactId>
+      <version>1.14</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase -->
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase</artifactId>
+      <version>2.0.0-alpha-1</version>
+      <type>pom</type>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.dyuproject.protostuff/protostuff-core -->
+    <dependency>
+      <groupId>com.dyuproject.protostuff</groupId>
+      <artifactId>protostuff-core</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+
 
   </dependencies>
 

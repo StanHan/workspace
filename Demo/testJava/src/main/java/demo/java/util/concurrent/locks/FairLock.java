@@ -1,4 +1,4 @@
-package demo.java.util.concurrent.lock;
+package demo.java.util.concurrent.locks;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package demo.java.codec;
+package demo.java.util.codec;
 
 /* 安全散列算法SHA (Secure Hash Algorithm，SHA) */
 public class SHA1 {

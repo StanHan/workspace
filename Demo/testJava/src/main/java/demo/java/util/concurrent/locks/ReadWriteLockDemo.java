@@ -1,10 +1,10 @@
-package demo.java.util.concurrent.lock;
+package demo.java.util.concurrent.locks;
 
 import java.util.Random;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ReadWriteLockTest {
+public class ReadWriteLockDemo {
 	public static void main(String[] args) {
 		final TheData myData = new TheData(); // 这是各线程的共享数据
 		for (int i = 0; i < 3; i++) { // 开启3个读线程

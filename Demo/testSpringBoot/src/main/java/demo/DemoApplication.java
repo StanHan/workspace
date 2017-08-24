@@ -17,11 +17,6 @@ public class DemoApplication {
     private static Logger log = LoggerFactory.getLogger(DemoApplication.class); 
     
 	public static void main(String[] args) {
-	    log.trace("======trace");  
-        log.debug("======debug");  
-        log.info("======info");  
-        log.warn("======warn");  
-        log.error("======error");  
 		SpringApplication.run(DemoApplication.class, args);
 	}
 }

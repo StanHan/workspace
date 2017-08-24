@@ -1,4 +1,4 @@
-package demo.util;
+package demo.java.util.codec;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -52,7 +52,7 @@ public class MD5Util{
 		try {
 			msgDigest.update(text.getBytes("utf-8"));
 		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException:MD5Util.unionPaymd5(String text) error.");;
+			e.printStackTrace();
 		}
 
 		byte[] bytes = msgDigest.digest();
@@ -87,11 +87,13 @@ public class MD5Util{
 		return md5Str;
 	}
     
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
 		try {
 			System.out.println(new MD5Util().unionPaymd5(new String("112233helloword".getBytes("utf-8"), "utf-8")));
 			System.out.println(new MD5Util().md5("112233helloword"));
+			System.out.println(md5("udsp"));
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	}*/
+	}
 }

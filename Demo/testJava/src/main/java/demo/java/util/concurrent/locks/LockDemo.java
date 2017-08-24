@@ -1,11 +1,11 @@
-package demo.java.util.concurrent.lock;
+package demo.java.util.concurrent.locks;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LockTest {
+public class LockDemo {
 	ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<String>(10,true);
 }
 
@@ -24,8 +24,9 @@ class BoundedBuffer {
 				notFull.await();
 			}
 			items[putptr] = x;
-			if (++putptr == items.length)
+			if (++putptr == items.length){
 				putptr = 0;
+			}
 			++count;
 			notEmpty.signal();
 		} finally {
@@ -36,11 +37,14 @@ class BoundedBuffer {
 	public Object take() throws InterruptedException {
 		lock.lock();
 		try {
-			while (count == 0)
-				notEmpty.await();
+			while (count == 0){
+			    notEmpty.await();
+			}
+				
 			Object x = items[takeptr];
-			if (++takeptr == items.length)
-				takeptr = 0;
+			if (++takeptr == items.length){
+			    takeptr = 0;
+			}
 			--count;
 			notFull.signal();
 			return x;

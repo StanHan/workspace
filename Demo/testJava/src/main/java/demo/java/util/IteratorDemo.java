@@ -5,12 +5,24 @@ import java.util.Scanner;
 public class IteratorDemo {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        demoScanner();
 
     }
     
     static void demoScanner(){
-        Scanner scanner = new Scanner(System.in);
+        try(Scanner scanner = new Scanner(System.in);){
+            System.out.println("请输入：");
+            while(true){
+                String line = scanner.nextLine();
+                System.out.println(line);
+                if(line.equalsIgnoreCase("QUIT")){
+                    break;
+                }
+            }
+            String line = scanner.nextLine();
+            System.out.println(line);
+            System.out.println("Bye bye!");
+        }
     }
 
 }
