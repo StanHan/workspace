@@ -1,6 +1,15 @@
 package demo.java.util.concurrent.locks;
 
 /**
+ * 
+ * 把代码块声明为 synchronized，有两个重要后果，通常是指该代码具有 原子性（atomicity）和 可见性（visibility）。
+ * 原子性意味着一个线程一次只能执行由一个指定监控对象（lock）保护的代码，从而防止多个线程在更新共享状态时相互冲突。 可见性则更为微妙；它要对付内存缓存和编译器优化的各种反常行为。
+ * 一般来说，线程以某种不必让其他线程立即可以看到的方式（不管这些线程在寄存器中、在处理器特定的缓存中，还是通过指令重排或者其他编译器优化），不受缓存变量值的约束，
+ * 但是如果开发人员使用了同步，那么运行库将确保某一线程对变量所做的更新先于对现有 synchronized 块所进行的更新，当进入由同一监控器（lock）保护的另一个 synchronized 块时，
+ * 将立刻可以看到这些对变量所做的更新。类似的规则也存在于 volatile 变量上。
+ * 
+ *  Object 包含某些特殊的方法， wait() 、 notify() 和 notifyAll() ,用来在线程的之间进行通信。
+ * 
  * synchronized是针对对象的隐式锁使用的，注意是对象！
  * 
  * synchronized关键字的作用域有二种：
@@ -50,6 +59,10 @@ package demo.java.util.concurrent.locks;
  * <li>2.synchronized负责线程间的互斥.即同一时候只有一个线程可以执行synchronized中的代码.
  * synchronized还有另外一个方面的作用：在线程进入synchronized块之前，会把工作存内存中的所有内容映射到主内存上，然后把工作内存清空再从主存储器上拷贝最新的值。而在线程退出synchronized块时，同样会把工作内存中的值映射到主内存，不过此时并不会清空工作内存。这样保证线程在执行完代码块后，工作内存中的值和主内存中的值是一致的，保证了数据的一致性！
  * <li>3.volatile负责线程中的变量与主存储区同步.但不负责每个线程之间的同步. volatile的含义是：线程在试图读取一个volatile变量时，会从主内存区中读取最新的值。
+ * 
+ * synchronized有什么缺点：
+ * <li>只有一个condition与锁相关联，这个condition是什么？就是synchronized对针对的对象锁。
+ * <li>多线程竞争一个锁时，其余未得到锁的线程只能不停的尝试获得锁，而不能中断。这种情况对于大量的竞争线程会造成性能的下降等后果。
  */
 public class SynchronizedDemo {
 

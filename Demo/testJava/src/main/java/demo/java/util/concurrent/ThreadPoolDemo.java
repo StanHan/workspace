@@ -16,16 +16,38 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class ExecutorTest {
+public class ThreadPoolDemo {
     static Random random = new Random();
     public static void main(String[] args) {
-        demoShutDownThreadPool();
+//        demoShutDownThreadPool();
+        testThreadException();
+    }
+    
+    static void testThreadException(){
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        for(int i =0 ;i<10;i++){
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    while(true){
+                        System.out.println(Thread.currentThread().getName());
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+//                        throw new RuntimeException();
+                    }
+                }
+            });
+        }
+        executorService.shutdown();
     }
 
     /**
      * 采用线程池开启多个子线程，主线程等待所有的子线程执行完毕
      */
-    public static void demoShutDownThreadPool() {
+    static void demoShutDownThreadPool() {
         try {
             ExecutorService executorService = Executors.newFixedThreadPool(3);
             for (int i = 0; i < 10; i++) {
