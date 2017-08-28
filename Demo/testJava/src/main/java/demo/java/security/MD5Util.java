@@ -1,4 +1,4 @@
-package demo.java.util.codec;
+package demo.java.security;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

@@ -16,13 +16,13 @@ public class JedisDemo {
         try(Jedis jedis = new Jedis("180.101.195.162", 63790);){
             jedis.auth("daikuanwang_wuxi_test");
             jedis.select(0);
-            Set<String> set = jedis.keys("ma*");
+            Set<String> set = jedis.keys("ma_*");
             set.forEach(System.out::println);
             String[] array = new String[set.size()];
             set.toArray(array);
             jedis.del(array);
             System.out.println("------------------------------");
-            Set<String> set2 = jedis.keys("ma*");
+            Set<String> set2 = jedis.keys("ma_*");
             set2.forEach(System.out::println);
         }
     }
