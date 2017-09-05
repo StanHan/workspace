@@ -69,10 +69,13 @@ public class FastjsonDemo {
 
         Student student = JSON.parseObject(JSON_OBJ_STR, new TypeReference<Student>() {
         });
+        
+        Student student2 = JSON.parseObject(JSON_OBJ_STR, Student.class);
         // Student student1 = JSONObject.parseObject(JSON_OBJ_STR, new TypeReference<Student>()
         // {});//因为JSONObject继承了JSON，所以这样也是可以的
 
         System.out.println(student.getStudentName() + ":" + student.getStudentAge());
+        System.out.println(student2.getStudentName() + ":" + student2.getStudentAge());
 
     }
 

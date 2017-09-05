@@ -3,9 +3,17 @@ package demo.java;
 public class ControlFlowDemo {
 
 	public static void main(String[] args) {
+	    String a = "a";
+	    if(a.equals("a")){
+	        System.out.println(a);
+	    }else if(a.equals("a")){
+	        System.out.println(a);
+	    }else if(a.equals("a")){
+	        System.out.println(a);
+        }
 	}
 
-	public static void continueWithLabelDemo() {
+	static void continueWithLabelDemo() {
 
 		String searchMe = "Look for a substring in me";
 		String substring = "sub";
@@ -28,7 +36,7 @@ public class ControlFlowDemo {
 		System.out.println(foundIt ? "Found it" : "Didn't find it");
 	}
 
-	public static void continueDemo() {
+	static void continueDemo() {
 
 		String searchMe = "peter piper picked a " + "peck of pickled peppers";
 		int max = searchMe.length();
@@ -48,7 +56,7 @@ public class ControlFlowDemo {
 	/**
 	 * 跳出循环到 标签
 	 */
-	public static void breakWithLabelDemo() {
+	static void breakWithLabelDemo() {
 
 		int[][] arrayOfInts = { { 32, 87, 3, 589 }, { 12, 1076, 2000, 8 }, { 622, 127, 77, 955 } };
 		int searchfor = 12;
@@ -73,26 +81,26 @@ public class ControlFlowDemo {
 		}
 	}
 
-	public static void enhancedForDemo() {
+	static void enhancedForDemo() {
 		int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		for (int item : numbers) {
 			System.out.println("Count is: " + item);
 		}
 	}
 
-	public static void infiniteLoop() {
+	static void infiniteLoop() {
 		while (true) {
 		}
 	}
 
-	public static void infiniteLoop2() {
+	static void infiniteLoop2() {
 		// infinite loop
 		for (;;) {
 			// your code goes here
 		}
 	}
 
-	public static void doWhileDemo() {
+	static void doWhileDemo() {
 		int count = 1;
 		do {
 			System.out.println("Count is: " + count);
@@ -100,7 +108,7 @@ public class ControlFlowDemo {
 		} while (count < 11);
 	}
 
-	public static void whileDemo() {
+	static void whileDemo() {
 		int count = 1;
 		while (count < 11) {
 			System.out.println("Count is: " + count);

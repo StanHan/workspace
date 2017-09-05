@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daikuan.platform.ma.dao.ADictTypeDtlMapper">
+    <resultMap id="BaseResultMap" type="com.daikuan.platform.ma.pojo.ADictTypeDtlEntity">
+        <!-- -->
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!-- -->
+        id, type, code, description
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!-- -->
+        select
+        <include refid="Base_Column_List" />
+        from approve_dict_type_dtl
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!-- -->
+        delete from approve_dict_type_dtl
+        where id =
+        #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.daikuan.platform.ma.pojo.ADictTypeDtlEntity">
+        <!-- -->
+        insert into approve_dict_type_dtl (id, type, code,
+        description)
+        values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+        #{code,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.daikuan.platform.ma.pojo.ADictTypeDtlEntity">
+        <!-- -->
+        insert into approve_dict_type_dtl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.daikuan.platform.ma.pojo.ADictTypeDtlEntity">
+        <!-- -->
+        update approve_dict_type_dtl
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.daikuan.platform.ma.pojo.ADictTypeDtlEntity">
+        <!-- -->
+        update approve_dict_type_dtl
+        set type = #{type,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        description =
+        #{description,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

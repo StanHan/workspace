@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daikuan.platform.ma.dao.AUserProductAuditStatusMapper">
+    <sql id="tableName">a_user_product_audit_status</sql>
+    <resultMap id="BaseResultMap" type="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="Apply_id" jdbcType="BIGINT" property="applyId" />
+        <result column="product_id" jdbcType="INTEGER" property="productId" />
+        <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+        <result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+        <result column="product_audit_id" jdbcType="BIGINT" property="productAuditId" />
+        <result column="reason" jdbcType="LONGVARCHAR" property="reason" />
+        <result column="reason_ids" jdbcType="VARCHAR" property="reasonIds" />
+        <result column="reason_version" jdbcType="VARCHAR" property="reasonVersion" />
+        <result column="approve_time" jdbcType="TIMESTAMP" property="approveTime" />
+        <result column="result_type" jdbcType="TINYINT" property="resultType" />
+        <result column="audit_remarks" jdbcType="VARCHAR" property="auditRemarks" />
+        <result column="auto_green" jdbcType="LONGVARCHAR" property="autoGreen" />
+        <result column="manual_green" jdbcType="LONGVARCHAR" property="manualGreen" />
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, Apply_id, product_id, admin_id, audit_status,
+        product_audit_id, reason,
+        reason_ids, reason_version, approve_time,
+        result_type,audit_remarks,
+        auto_green,manual_green, create_at,
+        update_at
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from a_user_product_audit_status
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByApplyId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from a_user_product_audit_status
+    where apply_id =
+    #{applyId,jdbcType=BIGINT}
+</select>
+
+
+    <select id="getProductAuditStatusByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from a_user_product_audit_status
+        where user_id =
+        #{userId,jdbcType=BIGINT}
+        ORDER BY create_at DESC
+        limit 1
+    </select>
+
+
+
+
+
+
+
+
+    <select id="selectCertainId" resultType="java.lang.Long">
+        select id from a_user_product_audit_status
+        <trim prefix="where" prefixOverrides="AND |OR ">
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus,jdbcType=INTEGER}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId,jdbcType=INTEGER}
+            </if>
+        </trim>
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from
+        a_user_product_audit_status
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByApplyId" parameterType="java.lang.Long">
+        delete from
+        a_user_product_audit
+        where apply_id = #{applyId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+        insert into a_user_product_audit_status (
+        user_id,
+        Apply_id,
+        product_id, admin_id, audit_status,
+        product_audit_id, reason,
+        reason_ids,
+        reason_version, approve_time,result_type,
+        audit_remarks,
+        auto_green,
+        manual_green,
+        create_at, update_at
+        )
+        values
+        (
+        #{userId,jdbcType=BIGINT},
+        #{applyId,jdbcType=BIGINT},
+        #{productId,jdbcType=INTEGER},
+        #{adminId,jdbcType=INTEGER},
+        #{auditStatus,jdbcType=INTEGER},
+        #{productAuditId,jdbcType=BIGINT},
+        #{reason,jdbcType=LONGVARCHAR},
+        #{reasonIds,jdbcType=VARCHAR},
+        #{reasonVersion,jdbcType=VARCHAR},
+        #{approveTime,jdbcType=TIMESTAMP},
+        #{resultType,jdbcType=TINYINT},
+        #{auditRemarks,jdbcType=LONGVARCHAR},#{autoGreen,jdbcType=LONGVARCHAR},
+        #{manualGreen,jdbcType=LONGVARCHAR},
+        #{createAt,jdbcType=TIMESTAMP},
+        #{updateAt,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+        insert into a_user_product_audit_status
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="applyId != null">
+                Apply_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="productAuditId != null">
+                product_audit_id,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="reasonIds != null">
+                reason_ids,
+            </if>
+            <if test="reasonVersion != null">
+                reason_version,
+            </if>
+            <if test="approveTime != null">
+                approve_time,
+            </if>
+            <if test="resultType != null">
+                result_type,
+            </if>
+            <if test="auditRemarks != null">
+                audit_remarks,
+            </if>
+            <if test="autoGreen != null">
+                auto_green,
+            </if>
+            <if test="manualGreen != null">
+                manual_green,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="applyId != null">
+                #{applyId,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=INTEGER},
+            </if>
+
+            <if test="productAuditId != null">
+                #{productAuditId,jdbcType=BIGINT},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reasonIds != null">
+                #{reasonIds,jdbcType=VARCHAR},
+            </if>
+            <if test="reasonVersion != null">
+                #{reasonVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="approveTime != null">
+                #{approveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resultType != null">
+                #{resultType,jdbcType=TINYINT},
+            </if>
+            <if test="auditRemarks != null">
+                #{auditRemarks,jdbcType=TINYINT},
+            </if>
+            <if test="autoGreen != null">
+                #{autoGreen,jdbcType=TINYINT},
+            </if>
+            <if test="manualGreen != null">
+                #{manualGreen,jdbcType=TINYINT},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+        update a_user_product_audit_status
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="applyId != null">
+                Apply_id = #{applyId,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=INTEGER},
+            </if>
+            <if test="productAuditId != null">
+                product_audit_id = #{productAuditId,jdbcType=BIGINT},
+            </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reasonIds != null">
+                reason_ids = #{reasonIds,jdbcType=VARCHAR},
+            </if>
+            <if test="approveTime != null">
+                approve_time = #{approveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resultType != null">
+                result_type = #{resultType,jdbcType=TINYINT},
+            </if>
+            <if test="auditRemarks != null">
+                audit_remarks = #{auditRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="autoGreen != null">
+                auto_green = #{autoGreen,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="manualGreen != null">
+                manual_green = #{manualGreen,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+        update a_user_product_audit_status
+        set user_id =
+        #{userId,jdbcType=BIGINT},
+        Apply_id =
+        #{applyId,jdbcType=BIGINT},
+        product_id = #{productId,jdbcType=INTEGER},
+        admin_id =
+        #{adminId,jdbcType=INTEGER},
+        audit_status =
+        #{auditStatus,jdbcType=INTEGER},
+        product_audit_id =
+        #{productAuditId,jdbcType=BIGINT},
+        reason =
+        #{reason,jdbcType=LONGVARCHAR},
+        reason_ids =
+        #{reasonIds,jdbcType=VARCHAR},
+        reason_version =
+        #{reasonVersion,jdbcType=VARCHAR},
+        approve_time =
+        #{approveTime,jdbcType=TIMESTAMP},
+        result_type =
+        #{resultType,jdbcType=TINYINT},
+        audit_remarks =
+        #{auditRemarks,jdbcType=VARCHAR},
+        auto_green =
+        #{autoGreen,jdbcType=LONGVARCHAR},
+        manual_green =
+        #{manualGreen,jdbcType=LONGVARCHAR}
+        create_at =
+        #{createAt,jdbcType=TIMESTAMP},
+        update_at =
+        #{updateAt,jdbcType=TIMESTAMP}
+        where id =
+        #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+        update a_user_product_audit_status
+        set user_id = #{userId,jdbcType=VARCHAR},
+        apply_id =
+        #{applyId,jdbcType=BIGINT},
+        product_id = #{productId,jdbcType=INTEGER},
+        admin_id = #{adminId,jdbcType=INTEGER},
+        audit_status =
+        #{auditStatus,jdbcType=TINYINT},
+        product_audit_id = #{productAuditId,jdbcType=BIGINT},
+        reason = #{reason,jdbcType=VARCHAR},
+        reason_ids =
+        #{reasonIds,jdbcType=VARCHAR},
+        reason_version = #{reasonVersion,jdbcType=VARCHAR},
+        approve_time = #{approveTime,jdbcType=TIMESTAMP},
+        result_type
+        = #{resultType,jdbcType=TINYINT},
+        audit_remarks = #{auditRemarks,jdbcType=VARCHAR},
+        auto_green = #{manualGreen,jdbcType=VARCHAR},
+        manual_green =
+        #{manualGreen,jdbcType=VARCHAR},
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+        update_at = #{updateAt,jdbcType=TIMESTAMP}
+        where id =
+        #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryByProductAuditId" parameterType="Long" resultType="AUserProductAuditStatusEntity">
+        SELECT * FROM
+        <include refid="tableName" />
+        WHERE product_audit_id = #{productAuditId}
+    </select>
+
+
+
+    <update id="updateManualGreenByApplyId" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditStatusEntity">
+       UPDATE
+        <include refid="tableName" />
+        SET manual_green = #{manualGreen} where apply_id = #{applyId} and audit_status = 2
+        order by create_at desc limit 1
+    </update>
+</mapper>

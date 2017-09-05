@@ -1,5 +1,10 @@
 package demo.vo;
 
+/**
+ * 错误代码及其描述
+ * @author hanjy
+ *
+ */
 public class ErrorCode implements ErrorMsg {
     
     private String errCode;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daikuan.platform.ma.dao.ARejectReasonMasterHisMapper">
+    <insert id="bathInsert" parameterType="com.daikuan.platform.ma.pojo.ARejectReasonMasterHisEntity">
+        insert into a_reject_reason_master_his (
+        id, reason_id, type, version,
+        message,
+        cause_message,simple_reason, status,
+        create_at,update_at
+        )
+        values
+        <foreach item="item" index="index" collection="rejectReasonMasterHisList" separator=",">
+            (
+            #{item.id},#{item.reasonId},
+            #{item.type},#{item.version},
+            #{item.message},
+            #{item.causeMessage},
+            #{item.simpleReason},
+            #{item.status},
+            #{item.createAt},
+            #{item.updateAt}
+            )
+        </foreach>
+    </insert>
+</mapper>

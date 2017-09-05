@@ -9,7 +9,17 @@ import redis.clients.jedis.JedisPoolConfig;
 public class JedisDemo {
 
     public static void main(String[] args) {
-        clearMA();
+        listMA生产();
+//        clearMA();
+    }
+    
+    static void listMA生产(){
+        try(Jedis jedis = new Jedis("180.101.195.217", 5004);){
+            jedis.auth("daikuanwang_webserver");
+            jedis.select(0);
+            Set<String> set = jedis.keys("ma_*");
+            set.forEach(System.out::println);
+        }
     }
     
     static void clearMA(){

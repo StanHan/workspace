@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daikuan.platform.ma.dao.AUserProductAuditMapper">
+    <sql id="tableName">a_user_product_audit</sql>
+    <resultMap id="BaseResultMap" type="com.daikuan.platform.ma.pojo.AUserProductAuditEntity">
+        <!-- -->
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="apply_id" jdbcType="BIGINT" property="applyId" />
+        <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+        <result column="mobile_no" jdbcType="VARCHAR" property="mobileNo" />
+        <result column="home_province" jdbcType="VARCHAR" property="homeProvince" />
+        <result column="home_city" jdbcType="VARCHAR" property="homeCity" />
+        <result column="home_addr" jdbcType="VARCHAR" property="homeAddr" />
+        <result column="home_district" jdbcType="VARCHAR" property="homeDistrict" />
+        <result column="job_unit" jdbcType="VARCHAR" property="jobUnit" />
+        <result column="unit_province" jdbcType="VARCHAR" property="unitProvince" />
+        <result column="unit_city" jdbcType="VARCHAR" property="unitCity" />
+        <result column="unit_addr" jdbcType="VARCHAR" property="unitAddr" />
+        <result column="units_district" jdbcType="VARCHAR" property="unitsDistrict" />
+        <result column="unit_tel_area" jdbcType="VARCHAR" property="unitTelArea" />
+        <result column="unit_tel_no" jdbcType="VARCHAR" property="unitTelNo" />
+        <result column="unit_tel_ext" jdbcType="VARCHAR" property="unitTelExt" />
+        <result column="rela_family" jdbcType="VARCHAR" property="relaFamily" />
+        <result column="rela_family_tel" jdbcType="VARCHAR" property="relaFamilyTel" />
+        <result column="rela_colleague" jdbcType="VARCHAR" property="relaColleague" />
+        <result column="rela_colleague_tel" jdbcType="VARCHAR" property="relaColleagueTel" />
+        <result column="rela_friend" jdbcType="VARCHAR" property="relaFriend" />
+        <result column="rela_friend_tel" jdbcType="VARCHAR" property="relaFriendTel" />
+        <result column="photo_front" jdbcType="VARCHAR" property="photoFront" />
+        <result column="photo_back" jdbcType="VARCHAR" property="photoBack" />
+        <result column="photo_real_time" jdbcType="VARCHAR" property="photoRealTime" />
+        <result column="video" jdbcType="VARCHAR" property="video" />
+        <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+        <result column="Apply_at" jdbcType="TIMESTAMP" property="applyAt" />
+        <result column="audit_type" jdbcType="TINYINT" property="auditType" />
+        <result column="credit_type" jdbcType="TINYINT" property="creditType" />
+
+        <result column="face_score_icon" jdbcType="TINYINT" property="faceScoreIcon" />
+        <result column="face_score_video" jdbcType="TINYINT" property="faceScoreVideo" />
+
+        <result column="product_id" jdbcType="INTEGER" property="productId" />
+        <result column="ic_emblem_nationality" jdbcType="VARCHAR" property="icEmblemNationality" />
+        <result column="ic_emblem_type" jdbcType="VARCHAR" property="icEmblemType" />
+        <result column="ic_emblem_issuer" jdbcType="VARCHAR" property="icEmblemIssuer" />
+        <result column="ic_emblem_valid_start" jdbcType="CHAR" property="icEmblemValidStart" />
+        <result column="ic_emblem_valid_end" jdbcType="CHAR" property="icEmblemValidEnd" />
+        <result column="ic_portrait_name" jdbcType="VARCHAR" property="icPortraitName" />
+        <result column="ic_portrait_gender" jdbcType="TINYINT" property="icPortraitGender" />
+        <result column="ic_portrait_ethnicity" jdbcType="TINYINT" property="icPortraitEthnicity" />
+        <result column="ic_portrait_birthday" jdbcType="CHAR" property="icPortraitBirthday" />
+        <result column="ic_portrait_address" jdbcType="VARCHAR" property="icPortraitAddress" />
+        <result column="ic_portrait_no" jdbcType="VARCHAR" property="icPortraitNo" />
+        <result column="Apply_Times" jdbcType="TINYINT" property="applyTimes" />
+        <result column="Send_times" jdbcType="TINYINT" property="sendTimes" />
+        <result column="old_boc" jdbcType="TINYINT" property="oldBoc" />
+        <result column="old_bos" jdbcType="TINYINT" property="oldBos" />
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+        <result column="ic_Portrait_Ocr_Pass" jdbcType="TINYINT" property="icPortraitOcrPass" />
+        <result column="ftp_config_json" jdbcType="VARCHAR" property="ftpConfigJson" />
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!-- -->
+        id, user_id, apply_id, id_no, customer_name, mobile_no,
+        home_province, home_city,
+        home_addr, home_district, job_unit, unit_province, unit_city,
+        unit_addr,
+        units_district,
+        unit_tel_area, unit_tel_no, unit_tel_ext, rela_family, rela_family_tel,
+        rela_colleague,
+        rela_colleague_tel,
+        rela_friend, rela_friend_tel, photo_front, photo_back,
+        photo_real_time,
+        video, group_name, Apply_at, audit_type,
+        credit_type,
+        face_score_icon, face_score_video,
+        product_id, ic_emblem_nationality, ic_emblem_type, ic_emblem_issuer,
+        ic_emblem_valid_start,
+        ic_emblem_valid_end, ic_portrait_name, ic_portrait_gender, ic_portrait_ethnicity,
+        ic_portrait_birthday, ic_portrait_address, ic_portrait_no,
+        Apply_Times, Send_times,
+        old_boc, old_bos, create_at, update_at, ic_Portrait_Ocr_Pass, ftp_config_json
+    </sql>
+
+    <sql id="Base_Where">
+        <trim prefix="where" prefixOverrides="AND |OR ">
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="applyId != null">
+                and apply_id = #{applyId,jdbcType=BIGINT}
+            </if>
+            <if test="idNo != null">
+                and id_no = #{idNo,jdbcType=VARCHAR}
+            </if>
+            <if test="customerName != null">
+                and customer_name = #{customerName,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileNo != null">
+                and mobile_no = #{mobileNo,jdbcType=VARCHAR}
+            </if>
+            <if test="homeProvince != null">
+                and home_province = #{homeProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="homeCity != null">
+                and home_city = #{homeCity,jdbcType=VARCHAR}
+            </if>
+            <if test="homeAddr != null">
+                and home_addr = #{homeAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="homeDistrict != null">
+                and home_district = #{homeDistrict,jdbcType=VARCHAR}
+            </if>
+            <if test="jobUnit != null">
+                and job_unit = #{jobUnit,jdbcType=VARCHAR}
+            </if>
+            <if test="unitProvince != null">
+                and unit_province = #{unitProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="unitCity != null">
+                and unit_city = #{unitCity,jdbcType=VARCHAR}
+            </if>
+            <if test="unitAddr != null">
+                and unit_addr = #{unitAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="unitsDistrict != null">
+                and units_district = #{unitsDistrict,jdbcType=VARCHAR}
+            </if>
+            <if test="unitTelArea != null">
+                and unit_tel_area = #{unitTelArea,jdbcType=VARCHAR}
+            </if>
+            <if test="unitTelNo != null">
+                and unit_tel_no = #{unitTelNo,jdbcType=VARCHAR}
+            </if>
+            <if test="unitTelExt != null">
+                and unit_tel_ext = #{unitTelExt,jdbcType=VARCHAR}
+            </if>
+            <if test="relaFamily != null">
+                and rela_family = #{relaFamily,jdbcType=VARCHAR}
+            </if>
+            <if test="relaFamilyTel != null">
+                and rela_family_tel = #{relaFamilyTel,jdbcType=VARCHAR}
+            </if>
+            <if test="relaColleague != null">
+                and rela_colleague = #{relaColleague,jdbcType=VARCHAR}
+            </if>
+            <if test="relaColleagueTel != null">
+                and rela_colleague_tel = #{relaColleagueTel,jdbcType=VARCHAR}
+            </if>
+            <if test="relaFriend != null">
+                and rela_friend = #{relaFriend,jdbcType=VARCHAR}
+            </if>
+            <if test="relaFriendTel != null">
+                and rela_friend_tel = #{relaFriendTel,jdbcType=VARCHAR}
+            </if>
+            <if test="photoFront != null">
+                and photo_front = #{photoFront,jdbcType=VARCHAR}
+            </if>
+            <if test="photoBack != null">
+                and photo_back = #{photoBack,jdbcType=VARCHAR}
+            </if>
+            <if test="photoRealTime != null">
+                and photo_real_time = #{photoRealTime,jdbcType=VARCHAR}
+            </if>
+            <if test="video != null">
+                and video = #{video,jdbcType=VARCHAR}
+            </if>
+            <if test="createAt != null">
+                and create_at = #{createAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateAt != null">
+                and update_at = #{updateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="applyAt != null">
+                and Apply_at = #{applyAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="auditType != null">
+                and audit_type = #{auditType,jdbcType=SMALLINT}
+            </if>
+            <if test="creditType != null">
+                and credit_type = #{creditType,jdbcType=BIT}
+            </if>
+            <if test="faceScoreIcon != null">
+                and face_score_icon = #{faceScoreIcon,jdbcType=INTEGER}
+            </if>
+            <if test="faceScoreVideo != null">
+                and face_score_video = #{faceScoreVideo,jdbcType=INTEGER}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId,jdbcType=INTEGER}
+            </if>
+            <if test="icEmblemNationality != null">
+                and ic_emblem_nationality = #{icEmblemNationality,jdbcType=VARCHAR}
+            </if>
+            <if test="icEmblemType != null">
+                and ic_emblem_type = #{icEmblemType,jdbcType=VARCHAR}
+            </if>
+            <if test="icEmblemIssuer != null">
+                and ic_emblem_issuer = #{icEmblemIssuer,jdbcType=VARCHAR}
+            </if>
+            <if test="icEmblemValidStart != null">
+                and ic_emblem_valid_start = #{icEmblemValidStart,jdbcType=CHAR}
+            </if>
+            <if test="icEmblemValidEnd != null">
+                and ic_emblem_valid_end = #{icEmblemValidEnd,jdbcType=CHAR}
+            </if>
+            <if test="icPortraitName != null">
+                and ic_portrait_name = #{icPortraitName,jdbcType=VARCHAR}
+            </if>
+            <if test="icPortraitGender != null">
+                and ic_portrait_gender = #{icPortraitGender,jdbcType=VARCHAR}
+            </if>
+            <if test="icPortraitEthnicity != null">
+                and ic_portrait_ethnicity = #{icPortraitEthnicity,jdbcType=VARCHAR}
+            </if>
+            <if test="icPortraitBirthday != null">
+                and ic_portrait_birthday = #{icPortraitBirthday,jdbcType=VARCHAR}
+            </if>
+            <if test="icPortraitAddress != null">
+                and ic_portrait_address = #{icPortraitAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="icPortraitNo != null">
+                and ic_portrait_no = #{icPortraitNo,jdbcType=VARCHAR}
+            </if>
+            <if test="applyTimes != null">
+                and Apply_Times = #{applyTimes,jdbcType=SMALLINT}
+            </if>
+            <if test="sendTimes != null">
+                and Send_times = #{sendTimes,jdbcType=SMALLINT}
+            </if>
+            <if test="oldBoc != null">
+                and old_boc = #{oldBoc,jdbcType=INTEGER}
+            </if>
+            <if test="oldBos != null">
+                and old_bos = #{oldBos,jdbcType=INTEGER}
+            </if>
+            <if test="icPortraitOcrPass != null">
+                and ic_Portrait_Ocr_Pass = #{icPortraitOcrPass,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from a_user_product_audit
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="queryByApplyId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from a_user_product_audit
+        where apply_id = #{applyId,jdbcType=BIGINT}
+    </select>
+    <select id="selectIdByVo" resultType="java.lang.Long">
+        select id
+        from a_user_product_audit
+        <!-- <include refid="Base_Where"/> -->
+        <trim prefix="where" prefixOverrides="AND |OR ">
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId,jdbcType=INTEGER}
+            </if>
+        </trim>
+        LIMIT #{offset},#{limit}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from a_user_product_audit
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByApplyId" parameterType="java.lang.Long">
+        delete from a_user_product_audit
+        where apply_id = #{applyId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditEntity">
+        <!-- -->
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into a_user_product_audit (user_id, apply_id,
+        id_no, customer_name, mobile_no,
+        home_province, home_city, home_addr,
+        home_district,
+        job_unit, unit_province,
+        unit_city, unit_addr, units_district,
+        unit_tel_area, unit_tel_no, unit_tel_ext,
+        rela_family, rela_family_tel,
+        rela_colleague,
+        rela_colleague_tel, rela_friend, rela_friend_tel,
+        photo_front, photo_back, photo_real_time,
+        video, group_name,
+        Apply_at,
+        audit_type, credit_type, face_score_icon, face_score_video,
+        product_id, ic_emblem_nationality, ic_emblem_type,
+        ic_emblem_issuer,
+        ic_emblem_valid_start, ic_emblem_valid_end,
+        ic_portrait_name, ic_portrait_gender, ic_portrait_ethnicity,
+        ic_portrait_birthday,
+        ic_portrait_address, ic_portrait_no,
+        Apply_Times, Send_times, old_boc,
+        old_bos, create_at, update_at,ic_Portrait_Ocr_Pass, ftp_config_json
+        )
+        values
+        (#{userId,jdbcType=BIGINT}, #{applyId,jdbcType=BIGINT},
+        #{idNo,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR},
+        #{mobileNo,jdbcType=VARCHAR},
+        #{homeProvince,jdbcType=VARCHAR}, #{homeCity,jdbcType=VARCHAR}, #{homeAddr,jdbcType=VARCHAR},
+        #{homeDistrict,jdbcType=VARCHAR}, #{jobUnit,jdbcType=VARCHAR},
+        #{unitProvince,jdbcType=VARCHAR},
+        #{unitCity,jdbcType=VARCHAR},
+        #{unitAddr,jdbcType=VARCHAR}, #{unitsDistrict,jdbcType=VARCHAR},
+        #{unitTelArea,jdbcType=VARCHAR}, #{unitTelNo,jdbcType=VARCHAR},
+        #{unitTelExt,jdbcType=VARCHAR},
+        #{relaFamily,jdbcType=VARCHAR}, #{relaFamilyTel,jdbcType=VARCHAR}, #{relaColleague,jdbcType=VARCHAR},
+        #{relaColleagueTel,jdbcType=VARCHAR},
+        #{relaFriend,jdbcType=VARCHAR},
+        #{relaFriendTel,jdbcType=VARCHAR},
+        #{photoFront,jdbcType=VARCHAR},
+        #{photoBack,jdbcType=VARCHAR},
+        #{photoRealTime,jdbcType=VARCHAR},
+        #{video,jdbcType=VARCHAR},  #{groupName,jdbcType=VARCHAR},
+        #{applyAt,jdbcType=TIMESTAMP},
+        #{auditType,jdbcType=TINYINT},
+        #{creditType,jdbcType=TINYINT}, #{faceScoreIcon,jdbcType=TINYINT},
+        #{faceScoreVideo,jdbcType=TINYINT},
+        #{productId,jdbcType=INTEGER},
+        #{icEmblemNationality,jdbcType=VARCHAR},
+        #{icEmblemType,jdbcType=VARCHAR},
+        #{icEmblemIssuer,jdbcType=VARCHAR},
+        #{icEmblemValidStart,jdbcType=CHAR},
+        #{icEmblemValidEnd,jdbcType=CHAR},
+        #{icPortraitName,jdbcType=VARCHAR},
+        #{icPortraitGender,jdbcType=TINYINT},
+        #{icPortraitEthnicity,jdbcType=TINYINT},
+        #{icPortraitBirthday,jdbcType=CHAR},
+        #{icPortraitAddress,jdbcType=VARCHAR},
+        #{icPortraitNo,jdbcType=VARCHAR},
+        #{applyTimes,jdbcType=TINYINT}, #{sendTimes,jdbcType=TINYINT},
+        #{oldBoc,jdbcType=TINYINT},
+        #{oldBos,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP},
+        #{icPortraitOcrPass,jdbcType=TINYINT},
+        #{ftpConfigJson,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditEntity">
+        <!-- -->
+        insert into a_user_product_audit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="applyId != null">
+                apply_id,
+            </if>
+            <if test="idNo != null">
+                id_no,
+            </if>
+            <if test="customerName != null">
+                customer_name,
+            </if>
+            <if test="mobileNo != null">
+                mobile_no,
+            </if>
+            <if test="homeProvince != null">
+                home_province,
+            </if>
+            <if test="homeCity != null">
+                home_city,
+            </if>
+            <if test="homeAddr != null">
+                home_addr,
+            </if>
+            <if test="homeDistrict != null">
+                home_district,
+            </if>
+            <if test="jobUnit != null">
+                job_unit,
+            </if>
+            <if test="unitProvince != null">
+                unit_province,
+            </if>
+            <if test="unitCity != null">
+                unit_city,
+            </if>
+            <if test="unitAddr != null">
+                unit_addr,
+            </if>
+            <if test="unitsDistrict != null">
+                units_district,
+            </if>
+            <if test="unitTelArea != null">
+                unit_tel_area,
+            </if>
+            <if test="unitTelNo != null">
+                unit_tel_no,
+            </if>
+            <if test="unitTelExt != null">
+                unit_tel_ext,
+            </if>
+            <if test="relaFamily != null">
+                rela_family,
+            </if>
+            <if test="relaFamilyTel != null">
+                rela_family_tel,
+            </if>
+            <if test="relaColleague != null">
+                rela_colleague,
+            </if>
+            <if test="relaColleagueTel != null">
+                rela_colleague_tel,
+            </if>
+            <if test="relaFriend != null">
+                rela_friend,
+            </if>
+            <if test="relaFriendTel != null">
+                rela_friend_tel,
+            </if>
+            <if test="photoFront != null">
+                photo_front,
+            </if>
+            <if test="photoBack != null">
+                photo_back,
+            </if>
+            <if test="photoRealTime != null">
+                photo_real_time,
+            </if>
+            <if test="video != null">
+                video,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="applyAt != null">
+                Apply_at,
+            </if>
+            <if test="auditType != null">
+                audit_type,
+            </if>
+            <if test="creditType != null">
+                credit_type,
+            </if>
+            <if test="faceScoreIcon != null">
+                face_score_icon,
+            </if>
+            <if test="faceScoreVideo != null">
+                face_score_video,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="icEmblemNationality != null">
+                ic_emblem_nationality,
+            </if>
+            <if test="icEmblemType != null">
+                ic_emblem_type,
+            </if>
+            <if test="icEmblemIssuer != null">
+                ic_emblem_issuer,
+            </if>
+            <if test="icEmblemValidStart != null">
+                ic_emblem_valid_start,
+            </if>
+            <if test="icEmblemValidEnd != null">
+                ic_emblem_valid_end,
+            </if>
+            <if test="icPortraitName != null">
+                ic_portrait_name,
+            </if>
+            <if test="icPortraitGender != null">
+                ic_portrait_gender,
+            </if>
+            <if test="icPortraitEthnicity != null">
+                ic_portrait_ethnicity,
+            </if>
+            <if test="icPortraitBirthday != null">
+                ic_portrait_birthday,
+            </if>
+            <if test="icPortraitAddress != null">
+                ic_portrait_address,
+            </if>
+            <if test="icPortraitNo != null">
+                ic_portrait_no,
+            </if>
+            <if test="applyTimes != null">
+                Apply_Times,
+            </if>
+            <if test="sendTimes != null">
+                Send_times,
+            </if>
+            <if test="oldBoc != null">
+                old_boc,
+            </if>
+            <if test="oldBos != null">
+                old_bos,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+            <if test="icPortraitOcrPass != null">
+                ic_Portrait_Ocr_Pass,
+            </if>
+            <if test="ftpConfigJson != null">
+                ftp_config_json,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="applyId != null">
+                #{applyId,jdbcType=BIGINT},
+            </if>
+            <if test="idNo != null">
+                #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNo != null">
+                #{mobileNo,jdbcType=VARCHAR},
+            </if>
+            <if test="homeProvince != null">
+                #{homeProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="homeCity != null">
+                #{homeCity,jdbcType=VARCHAR},
+            </if>
+            <if test="homeAddr != null">
+                #{homeAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="homeDistrict != null">
+                #{homeDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="jobUnit != null">
+                #{jobUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="unitProvince != null">
+                #{unitProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="unitCity != null">
+                #{unitCity,jdbcType=VARCHAR},
+            </if>
+            <if test="unitAddr != null">
+                #{unitAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="unitsDistrict != null">
+                #{unitsDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="unitTelArea != null">
+                #{unitTelArea,jdbcType=VARCHAR},
+            </if>
+            <if test="unitTelNo != null">
+                #{unitTelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="unitTelExt != null">
+                #{unitTelExt,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFamily != null">
+                #{relaFamily,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFamilyTel != null">
+                #{relaFamilyTel,jdbcType=VARCHAR},
+            </if>
+            <if test="relaColleague != null">
+                #{relaColleague,jdbcType=VARCHAR},
+            </if>
+            <if test="relaColleagueTel != null">
+                #{relaColleagueTel,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFriend != null">
+                #{relaFriend,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFriendTel != null">
+                #{relaFriendTel,jdbcType=VARCHAR},
+            </if>
+            <if test="photoFront != null">
+                #{photoFront,jdbcType=VARCHAR},
+            </if>
+            <if test="photoBack != null">
+                #{photoBack,jdbcType=VARCHAR},
+            </if>
+            <if test="photoRealTime != null">
+                #{photoRealTime,jdbcType=VARCHAR},
+            </if>
+            <if test="video != null">
+                #{video,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="applyAt != null">
+                #{applyAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditType != null">
+                #{auditType,jdbcType=TINYINT},
+            </if>
+            <if test="creditType != null">
+                #{creditType,jdbcType=TINYINT},
+            </if>
+            <if test="faceScoreIcon != null">
+                #{faceScoreIcon,jdbcType=TINYINT},
+            </if>
+            <if test="faceScoreVideo != null">
+                #{faceScoreVideo,jdbcType=TINYINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="icEmblemNationality != null">
+                #{icEmblemNationality,jdbcType=VARCHAR},
+            </if>
+            <if test="icEmblemType != null">
+                #{icEmblemType,jdbcType=VARCHAR},
+            </if>
+            <if test="icEmblemIssuer != null">
+                #{icEmblemIssuer,jdbcType=VARCHAR},
+            </if>
+            <if test="icEmblemValidStart != null">
+                #{icEmblemValidStart,jdbcType=CHAR},
+            </if>
+            <if test="icEmblemValidEnd != null">
+                #{icEmblemValidEnd,jdbcType=CHAR},
+            </if>
+            <if test="icPortraitName != null">
+                #{icPortraitName,jdbcType=VARCHAR},
+            </if>
+            <if test="icPortraitGender != null">
+                #{icPortraitGender,jdbcType=TINYINT},
+            </if>
+            <if test="icPortraitEthnicity != null">
+                #{icPortraitEthnicity,jdbcType=TINYINT},
+            </if>
+            <if test="icPortraitBirthday != null">
+                #{icPortraitBirthday,jdbcType=CHAR},
+            </if>
+            <if test="icPortraitAddress != null">
+                #{icPortraitAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="icPortraitNo != null">
+                #{icPortraitNo,jdbcType=VARCHAR},
+            </if>
+            <if test="applyTimes != null">
+                #{applyTimes,jdbcType=TINYINT},
+            </if>
+            <if test="sendTimes != null">
+                #{sendTimes,jdbcType=TINYINT},
+            </if>
+            <if test="oldBoc != null">
+                #{oldBoc,jdbcType=TINYINT},
+            </if>
+            <if test="oldBos != null">
+                #{oldBos,jdbcType=TINYINT},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="icPortraitOcrPass != null">
+                ic_Portrait_Ocr_Pass = #{icPortraitOcrPass,jdbcType=TINYINT},
+            </if>
+            <if test="ftpConfigJson != null">
+                ftp_config_json = #{ftpConfigJson,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditEntity">
+        <!-- -->
+        update a_user_product_audit
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="applyId != null">
+                apply_id = #{applyId,jdbcType=BIGINT},
+            </if>
+            <if test="idNo != null">
+                id_no = #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNo != null">
+                mobile_no = #{mobileNo,jdbcType=VARCHAR},
+            </if>
+            <if test="homeProvince != null">
+                home_province = #{homeProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="homeCity != null">
+                home_city = #{homeCity,jdbcType=VARCHAR},
+            </if>
+            <if test="homeAddr != null">
+                home_addr = #{homeAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="homeDistrict != null">
+                home_district = #{homeDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="jobUnit != null">
+                job_unit = #{jobUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="unitProvince != null">
+                unit_province = #{unitProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="unitCity != null">
+                unit_city = #{unitCity,jdbcType=VARCHAR},
+            </if>
+            <if test="unitAddr != null">
+                unit_addr = #{unitAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="unitsDistrict != null">
+                units_district = #{unitsDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="unitTelArea != null">
+                unit_tel_area = #{unitTelArea,jdbcType=VARCHAR},
+            </if>
+            <if test="unitTelNo != null">
+                unit_tel_no = #{unitTelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="unitTelExt != null">
+                unit_tel_ext = #{unitTelExt,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFamily != null">
+                rela_family = #{relaFamily,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFamilyTel != null">
+                rela_family_tel = #{relaFamilyTel,jdbcType=VARCHAR},
+            </if>
+            <if test="relaColleague != null">
+                rela_colleague = #{relaColleague,jdbcType=VARCHAR},
+            </if>
+            <if test="relaColleagueTel != null">
+                rela_colleague_tel = #{relaColleagueTel,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFriend != null">
+                rela_friend = #{relaFriend,jdbcType=VARCHAR},
+            </if>
+            <if test="relaFriendTel != null">
+                rela_friend_tel = #{relaFriendTel,jdbcType=VARCHAR},
+            </if>
+            <if test="photoFront != null">
+                photo_front = #{photoFront,jdbcType=VARCHAR},
+            </if>
+            <if test="photoBack != null">
+                photo_back = #{photoBack,jdbcType=VARCHAR},
+            </if>
+            <if test="photoRealTime != null">
+                photo_real_time = #{photoRealTime,jdbcType=VARCHAR},
+            </if>
+            <if test="video != null">
+                video = #{video,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                groupName = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="applyAt != null">
+                Apply_at = #{applyAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditType != null">
+                audit_type = #{auditType,jdbcType=TINYINT},
+            </if>
+            <if test="creditType != null">
+                credit_type = #{creditType,jdbcType=TINYINT},
+            </if>
+            <if test="faceScoreIcon != null">
+                face_score_icon = #{faceScoreIcon,jdbcType=TINYINT},
+            </if>
+            <if test="faceScoreVideo != null">
+                face_score_video = #{faceScoreVideo,jdbcType=TINYINT},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="icEmblemNationality != null">
+                ic_emblem_nationality = #{icEmblemNationality,jdbcType=VARCHAR},
+            </if>
+            <if test="icEmblemType != null">
+                ic_emblem_type = #{icEmblemType,jdbcType=VARCHAR},
+            </if>
+            <if test="icEmblemIssuer != null">
+                ic_emblem_issuer = #{icEmblemIssuer,jdbcType=VARCHAR},
+            </if>
+            <if test="icEmblemValidStart != null">
+                ic_emblem_valid_start = #{icEmblemValidStart,jdbcType=CHAR},
+            </if>
+            <if test="icEmblemValidEnd != null">
+                ic_emblem_valid_end = #{icEmblemValidEnd,jdbcType=CHAR},
+            </if>
+            <if test="icPortraitName != null">
+                ic_portrait_name = #{icPortraitName,jdbcType=VARCHAR},
+            </if>
+            <if test="icPortraitGender != null">
+                ic_portrait_gender = #{icPortraitGender,jdbcType=TINYINT},
+            </if>
+            <if test="icPortraitEthnicity != null">
+                ic_portrait_ethnicity = #{icPortraitEthnicity,jdbcType=TINYINT},
+            </if>
+            <if test="icPortraitBirthday != null">
+                ic_portrait_birthday = #{icPortraitBirthday,jdbcType=CHAR},
+            </if>
+            <if test="icPortraitAddress != null">
+                ic_portrait_address = #{icPortraitAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="icPortraitNo != null">
+                ic_portrait_no = #{icPortraitNo,jdbcType=VARCHAR},
+            </if>
+            <if test="applyTimes != null">
+                Apply_Times = #{applyTimes,jdbcType=TINYINT},
+            </if>
+            <if test="sendTimes != null">
+                Send_times = #{sendTimes,jdbcType=TINYINT},
+            </if>
+            <if test="oldBoc != null">
+                old_boc = #{oldBoc,jdbcType=TINYINT},
+            </if>
+            <if test="oldBos != null">
+                old_bos = #{oldBos,jdbcType=TINYINT},
+            </if>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="icPortraitOcrPass != null">
+                ic_Portrait_Ocr_Pass = #{icPortraitOcrPass,jdbcType=TINYINT},
+            </if>
+            <if test="ftpConfigJson != null">
+                ftp_config_json = #{ftpConfigJson,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.daikuan.platform.ma.pojo.AUserProductAuditEntity">
+        <!-- -->
+        update a_user_product_audit
+        set user_id = #{userId,jdbcType=BIGINT},
+        apply_id = #{applyId,jdbcType=BIGINT},
+        id_no = #{idNo,jdbcType=VARCHAR},
+        customer_name = #{customerName,jdbcType=VARCHAR},
+        mobile_no = #{mobileNo,jdbcType=VARCHAR},
+        home_province = #{homeProvince,jdbcType=VARCHAR},
+        home_city = #{homeCity,jdbcType=VARCHAR},
+        home_addr = #{homeAddr,jdbcType=VARCHAR},
+        home_district = #{homeDistrict,jdbcType=VARCHAR},
+        job_unit =
+        #{jobUnit,jdbcType=VARCHAR},
+        unit_province = #{unitProvince,jdbcType=VARCHAR},
+        unit_city = #{unitCity,jdbcType=VARCHAR},
+        unit_addr =
+        #{unitAddr,jdbcType=VARCHAR},
+        units_district = #{unitsDistrict,jdbcType=VARCHAR},
+        unit_tel_area = #{unitTelArea,jdbcType=VARCHAR},
+        unit_tel_no =
+        #{unitTelNo,jdbcType=VARCHAR},
+        unit_tel_ext = #{unitTelExt,jdbcType=VARCHAR},
+        rela_family = #{relaFamily,jdbcType=VARCHAR},
+        rela_family_tel =
+        #{relaFamilyTel,jdbcType=VARCHAR},
+        rela_colleague = #{relaColleague,jdbcType=VARCHAR},
+        rela_colleague_tel =
+        #{relaColleagueTel,jdbcType=VARCHAR},
+        rela_friend = #{relaFriend,jdbcType=VARCHAR},
+        rela_friend_tel = #{relaFriendTel,jdbcType=VARCHAR},
+        photo_front = #{photoFront,jdbcType=VARCHAR},
+        photo_back = #{photoBack,jdbcType=VARCHAR},
+        photo_real_time = #{photoRealTime,jdbcType=VARCHAR},
+        video = #{video,jdbcType=VARCHAR},
+        group_name = #{groupName,jdbcType=VARCHAR},
+        Apply_at = #{applyAt,jdbcType=TIMESTAMP},
+        audit_type = #{auditType,jdbcType=TINYINT},
+        credit_type =
+        #{creditType,jdbcType=TINYINT},
+        face_score_icon = #{faceScoreIcon,jdbcType=TINYINT},
+        face_score_video = #{faceScoreVideo,jdbcType=TINYINT},
+        product_id = #{productId,jdbcType=INTEGER},
+        ic_emblem_nationality = #{icEmblemNationality,jdbcType=VARCHAR},
+        ic_emblem_type =
+        #{icEmblemType,jdbcType=VARCHAR},
+        ic_emblem_issuer = #{icEmblemIssuer,jdbcType=VARCHAR},
+        ic_emblem_valid_start =
+        #{icEmblemValidStart,jdbcType=CHAR},
+        ic_emblem_valid_end = #{icEmblemValidEnd,jdbcType=CHAR},
+        ic_portrait_name =
+        #{icPortraitName,jdbcType=VARCHAR},
+        ic_portrait_gender = #{icPortraitGender,jdbcType=TINYINT},
+        ic_portrait_ethnicity =
+        #{icPortraitEthnicity,jdbcType=TINYINT},
+        ic_portrait_birthday = #{icPortraitBirthday,jdbcType=CHAR},
+        ic_portrait_address =
+        #{icPortraitAddress,jdbcType=VARCHAR},
+        ic_portrait_no = #{icPortraitNo,jdbcType=VARCHAR},
+        Apply_Times = #{applyTimes,jdbcType=TINYINT},
+        Send_times = #{sendTimes,jdbcType=TINYINT},
+        old_boc = #{oldBoc,jdbcType=TINYINT},
+        old_bos = #{oldBos,jdbcType=TINYINT},
+        create_at =
+        #{createAt,jdbcType=TIMESTAMP},
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+        ic_Portrait_Ocr_Pass = #{icPortraitOcrPass,jdbcType=TINYINT},
+        ftp_config_json = #{ftpConfigJson,jdbcType=VARCHAR}
+        where id
+        = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryLastRecord" parameterType="Long" resultType="AUserProductAuditEntity">
+        SELECT * FROM
+        <include refid="tableName" />
+        WHERE user_id = #{userId} ORDER BY create_at DESC LIMIT 0,1;
+    </select>
+</mapper>

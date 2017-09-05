@@ -45,8 +45,9 @@ public class CollectionDemo {
         Collection collection = null;
         // testTreeSet();
         // testHashSet();
-        demoArrays(1, 2, 3);
+//        demoArrays(1, 2, 3);
 //        java7Demo();
+        listDemo();
     }
     
     static void demoArrays(int... ids) {
@@ -69,7 +70,11 @@ public class CollectionDemo {
         list4.forEach(System.out::println);
     }
 
-    static void java7Demo(){
+    static void listDemo(){
+        List<String> list = null;
+        for (String string : list) {
+            System.out.println(string);
+        }
     }
 
     static void demoSearch(int a) {
