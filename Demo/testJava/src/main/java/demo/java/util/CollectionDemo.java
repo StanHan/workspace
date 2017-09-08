@@ -45,9 +45,9 @@ public class CollectionDemo {
         Collection collection = null;
         // testTreeSet();
         // testHashSet();
-//        demoArrays(1, 2, 3);
+        demoArrays(1, 2, 3);
 //        java7Demo();
-        listDemo();
+//        listDemo();
     }
     
     static void demoArrays(int... ids) {
@@ -62,9 +62,13 @@ public class CollectionDemo {
         List<int[]> list2 = Arrays.asList(array2);
         list2.forEach(System.out::println);
         System.out.println("包装类型的数组，数组的每个对象作为参数");
+        
         Integer[] array3 = {1,2,3,4,5};
         List<Integer> list3 = Arrays.asList(array3);
         list3.forEach(System.out::println);
+        String tmp = Arrays.toString(array3);
+        System.out.println(tmp);
+        System.out.println(tmp.substring(1,tmp.length()-1));
         
         List<Integer> list4 = Arrays.asList(1,2,3);
         list4.forEach(System.out::println);

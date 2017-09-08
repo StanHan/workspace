@@ -2,6 +2,8 @@ package demo.java.util;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,22 +13,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.hadoop.hbase.util.Bytes;
-
 public class StringUtil {
 
 	public static void main(String[] args) {
-		String s = "a,b,c,";
-		System.out.println(s.substring(0,s.length() -1));
-		String a = null;
-//		a.getClass();
-		Number n = 0; 
-		Class<? extends Number> c = n.getClass(); 
-		System.out.println(c);
-		System.out.println(a.matches("\\d"));
-//		JPasswordField a = null;
-//		a.getPassword();
-		
+	    String refuseId = "47,53,55,56,112,";
+	    String[] array = refuseId.split(",");
+        List<Integer> refuseIdList = new ArrayList<>(array.length);
+        for (String string : array) {
+            refuseIdList.add(Integer.valueOf(string));
+        }
+        System.out.println(Arrays.toString(array));
+        refuseIdList.forEach(System.out::print);
 	}
 
 	/**

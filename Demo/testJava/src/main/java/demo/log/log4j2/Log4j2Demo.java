@@ -31,11 +31,11 @@ import org.apache.logging.log4j.Logger;
  */
 public class Log4j2Demo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         demo();
     }
 
-    static void demo() {
+    static void demo() throws InterruptedException {
         File file = new File("E:/Stan/Demo/testJava/src/main/java/demo/log/log4j2/log4j2.xml");
         try (FileInputStream fileInputStream = new FileInputStream(file);
                 BufferedInputStream in = new BufferedInputStream(fileInputStream)) {
@@ -43,13 +43,16 @@ public class Log4j2Demo {
             Configurator.initialize(null, source);
 
             Logger logger = LogManager.getLogger(Log4j2Demo.class);
-            logger.trace("-------------------------------trace level");
-            logger.debug("-------------------------------debug level");
-            logger.info("-------------------------------info level");
-            logger.warn("-------------------------------warn level");
-            logger.error("-------------------------------error level");
-            logger.fatal("-------------------------------fatal level");
-            logger.info("hello {}.", "world");
+            while(true) {
+                logger.trace("-------------------------------trace level");
+                logger.debug("-------------------------------debug level");
+                logger.info("-------------------------------info level");
+                logger.warn("-------------------------------warn level");
+                logger.error("-------------------------------error level");
+                logger.fatal("-------------------------------fatal level");
+                logger.info("hello {}.", "world");
+                Thread.sleep(2000);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

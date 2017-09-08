@@ -12,9 +12,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ThreadPoolTest {
 
 	public static void main(String[] args) {
-//		testScheduledThreadPool();
+		testScheduledThreadPool();
+	   
+	}
+	
+	static void demo() {
 	    ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-	    singleThreadExecutor.execute(new Runnable() {
+        singleThreadExecutor.execute(new Runnable() {
             
             @Override
             public void run() {
@@ -31,11 +35,14 @@ public class ThreadPoolTest {
                 }
             }
         });
-	    singleThreadExecutor.shutdown();
-	    System.out.println("over.");
+        singleThreadExecutor.shutdown();
+        System.out.println("over.");
 	}
 
-	public static void testScheduledThreadPool() {
+	/**
+	 * 如果抛出异常，则线程WAITING (parking)，该定时任务不会再被调度
+	 */
+	static void testScheduledThreadPool() {
 		/** 创建一个可安排在给定延迟后运行命令或者定期地执行的线程池。效果类似于Timer定时器 */
 		ScheduledExecutorService schedulePool = Executors.newScheduledThreadPool(2);
 		// 5秒后执行任务
@@ -43,14 +50,21 @@ public class ThreadPoolTest {
 			public void run() {
 				System.out.println(Thread.currentThread().getName()+"爆炸");
 			}
-		}, 5, TimeUnit.SECONDS);
+		}, 1, TimeUnit.SECONDS);
+		
+		
 		// 5秒后执行任务，以后每2秒执行一次
 		schedulePool.scheduleAtFixedRate(new Runnable() {
+		    int count = 0 ;
 			@Override
 			public void run() {
-				System.out.println(Thread.currentThread().getName()+"爆炸");
+			    count++;
+				System.out.println(Thread.currentThread().getName()+"爆炸 "+count);
+				if(count == 3) {//抛出异常，线程 WAITING (parking)
+				    throw new RuntimeException();
+				}
 			}
-		}, 5, 2, TimeUnit.SECONDS);
+		}, 1, 2, TimeUnit.SECONDS);
 		
 	}
 

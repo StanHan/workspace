@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- status用来指定log4j本身的打印日志的级别. -->
 <!-- monitorinterval用于指定log4j自动重新配置的监测间隔时间，单位是s,最小是5s. -->
-<Configuration status="debug" strict="true" name="XMLConfigTest" monitorInterval="300">
+<Configuration status="debug" strict="true" name="XMLConfigTest" monitorInterval="5">
 
   <Properties>
     <Property name="filename">testJava</Property>
@@ -53,17 +53,17 @@
       <DefaultRolloverStrategy max="20" />
     </RollingFile>
 
-    <RollingFile name="MangerInfoRollingFile" fileName="${logdir}/async-${filename}-info.log" filePattern="${logdir}/$${date:yyyy-MM}/async-${filename}-info-%d{MM-dd-yyyy}-%i.log.tar.gz">
+    <RollingFile name="MangerInfoRollingFile" fileName="${logdir}/${filename}-info.log" filePattern="${logdir}/$${date:yyyy-MM}/${filename}-info-%d{MM-dd-yyyy}-%i.log.tar.gz">
       <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
       <!--每日分割日志 -->
       <CronTriggeringPolicy schedule="0 0 0 1/1 * ? " />
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n" />
+      <PatternLayout pattern="%d [%t] %5p %c{8}:%L -%m%n" />
 
     </RollingFile>
 
     <RollingFile name="OtherRollingFile" fileName="${logdir}/${filename}.log" filePattern="${logdir}/$${date:yyyy-MM}/${filename}-%d{MM-dd-yyyy}-%i.log.tar.gz">
       <CronTriggeringPolicy schedule="0 0 0 1/1 * ? " />
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n" />
+      <PatternLayout pattern="%d [%t] %5p %c{8}:%L -%m%n" />
     </RollingFile>
   </Appenders>
 
@@ -73,22 +73,25 @@
     <!-- level:日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF. -->
     <Root level="DEBUG">
       <!-- AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender. -->
-      <AppenderRef ref="console" level="DEBUG" />
+<!--       <AppenderRef ref="console" level="DEBUG" /> -->
       <!-- <AppenderRef ref="OtherRollingFile" level="DEBUG" /> -->
     </Root>
     <!-- Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等 -->
     <!-- name:用来指定该Logger所适用的类或者类所在的包全路径,继承自Root节点. -->
-    <!-- AppenderRef：Logger的子节点，用来指定该日志输出到哪个Appender,如果没有指定，就会默认继承自Root.如果指定了，那么会在指定的这个Appender和Root的Appender中都会输出，此时我们可以设置Logger的additivity="false"只在自定义的Appender中进行输出。 -->
+
     <!--过滤掉spring和mybatis的一些无用的DEBUG信息 -->
     <logger name="org.springframework" level="INFO"></logger>
     <logger name="org.mybatis" level="INFO"></logger>
-    <AsyncLogger name="com.admin" level="INFO" includeLocation="true" additivity="false">
+
+    <!-- Logger的additivity="false" 只在自定义的Appender中进行输出。 -->
+    <AsyncLogger name="demo.log" level="INFO" includeLocation="true" additivity="false">
+      <!-- AppenderRef：Logger的子节点，用来指定该日志输出到哪个Appender,如果没有指定，就会默认继承自Root.如果指定了，那么会在指定的这个Appender和Root的Appender中都会输出， -->
       <AppenderRef ref="MangerInfoRollingFile" />
-      <AppenderRef ref="console" />
+<!--       <AppenderRef ref="console" /> -->
     </AsyncLogger>
-    <AsyncLogger name="com.daikuan.platform.mc" level="INFO" includeLocation="true" additivity="false">
-      <AppenderRef ref="MangerInfoRollingFile" />
-      <AppenderRef ref="console" />
+    <AsyncLogger name="demo.log" level="ERROR" includeLocation="true" additivity="false">
+      <AppenderRef ref="OtherRollingFile" />
+<!--       <AppenderRef ref="console" /> -->
     </AsyncLogger>
   </Loggers>
 

@@ -2,18 +2,56 @@
 <Configuration status="debug" strict="true" name="XMLConfigTest">
   <!--先定义所有的appender- -->
   <Appenders>
-    <Console name="console" target="SYSTEM_OUT">
+    <console name="console" target="SYSTEM_OUT">
       <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
-      <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
-      <PatternLayout pattern="%d [%t] %5p %c{1}:%L - %m%n" />
-    </Console>
+      <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+      <PatternLayout pattern="%d [%t] %5p %c{8}:%L - %m%n" />
+    </console>
   </Appenders>
 
   <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
   <Loggers>
-    <Root level="DEBUG">
+    <Root level="debug">
       <AppenderRef ref="console" />
     </Root>
+    <logger name="log4j.logger.noModule" level="fatal" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.org.mybatis.jpetstore" level="trace" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.com.opensymphony.xwork2" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.com.ibatis" level="trace" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.com.ibatis.common.jdbc.SimpleDataSource" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.com.ibatis.common.jdbc.ScriptRunner" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.org.mybatis" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql.Connection" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql.Statement" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql.PreparedStatement" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql.ResultSet" level="debug" additivity="false">
+      <appender-ref ref="console"/>
+    </logger>
   </Loggers>
-
 </Configuration>
