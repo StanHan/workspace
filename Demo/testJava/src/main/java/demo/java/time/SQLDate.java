@@ -1,4 +1,4 @@
-package demo.java.sql;
+package demo.java.time;
 
 import java.sql.Date;
 import java.text.ParseException;

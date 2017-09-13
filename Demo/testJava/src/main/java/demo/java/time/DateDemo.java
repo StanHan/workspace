@@ -1,4 +1,4 @@
-package demo.util;
+package demo.java.time;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,17 +25,29 @@ import java.util.Locale;
 //S	 Millisecond Number 
 //z	 Time zone General time zone 
 //Z	 Time zone RFC 822 time zone 
-public class DateUtil {
+public class DateDemo {
 	
 	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("",Locale.SIMPLIFIED_CHINESE); 
+	    testCalendar();
+	}
+	
+	static void testCalendar() {
+	    Calendar calendar = Calendar.getInstance();
+	    System.out.println(calendar.toString());
+	    System.out.println(calendar.getTime());
+	    calendar.set(Calendar.DAY_OF_MONTH,1);
+	    System.out.println(calendar.toString());
+	    System.out.println(calendar.getTime());
+	}
+	
+	static void demo1() throws ParseException {
+	    SimpleDateFormat sdf = new SimpleDateFormat("",Locale.SIMPLIFIED_CHINESE); 
+        sdf.applyPattern("yyyy年MM月dd日_HH时mm分ss秒"); 
 
-		sdf.applyPattern("yyyy年MM月dd日_HH时mm分ss秒"); 
-
-		Date date = sdf.parse("2006年07月01日_14时00分00秒"); 
-		System.out.println(date);
-		Date date2= parseDate(-2000, 6, 12, 13, 13, 13);
-		System.out.println(date2);
+        Date date = sdf.parse("2006年07月01日_14时00分00秒"); 
+        System.out.println(date);
+        Date date2= parseDate(2000, 6, 12, 13, 13, 13);
+        System.out.println(date2);
 	}
 
 	public final static long DAY_MS_RATE = 1000 * 60 * 60 * 24L;
@@ -358,7 +370,7 @@ public class DateUtil {
 	 */
 	public static double processMonthsFromNow(String dateString, String format) {
 		Date now = new Date();
-		Date date = DateUtil.toDate(dateString, format);
+		Date date = DateDemo.toDate(dateString, format);
 		long howlong = now.getTime() - date.getTime();// 毫秒
 		return howlong / (1000 * 60 * 60 * 24 * 30);
 	}
@@ -371,8 +383,8 @@ public class DateUtil {
 	 * @return
 	 */
 	public static double processMonths(String startDate, String endDate, String format) {
-		Date start_date = DateUtil.toDate(startDate, format);
-		Date end_date = DateUtil.toDate(endDate, format);
+		Date start_date = DateDemo.toDate(startDate, format);
+		Date end_date = DateDemo.toDate(endDate, format);
 		long howlong = end_date.getTime() - start_date.getTime();// 毫秒
 		return howlong / (1000 * 60 * 60 * 24 * 30);
 	}

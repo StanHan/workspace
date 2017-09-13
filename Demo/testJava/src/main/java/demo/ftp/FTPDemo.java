@@ -1,4 +1,4 @@
-package demo.java.io.ftp;
+package demo.ftp;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -15,12 +15,40 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPListParseEngine;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ApacheFtpDemo {
+/**
+ * FTP是一个比较特殊的服务，它占用了20和21两个端口，21是命令端口，20是数据端口。
+ * <p>
+ * 主动FTP过程大致如下：
+ * <ol>
+ * <li>1、客户端启用端口N（N>1024,因为1024之前为特殊端口，不能手动占用，把N当作客户端的命令端口）和端口N+1（客户端的数据端口），从端口N向服务器的21端口发送PORT命令，其中PORT命令包含客户端IP和数据端口
+ * <li>2、服务器接收到客户端的PORT命令后，并得知客户端用N+1端口监听数据。接着，服务器向客户端发送ACK应答（ACK与TCP通信中的连接握手一样）
+ * <li>3、服务器用20端口再向客户端的N+1端口发送数据请求
+ * <li>4、客户端向服务器端发送数据ACK应答
+ * </ol>
+ * 以上就是主动FTP的大致过程，但是数据请求的发起方是服务器，如果此时客户端的防火墙启用了高端端口的屏蔽的话，有可能会发生阻塞，所以主动FTP的情况下，客户端最好把防火墙关闭了。
+ * 
+ * 被动FTP过程大致如下：
+ * <ol>
+ * <li>1、客户端启用端口N（同样的N>1024）和N+1，N用作命令端口，N+1用作数据端口。然后客户端向服务器端发送PASV请求，告诉服务器端，这是被动FTP请求
+ * <li>2、服务器端接收到PASV请求后，启动一个M（同样>1024）端口当作数据端，并发送PORT M到客户端
+ * <li>3、客户端得到服务器端的数据端口后，再由端口N+1向服务器的M端口发起数据请求
+ * <li>4、服务器端通过N端口向客户端的N+1端口发送ACK应答
+ * </ol>
+ * 以上是被动FTP的大致过程，与主动FTP请求不同，请求的发起方是客户端，这样客户端就不会为防火墙的问题感到烦恼，但是同样道理，服务器端的端口就会有了限制。
+ * 
+ * 所以，一般情况下。服务器端为了方便管理，一般采用被动FTP方式连接。当然客户端可以通过ftp -d host port命令向服务器发送请求，可以看出到底用的是主动FTP还是被动FTP。
+ *
+ */
+public class FTPDemo {
 
-    public static void main(String[] args) throws IOException {
-        ApacheFtpDemo ftp = new ApacheFtpDemo("10.3.15.1", 21, "ghips", "ghipsteam");
+    public static void main(String[] args) throws Exception {
+    }
+
+    void demo2() {
+        FTPDemo ftp = new FTPDemo("10.3.15.1", 21, "ghips", "ghipsteam");
         ftp.ftpLogin();
         // 上传文件夹
         ftp.uploadDirectory("d://DataProtemp", "/home/data/");
@@ -30,13 +58,13 @@ public class ApacheFtpDemo {
     }
 
     public void list(String directory) throws IOException {
-        
+
         FTPListParseEngine engine = ftpClient.initiateListParsing(directory);
 
         while (engine.hasNext()) {
-           FTPFile[] files = engine.getNext(25);  // "page size" you want
-           //do whatever you want with these files, display them, etc.
-           //expensive FTPFile objects not created until needed.
+            FTPFile[] files = engine.getNext(25); // "page size" you want
+            // do whatever you want with these files, display them, etc.
+            // expensive FTPFile objects not created until needed.
         }
     }
 
@@ -92,9 +120,9 @@ public class ApacheFtpDemo {
     private String user;
     private String password;
 
-    private static Logger logger = Logger.getLogger(ApacheFtpDemo.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(FTPDemo.class);
 
-    public ApacheFtpDemo(String strIp, int intPort, String user, String Password) {
+    public FTPDemo(String strIp, int intPort, String user, String Password) {
         this.server = strIp;
         this.port = intPort;
         this.user = user;
@@ -278,6 +306,7 @@ public class ApacheFtpDemo {
 
     /***
      * 下载文件夹
+     * 
      * @param localDirectoryPath本地地址
      * @param remoteDirectory
      *            远程文件夹

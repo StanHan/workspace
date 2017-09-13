@@ -162,7 +162,7 @@ public class PycreditPersonalComponent {
 	 */
 	public String insertPycreditInfo(CisReports cisReports, String appId) throws Exception {
 		
-		Timestamp timestamp = new Timestamp(DateUtil.getJVMDate().getTime());
+		Timestamp timestamp = new Timestamp(DateDemo.getJVMDate().getTime());
 		boolean result = false;
 		try {
 			System.out.println("pycreadit return information insert into the database starts......");
@@ -535,7 +535,7 @@ public class PycreditPersonalComponent {
 	 */
 	public void copyPycreditHistoryInfo(DataObject scrPycreditInfo, String appId) throws Exception {
 		IUserObject user = CommonUtil.getIUserObject();
-		Timestamp timestamp = new Timestamp(DateUtil.getJVMTimeMillis());
+		Timestamp timestamp = new Timestamp(DateDemo.getJVMTimeMillis());
 		scrPycreditInfo.set("pkId", CommonUtil.getUUID());
 		scrPycreditInfo.set("appId", appId);
 		scrPycreditInfo.set("inputUsr", user.getUserId());

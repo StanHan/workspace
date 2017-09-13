@@ -15,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
+
+import demo.java.time.DateDemo;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +25,6 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import demo.util.DateUtil;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.util.MimeTypes;
@@ -262,7 +264,7 @@ public class ChinaUnicom {
 		String create = sdf.format(date);
 		System.out.println("create:" + create);
 
-		String datetime = DateUtil.dateToStr(date, DateUtil.TZ);// 创建时间
+		String datetime = DateDemo.dateToStr(date, DateDemo.TZ);// 创建时间
 		System.out.println("CreatedTime :" + datetime);
 
 		System.out.println(create.equals(datetime));
