@@ -3,7 +3,6 @@ package demo.xml;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,8 +10,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;

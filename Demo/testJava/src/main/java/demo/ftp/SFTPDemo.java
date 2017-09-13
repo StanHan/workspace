@@ -1,7 +1,5 @@
 package demo.ftp;
 
-import org.apache.commons.net.ftp.FTPClient;
-
 /**
  * sftp是Secure File Transfer Protocol的缩写，安全文件传送协议。可以为传输文件提供一种安全的网络的加密方法。sftp 与 ftp 有着几乎一样的语法和功能。
  * SFTP 为 SSH的其中一部分，是一种传输档案至 Blogger 伺服器的安全方式。其实在SSH软件包中，已经包含了一个叫作SFTP(Secure File Transfer Protocol)的安全文件信息传输子系统，
@@ -15,6 +13,4 @@ public class SFTPDemo {
         // TODO Auto-generated method stub
 
     }
-    private FTPClient ftpClient;
-
 }

@@ -33,7 +33,7 @@ public class DaiKuan {
 	 * @param lixi
 	 *            月手续费率
 	 */
-	public static void processMonthly_SHYH(double amount, int months, double lixi) {
+	static void processMonthly_SHYH(double amount, int months, double lixi) {
 		System.out.println("------上海银行贷款方案分析------");
 		System.out.println("一共贷款：" + amount + "元");
 		System.out.println("分" + months + "个月来还款");
@@ -71,7 +71,7 @@ public class DaiKuan {
 	 * @param rate
 	 *            月手续费率
 	 */
-	public static void processInterestRate_CCB(double amount, int months, double rate) {
+	static void processInterestRate_CCB(double amount, int months, double rate) {
 		System.out.println("------建设银行贷款方案分析------");
 		System.out.println("一共贷款：" + amount + "元");
 		System.out.println("分" + months + "期来还款（一期为一个月）");
@@ -111,7 +111,7 @@ public class DaiKuan {
 	 * @param rate
 	 *            月手续费率
 	 */
-	public static void processInterestRate_BOS(double amount, int months, double rate) {
+	static void processInterestRate_BOS(double amount, int months, double rate) {
 		System.out.println("------上海银行贷款方案分析------");
 		System.out.println("一共贷款：" + amount + "元");
 		System.out.println("分" + months + "个月来还款");

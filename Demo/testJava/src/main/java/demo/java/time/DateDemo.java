@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 //G	 Era designator Text 
 //y	 Year Year 
 //M	 Month in year Month 
@@ -28,7 +30,14 @@ import java.util.Locale;
 public class DateDemo {
 	
 	public static void main(String[] args) throws ParseException {
-	    testCalendar();
+//	    testCalendar();
+	    System.out.println(removeHmsS2(new Date()).getTime());
+	    System.out.println(removeHmsS(new Date()).getTime());
+	    Date lastDate = new Date(Long.MAX_VALUE);
+	    System.out.println(getDate(lastDate) + " "+ getTime(lastDate));
+	    Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+	    Date tomorrow = DateUtils.addDays(today, 1);
+	    System.out.println(today + "    "+ tomorrow);
 	}
 	
 	static void testCalendar() {
@@ -59,14 +68,14 @@ public class DateDemo {
 	public final static String Y_M_D_HMS = "yyyy-MM-dd HH:mm:ss";
 	public final static String TZ = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-	public static String getDate() {
+	public static String getDate(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-		return formatter.format(new Date());
+		return formatter.format(date);
 	}
 
-	public static String getTime() {
+	public static String getTime(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-		return formatter.format(new Date());
+		return formatter.format(date);
 	}
 
 	/**
@@ -139,27 +148,6 @@ public class DateDemo {
 		return dateStr;
 	}
 
-	/**
-	 * Date转换为字符串(年月日)
-	 * 
-	 * @param obj
-	 *            Object
-	 * @return String
-	 */
-	public static String dateToStr(Object obj) {
-		return dateToStr(obj, Y_M_D);
-	}
-
-	/**
-	 * Date转换为字符串(年月日,时分秒)
-	 * 
-	 * @param obj
-	 *            Object
-	 * @return String
-	 */
-	public static String dateTimeToStr(Object obj) {
-		return dateToStr(obj, Y_M_D_HMS);
-	}
 
 	/**
 	 * 计算两个日期之间相差多少天(endDate-startDate)
@@ -428,21 +416,30 @@ public class DateDemo {
 	}
 
 	/**
-	 * 得到指定年全年的天数
-	 * 
-	 * @throws ParseException
-	 */
-	public static int getAllYearDay(int year) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date startDate = new Date();
-		Date endDate = new Date();
-		try {
-			startDate = sdf.parse(year + "-01-01");
-			endDate = sdf.parse(year + "-12-31");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		int day = (int) ((endDate.getTime() - startDate.getTime()) / (3600 * 24 * 1000)) + 1;
-		return day;
-	}
+     * 去除时分秒
+     * 
+     * @param date
+     * @return
+     */
+    public static Date removeHmsS(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+    
+    /**
+     * 去除时分秒
+     * 
+     * @param date
+     * @return
+     */
+    public static Date removeHmsS2(Date date) {
+        return DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
+    }
+    
+    public static final int oneDayInMilliseconds = 24 * 60 * 60 * 1000;
 }
