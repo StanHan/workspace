@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class StringFormatDemo {
+public class StringDemo {
 
 	public static void main(String[] args) throws IOException {
 		NumberFormat numberFormat = null;
