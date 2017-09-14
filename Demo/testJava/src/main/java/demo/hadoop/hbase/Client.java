@@ -33,7 +33,7 @@ import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.filter.SubstringComparator;
 import org.apache.hadoop.hbase.util.Bytes;
 
-import test.java.util.StringUtil;
+import demo.java.util.StringUtil;
 
 public class Client {
 

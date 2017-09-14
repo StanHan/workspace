@@ -1,6 +1,7 @@
 package demo.hadoop.spark;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -38,10 +39,10 @@ public class JavaWordCount {
 		JavaRDD<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
 
 			@Override
-			public Iterable<String> call(String t) throws Exception {
+			public Iterator<String> call(String t) throws Exception {
 				String[] array = SPACE.split(t);
 				// TODO Auto-generated method stub
-				return Arrays.asList(array);
+				return (Iterator<String>) Arrays.asList(array);
 			}
 			
 		});

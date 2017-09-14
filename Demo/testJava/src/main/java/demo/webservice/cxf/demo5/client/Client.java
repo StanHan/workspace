@@ -25,7 +25,8 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.soap.SOAPBinding;
 
-import test.webservice.cxf.demo5.server.*;
+import demo.webservice.cxf.demo1.server.HelloWorld;
+import demo.webservice.cxf.demo5.server.UserImpl;
 
 public final class Client {
 

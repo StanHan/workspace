@@ -1,4 +1,4 @@
-package demo.hadoop.hdfs;
+package demo.vo;
 
 public class GcsLogBean {
 

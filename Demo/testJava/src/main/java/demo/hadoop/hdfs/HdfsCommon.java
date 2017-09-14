@@ -25,6 +25,8 @@ import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.util.Progressable;
 
+import demo.vo.GcsLogBean;
+
 public class HdfsCommon {
 	public static final String FieldDelimit = "\u007F";//字段分隔符，007F是unicode的127，表示删除符
 	private Configuration configuration;

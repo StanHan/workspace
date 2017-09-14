@@ -1,5 +1,7 @@
 package demo.hadoop.hdfs;
 
+import demo.vo.GcsLogBean;
+
 public class Demo {
 
 	public static void main(String[] args) {

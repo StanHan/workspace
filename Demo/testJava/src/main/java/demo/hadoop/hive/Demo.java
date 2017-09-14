@@ -1,13 +1,8 @@
 package demo.hadoop.hive;
 
 import java.io.IOException;
-import java.util.Vector;
 
-import org.apache.hadoop.hive.conf.HiveConf;
-import org.apache.hadoop.hive.ql.Driver;
-import org.apache.hadoop.hive.ql.session.SessionState;
-
-import test.hadoop.hdfs.GcsLogBean;
+import demo.vo.GcsLogBean;
 
 public class Demo {
 
@@ -50,10 +45,10 @@ public class Demo {
 		
 		try {
 			HdfsCommon hdfsCommon = new HdfsCommon(hdfsFile);
-			hdfsCommon.writeFile(bean);
-			hdfsCommon.writeFile(bean);
-			hdfsCommon.writeFile(bean);
-			hdfsCommon.writeFile(bean);
+			hdfsCommon.writeFile(bean.toString());
+			hdfsCommon.writeFile(bean.toString());
+			hdfsCommon.writeFile(bean.toString());
+			hdfsCommon.writeFile(bean.toString());
 			hdfsCommon.close();
 		} catch (IOException e) {
 			e.printStackTrace();

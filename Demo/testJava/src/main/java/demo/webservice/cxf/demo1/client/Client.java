@@ -19,10 +19,9 @@
 
 package demo.webservice.cxf.demo1.client;
 
-import org.apache.cxf.frontend.ClientProxyFactoryBean;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 
-import test.webservice.cxf.demo1.server.HelloWorld;
+import demo.webservice.cxf.demo1.server.HelloWorld;
 
 public final class Client {
 

@@ -1,13 +1,14 @@
 package demo.hadoop.hive;
 
 import java.io.IOException;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-import test.hadoop.hdfs.GcsLogBean;
+import demo.vo.GcsLogBean;
 
 public class HdfsCommon implements Runnable{
 	private Configuration configuration;
