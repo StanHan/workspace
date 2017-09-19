@@ -24,7 +24,6 @@ import com.netflix.discovery.EurekaClientConfig;
 import com.netflix.discovery.guice.EurekaModule;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
-import com.netflix.eureka.resources.ApplicationResource;
 
 public class EurekaInvokeClient {
     private static final Logger logger = LoggerFactory.getLogger(EurekaInvokeClient.class);

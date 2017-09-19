@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+  <!-- property：用来定义变量值的标签，有两个属性，name和value；其中name的值是变量的名称，value的值时变量定义的值。通过<property>定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
+  <property name="APP_Name" value="testJava" />
+  <property name="log.dir" value="G:/logs" />
+
+
+  <!-- timestamp：获取时间戳字符串：两个属性, key:标识此<timestamp> 的名字；datePattern：设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循Java.txt.SimpleDateFormat的格式。 -->
+  <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss" />
+
+  <!-- contextName：设置上下文名称：每个logger都关联到logger上下文，默认上下文名称为“default”。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。 -->
+  <contextName>${APP_Name}</contextName>
+
+  <!-- 控制台输出 -->
+  <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="java.sql.Connection" level="DEBUG" />
+  <logger name="java.sql.Statement" level="DEBUG" />
+  <logger name="com.ibatis" level="DEBUG" />
+  <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+  <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
+  <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+  <logger name="com.danga.MemCached" level="DEBUG" />
+  <logger name="org.springframework.test" level="DEBUG" />
+  <logger name="org.apache.struts2" level="DEBUG" />
+
+  <root level="DEBUG">
+    <!-- <root>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。 -->
+    <appender-ref ref="ConsoleAppender" />
+  </root>
+
+</configuration>

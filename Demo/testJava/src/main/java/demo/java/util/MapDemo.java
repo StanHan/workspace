@@ -16,7 +16,7 @@ public class MapDemo {
 
 	}
 
-	public static void testMap(){
+	static void testMap(){
 		/* HashMap 也用到了哈希码的算法，以便快速查找一个键 
 		 * */
 		HashMap<String,String> hashMap = new HashMap<String,String>();
@@ -29,7 +29,7 @@ public class MapDemo {
 		
 	}
 	
-	public static void testProperties() throws IOException{
+	static void testProperties() throws IOException{
 		Properties properties = new Properties();
 		
 		InputStream is = MapDemo.class.getResourceAsStream("d:/test/aaa.properties");

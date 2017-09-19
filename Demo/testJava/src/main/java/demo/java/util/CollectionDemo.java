@@ -41,44 +41,79 @@ import java.util.Vector;
 public class CollectionDemo {
 
     public static void main(String[] args) {
-//        demoSearch(19);
+        // demoSearch(19);
         Collection collection = null;
         // testTreeSet();
         // testHashSet();
-        demoArrays(1, 2, 3);
-//        java7Demo();
-//        listDemo();
+//        testArray(1, 2, 3);
+        // java7Demo();
+        // listDemo();
+         testList();
     }
-    
-    static void demoArrays(int... ids) {
+
+    static void testArray(int... ids) {
         System.out.println(ids);
-        Arrays.stream(ids).forEach(System.out::println);
-        
+        System.out.println(Arrays.toString(ids));
         List<int[]> list = Arrays.asList(ids);
         list.forEach(System.out::println);
-        
+
         System.out.println("原型数据的数组，数组对象作为参数");
-        int[] array2 = {1,2,3,4,5};
+        int[] array2 = { 1, 2, 3, 4, 5 };
         List<int[]> list2 = Arrays.asList(array2);
         list2.forEach(System.out::println);
         System.out.println("包装类型的数组，数组的每个对象作为参数");
-        
-        Integer[] array3 = {1,2,3,4,5};
+
+        Integer[] array3 = { 1, 2, 3, 4, 5 };
         List<Integer> list3 = Arrays.asList(array3);
-        list3.forEach(System.out::println);
         String tmp = Arrays.toString(array3);
         System.out.println(tmp);
-        System.out.println(tmp.substring(1,tmp.length()-1));
-        
-        List<Integer> list4 = Arrays.asList(1,2,3);
+        System.out.println(tmp.substring(1, tmp.length() - 1));
+
+        List<Integer> list4 = Arrays.asList(1, 2, 3);
         list4.forEach(System.out::println);
     }
 
-    static void listDemo(){
-        List<String> list = null;
-        for (String string : list) {
-            System.out.println(string);
+    static void testList() {
+        List<Integer> list = null;
+        try {
+            System.out.println("如果list为null,foreach 操作会抛空指针");
+            for (Integer string : list) {
+                System.out.println(string);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+        
+        Integer[] array3 = { 1, 2, 3, 4, 5 };
+        list = Arrays.asList(array3);
+        
+        Integer[] emptyArray = {};
+        Integer[] arrayNull = null;
+        Integer[] biggerArray = new Integer[10];
+        
+        try {
+            System.out.println("List.toArray(...) 方法参数为null,报空指针");
+            emptyArray = list.toArray(arrayNull);
+            System.out.println(Arrays.toString(arrayNull));
+            System.out.println(Arrays.toString(emptyArray));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        {
+            System.out.println("List.toArray(...) 参数长度大于list size，全部填充，其他填充为null.");
+            arrayNull = list.toArray(biggerArray);
+            System.out.println(Arrays.toString(arrayNull));
+            System.out.println(Arrays.toString(biggerArray));
+        }
+        
+        {
+            System.out.println("List.toArray(...) 参数长度小于于list size，创建一个新的数组填充，参数数组不变。让人误解的逻辑！！");
+            arrayNull = list.toArray(emptyArray);
+            System.out.println(Arrays.toString(arrayNull));
+            System.out.println(Arrays.toString(emptyArray));
+        }
+        
     }
 
     static void demoSearch(int a) {
@@ -87,7 +122,7 @@ public class CollectionDemo {
         System.out.println(idx);
     }
 
-    public static void testCollection() {
+    static void testCollection() {
         ArrayList<String> arrayList = new ArrayList<String>();
         LinkedList<String> linkedList = new LinkedList<String>();
         Vector<String> vector = new Vector<String>();
@@ -97,7 +132,7 @@ public class CollectionDemo {
         Map<String, Date> map = Collections.synchronizedMap(new HashMap<String, Date>());
     }
 
-    public static void testTreeSet() {
+    static void testTreeSet() {
         TreeSet<String> treeSet = new TreeSet<String>();
         treeSet.add("han");
         treeSet.add("jun");
@@ -116,7 +151,7 @@ public class CollectionDemo {
          */
     }
 
-    public static void testHashSet() {
+    static void testHashSet() {
         HashSet<String> set = new HashSet();
         set.add("han");
         set.add("jun");
@@ -136,7 +171,7 @@ public class CollectionDemo {
         }
     }
 
-    public static void testSort() {
+    static void testSort() {
         List<Double> list = new ArrayList<Double>();
         list.add(7.5);
         list.add(8.5);
@@ -156,7 +191,7 @@ public class CollectionDemo {
         }
     }
 
-    public static void testItorator() {
+    static void testItorator() {
         List<String> list = new ArrayList<String>();
         list.add("6");
         list.add("1");
@@ -175,7 +210,7 @@ public class CollectionDemo {
 
     }
 
-    public static void testDeque() {
+    static void testDeque() {
         Deque<String> deque = new ArrayDeque<String>();
         deque.addFirst("Fist1");
         deque.addFirst("Fist2");
@@ -189,7 +224,7 @@ public class CollectionDemo {
 
     }
 
-    public void testQueue() {
+    void testQueue() {
         Queue<String> queue;
     }
 
