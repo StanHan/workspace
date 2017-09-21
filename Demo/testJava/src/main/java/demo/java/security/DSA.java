@@ -1,5 +1,6 @@
 package demo.java.security;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -10,11 +11,11 @@ import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.HashMap;
 import java.util.Map;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 /**
  * DSA-Digital Signature Algorithm 是Schnorr和ElGamal签名算法的变种，被美国NIST作为DSS(DigitalSignature Standard)。
@@ -146,9 +147,9 @@ public class DSA {
 	 * @return 加密后的字符串
 	 */
 	private static String encryptBASE64(byte[] data) {
-		BASE64Encoder encoder = new BASE64Encoder();
-		String encode = encoder.encode(data);
-		return encode;
+	    Encoder encoder = Base64.getEncoder();
+		byte[] encode = encoder.encode(data);
+		return new String(encode, StandardCharsets.UTF_8);
 	}
 	
 	/**
@@ -158,8 +159,8 @@ public class DSA {
 	 * @throws Exception 
 	 */
 	private static byte[] decryptBASE64(String data) throws Exception {
-		BASE64Decoder decoder = new BASE64Decoder();
-		byte[] buffer = decoder.decodeBuffer(data);
+	    Decoder decoder = Base64.getDecoder();
+		byte[] buffer = decoder.decode(data.getBytes(StandardCharsets.UTF_8));
 		return buffer;
 	}
 	

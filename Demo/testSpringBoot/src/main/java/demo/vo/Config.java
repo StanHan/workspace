@@ -14,19 +14,12 @@ public class Config {
     @Value("${rocketMQ.namesrvAddr}")
     private String namesrvAddr;
 
-    @Value("${task.giveupLog}")
-    private String giveupLogCron;
-
-    @Value("${task.moveHistory}")
-    private String moveHistoryCron;
-
     @Autowired
     private DBInfo db;
 
     @Override
     public String toString() {
-        return "Config [namesrvAddr=" + namesrvAddr + ", giveupLogCron=" + giveupLogCron + ", moveHistoryCron="
-                + moveHistoryCron + ", db=" + db + "]";
+        return "Config [namesrvAddr=" + namesrvAddr + ", db=" + db + "]";
     }
 
     public String getNamesrvAddr() {
@@ -35,22 +28,6 @@ public class Config {
 
     public void setNamesrvAddr(String namesrvAddr) {
         this.namesrvAddr = namesrvAddr;
-    }
-
-    public String getGiveupLogCron() {
-        return giveupLogCron;
-    }
-
-    public void setGiveupLogCron(String giveupLogCron) {
-        this.giveupLogCron = giveupLogCron;
-    }
-
-    public String getMoveHistoryCron() {
-        return moveHistoryCron;
-    }
-
-    public void setMoveHistoryCron(String moveHistoryCron) {
-        this.moveHistoryCron = moveHistoryCron;
     }
 
     public DBInfo getDb() {

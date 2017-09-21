@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import demo.vo.Course;
 import demo.vo.Student;
@@ -22,15 +23,26 @@ import demo.vo.Teacher;
  * @author hanjy
  *
  */
-public class FastjsonDemo {
+public class FastJsonDemo {
 
     public static void main(String[] args) {
-        testJSONStrToJavaBeanObj();
+//        testJSONStrToJavaBeanObj();
         // testComplexJSONStrToJSONObject();
         // testJSONStrToJSONArray();
         // testJSONStrToJSONObject();
+        testToJSONString();
 
     }
+    
+    static void testToJSONString() {
+//        System.out.println("ok.");
+        String json = JSON.toJSONString(new Student(), SerializerFeature.WriteNonStringKeyAsString);
+        System.err.println(json);
+        json = JSON.toJSONString(new Student());
+        System.err.println(json);
+        json = JSON.toJSONString(new Student(), SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        System.err.println(json);
+    } 
 
     /**
      * 复杂json格式字符串与JavaBean_obj之间的转换

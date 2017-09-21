@@ -1,6 +1,7 @@
 package demo.web;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -87,6 +88,18 @@ public class DemoController {
         }
         System.out.println(request.toString());
         result.setResult(0);
+        return result;
+    }
+    
+    @GetMapping("/demo/user/ids")
+    public ApiResult<List<User>> getUserById(@RequestParam("id") Integer[] ids) {
+        ApiResult<List<User>> result = new ApiResult<>();
+        logger.info("query users by ids={}", Arrays.toString(ids));
+        List<User> users = new ArrayList<>();
+        for (Integer integer : ids) {
+            users.add(new User(integer, "User_"+integer));
+        }
+        result.setResult(users);
         return result;
     }
 
