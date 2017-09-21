@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bson.Document;
-import org.junit.Test;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -37,7 +36,6 @@ public class Demo {
 
     private MongoDBService mongoDBService = new MongoDBService();
     // 测试插入数据
-    @Test
     public void testInsert() {
         // 数据一，包括用户名、密码，地址信息（省份、城市），爱好[…]
         BasicDBList dbList1 = new BasicDBList();
@@ -84,7 +82,6 @@ public class Demo {
     }
 
     // 测试查询数据
-    @Test
     public void testFind() {
         DBObject dbObject = new BasicDBObject("username", "insert1");
         System.out.println("数量：" + mongoDBService.getCollectionCount());
@@ -100,7 +97,6 @@ public class Demo {
     }
 
     // 测试数据更新
-    @Test
     public void testUpdate() {
         BasicDBObject newDocument = new BasicDBObject("$set", new BasicDBObject("age", 11));
 
@@ -113,7 +109,6 @@ public class Demo {
     }
 
     // 测试数据删除
-    @Test
     public void testDelete() {
         DBObject dbObject1 = new BasicDBObject("username", "insert1");
         DBObject dbObject2 = new BasicDBObject("username", "insert2");

@@ -18,9 +18,6 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
-import test.java.io.IOUtil;
-import test.java.util.StringUtil;
-
 public class XMLSchema2JavaClass {
 
 	public static void main(String[] args) {
@@ -57,7 +54,7 @@ public class XMLSchema2JavaClass {
 					String javaContent = parseElement2JavaFile(element,"package com.pactera.nppc.vo;",classComment);
 					String javaFileName = fileSavePath + name + ".java";
 
-					IOUtil.writeFile(javaFileName, javaContent, "UTF-8");
+					demo.java.io.IOUtil.writeFile(javaFileName, javaContent, "UTF-8");
 				}
 			}
 		} catch (Exception e) {
@@ -73,7 +70,6 @@ public class XMLSchema2JavaClass {
 		StringBuilder javaContent = new StringBuilder();
 		StringBuilder getSetStringBuilder = new StringBuilder();
 		String className = element.attributeValue("name");
-		StringUtil.upperCase1stLetter(className);
 		javaContent.append(packageInfo + "\n");
 		
 		javaContent.append("import javax.xml.bind.annotation.XmlAccessType;\n");
@@ -124,7 +120,7 @@ public class XMLSchema2JavaClass {
 					javaContent.append("private " + type + " " + name + ";\n");
 				}
 
-				String getset = StringUtil.generateGetSet(type, name);
+				String getset = generateGetSet(type, name);
 				getSetStringBuilder.append(getset);
 			}
 		}
@@ -138,6 +134,10 @@ public class XMLSchema2JavaClass {
 		}
 		System.out.println(javaContent.toString());
 		return javaContent.toString();
+	}
+	
+	static String generateGetSet(String type,String name) {
+	    return "";
 	}
 
 	/**

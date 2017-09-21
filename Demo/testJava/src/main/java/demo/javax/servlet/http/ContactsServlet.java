@@ -300,7 +300,8 @@ class LoginAction implements Action {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 
-		ContactsUser user = UserDatabase.getSingleton().get(username, password);
+//		ContactsUser user = UserDatabase.getSingleton().get(username, password);
+		ContactsUser user = null;
 		if (user != null) {
 			ContactsUser contactsUser = (ContactsUser) user;
 			request.getSession().setAttribute("user", contactsUser);
@@ -321,7 +322,7 @@ class LoginAction implements Action {
 class LogoutAction implements Action {
 
 	public String perform(HttpServletRequest request, HttpServletResponse response) {
-		UserDatabase.getSingleton().shutDown();
+//		UserDatabase.getSingleton().shutDown();
 		return "/goodbye.jsp";
 	}
 

@@ -2,18 +2,12 @@ package demo.java.util.concurrent.atomic;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-
 public class AtomicDemo {
 
 	private final AtomicLong count = new AtomicLong(0);
 	
-	@Test
 	public void testAtomicLong(){
 		long l = count.incrementAndGet();
-		Assert.assertEquals(1, l);
 		System.err.println(l);
 		System.out.println(count.get());
 		count.addAndGet(107);
@@ -27,5 +21,4 @@ public class AtomicDemo {
 		System.out.println(count);
 	}
 	
-//	public void 
 }

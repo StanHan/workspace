@@ -6,7 +6,6 @@ import java.lang.reflect.Proxy;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.junit.Test;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
@@ -22,7 +21,6 @@ public class ProxyTest {
 	/**
 	 * 测试动态代理
 	 */
-	@Test
 	public static void testDynamicProxy() {
 		IUserDAO userDAO = new UserDAOImpl();
 		InvocationHandler handler = new DAOLogHandler(userDAO);
@@ -35,7 +33,6 @@ public class ProxyTest {
 	/**
 	 * 测试静态代理
 	 */
-	@Test
 	public static void testStaticProxy() {
 		IUserDAO userDAO = new UserDAOImpl();
 		IUserDAO staticProxy = new StaticProxy(userDAO);

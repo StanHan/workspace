@@ -35,7 +35,7 @@ public class CompilerTest {
 
 	}
 
-	public static void test3(InputStream is) {
+	/*public static void test3(InputStream is) {
 		ClassReader classReader = new ClassReader(is);
 		ClassNode classNode = new ClassNode();
 		classReader.accept(classNode, 0);
@@ -55,9 +55,9 @@ public class CompilerTest {
 		ClassWriter classWriter = new ClassWriter(0);
 		classNode.accept(classWriter);
 		byte[] b = classWriter.toByteArray();
-	}
+	}*/
 
-	private static double calculate(String expr) throws Exception  {
+	/*private static double calculate(String expr) throws Exception  {
 		   String className = "CalculatorMain";
 		   String methodName = "calculate";
 		   String source = "public class " + className 
@@ -77,7 +77,7 @@ public class CompilerTest {
 		   } else {
 		      throw new Exception("错误的表达式。");    
 		   }
-		}
+		}*/
 
 	public static void test2() {
 		String source = "public class Main { public static void main(String[] args) {System.out.println(\"Hello World!\");} }";

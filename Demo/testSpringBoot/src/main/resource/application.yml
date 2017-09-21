@@ -3,13 +3,16 @@ spring:
 #    mongodb:
 #      uri: mongodb://xinyongjin:eGlueW9uZ2ppbgo=@221.228.75.188:27010/xinyongjin
     redis:
-      database: 0
-      hostName: 172.16.20.205
-      port: 6379
-      password: null
+      database: ${redis.db}
+      hostName: ${redis.host}
+      port: ${redis.port}
+      password: ${redis.pass}
       pool:
         max-active: 8
         max-wait: -1
         max-idle: 8
         min-idle: 0
       timeout: 0
+      
+config:
+  properties: file:/home/b2b2p/ma/config.properties

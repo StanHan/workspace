@@ -4,13 +4,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
-import com.icfcc.prefint.cums.htmlparse.webservice.services.GeneralXmlServiceImpDelegate;
+/*import com.icfcc.prefint.cums.htmlparse.webservice.services.GeneralXmlServiceImpDelegate;
 import com.icfcc.prefint.cums.htmlparse.webservice.services.GeneralXmlServiceImpService;
 import com.icfcc.prefint.cums.htmlparse.webservice.services.HtmlParseRequest;
-import com.icfcc.prefint.cums.htmlparse.webservice.services.HtmlParseResponse;
+import com.icfcc.prefint.cums.htmlparse.webservice.services.HtmlParseResponse;*/
 
 public class Client {
 
@@ -72,7 +71,7 @@ public class Client {
 	/**
 	 * 人行旧版
 	 */
-	public static void test1() throws MalformedURLException {
+	/*public static void test1() throws MalformedURLException {
 		HtmlParseRequest vo = new HtmlParseRequest();
 		vo.setQuerierName("苏冬");
 		vo.setQuerierCertype("0");// 身份证
@@ -101,6 +100,6 @@ public class Client {
 		for (String string : stringList) {
 			System.out.println(string);
 		}
-	}
+	}*/
 
 }

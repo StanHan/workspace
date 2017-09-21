@@ -14,9 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 public class Application {
 
-//    private static Logger log = LoggerFactory.getLogger(Application.class); 
+    private static Logger logger = LoggerFactory.getLogger(Application.class); 
     
 	public static void main(String[] args) {
+	    logger.info("start.");
 	    new SpringApplicationBuilder(Application.class).web(true).run(args);
 	}
 }

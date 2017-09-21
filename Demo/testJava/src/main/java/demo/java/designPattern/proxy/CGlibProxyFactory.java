@@ -1,6 +1,7 @@
 package demo.java.designPattern.proxy;
 
 import java.lang.reflect.Method;
+
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -23,7 +24,6 @@ public class CGlibProxyFactory implements MethodInterceptor {
     }
 
     @Override
-
     public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         Object bean = this.targetObject;
         Object result = null;

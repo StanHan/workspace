@@ -2,13 +2,11 @@ package demo.xml;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -17,19 +15,11 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.io.FileUtils;
-
-import com.pactera.nppc.vo.*;
-
-import test.util.JSONUtil;
-import test.util.ProtoStuffSerializerUtil;
-import test.util.SerializeUtil;
 
 public class JAXB2Tester {
 
@@ -49,7 +39,7 @@ public class JAXB2Tester {
 //		reportMessage.setHeader(header);
 		
 //		write(ReportMessage, path);
-		ReportMessage object = null;
+		/*ReportMessage object = null;
 		{
 			Date start = new Date();
 			object = read(path, ReportMessage.class);
@@ -93,7 +83,7 @@ public class JAXB2Tester {
 			Date end = new Date();
 			System.out.println("BEAN反序列化_protoStuff耗时：" +(end.getTime() - start.getTime())+" 毫秒");
 			write(reportMessage, "D:\\reportMessage2.XML");
-		}
+		}*/
 //		String path = "D:/SVN/hadoop/0100 项目明细/010013双网双卡-信用卡决策/001 需求文档/ReportMessage.xml";
 //		ReportMessage reportMessage = read(path, ReportMessage.class);
 //		System.out.println(reportMessage);
@@ -103,7 +93,7 @@ public class JAXB2Tester {
 	public static void testRead() {
 		Person person2 = read("d:\\cache\\person.xml", Person.class);
 		System.out.println(person2);
-		System.out.println(JSONUtil.object2Json(person2));
+//		System.out.println(JSONUtil.object2Json(person2));
 	}
 
 	public static void testWrite() {
