@@ -9,7 +9,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
+import demo.vo.ApiResult;
+import demo.vo.BusinessError;
 import demo.vo.Course;
+import demo.vo.ErrorCode;
 import demo.vo.Student;
 import demo.vo.Teacher;
 
@@ -40,7 +43,11 @@ public class FastJsonDemo {
         System.err.println(json);
         json = JSON.toJSONString(new Student());
         System.err.println(json);
-        json = JSON.toJSONString(new Student(), SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        json = JSON.toJSONString(new ApiResult(BusinessError.NOT_LOGIN), SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        System.err.println(json);
+        json = JSON.toJSONString(new ApiResult(new ErrorCode("not_login","用户未登录")), SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        System.err.println(json);
+        json = JSON.toJSONString(new ApiResult(BusinessError.NOT_LOGIN));
         System.err.println(json);
     } 
 

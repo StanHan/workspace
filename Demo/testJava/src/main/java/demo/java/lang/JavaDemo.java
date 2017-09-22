@@ -4,6 +4,7 @@ public class JavaDemo {
 
 	public static void main(String[] args) {
 		// Son son = new Son();
+	    System.out.println("hello.");
 		C c = new C();
 		c.pX();
 

@@ -1,7 +1,9 @@
 spring:
   data:
-#    mongodb:
-#      uri: mongodb://xinyongjin:eGlueW9uZ2ppbgo=@221.228.75.188:27010/xinyongjin
+    mongodb:
+      uri: mongodb://xinyongjin:eGlueW9uZ2ppbgo=@221.228.75.188:27010/xinyongjin?AutoConnectRetry=true
+    repositories:
+      enabled: true
     redis:
       database: ${redis.db}
       hostName: ${redis.host}

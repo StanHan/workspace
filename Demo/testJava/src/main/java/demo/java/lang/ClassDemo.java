@@ -6,6 +6,9 @@ import java.util.List;
 public class ClassDemo {
 
     public static void main(String[] args) {
+        Object o = null;
+        Long l = (Long)o;
+        System.out.println(l);
         testPrintFilePath();
     }
 

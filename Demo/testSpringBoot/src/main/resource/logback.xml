@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+  <included>
+    <logger name="org.springframework.web" level="INFO" />
+    <logger name="org.springboot.sample" level="TRACE" />
+
+    <property name="LOG_FILE" value="G:/logs/testSpringBoot.log" />
+    <property name="log.dir" value="G:/logs" />
+
+    <!-- INFO级别 -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <!-- 级别过滤器 -->
+      <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <!-- 设置过滤级别 -->
+        <level>INFO</level>
+        <!-- 用于配置符合过滤条件的操作 -->
+        <onMatch>ACCEPT</onMatch>
+        <!-- 用于配置不符合过滤条件的操作 -->
+        <onMismatch>DENY</onMismatch>
+      </filter>
+      <Encoding>UTF-8</Encoding>
+      <File>${log.dir}/testSpringBoot/info.log</File>
+      <!-- 根据时间来制定滚动策略 -->
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <FileNamePattern>
+          ${log.dir}/testSpringBoot/info.%d{yyyy-MM-dd}.%i.log
+        </FileNamePattern>
+        <!-- 多久后自动清楚旧的日志文件,单位:月 -->
+        <MaxHistory>1</MaxHistory>
+        <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+          <!-- 默认值是 10MB,文档最大值 -->
+          <MaxFileSize>1MB</MaxFileSize>
+        </TimeBasedFileNamingAndTriggeringPolicy>
+      </rollingPolicy>
+
+      <encoder>
+        <Pattern>${FILE_LOG_PATTERN}</Pattern>
+      </encoder>
+    </appender>
+
+    <!-- ERROR级别 -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <level>ERROR</level>
+        <onMatch>ACCEPT</onMatch>
+        <onMismatch>DENY</onMismatch>
+      </filter>
+      <Encoding>UTF-8</Encoding>
+      <File>${log.dir}/testSpringBoot/error.log</File>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <FileNamePattern>
+          ${log.dir}/testSpringBoot/error.%d{yyyy-MM-dd}.%i.log
+        </FileNamePattern>
+        <MaxHistory>1</MaxHistory>
+        <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+          <MaxFileSize>1MB</MaxFileSize>
+        </TimeBasedFileNamingAndTriggeringPolicy>
+      </rollingPolicy>
+
+      <encoder>
+        <Pattern>${FILE_LOG_PATTERN}</Pattern>
+      </encoder>
+    </appender>
+
+    <root level="DEBUG">
+      <appender-ref ref="CONSOLE" />
+      <appender-ref ref="FILE_INFO" />
+      <appender-ref ref="FILE_ERROR" />
+    </root>
+  </included>
+</configuration>
