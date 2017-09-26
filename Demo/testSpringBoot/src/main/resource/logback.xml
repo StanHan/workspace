@@ -1,71 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
-  <included>
-    <logger name="org.springframework.web" level="INFO" />
-    <logger name="org.springboot.sample" level="TRACE" />
+  <property name="LOG_FILE" value="G:/logs/testSpringBoot.log" />
+  <property name="log.dir" value="G:/logs" />
+  <property name="FILE_LOG_PATTERN" value="%date [%thread] %-5level %c{8}:%L - %msg%n" />
+  
+  <!-- INFO级别 -->
+  <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 级别过滤器 -->
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <!-- 设置过滤级别 -->
+      <level>INFO</level>
+    </filter>
+    <File>${log.dir}/testSpringBoot/info.log</File>
+    <!-- 根据时间来制定滚动策略 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>
+        ${log.dir}/testSpringBoot/info.%d{yyyy-MM-dd}.%i.log.gz
+      </FileNamePattern>
+      <!-- 多久后自动清楚旧的日志文件,单位:月 -->
+      <MaxHistory>1</MaxHistory>
+      <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <!-- 默认值是 10MB,文档最大值 -->
+        <MaxFileSize>1MB</MaxFileSize>
+      </TimeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
 
-    <property name="LOG_FILE" value="G:/logs/testSpringBoot.log" />
-    <property name="log.dir" value="G:/logs" />
+    <encoder>
+      <Pattern>${FILE_LOG_PATTERN}</Pattern>
+    </encoder>
+  </appender>
 
-    <!-- INFO级别 -->
-    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-      <!-- 级别过滤器 -->
-      <filter class="ch.qos.logback.classic.filter.LevelFilter">
-        <!-- 设置过滤级别 -->
-        <level>INFO</level>
-        <!-- 用于配置符合过滤条件的操作 -->
-        <onMatch>ACCEPT</onMatch>
-        <!-- 用于配置不符合过滤条件的操作 -->
-        <onMismatch>DENY</onMismatch>
-      </filter>
-      <Encoding>UTF-8</Encoding>
-      <File>${log.dir}/testSpringBoot/info.log</File>
-      <!-- 根据时间来制定滚动策略 -->
-      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <FileNamePattern>
-          ${log.dir}/testSpringBoot/info.%d{yyyy-MM-dd}.%i.log
-        </FileNamePattern>
-        <!-- 多久后自动清楚旧的日志文件,单位:月 -->
-        <MaxHistory>1</MaxHistory>
-        <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-          <!-- 默认值是 10MB,文档最大值 -->
-          <MaxFileSize>1MB</MaxFileSize>
-        </TimeBasedFileNamingAndTriggeringPolicy>
-      </rollingPolicy>
+  <!-- ERROR级别 -->
+  <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <File>${log.dir}/testSpringBoot/error.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>
+        ${log.dir}/testSpringBoot/error.%d{yyyy-MM-dd}.%i.log.gz
+      </FileNamePattern>
+      <MaxHistory>1</MaxHistory>
+      <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <MaxFileSize>1MB</MaxFileSize>
+      </TimeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
 
-      <encoder>
-        <Pattern>${FILE_LOG_PATTERN}</Pattern>
-      </encoder>
-    </appender>
+    <encoder>
+      <Pattern>${FILE_LOG_PATTERN}</Pattern>
+    </encoder>
+  </appender>
 
-    <!-- ERROR级别 -->
-    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-      <filter class="ch.qos.logback.classic.filter.LevelFilter">
-        <level>ERROR</level>
-        <onMatch>ACCEPT</onMatch>
-        <onMismatch>DENY</onMismatch>
-      </filter>
-      <Encoding>UTF-8</Encoding>
-      <File>${log.dir}/testSpringBoot/error.log</File>
-      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <FileNamePattern>
-          ${log.dir}/testSpringBoot/error.%d{yyyy-MM-dd}.%i.log
-        </FileNamePattern>
-        <MaxHistory>1</MaxHistory>
-        <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-          <MaxFileSize>1MB</MaxFileSize>
-        </TimeBasedFileNamingAndTriggeringPolicy>
-      </rollingPolicy>
+  <!-- 控制台输出 -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+      <Pattern>${FILE_LOG_PATTERN}</Pattern>
+    </encoder>
+  </appender>
 
-      <encoder>
-        <Pattern>${FILE_LOG_PATTERN}</Pattern>
-      </encoder>
-    </appender>
+  <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR" />
+  <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR" />
+  <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN" />
+  <logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN" />
+  <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN" />
+  <logger name="org.crsh.plugin" level="WARN" />
+  <logger name="org.crsh.ssh" level="WARN" />
+  <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR" />
+  <logger name="org.hibernate.validator.internal.util.Version" level="WARN" />
+  <logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="WARN" />
+  <logger name="org.springframework.boot.actuate.endpoint.jmx" />
+  <logger name="org.thymeleaf" />
+  <logger name="org.springframework.web" level="INFO" />
+  <logger name="org.springboot.sample" level="TRACE" />
+  <logger name="demo" level="TRACE" />
 
-    <root level="DEBUG">
-      <appender-ref ref="CONSOLE" />
-      <appender-ref ref="FILE_INFO" />
-      <appender-ref ref="FILE_ERROR" />
-    </root>
-  </included>
+  <root level="DEBUG">
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="FILE_INFO" />
+    <appender-ref ref="FILE_ERROR" />
+  </root>
 </configuration>

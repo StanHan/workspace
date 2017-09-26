@@ -5,7 +5,7 @@ import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class RunnableFutureTest {
+public class RunnableFutureDemo {
 
 	public static void main(String[] args) {
 
