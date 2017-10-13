@@ -6,6 +6,12 @@ import java.util.List;
 public class PrimitiveDataTest {
 
 	public static void main(String[] args) {
+	    Byte a = 12;
+	    Byte b = 12;
+	    System.out.println(a==b);
+	    Integer c = 12;
+	    Integer d = 12;
+	    System.out.println(c==d);
 		// Unicode for uppercase Greek omega character
 		char uniChar = '\u03A9';
 		System.out.println(uniChar);

@@ -81,7 +81,7 @@ public class CallableDemo {
 		}
 	}
 
-	public static void testCompletionService() {
+	static void testCompletionService() {
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
 		/**提交到CompletionService中的Future是按照完成的顺序排列的*/
@@ -133,25 +133,4 @@ public class CallableDemo {
 		}
 	}
 
-	public static void testFutureTask() {
-
-		Callable<Integer> callable = new Callable<Integer>() {
-			public Integer call() throws Exception {
-				return new Random().nextInt(100);
-			}
-		};
-
-		FutureTask<Integer> future = new FutureTask<Integer>(callable);
-
-		new Thread(future).start();
-
-		try {
-			Thread.sleep(2000);// 可能做一些事情
-			System.out.println(future.get());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-	}
 }

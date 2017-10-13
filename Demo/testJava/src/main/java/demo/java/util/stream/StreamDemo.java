@@ -7,23 +7,15 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.alibaba.fastjson.JSON;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 import demo.vo.City;
 import demo.vo.Person;
-import demo.vo.Report;
 
 /**
  * 流底层核心其实是Spliterator接口的一个实现，而这个Spliterator接口其实本身就是Fork/Join并行框架的一个实现，所以归根结底要明白流的工作方式，就要明白一下Fork/Join框架的基本思想，
@@ -33,12 +25,16 @@ import demo.vo.Report;
 public class StreamDemo {
 
     public static void main(String[] args) {
-        // demoCollection();
+//        testCollect();
         // reduceDemo();
-        demoVersion();
+//        testPrintDistinctVersion();
+        testCollectors2Map();
     }
 
-    static void demoVersion() {
+    /**
+     * 打印不同的version版本
+     */
+    static void testPrintDistinctVersion() {
         String[] andoidVersion = { "5.7.1", "5.7.0", "5.6.2", "5.6.0", "5.5.0", "5.4.3", "5.4.2", "5.4.1", "5.4.0",
                 "5.3.2", "5.3.1", "5.2.1", "5.2.0", "5.1.2", "5.1.1", "5.1.0", "5.0.2", "5.0.1", "4.4.0", "4.3.0",
                 "4.2.0", "4.1.0", "4.0.0" };
@@ -115,6 +111,15 @@ public class StreamDemo {
      */
     static void 可变汇聚() {
     }
+    
+    /**
+     * List 转MAP
+     */
+    static void testCollectors2Map() {
+        String[] array = {"a","b","c"};
+        Map<String,String> map = Arrays.stream(array).collect(Collectors.toMap(e ->e, e -> e+" hehe!"));
+        System.out.println(map);
+    }
 
     /**
      * <code>
@@ -128,7 +133,7 @@ public class StreamDemo {
      * 
      * 
      */
-    static void demoCollection() {
+    static void testCollect() {
         Collection<String> strings = Stream.generate(new Supplier<Integer>() {
             Random random = new Random();
 

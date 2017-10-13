@@ -5,19 +5,11 @@ import java.util.Date;
 public class DaiKuan {
 
 	public static void main(String[] args) {
-		Date date1 = new Date();
-		int a =0;
-		for (int i = 0; i <= 300_0000; i++) {
-			a++;
-		}
-		System.out.println(a);
-		Date date2 = new Date();
-		System.out.println(date2.getTime() - date1.getTime());
 //		processInterestRate_CCB(10_0000.0, 12, 0.0032);
 //		processInterestRate_CCB(10_0000.0, 24, 0.0032);
 //		processInterestRate_CCB(10_0000.0, 36, 0.0032);
 		// System.out.println("===================================");
-//		processInterestRate_BOS(10_0000.0, 24, 0.077);
+		processInterestRate_BOS(10_0000.0, 24, 0.077);
 //		processInterestRate_BOS(10_0000.0, 36, 0.115);
 	}
 
