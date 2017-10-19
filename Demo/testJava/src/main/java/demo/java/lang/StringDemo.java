@@ -15,6 +15,17 @@ public class StringDemo {
 	    System.out.println(String.format(showPath, "/SL90001/4099a091a4491b86f821/70/70-1--20171009132013.jpg",7,(new Date()).getTime()));
 	    System.out.println(String.format(showPath, "/SL90001/4099a091a4491b86f821/70/70-1--20171009132013.jpg",7,null));
 	    System.out.println(String.format(showPath2, "http://localhost:8080/","/SL90001/4099a091a4491b86f821/70/70-1--20171009132013.jpg",7,null));
+	    String sql = "SELECT c.id userId, a.identity_name identityName, alias, mobilephone, f.device_type deviceType, h.channel_id channelId " +
+                "FROM s_user c  " +
+                "LEFT JOIN s_user_identity a ON a.user_id = c.id " +
+                "LEFT JOIN s_user_xiaomi_push_alias d ON c.id = d.user_id  " +
+                "LEFT JOIN s_user_current_device e ON c.id = e.user_id " +
+                "LEFT JOIN s_user_device f ON e.current_device = f.id " +
+                "LEFT JOIN s_user_device_temp g ON f.device_token = g.device_token " +
+                "LEFT JOIN s_user_device_channel h ON g.id = h.device_id  " +
+                "WHERE c.id =:userId " +
+                "GROUP BY c.id  ";
+	    System.out.println(sql);
 //	    testFormat();
 //		NumberFormat numberFormat = null;
 //		System.out.println(Integer.valueOf(1).equals(Long.valueOf(1)));

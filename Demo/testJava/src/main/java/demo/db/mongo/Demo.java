@@ -28,7 +28,6 @@ public class Demo {
         MongoClient mongoClient = new MongoClient(Arrays.asList(new ServerAddress("localhost", 27017)));
         MongoDatabase mongoDatabase = mongoClient.getDatabase("demo");
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("test1");
-        User user = new User(1, "Stan");
 //        MongoCollection<User> MongoCollectionImpl = new MongoCollectionImpl<>();
 //        mongoCollection.insertOne(user);
 

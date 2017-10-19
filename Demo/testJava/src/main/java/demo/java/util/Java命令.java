@@ -64,7 +64,36 @@ public interface Java命令 {
      * <li>查看新生代、老生代及持久代的垃圾收集情况，包括垃圾回收的次数及垃圾回收所占用的时间
      * <li>查看新生代中Eden区及Survior区中容量及分配情况等 jstat工具特别强大，它有众多的可选项，通过提供多种不同的监控维度，使我们可以从不同的维度来了解到当前JVM堆的使用情况。
      * <p>
-     * 
+     * 语法 : jstat [ generalOption | outputOptions vmid [interval[s|ms] [count]] ]
+    generalOption - 单个的常用的命令行选项，如-help, -options, 或 -version。
+    outputOptions -一个或多个输出选项，由单个的statOption选项组成，可以和-t, -h, and -J等选项配合使用。
+    statOption：
+    根据jstat统计的维度不同，可以使用如下表中的选项进行不同维度的统计，不同的操作系统支持的选项可能会不一样，可以通过-options选项，查看不同操作系统所支持选项，如：
+Option  Displays...
+class   用于查看类加载情况的统计
+compiler    用于查看HotSpot中即时编译器编译情况的统计
+gc  用于查看JVM中堆的垃圾收集情况的统计
+gccapacity  用于查看新生代、老生代及持久代的存储容量情况
+gccause 用于查看垃圾收集的统计情况（这个和-gcutil选项一样），如果有发生垃圾收集，它还会显示最后一次及当前正在发生垃圾收集的原因。
+gcnew   用于查看新生代垃圾收集的情况
+gcnewcapacity   用于查看新生代的存储容量情况
+gcold   用于查看老生代及持久代发生GC的情况
+gcoldcapacity   用于查看老生代的容量
+gcpermcapacity  用于查看持久代的容量
+gcutil  用于查看新生代、老生代及持代垃圾收集的情况
+printcompilation    HotSpot编译方法的统计    -h n
+        用于指定每隔几行就输出列头，如果不指定，默认是只在第一行出现列头。
+    -JjavaOption
+        用于将给定的javaOption传给java应用程序加载器，例如，“-J-Xms48m”将把启动内存设置为48M。如果想查看可以传递哪些选项到应用程序加载器中，可以相看如下的文档：
+        Linux and Solaris：http://docs.oracle.com/javase/1.5.0/docs/tooldocs/solaris/java.html
+        Windows： http://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/java.html
+    -t n
+        用于在输出内容的第一列显示时间戳，这个时间戳代表的时JVM开始启动到现在的时间（注：在IBM JDK5中是没有这个选项的）。
+
+    vmid  - VM的进程号，即当前运行的java进程号。
+    还有两个关于显示频率的选项：
+    interval–间隔时间，单位可以是秒或者毫秒，通过指定s或ms确定，默认单位为毫秒。
+    count-打印次数，如果缺省则打印无数次。
      */
     void jstat();
 

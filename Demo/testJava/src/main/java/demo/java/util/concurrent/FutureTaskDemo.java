@@ -10,6 +10,13 @@ import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * FutureTask一个可取消的异步计算，FutureTask 实现了Future的基本方法，提供start、cancel操作，可以查询计算是否已经完成，并且可以获取计算的结果。
+ * 结果只可以在计算完成之后获取，get方法会阻塞当计算没有完成的时候，一旦计算已经完成， 那么计算就不能再次启动或是取消。
+ * 
+ * @author hanjy
+ *
+ */
 public class FutureTaskDemo {
 
     public static void main(String[] args) {

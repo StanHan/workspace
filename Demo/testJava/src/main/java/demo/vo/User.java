@@ -1,30 +1,34 @@
 package demo.vo;
 
 public class User {
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + "]";
-    }
-
-    private int id;
-    private String name;
+    /**
+     * 身份证号
+     */
+    private Integer id;
+    // 年龄
+    public int age;
+    /* 姓名 */
+    String name;
+    protected String address;
 
     public User() {
-        super();
+        System.out.println(" 实例化 ");
     }
 
-    public User(int id, String name) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getName() {
@@ -35,4 +39,11 @@ public class User {
         this.name = name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

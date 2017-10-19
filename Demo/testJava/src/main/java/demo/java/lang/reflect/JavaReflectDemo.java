@@ -6,25 +6,29 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import demo.vo.People;
+import demo.vo.User;
 
 /**
  * 要让Java程序能够运行，就得让Java类被JVM加载。Java类如果不被JVM加载就不能正常运行。正常情况下，我们运行的所有的程序在编译期时候就已经把那个类被加载了。
  * 
- * 但是在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用它的任意一个方法？答案是肯定的。这种动态获取类的信息以及动态调用对象的方法的功能来自于Java 反射（Reflection）机制。
+ * 但是在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用它的任意一个方法？答案是肯定的。 这种动态获取类的信息以及动态调用对象的方法的功能来自于Java 反射（Reflection）机制。
  * 
- * Java反射机制容许程序在运行时加载、探知、使用编译期间完全未知的classes。
- * 
- * 换言之，Java可以加载一个运行时才得知名称的class，获得其完整结构。
+ * Java反射机制容许程序在运行时加载、探知、使用编译期间完全未知的classes。 * 换言之，Java可以加载一个运行时才得知名称的class，获得其完整结构。
  * 
  * <li>静态编译：在编译时确定类型，绑定对象,即通过。
  * <li>动态编译：运行时确定类型，绑定对象。动态编译最大限度发挥了java的灵活性，体现了多态的应用，有以降低类之间的藕合性。
  * 
  * 一句话，反射机制的优点就是可以实现动态创建对象和编译，体现出很大的灵活性，特别是在J2EE的开发中.它的灵活性就表现的十分明显。
  * 
- * 比如，一个大型的软件，不可能一次就把把它设计的很完美，当这个程序编译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。采用静态的话，需要把整个程序重新编译一次才可以实现功能的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功能。
+ * 比如，一个大型的软件，不可能一次就把把它设计的很完美，当这个程序编译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如这样的话，这个软件肯定是没有多少人用的。
+ * 采用静态的话，需要把整个程序重新编译一次才可以实现功能的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功能。
  * 
  * 它的缺点是对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它满足我们的要求。这类操作总是慢于只直接执行相同的操作。
  * 
@@ -36,11 +40,38 @@ public class JavaReflectDemo {
     public static void main(String[] args) throws Exception {
         // testAnnotation();
         // testField();
-        // demoDynamicLoadObject();
-        getConstructor();
+        // testDynamicLoadObject();
+        // testConstructor();
+        testParameterizedType();
     }
 
-    static void getConstructor() throws Exception {
+    static void testParameterizedType() {
+        Collection<String> ids = new ArrayList<String>();
+        Class<?> cls = ids.getClass();
+        System.out.println(cls.toGenericString());
+        String canonicalName = cls.getCanonicalName();
+        System.out.println(canonicalName);
+        TypeVariable<?>[] typeVariables = cls.getTypeParameters();
+        for (TypeVariable<?> typeVariable : typeVariables) {
+            System.out.println(typeVariable.getTypeName());
+        }
+        
+        Type[] types = cls.getGenericInterfaces();
+        for (Type type : types) {
+            System.out.println(type.getTypeName());
+            if (type instanceof ParameterizedType) {
+                System.out.println("ok");
+            }
+        }
+        
+    }
+
+    /**
+     * 获取构造方法
+     * 
+     * @throws Exception
+     */
+    static void testConstructor() throws Exception {
         Class<?> c = null;
         c = Class.forName("java.lang.Long");
 
@@ -132,12 +163,16 @@ public class JavaReflectDemo {
     /**
      * 动态加载，及运行时加载类
      */
-    static void demoDynamicLoadObject() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    static void testDynamicLoadObject() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         Class<People> clas = (Class<People>) Class.forName("demo.vo.People");
         People people = clas.newInstance();
         System.out.println(people.getId());
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     static void testField() throws Exception {
         System.out.println("User.class.getName() = " + User.class.getName());
 
@@ -251,53 +286,5 @@ public class JavaReflectDemo {
                                                                     // get方法的值
             }
         }
-    }
-}
-
-class User {
-    /**
-     * 身份证号
-     */
-    private Integer id;
-    // 年龄
-    public int age;
-    /* 姓名 */
-    String name;
-    protected String address;
-
-    public User() {
-        System.out.println(" 实例化 ");
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
