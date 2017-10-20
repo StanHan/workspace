@@ -1,4 +1,4 @@
-package demo.vo;
+package demo.vo.common;
 
 /**
  * 错误代码及其描述

@@ -1,4 +1,4 @@
-package demo.vo;
+package demo.vo.common;
 
 /**
  * 统一接口结果封装类

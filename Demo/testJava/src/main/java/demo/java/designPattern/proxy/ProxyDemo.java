@@ -1,6 +1,6 @@
 package demo.java.designPattern.proxy;
 
-import demo.vo.Actions;
+import demo.spring.service.IActions;
 import demo.vo.People;
 
 public class ProxyDemo {
@@ -18,7 +18,7 @@ public class ProxyDemo {
         people.setId(0);
         people.setName("Stan");
         
-        Actions service = (Actions) factory.createProxyIntance(people);
+        IActions service = (IActions) factory.createProxyIntance(people);
         service.say("666!");
     }
 

@@ -1,4 +1,4 @@
-package demo.vo;
+package demo.vo.common;
 
 public enum BusinessError implements ErrorMsg {
     NO_DATA("no_data","案件不存在"),

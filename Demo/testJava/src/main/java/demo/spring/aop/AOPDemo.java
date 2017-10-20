@@ -3,7 +3,7 @@ package demo.spring.aop;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import demo.vo.Actions;
+import demo.spring.service.IActions;
 
 /**
  * AOP术语：
@@ -24,7 +24,7 @@ public class AOPDemo {
     public static void main(String[] args) {
         ApplicationContext cxt = new ClassPathXmlApplicationContext("spring/bean.xml");
 
-        Actions personService = (Actions) cxt.getBean("personService");
+        IActions personService = (IActions) cxt.getBean("personService");
 
         personService.say("hello aop.");
 

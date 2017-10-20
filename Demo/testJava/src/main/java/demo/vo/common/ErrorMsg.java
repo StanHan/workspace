@@ -1,4 +1,4 @@
-package demo.vo;
+package demo.vo.common;
 
 /**
  * 错误信息接口，包括错误代码和错误详情

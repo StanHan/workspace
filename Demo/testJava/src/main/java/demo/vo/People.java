@@ -1,6 +1,8 @@
 package demo.vo;
 
-public class People implements Actions {
+import demo.spring.service.IActions;
+
+public class People implements IActions {
     
     private int id;
     private String name;

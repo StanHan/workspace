@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 
 public class Test {
 
 	public static void main(String[] args) {
+	    BeanPostProcessor dd = null;
 		A a = new A();
 		a.setaBC("aaaaaaaa");
 		B b = new B();

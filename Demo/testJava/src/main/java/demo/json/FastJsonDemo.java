@@ -9,12 +9,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
-import demo.vo.ApiResult;
-import demo.vo.BusinessError;
 import demo.vo.Course;
-import demo.vo.ErrorCode;
 import demo.vo.Student;
 import demo.vo.Teacher;
+import demo.vo.common.ApiResult;
+import demo.vo.common.BusinessError;
+import demo.vo.common.ErrorCode;
 
 /**
  * 1，对于JSON对象与JSON格式字符串的转换可以直接用 toJSONString()这个方法。
