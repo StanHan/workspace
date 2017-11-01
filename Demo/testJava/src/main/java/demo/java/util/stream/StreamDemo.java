@@ -27,8 +27,15 @@ public class StreamDemo {
     public static void main(String[] args) {
 //        testCollect();
         // reduceDemo();
-//        testPrintDistinctVersion();
-        testCollectors2Map();
+        testPrintDistinctVersion();
+//        testCollectors2Map();
+//        testToArray();
+    }
+    
+    static void testToArray() {
+        String a = "1,2,3,4,5,6";
+        Integer[] array = Stream.of(a.split(",")).map(Integer::valueOf).toArray(Integer[]::new);
+        System.out.println(Arrays.toString(array));
     }
 
     /**

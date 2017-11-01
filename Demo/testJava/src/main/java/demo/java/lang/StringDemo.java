@@ -9,34 +9,18 @@ import java.util.Date;
 import java.util.Locale;
 
 public class StringDemo {
-    public static final String showPath = "ftp/resource/show?path=%s&ftp_marker=%d&register_date=%d";
-    public static final String showPath2 = "%sftp/resource/show?path=%s&ftp_marker=%d&register_date=%d";
+    
 	public static void main(String[] args) throws IOException {
-	    System.out.println(String.format(showPath, "/SL90001/4099a091a4491b86f821/70/70-1--20171009132013.jpg",7,(new Date()).getTime()));
-	    System.out.println(String.format(showPath, "/SL90001/4099a091a4491b86f821/70/70-1--20171009132013.jpg",7,null));
-	    System.out.println(String.format(showPath2, "http://localhost:8080/","/SL90001/4099a091a4491b86f821/70/70-1--20171009132013.jpg",7,null));
-	    String sql = "SELECT c.id userId, a.identity_name identityName, alias, mobilephone, f.device_type deviceType, h.channel_id channelId " +
-                "FROM s_user c  " +
-                "LEFT JOIN s_user_identity a ON a.user_id = c.id " +
-                "LEFT JOIN s_user_xiaomi_push_alias d ON c.id = d.user_id  " +
-                "LEFT JOIN s_user_current_device e ON c.id = e.user_id " +
-                "LEFT JOIN s_user_device f ON e.current_device = f.id " +
-                "LEFT JOIN s_user_device_temp g ON f.device_token = g.device_token " +
-                "LEFT JOIN s_user_device_channel h ON g.id = h.device_id  " +
-                "WHERE c.id =:userId " +
-                "GROUP BY c.id  ";
-	    System.out.println(sql);
-//	    testFormat();
-//		NumberFormat numberFormat = null;
-//		System.out.println(Integer.valueOf(1).equals(Long.valueOf(1)));
-//		regionMatchesDemo();
-	    String a = "hello "+ null;
-	    System.out.println(a);
+	    String a = ".*你好.*";
+	    System.out.println("老王，你好吗".matches(a));
+	           
 	}
+	
+	
 	/**
      * 
      */
-    public static void testFormat() {
+    static void testFormat() {
         String str = null;
         str = String.format("Hi,%s", "王力");
         System.out.println(str);
@@ -139,7 +123,7 @@ public class StringDemo {
 
     }
 
-	public static void regionMatchesDemo() {
+	static void regionMatchesDemo() {
 		String searchMe = "Green Eggs and Ham";
 		String findMe = "Eggs";
 		boolean foundIt = false;
@@ -155,7 +139,7 @@ public class StringDemo {
 		}
 	}
 
-	public static void trigonometricDemo() {
+	static void trigonometricDemo() {
 		double degrees = 45.0;
 		double radians = Math.toRadians(degrees);
 
@@ -177,7 +161,7 @@ public class StringDemo {
 				Math.toDegrees(Math.atan(Math.tan(radians))));
 	}
 
-	public static void exponentialDemo() {
+	static void exponentialDemo() {
 		double x = 11.635;
 		double y = 2.76;
 
@@ -192,7 +176,7 @@ public class StringDemo {
 		System.out.printf("sqrt(%.3f) is " + "%.3f%n", x, Math.sqrt(x));
 	}
 
-	public static void basicMathDemo() {
+	static void basicMathDemo() {
 		double a = -191.635;
 		double b = 43.74;
 		int c = 16, d = 45;
@@ -216,14 +200,14 @@ public class StringDemo {
 		System.out.println(value + "  " + pattern + "  " + output);
 	}
 
-	public static void decimalFormatDemo() {
+	static void decimalFormatDemo() {
 		customFormat("###,###.###", 123456.789);
 		customFormat("###.##", 123456.789);
 		customFormat("000000.000", 123.78);
 		customFormat("$###,###.###", 12345.67);
 	}
 
-	public static void testFormat2() {
+	static void testFormat2() {
 
 		long n = 461012;
 		System.out.format("%d%n", n); // --> "461012"

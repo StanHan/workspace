@@ -22,7 +22,7 @@ public class MyBatisDemo {
 
     static void demoSpringMybatis() {
         // 使用"spring.xml"和"spring-mybatis.xml"这两个配置文件创建Spring上下文
-        ApplicationContext ac = new ClassPathXmlApplicationContext(new String[] { "spring/bean.xml", "spring/spring-mybatis.xml" });
+        ApplicationContext ac = new ClassPathXmlApplicationContext(new String[] { "spring/beans.xml", "spring/spring-mybatis.xml" });
         // 从Spring容器中根据bean的id取出我们要使用的userService对象
         ServiceA serviceA = ac.getBean(ServiceA.class);
         serviceA.selectAdminOperationLog();

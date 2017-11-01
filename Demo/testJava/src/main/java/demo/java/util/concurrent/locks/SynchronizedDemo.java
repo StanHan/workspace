@@ -1,5 +1,8 @@
 package demo.java.util.concurrent.locks;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * 
  * 把代码块声明为 synchronized，有两个重要后果，通常是指该代码具有 原子性（atomicity）和 可见性（visibility）。
@@ -8,7 +11,7 @@ package demo.java.util.concurrent.locks;
  * 但是如果开发人员使用了同步，那么运行库将确保某一线程对变量所做的更新先于对现有 synchronized 块所进行的更新，当进入由同一监控器（lock）保护的另一个 synchronized 块时，
  * 将立刻可以看到这些对变量所做的更新。类似的规则也存在于 volatile 变量上。
  * 
- *  Object 包含某些特殊的方法， wait() 、 notify() 和 notifyAll() ,用来在线程的之间进行通信。
+ * Object 包含某些特殊的方法， wait() 、 notify() 和 notifyAll() ,用来在线程的之间进行通信。
  * 
  * synchronized是针对对象的隐式锁使用的，注意是对象！
  * 
@@ -32,7 +35,6 @@ package demo.java.util.concurrent.locks;
  * synchronized与这两个方法之间的关系：
  * 
  * <li>1.有synchronized的地方不一定有wait,notify
- * 
  * <li>2.有wait,notify的地方必有synchronized.这是因为wait和notify不是属于线程类，而是每一个对象都具有的方法（事实上，这两个方法是Object类里的），而且，这两个方法都和对象锁有关，有锁的地方，必有synchronized。
  * 
  * synchronized方法中由当前线程占有锁。另一方面，调用wait()notify()方法的对象上的锁必须为当前线程所拥有。
@@ -67,8 +69,138 @@ package demo.java.util.concurrent.locks;
 public class SynchronizedDemo {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        testStaicMethodSynchronize();
+    }
 
+    private static Object classLock = new Object();
+
+    /**
+     * 对一个类静态方法上锁
+     */
+    static void testStaicMethodSynchronize() {
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
+        for (int i = 0; i < 50; i++) {
+            executorService.submit(new Runnable() {
+                SynchronizedDemo demo = new SynchronizedDemo();
+
+                @Override
+                public void run() {
+                    try {
+                        demo.staticMethodSynchronize();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        executorService.shutdown();
+    }
+
+    /**
+     * 对一个类静态变量上锁
+     */
+    static void testStaicObjectSynchronize() {
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
+        for (int i = 0; i < 50; i++) {
+            executorService.submit(new Runnable() {
+                SynchronizedDemo demo = new SynchronizedDemo();
+
+                @Override
+                public void run() {
+                    try {
+                        demo.staticObjectSynchronize();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        executorService.shutdown();
+    }
+
+    /**
+     * 对一个类静态方法上锁，可能就对整个类对象上锁。所以不管该类生成多少个对象，都只允许一个线程访问该方法
+     * 
+     * @return
+     * @throws InterruptedException
+     */
+    private static synchronized void staticMethodSynchronize() throws InterruptedException {
+        System.out.println("classSynchronize：" + Thread.currentThread().getName() + " BEGIN.");
+        Thread.sleep(500);
+        System.out.println("classSynchronize：" + Thread.currentThread().getName() + " OVER.");
+    }
+
+    /**
+     * 对一个类静态变量上锁，可能就对整个类对象上锁。所以不管该类生成多少个对象，都只允许一个线程访问该方法
+     * 
+     * @throws InterruptedException
+     */
+    private void staticObjectSynchronize() throws InterruptedException {
+        synchronized (classLock) {
+            System.out.println("classSynchronize：" + Thread.currentThread().getName() + " BEGIN.");
+            Thread.sleep(500);
+            System.out.println("classSynchronize：" + Thread.currentThread().getName() + " OVER.");
+        }
+    }
+
+    /**
+     * 
+     */
+    static void testSynMethod() {
+        ExecutorService executorService = Executors.newFixedThreadPool(20);
+        SynchronizedDemo demo = new SynchronizedDemo();
+        for (int i = 0; i < 50; i++) {
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        demo.synMethod1();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        demo.synMethod2();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        executorService.shutdown();
+    }
+
+    /**
+     * 方法声明时使用,放在范围操作符(public等)之后,返回类型声明(void等)之前.
+     * 即一次只能有一个线程进入该方法,其他线程要想在此时调用该方法,只能排队等候,当前线程(就是在synchronized方法内部的线程)执行完该方法后,别的线程才能进入.
+     * 
+     * @throws InterruptedException
+     */
+    public synchronized void synMethod1() throws InterruptedException {
+        System.out.println("同步方法1：" + Thread.currentThread().getName());
+        Thread.sleep(500);
+        System.out.println("同步方法1：" + Thread.currentThread().getName() + " OVER.");
+    }
+
+    public synchronized void synMethod2() throws InterruptedException {
+        System.out.println("同步方法2：" + Thread.currentThread().getName());
+        Thread.sleep(500);
+        System.out.println("同步方法2：" + Thread.currentThread().getName() + " OVER.");
+    }
+
+    Object lock = new Object();
+
+    public void method() throws InterruptedException {
+        synchronized (lock) {
+            System.out.println("非同步方法：" + Thread.currentThread().getName());
+            Thread.sleep(500);
+            System.out.println("非同步方法：" + Thread.currentThread().getName() + " OVER.");
+        }
     }
 
 }

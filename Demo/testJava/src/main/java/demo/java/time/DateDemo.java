@@ -31,13 +31,22 @@ public class DateDemo {
 	
 	public static void main(String[] args) throws ParseException {
 //	    testCalendar();
-	    System.out.println(removeHmsS2(new Date()).getTime());
-	    System.out.println(removeHmsS(new Date()).getTime());
-	    Date lastDate = new Date(Long.MAX_VALUE);
-	    System.out.println(getDate(lastDate) + " "+ getTime(lastDate));
-	    Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
-	    Date tomorrow = DateUtils.addDays(today, 1);
-	    System.out.println(today + "    "+ tomorrow);
+	    demoDateUtils();
+	}
+	
+	static void demoDateUtils() {
+	    Date now = new Date();
+	    System.out.println(DateUtils.truncate(now, Calendar.DAY_OF_MONTH));
+	    System.out.println(DateUtils.truncate(now, Calendar.MONTH));
+	    System.out.println(DateUtils.truncate(now, Calendar.DATE));
+	    System.out.println(DateUtils.truncate(now, Calendar.HOUR));
+	    System.out.println(removeHmsS2(new Date()));
+        System.out.println(removeHmsS(new Date()));
+        Date lastDate = new Date(Long.MAX_VALUE);
+        System.out.println(getDate(lastDate) + " "+ getTime(lastDate));
+        Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+        Date tomorrow = DateUtils.addDays(today, 1);
+        System.out.println(today + "    "+ tomorrow);
 	}
 	
 	static void testCalendar() {
