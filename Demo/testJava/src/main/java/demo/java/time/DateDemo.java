@@ -31,7 +31,8 @@ public class DateDemo {
 	
 	public static void main(String[] args) throws ParseException {
 //	    testCalendar();
-	    demoDateUtils();
+//	    demoDateUtils();
+	    System.out.println((new Date().getTime()));
 	}
 	
 	static void demoDateUtils() {

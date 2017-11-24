@@ -1,16 +1,30 @@
 package demo.java.net;
 
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
 
 /**
- * URL访问过程：
+ * URL: Uniform Resource Locator
+ * 
+ * 为什么要进行url encode？
+ * 
+ * 因为一些历史的原因URL设计者使用US-ASCII字符集表示URL。（原因比如ASCII比较简单；所有的系统都支持ASCII）。
+ * 为了满足URL的以上特性，设计者就将转义序列移植了进去，来实现通过ASCII字符集的有限子集对任意字符或数据进行编码。 现在URL转义表示法比较常用的有两个：
+ * <li>RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax
+ * <li>RFC 3986 - Uniform Resource Identifier (URI): Generic Syntax
+ * 
+ * 
+ * .URL访问过程：
  * <p>
  * <ol>
  * <li>第一步：客户机提出域名解析请求,并将该请求发送给本地的域名服务器。
@@ -88,6 +102,46 @@ public class URLDemo {
     public static void main(String[] args) throws Exception {
         demo2();
         // demo1();
+    }
+
+    static void demo3() {
+        String result = "";
+        BufferedReader in = null;
+        try {
+            String urlNameString = "http://www.baidu.com";
+            URL realUrl = new URL(urlNameString);
+            // 打开和URL之间的连接
+            URLConnection connection = realUrl.openConnection();
+            // 设置通用的请求属性
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent", "Mozilla/4.0(compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // 建立实际的连接
+            connection.connect();
+            // 获取所有响应头字段
+            Map<String, List<String>> map = connection.getHeaderFields();
+            // 遍历所有的响应头字段
+            for (String key : map.keySet()) {
+                System.out.println(key + "--->" + map.get(key));
+            }
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally { // 使用finally块来关闭输入流
+            // 关闭流
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     static void demo2() throws MalformedURLException, URISyntaxException {

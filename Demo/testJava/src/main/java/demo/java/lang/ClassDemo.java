@@ -3,13 +3,20 @@ package demo.java.lang;
 import java.util.ArrayList;
 import java.util.List;
 
+import demo.vo.Person;
+import demo.vo.Student;
+
 public class ClassDemo {
+    public static final byte ID_CARD_BACK_FLAG_2 = 2;
 
     public static void main(String[] args) {
-        testPrintFilePath();
+        Person person = new Person();
+        person.setLastName("HAN");
+        Student student = (Student) person;
+        System.out.println(student.getLastName());
     }
 
-    static void testPrintFilePath() {
+    static void printFilePath() {
         // 下面三种方法都可以获取相对路径
         System.out.println(ClassDemo.class.getResource("/").getPath());
 

@@ -3,11 +3,13 @@ package demo.java.lang.thread;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 线程的几种状态：
  * <li>NEW,未启动的。不会出现在Dump中。
- * <li>RUNNABLE,该状态表示线程具备所有运行条件，在运行队列中准备操作系统的调度，或者正在运行。 
+ * <li>RUNNABLE,该状态表示线程具备所有运行条件，在运行队列中准备操作系统的调度，或者正在运行。
  * <li>BLOCKED,受阻塞并等待监视器锁。
  * <li>WATING,无限期等待另一个线程执行特定操作。
  * <li>TIMED_WATING,有时限的等待另一个线程的特定操作。
@@ -36,7 +38,27 @@ public class ThreadDemo {
         // testJoin();
         // testWaitNotify();
         // testInterrupte();
-        testUncaughtExceptionHandler();
+//        testUncaughtExceptionHandler();
+        testThreadPool();
+    }
+
+    static ExecutorService executorService = Executors.newFixedThreadPool(3);
+    
+    static void testThreadPool() {
+        for (int i = 0; i < 100; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    throw new RuntimeException("抛出异常");
+                }
+            });
+        }
     }
 
     public static void testWaitNotify() {

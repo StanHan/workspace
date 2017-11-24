@@ -6,6 +6,8 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 public class ReferenceDemo {
@@ -64,6 +66,28 @@ public class ReferenceDemo {
         }
     }
 
+    private static SoftReference<Map<Integer, Object>> taskCache;
+
+    /**
+     * 根据id查询task信息
+     * 
+     * @param id
+     * @return
+     */
+    private Object queryTaskById(int id) {
+        if (taskCache == null || taskCache.get() == null) {
+            taskCache = new SoftReference<>(new HashMap<>());
+        }
+        Object task = taskCache.get().get(id);
+        if (task == null) {
+            task = new Object();
+            if (task != null) {
+                taskCache.get().put(id, task);
+            }
+        }
+        return task;
+    }
+
     /**
      * 弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它 所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。
      * 不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。
@@ -110,9 +134,9 @@ public class ReferenceDemo {
      * 
      * 建立虚引用之后通过get方法返回结果始终为null,通过源代码你会发现,虚引用通向会把引用的对象写进referent,只是get方法返回结果为null.先看一下和gc交互的过程在说一下他的作用.
      * 
-     * 1 不把referent设置为null, 直接把heap中的new String(“abc”)对象设置为可结束的(finalizable).
+     * <li>1 不把referent设置为null, 直接把heap中的new String(“abc”)对象设置为可结束的(finalizable).
      * 
-     * 2 与软引用和弱引用不同, 先把PhantomRefrence对象添加到它的ReferenceQueue中.然后在释放虚可及的对象. 你会发现在收集heap中的new
+     * <li>2 与软引用和弱引用不同, 先把PhantomRefrence对象添加到它的ReferenceQueue中.然后在释放虚可及的对象. 你会发现在收集heap中的new
      * String(“abc”)对象之前,你就可以做一些其他的事情.
      */
     static void phantomReference() {

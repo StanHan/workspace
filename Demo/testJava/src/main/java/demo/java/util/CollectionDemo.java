@@ -44,12 +44,22 @@ public class CollectionDemo {
         // demoSearch(19);
         Collection collection = null;
         // testTreeSet();
-        // testHashSet();
-//        testArray(1, 2, 3);
+        testSet();
+        // testArray(1, 2, 3);
         // java7Demo();
         // listDemo();
-         testList();
+        // testList();
     }
+    
+    static void listToArray() {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(1);
+        list.add(2);
+        Integer[] array = list.toArray(new Integer[list.size()]);
+        for(int element:array){
+            System.out.println(element);
+        }
+   }
 
     static void testArray(int... ids) {
         System.out.println(ids);
@@ -83,14 +93,14 @@ public class CollectionDemo {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         Integer[] array3 = { 1, 2, 3, 4, 5 };
         list = Arrays.asList(array3);
-        
+
         Integer[] emptyArray = {};
         Integer[] arrayNull = null;
         Integer[] biggerArray = new Integer[10];
-        
+
         try {
             System.out.println("List.toArray(...) 方法参数为null,报空指针");
             emptyArray = list.toArray(arrayNull);
@@ -99,21 +109,21 @@ public class CollectionDemo {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         {
             System.out.println("List.toArray(...) 参数长度大于list size，全部填充，其他填充为null.");
             arrayNull = list.toArray(biggerArray);
             System.out.println(Arrays.toString(arrayNull));
             System.out.println(Arrays.toString(biggerArray));
         }
-        
+
         {
             System.out.println("List.toArray(...) 参数长度小于于list size，创建一个新的数组填充，参数数组不变。让人误解的逻辑！！");
             arrayNull = list.toArray(emptyArray);
             System.out.println(Arrays.toString(arrayNull));
             System.out.println(Arrays.toString(emptyArray));
         }
-        
+
     }
 
     static void demoSearch(int a) {
@@ -151,8 +161,49 @@ public class CollectionDemo {
          */
     }
 
+    static void testSet() {
+        Set<Integer> result = new HashSet<Integer>();
+        Set<Integer> set1 = new HashSet<Integer>() {
+            {
+                add(1);
+                add(2);
+            }
+        };
+
+        Set<Integer> set2 = new HashSet<Integer>() {
+            {
+                add(1);
+                add(3);
+            }
+        };
+
+        Set<Integer> set3 = new HashSet<Integer>();
+        System.out.println("set1=" + set1);
+        System.out.println("set2=" + set2);
+        System.out.println("set3=" + set3);
+
+        result.clear();
+        System.out.println(result.addAll(set1));
+        System.out.println(result.retainAll(set2));
+        System.out.println("交集：" + result);
+
+        result.clear();
+        System.out.println(result.addAll(set1));
+        System.out.println(result.removeAll(set2));
+        System.out.println("差集：" + result);
+
+        result.clear();
+        System.out.println(result.addAll(set1));
+        System.out.println(result.addAll(set2));
+        System.out.println("并集：" + result);
+
+        System.out.println(set1.removeAll(set3));
+        System.out.println("set1=" + set1);
+        System.out.println("set3=" + set3);
+    }
+
     static void testHashSet() {
-        HashSet<String> set = new HashSet();
+        HashSet<String> set = new HashSet<>();
         set.add("han");
         set.add("jun");
         set.add("ying");
@@ -164,7 +215,7 @@ public class CollectionDemo {
             String string = (String) iterator.next();
             System.out.println(string);
         }
-
+        System.out.println("------------------");
         Object[] array = set.toArray();
         for (Object string : array) {
             System.out.println(string);

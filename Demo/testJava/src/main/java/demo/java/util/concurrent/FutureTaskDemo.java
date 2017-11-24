@@ -1,5 +1,7 @@
 package demo.java.util.concurrent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -19,12 +21,67 @@ import java.util.concurrent.TimeoutException;
  */
 public class FutureTaskDemo {
 
-    public static void main(String[] args) {
-        testFutureTask();
+    public static void main(String[] args) throws InterruptedException {
+        testGetResult();
+    }
+
+    public static final Map<Integer, FutureTask<String>> map = new HashMap<>();
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
+    private static Random random = new Random();
+
+    /**
+     * 异步获取任务执行结果
+     * 
+     * @throws InterruptedException
+     */
+    static void testGetResult() throws InterruptedException {
+        // 创建10个任务并执行，将任务存到Map里
+        for (int i = 0; i < 20; i++) {
+            FutureTask<String> task = new FutureTask<String>(new Callable<String>() {// FutrueTask的构造参数是一个Callable接口
+                @Override
+                public String call() throws Exception {
+                    int tmp = random.nextInt(1000);
+                    Thread.sleep(tmp);
+                    if (tmp % 2 == 1) {
+                        throw new Exception("抛个异常试试");
+                    }
+                    return Thread.currentThread().getName() + ":" + System.currentTimeMillis();// 这里可以是一个异步操作
+                }
+            });
+            executorService.submit(task);
+            map.put(i, task);
+        }
+        // 主任务定期查看任务执行结果
+        while (true) {
+            // System.out.println(map.size());
+            if (map.isEmpty()) {
+                continue;
+            }
+            Integer[] array = map.keySet().stream().toArray(Integer[]::new);
+            for (Integer taskId : array) {
+                FutureTask<String> futureTask = map.get(taskId);
+                if (futureTask.isDone()) {
+                    map.remove(taskId);
+                    try {
+                        String result = futureTask.get();
+                        System.out.println(taskId + " result is :" + result);
+                    } catch (InterruptedException e) {
+                        System.out.println("中断异常:"+e.getMessage());
+                    } catch (ExecutionException e) {
+                        System.out.println("执行异常:"+e.getMessage());
+                    }
+                }
+            }
+            Thread.sleep(50);
+            if (map.size() == 0) {
+                break;
+            }
+        }
+        executorService.shutdown();
+        System.out.println("over.");
     }
 
     static void test() {
-        ExecutorService exec = Executors.newCachedThreadPool();
 
         FutureTask<String> task = new FutureTask<String>(new Callable<String>() {// FutrueTask的构造参数是一个Callable接口
             @Override
@@ -34,7 +91,7 @@ public class FutureTaskDemo {
         });
 
         try {
-            exec.execute(task);// FutureTask实际上也是一个线程
+            executorService.execute(task);// FutureTask实际上也是一个线程
             String result = task.get();// 取得异步计算的结果，如果没有返回，就会一直阻塞等待
             System.out.printf("get:%s%n", result);
         } catch (InterruptedException e) {
