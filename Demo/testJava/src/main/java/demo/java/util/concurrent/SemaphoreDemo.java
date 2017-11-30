@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 一个计数信号量。从概念上讲，信号量维护了一个许可集。 Semaphore 只对可用许可的号码进行计数，并采取相应的行动。 拿到信号量的线程可以进入代码，否则就等待。通过acquire()和release()获取和释放访问许可。
@@ -11,7 +13,9 @@ import java.util.concurrent.Semaphore;
  */
 public class SemaphoreDemo {
 
-    public static void main(String[] args) {
+    private static Logger logger = LoggerFactory.getLogger(SemaphoreDemo.class);
+
+    public static void main(String[] args) throws Exception {
         testSpeedLimiter2();
     }
 
@@ -49,24 +53,27 @@ public class SemaphoreDemo {
 
     /**
      * 限速
+     * 
+     * @throws InterruptedException
      */
-    static void testSpeedLimiter2() {
-        SpeedLimiter<Object> speedLimiter = new SpeedLimiter<>(2, 1000, new Object());
-        for (int i=0;i<300;i++) {
+    static void testSpeedLimiter2() throws InterruptedException {
+        SpeedLimiter<Object> speedLimiter = new SpeedLimiter<>(1, 1000, new Object());
+        for (int i = 0; i < 300; i++) {
             speedLimiter.consume();
-            System.out.println(i);
+            logger.info(" :" + i);
+            Thread.sleep(600);
             speedLimiter.returnResource();
         }
-        
+
     }
-    
+
     /**
      * 限速
      */
     static void testSpeedLimiter() {
         String resource = "myresource";
         SpeedLimiter<String> speedLimiter = new SpeedLimiter<String>(10, 1000, resource);
-        
+
         TestSpeedLimitedThread<String> testThread1 = new TestSpeedLimitedThread<String>(speedLimiter);
         testThread1.start();
         TestSpeedLimitedThread<String> testThread2 = new TestSpeedLimitedThread<String>(speedLimiter);
@@ -93,7 +100,8 @@ class TestSpeedLimitedThread<T> extends Thread {
         long i = 0;
         while (true) {
             T tmpResource = limiter.consume();
-            System.out.println("thread id: " + currentThread().getName() + " : " + (i + 1) + ": 已经获取到资源：" + tmpResource);
+            System.out
+                    .println("thread id: " + currentThread().getName() + " : " + (i + 1) + ": 已经获取到资源：" + tmpResource);
             i++;
             try {
                 Thread.sleep(10);

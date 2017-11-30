@@ -12,7 +12,14 @@ import java.util.concurrent.Executors;
  * <li>Timer不保证任务执行的十分精确。
  * <li>Timer类的线程安全的。
  * 
- * @author hanjy
+ * Timer有以下几种危险：
+ * <li>a. Timer是基于绝对时间的。容易受系统时钟的影响。
+ * <li>b. Timer只新建了一个线程来执行所有的TimeTask。所有TimeTask可能会相关影响
+ * <li>c. Timer不会捕获TimerTask的异常，只是简单地停止。这样势必会影响其他TimeTask的执行。
+ * 
+ * Timer有着不少缺陷，如Timer是单线程模式，调度多个周期性任务时，如果某个任务耗时较久就会影响其它任务的调度；如果某个任务出现异常而没有被catch则可能导致唯一的线程死掉而所有任务都不会再被调度。
+ * 
+ * 如果你是使用JDK1.5以上版本，建议用ScheduledThreadPoolExecutor代替Timer。 它基本上解决了上述问题。 它采用相对时间，用线程池来执行TimerTask，会出来TimerTask异常。
  *
  */
 public class TimerDemo {
