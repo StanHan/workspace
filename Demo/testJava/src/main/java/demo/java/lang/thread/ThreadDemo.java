@@ -30,7 +30,50 @@ import java.util.concurrent.Executors;
  * <li>waiting on <地址>
  * 目标：使用synchronized申请对象锁成功后,释放锁幵在等待区等待。通过synchronized关键字,成功获取到了对象的锁后,调用了wait方法,进入对象的等待区等待。在调用栈顶出现,线程状态为WAITING或TIMED_WATING。
  * <li>parking to wait for <地址> 目标.park是基本的线程阻塞原语,不通过监视器在对象上阻塞。随concurrent包会出现的新的机制,不synchronized体系不同。
- *
+ * 
+ * <p>
+ * JVM的线程模型，其中最主要的是下面几个类：
+ * <li>java.lang.Thread: 这个是Java语言里的线程类，由这个Java类创建的instance都会 1:1 映射到一个操作系统的osthread
+ * <li>JavaThread: JVM中C++定义的类，一个JavaThread的instance代表了在JVM中的java.lang.Thread的instance,
+ * 它维护了线程的状态，并且维护一个指针指向java.lang.Thread创建的对象(oop)。它同时还维护了一个指针指向对应的OSThread，来获取底层操作系统创建的osthread的状态
+ * <li>OSThread: JVM中C++定义的类，代表了JVM中对底层操作系统的osthread的抽象，它维护着实际操作系统创建的线程句柄handle，可以获取底层osthread的状态
+ * <li>VMThread: JVM中C++定义的类，这个类和用户创建的线程无关，是JVM本身用来进行虚拟机操作的线程，比如GC。
+ * <p>
+ * 有两种方式可以让用户在JVM中创建线程
+ * <li>1. new java.lang.Thread().start()
+ * <li>2. 使用JNI将一个native thread attach到JVM中
+ * <p>
+ * 针对 new java.lang.Thread().start()这种方式，只有调用start()方法的时候，才会真正的在JVM中去创建线程，主要的生命周期步骤有：
+ * <li>1. 创建对应的JavaThread的instance
+ * <li>2. 创建对应的OSThread的instance
+ * <li>3. 创建实际的底层操作系统的native thread
+ * <li>4. 准备相应的JVM状态，比如ThreadLocal存储空间分配等
+ * <li>5. 底层的native thread开始运行，调用java.lang.Thread生成的Object的run()方法
+ * <li>6. 当java.lang.Thread生成的Object的run()方法执行完毕返回后,或者抛出异常终止后，终止native thread
+ * <li>7. 释放JVM相关的thread的资源，清除对应的JavaThread和OSThread
+ * <p>
+ * 针对JNI将一个native thread attach到JVM中，主要的步骤有：
+ * <li>1. 通过JNI call AttachCurrentThread申请连接到执行的JVM实例
+ * <li>2. JVM创建相应的JavaThread和OSThread对象
+ * <li>3. 创建相应的java.lang.Thread的对象
+ * <li>4. 一旦java.lang.Thread的Object创建之后，JNI就可以调用Java代码了
+ * <li>5. 当通过JNI call DetachCurrentThread之后，JNI就从JVM实例中断开连接
+ * <li>6. JVM清除相应的JavaThread, OSThread, java.lang.Thread对象
+ * <p>
+ * 从JVM的角度来看待线程状态的状态有以下几种:其中主要的状态是这5种:
+ * <li>_thread_new: 新创建的线程
+ * <li>_thread_in_Java: 在运行Java代码
+ * <li>_thread_in_vm: 在运行JVM本身的代码
+ * <li>_thread_in_native: 在运行native代码
+ * <li>_thread_blocked: 线程被阻塞了，包括等待一个锁，等待一个条件，sleep，执行一个阻塞的IO等
+ * <p>
+ * 从OSThread的角度，JVM还定义了一些线程状态给外部使用，比如用jstack输出的线程堆栈信息中线程的状态: 比较常见有:
+ * <li>Runnable: 可以运行或者正在运行的
+ * <li>MONITOR_WAIT: 等待锁
+ * <li>OBJECT_WAIT: 执行了Object.wait()之后在条件队列中等待的
+ * <li>SLEEPING: 执行了Thread.sleep()的
+ * 
+ * 从JavaThread的角度，JVM定义了一些针对Java Thread对象的状态，基本类似，多了一个TIMED_WAITING的状态，用来表示定时阻塞的状态
  */
 public class ThreadDemo {
 
@@ -38,12 +81,12 @@ public class ThreadDemo {
         // testJoin();
         // testWaitNotify();
         // testInterrupte();
-//        testUncaughtExceptionHandler();
+        // testUncaughtExceptionHandler();
         testThreadPool();
     }
 
     static ExecutorService executorService = Executors.newFixedThreadPool(3);
-    
+
     static void testThreadPool() {
         for (int i = 0; i < 100; i++) {
             executorService.execute(new Runnable() {

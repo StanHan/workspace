@@ -17,6 +17,7 @@ import java.time.chrono.Chronology;
 import java.time.chrono.HijrahChronology;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.IsoFields;
+import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,17 +33,46 @@ public class TimeDemo {
     private LocalTime time;
 
     public static void main(String[] args) throws Exception {
-//        demoDateTimeFormatter();
-        demoClock();
+      testLocalDateTime();
     }
-    
-    static void demoDateTimeFormatter(){
+
+    static void testDateTimeFormatter() {
         LocalDate now = LocalDate.now();
+        System.out.println(now);// yyyy-MM-dd
         LocalDate yesterday = LocalDate.now().minusDays(1);
-        System.out.println(now);//yyyy-MM-dd
+        System.out.println(yesterday);// yyyy-MM-dd
         String formatNow = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         System.out.println(formatNow);
-        System.out.println(yesterday);
+        LocalDate localDate = LocalDate.parse("20180101", DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
+    /**
+     * LocalDate转Date
+     */
+    static void test2() {
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+        ZonedDateTime zdt = localDate.atStartOfDay(zoneId);
+
+        Date date = Date.from(zdt.toInstant());
+
+        System.out.println("LocalDate = " + localDate);
+        System.out.println("Date = " + date);
+
+    }
+
+    /**
+     * Date转LocalDate
+     */
+    static void test1() {
+        Date date = new Date();
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+
+        // atZone()方法返回在指定时区从此Instant生成的ZonedDateTime。
+        LocalDate localDate = instant.atZone(zoneId).toLocalDate();
+        System.out.println("Date = " + date);
+        System.out.println("LocalDate = " + localDate);
     }
 
     /**
@@ -53,7 +83,7 @@ public class TimeDemo {
         Clock c1 = Clock.systemUTC(); // 系统默认UTC时钟（当前瞬时时间 System.currentTimeMillis()）
         long start = c1.millis();
         System.out.println(c1.millis()); // 每次调用将返回当前瞬时时间（UTC）
-        System.out.println("耗时："+(c1.millis()-start));
+        System.out.println("耗时：" + (c1.millis() - start));
 
         Clock c2 = Clock.systemDefaultZone(); // 系统默认时区时钟（当前瞬时时间）
 
@@ -76,7 +106,7 @@ public class TimeDemo {
     /**
      * Instant 瞬时时间，等价于以前的System.currentTimeMillis()
      */
-    private static void demoInstance() {
+    static void demoInstance() {
         // 瞬时时间 相当于以前的System.currentTimeMillis()
         Instant instant1 = Instant.now();
         System.out.println(instant1.getEpochSecond());// 精确到秒 得到相对于1970-01-01 00:00:00 UTC的一个时间
@@ -94,7 +124,7 @@ public class TimeDemo {
     /**
      * LocalDateTime、LocalDate、LocalTime 提供了对java.util.Date的替代，另外还提供了新的DateTimeFormatter用于对格式化/解析的支持
      */
-    private static void demoLocal() {
+    static void testLocalDateTime() {
         // 使用默认时区时钟瞬时时间创建 Clock.systemDefaultZone() -->即相对于 ZoneId.systemDefault()默认时区
         LocalDateTime now = LocalDateTime.now();
         System.out.println(now);
@@ -155,7 +185,7 @@ public class TimeDemo {
      * ZonedDateTime 带有时区的date-time
      * 存储纳秒、时区和时差（避免与本地date-time歧义）；API和LocalDateTime类似，只是多了时差(如2013-12-20T10:35:50.711+08:00[Asia/Shanghai])
      */
-    private static void demoZone() {
+    static void demoZone() {
         // 即带有时区的date-time 存储纳秒、时区和时差（避免与本地date-time歧义）。
         // API和LocalDateTime类似，只是多了时差(如2013-12-20T10:35:50.711+08:00[Asia/Shanghai])
         ZonedDateTime now = ZonedDateTime.now();
@@ -174,7 +204,7 @@ public class TimeDemo {
      * Duration 表示两个瞬时时间的时间段
      * 
      */
-    private static void demoDuration() {
+    static void demoDuration() {
         // 表示两个瞬时时间的时间段
         Duration d1 = Duration.between(Instant.ofEpochMilli(System.currentTimeMillis() - 12323123), Instant.now());
         // 得到相应的时差
@@ -192,7 +222,7 @@ public class TimeDemo {
     /**
      * Chronology 用于对年历系统的支持，是java.util.Calendar的替代者
      */
-    private static void demoChronology() {
+    static void demoChronology() {
         // 提供对java.util.Calendar的替换，提供对年历系统的支持
         Chronology c = HijrahChronology.INSTANCE;
         ChronoLocalDateTime d = c.localDateTime(LocalDateTime.now());
@@ -202,7 +232,7 @@ public class TimeDemo {
     /**
      * 如果提供了年、年月、月日、周期的API支持
      */
-    private static void demoYYYYMMDD() {
+    static void demoYYYYMMDD() {
         Year year = Year.now();
         YearMonth yearMonth = YearMonth.now();
         MonthDay monthDay = MonthDay.now();

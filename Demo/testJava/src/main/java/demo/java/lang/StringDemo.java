@@ -3,18 +3,25 @@ package demo.java.lang;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.alibaba.fastjson.JSON;
-
-import demo.vo.ParamReturnVO;
-
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
+        System.out.println(String.valueOf(null));
+    }
+
+    static void testStringBuilder() {
+        StringBuilder sb = new StringBuilder("你好,");
+        System.out.println(sb.toString());
+        int length = sb.length();
+        System.out.println("length:" + length);
+        char idx0 = sb.charAt(0);
+        System.out.println("charAt(0) :" + idx0);
+        sb.deleteCharAt(length - 1);
+        System.out.println(sb.toString());
     }
 
     /**

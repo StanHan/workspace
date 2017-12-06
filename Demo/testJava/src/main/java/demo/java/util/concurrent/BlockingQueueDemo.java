@@ -34,15 +34,15 @@ public class BlockingQueueDemo {
     /**
      * 默认情况下，LinkedBlockingQueue的容量是没有上限的（在不指定时容量为Integer.MAX_VALUE），但是也可以选择指定其最大容量，它是基于链表的队列，此队列按 FIFO（先进先出）排序元素。
      */
-    static void demoLinkedBlockingQueue() {
+    static void testLinkedBlockingQueue() {
         LinkedBlockingQueue<Object> blockingQueue = new LinkedBlockingQueue<Object>();
     }
 
     /**
      * ArrayBlockingQueue在构造时需要指定容量， 并可以选择是否需要公平性，如果公平参数被设置true，等待时间最长的线程会优先得到处理（其实就是通过将ReentrantLock设置为true来
-     * 达到这种公平性的：即等待时间最长的线程会先操作）。通常，公平性会使你在性能上付出代价，只有在的确非常需要的时候再使用它。它是基于数组的阻塞循环队 列，此队列按 FIFO（先进先出）原则对元素进行排序。
+     * 达到这种公平性的：即等待时间最长的线程会先操作）。通常，公平性会使你在性能上付出代价，只有在的确非常需要的时候再使用它。 它是基于数组的阻塞循环队 列，此队列按 FIFO（先进先出）原则对元素进行排序。
      */
-    static void demoArrayBlockingQueue() {
+    static void testArrayBlockingQueue() {
         ArrayBlockingQueue<Object> blockingQueue = new ArrayBlockingQueue<Object>(10);
     }
 
@@ -52,57 +52,54 @@ public class BlockingQueueDemo {
      * 队列上put时是不会受阻的。虽然此队列逻辑上是无界的，但是由于资源被耗尽，所以试图执行添加操作可能会导致
      * OutOfMemoryError），但是如果队列为空，那么取元素的操作take就会阻塞，所以它的检索操作take是受阻的。另外，往入该队列中的元 素要具有比较能力。
      */
-    static void demoPriorityBlockingQueue() {
+    static void testPriorityBlockingQueue() {
         PriorityBlockingQueue<Object> blockingQueue = new PriorityBlockingQueue<Object>();
     }
 
-
 }
 
-class TestBlockingQueue {  
-    
-    public static void main(String[] args) {  
-        final BlockingQueue<Integer> queue=new LinkedBlockingQueue<Integer>(3);  
-        final Random random=new Random();  
-          
-        class Producer implements Runnable{  
-            @Override  
-            public void run() {  
-                while(true){  
-                    try {  
-                        int i=random.nextInt(100);  
-                        queue.put(i);//当队列达到容量时候，会自动阻塞的  
-                        if(queue.size()==3)  
-                        {  
-                            System.out.println("full");  
-                        }  
-                    } catch (InterruptedException e) {  
-                        e.printStackTrace();  
-                    }  
-                }  
-            }  
-        }  
-          
-        class Consumer implements Runnable{  
-            @Override  
-            public void run() {  
-                while(true){  
-                    try {  
-                        queue.take();//当队列为空时，也会自动阻塞  
-                        Thread.sleep(1000);  
-                    } catch (InterruptedException e) {  
-                        e.printStackTrace();  
-                    }  
-                }  
-            }  
-        }  
-          
-        new Thread(new Producer()).start();  
-        new Thread(new Consumer()).start();  
-    }  
-  
-}  
+class TestBlockingQueue {
 
+    public static void main(String[] args) {
+        final BlockingQueue<Integer> queue = new LinkedBlockingQueue<Integer>(3);
+        final Random random = new Random();
+
+        class Producer implements Runnable {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        int i = random.nextInt(100);
+                        queue.put(i);// 当队列达到容量时候，会自动阻塞的
+                        if (queue.size() == 3) {
+                            System.out.println("full");
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        class Consumer implements Runnable {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        queue.take();// 当队列为空时，也会自动阻塞
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        new Thread(new Producer()).start();
+        new Thread(new Consumer()).start();
+    }
+
+}
 
 /**
  * DelayQueue（基于PriorityQueue来实现的）是一个存放Delayed 元素的无界阻塞队列，只有在延迟期满时才能从中提取元素。该队列的头部是延迟期满后保存时间最长的 Delayed

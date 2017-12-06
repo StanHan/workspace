@@ -1,6 +1,5 @@
 package demo.java.lang.thread;
 
-import java.text.SimpleDateFormat;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
