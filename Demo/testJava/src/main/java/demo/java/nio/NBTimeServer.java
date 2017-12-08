@@ -1,11 +1,16 @@
 package demo.java.nio;
 
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.nio.channels.spi.*;
-import java.net.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.spi.SelectorProvider;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Listen on a port for connections and write back the current time. A non

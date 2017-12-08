@@ -162,6 +162,11 @@ import javax.servlet.http.HttpServletResponse;
 public class HeaderDemo {
     static void testHeader(HttpServletRequest req, HttpServletResponse resp) {
         resp.addHeader("", "");
+        resp.setHeader("", "");
+        resp.addDateHeader("", System.currentTimeMillis());
+        resp.addIntHeader("", 2);
+        resp.setDateHeader("", System.currentTimeMillis());
+        resp.setIntHeader("", 2);
     }
 
 }

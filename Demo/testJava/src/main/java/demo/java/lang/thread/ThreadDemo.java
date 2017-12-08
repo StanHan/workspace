@@ -7,13 +7,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * 
  * 线程的几种状态：
- * <li>NEW,未启动的。不会出现在Dump中。
+ * <li>NEW,创建后，尚未启动的线程。不会出现在Dump中。
  * <li>RUNNABLE,该状态表示线程具备所有运行条件，在运行队列中准备操作系统的调度，或者正在运行。
  * <li>BLOCKED,受阻塞并等待监视器锁。
- * <li>WATING,无限期等待另一个线程执行特定操作。
+ * <li>WATING,处于监视器所属对象的wait set中，等待着被其它（此对象监视器所有者）线程唤醒。
  * <li>TIMED_WATING,有时限的等待另一个线程的特定操作。
- * <li>TERMINATED,已退出的。
+ * <li>TERMINATED,已经终止的线程处于这种状态。
  * 
  * Monitor: Monitor是 Java中用以实现线程之间的互斥与协作的主要手段，它可以看成是对象或者 Class的锁。每一个对象都有，也仅有一个 monitor。
  * <li>进入区(Entry Set):表示线程通过synchronized要求获取对象的锁。如果对象未被锁住,则迚入拥有者;否则则在进入区等待。一旦对象锁被其他线程释放,立即参与竞争。
