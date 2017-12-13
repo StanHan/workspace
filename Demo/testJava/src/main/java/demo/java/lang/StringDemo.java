@@ -10,7 +10,15 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
-        System.out.println(String.valueOf(null));
+        String sql = "select cast(audit_status.user_id as char) userId,cast(fpm.id as char) productId,  fpm.name productName, cast(audit_status.product_audit_id as char) auditId, audit_status.apply_time applyTime, " +
+                "audit_status.approve_time  approveTime, s_admin.userName adminName, audit_status.credit_status creditStatus, " +
+                "audit_status.audit_status auditStatus , audit_status.reason reason, audit_status.reason_id reasonId, " +
+                "audit_status.result_code resultCode,audit_status.apply_progress applyProgress " +
+                "from s_user_product_audit_status  audit_status " +
+                "left join s_admin on audit_status.admin_id = s_admin.id " +
+                "left join s_finance_product_master fpm on audit_status.product_mst_id=fpm.id  " +
+                "where audit_status.user_id=:userId";
+        System.out.println(sql);
     }
 
     static void testStringBuilder() {

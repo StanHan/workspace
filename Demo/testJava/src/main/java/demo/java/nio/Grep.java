@@ -18,8 +18,24 @@ import java.util.regex.PatternSyntaxException;
  *
  */
 public class Grep {
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            System.err.println("Usage: java Grep pattern file...");
+            return;
+        }
+        compile(args[0]);
+        for (int i = 1; i < args.length; i++) {
+            File f = new File(args[i]);
+            try {
+                grep(f);
+            } catch (IOException x) {
+                System.err.println(f + ": " + x);
+            }
+        }
+    }
 
     // Charset and decoder for ISO-8859-15
+
     private static Charset charset = Charset.forName("ISO-8859-15");
     private static CharsetDecoder charsetDecoder = charset.newDecoder();
 
@@ -82,22 +98,5 @@ public class Grep {
 
         fileInputStream.close();
     }
-
-    public static void main(String[] args) {
-        if (args.length < 2) {
-            System.err.println("Usage: java Grep pattern file...");
-            return;
-        }
-        compile(args[0]);
-        for (int i = 1; i < args.length; i++) {
-            File f = new File(args[i]);
-            try {
-                grep(f);
-            } catch (IOException x) {
-                System.err.println(f + ": " + x);
-            }
-        }
-    }
-    
 
 }

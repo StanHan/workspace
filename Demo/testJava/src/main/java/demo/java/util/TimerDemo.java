@@ -39,6 +39,7 @@ public class TimerDemo {
         timer.scheduleAtFixedRate(task1, 1000, 300);
         // 该任务会抛出异常，导致任务终止
         timer.schedule(task4, 6000, 1000);
+        
     }
 
     /**

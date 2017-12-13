@@ -6,18 +6,43 @@ import java.util.List;
 public class PrimitiveDataTest {
 
     public static void main(String[] args) {
-        testByte();
-        Integer c = 12;
-        Integer d = 12;
-        System.out.println(c == d);
-        // Unicode for uppercase Greek omega character
-        char uniChar = '\u03A9';
-        System.out.println(uniChar);
-
         unboxing();
     }
 
+    static void testChar() {
+        // Unicode for uppercase Greek omega character 'Ω'
+        char uniChar = '\u03A9';
+        System.out.println(uniChar);
+        Character omega = 'Ω';
+        System.out.println(omega);
+    }
+
+    static void testInt() {
+        // 左移0位（不变）
+        final int OP_READ = 1 << 0;
+        System.out.println(OP_READ);
+        // 左移2位（*4）
+        final int OP_WRITE = 1 << 2;
+        System.out.println(OP_WRITE);
+        // 左移3位（*8）
+        final int OP_CONNECT = 1 << 3;
+        System.out.println(OP_CONNECT);
+        // 左移4位（*16）
+        final int OP_ACCEPT = 1 << 4;
+        System.out.println(OP_ACCEPT);
+        // -128 到 127 是Java常量池的常量，所以是一个对象
+        Integer a = -128;
+        Integer b = -128;
+        System.out.println(a == b);
+        // 超过这个范围就不是常量池的数据了，需要重新分配一个地址存放
+        Integer c = 128;
+        Integer d = 128;
+        System.out.println(c == d);
+    }
+
     static void testByte() {
+        System.out.println(Byte.MAX_VALUE);
+        System.out.println(Byte.MIN_VALUE);
         Byte a = 12;
         Byte b = 12;
         System.out.println(a == b);
@@ -48,7 +73,7 @@ public class PrimitiveDataTest {
         return (i < 0) ? -i : i;
     }
 
-    public static void bitDemo() {
+    static void bitDemo() {
         // The number 26, in binary
         int binVal = 0b10000000000000000000000000011010;
         System.out.println("binVal = " + Integer.toBinaryString(binVal));
@@ -69,7 +94,7 @@ public class PrimitiveDataTest {
         ;
     }
 
-    public static void prePostDemo() {
+    static void prePostDemo() {
         int i = 3;
         i++;
 

@@ -44,22 +44,46 @@ public class CollectionDemo {
         // demoSearch(19);
         Collection collection = null;
         // testTreeSet();
-        testSet();
+        // testSet();
         // testArray(1, 2, 3);
         // java7Demo();
         // listDemo();
         // testList();
+        testRemove();
     }
-    
+
+    static void testRemove() {
+        List<Integer> list = Arrays.asList(1, 2, 3);
+
+        for (Integer integer : list) {
+            System.out.println(integer);
+            /** remove 时报错 */
+            try {
+                list.remove(integer);
+            } catch (UnsupportedOperationException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        System.out.println("------------------------------");
+        Iterator<Integer> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Integer i = iterator.next();
+            System.out.println(i);
+            /** remove 时报错 */
+            iterator.remove();
+        }
+    }
+
     static void listToArray() {
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         list.add(2);
+        list.add(null);
         Integer[] array = list.toArray(new Integer[list.size()]);
-        for(int element:array){
+        for (Integer element : array) {
             System.out.println(element);
         }
-   }
+    }
 
     static void testArray(int... ids) {
         System.out.println(ids);
