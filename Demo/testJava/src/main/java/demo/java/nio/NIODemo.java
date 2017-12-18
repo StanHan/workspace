@@ -5,10 +5,13 @@ import java.io.RandomAccessFile;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channel;
+import java.nio.channels.DatagramChannel;
 import java.nio.channels.FileChannel;
+import java.nio.channels.Pipe;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -31,6 +34,11 @@ import java.util.Set;
  * <li>3. 阻塞， 就是调用我（s端被调用者，函数），我（s端被调用者，函数）没有接收完数据或者没有得到结果之前，我不会返回。
  * <li>4. 非阻塞， 就是调用我（s端被调用者，函数），我（s端被调用者，函数）立即返回，通过select通知调用者
  * 
+ * 使用传统的BIO（Blocking IO/阻塞IO）进行网络编程时，进行网络IO读写时都会阻塞当前线程，如果实现一个TCP服务器，都需要对每个客户端连接开启一个线程，而很多线程可能都在傻傻的阻塞住等待读写数据，系统资源消耗大。
+ * 
+ * 而NIO（Non-Blocking IO/非阻塞IO）或AIO（Asynchronous
+ * IO/异步IO）则是通过IO多路复用技术实现，不需要为每个连接创建一个线程，其底层实现是通过操作系统的一些特性如select、poll、epoll、iocp等
+ * 
  * Java NIO（java non-blocking IO）,java非阻塞式IO。目 的 提供非阻塞式的高伸缩性网络。
  * 由以下几个核心部分组成：Channels、Buffers、Selectors。其它组件，如Pipe和FileLock，只不过是与三个核心组件共同使用的工具类。
  * 
@@ -48,10 +56,133 @@ import java.util.Set;
  * Selector允许单线程处理多个 Channel。如果你的应用打开了多个连接（通道），但每个连接的流量都很低，使用Selector就会很方便。
  * 要使用Selector，得向Selector注册Channel，然后调用它的select()方法。这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，
  * 
+ * <p>
+ * <h4>Java NIO和IO的主要区别</h4>
+ * <li>Java NIO和IO之间第一个最大的区别是，IO是面向流的，NIO是面向缓冲区的。 Java IO面向流意味着每次从流中读一个或多个字节，直至读取所有字节，它们没有被缓存在任何地方。
+ * 此外，它不能前后移动流中的数据。如果需要前后移动从流中读取的数据，需要先将它缓存到一个缓冲区。 Java NIO的缓冲导向方法略有不同。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动。
+ * 这就增加了处理过程中的灵活性。但是，还需要检查是否该缓冲区中包含所有您需要处理的数据。而且，需确保当更多的数据读入缓冲区时，不要覆盖缓冲区里尚未处理的数据。
+ * <li>Java IO的各种流是阻塞的。这意味着，当一个线程调用read() 或 write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了。 Java
+ * NIO的非阻塞模式，使一个线程从某通道发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取。而不是保持线程阻塞，所以直至数据变的可以读取之前，该线程可以继续做其他的事情。
+ * 非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。
+ * 线程通常将非阻塞IO的空闲时间用于在其它通道上执行IO操作，所以一个单独的线程现在可以管理多个输入和输出通道（channel）。
+ * <li>选择器（Selectors）：Java
+ * NIO的选择器允许一个单独的线程来监视多个输入通道，你可以注册多个通道使用一个选择器，然后使用一个单独的线程来“选择”通道：这些通道里已经有可以处理的输入，或者选择已准备写入的通道。这种选择机制，使得一个单独的线程很容易来管理多个通道。
+ * 
+ * <h4>NIO和IO如何影响应用程序的设计：</h4>
+ * <p>
+ * NIO可让您只使用一个（或几个）单线程管理多个通道（网络连接或文件），但付出的代价是解析数据可能会比从一个阻塞流中读取数据更复杂。
+ * 如果需要管理同时打开的成千上万个连接，这些连接每次只是发送少量的数据，例如聊天服务器，实现NIO的服务器可能是一个优势。同样，如果你需要维持许多打开的连接到其他计算机上，如P2P网络中，使用一个单独的线程来管理你所有出站连接，可能是一个优势。
+ * 如果你有少量的连接使用非常高的带宽，一次发送大量的数据，也许典型的IO服务器实现可能非常契合。
  */
 public class NIODemo {
     public static void main(String[] args) throws Exception {
         test1();
+    }
+
+    /**
+     * Java NIO 管道是2个线程之间的单向数据连接。Pipe有一个source通道和一个sink通道。数据会被写到sink通道，从source通道读取。
+     */
+    static void pipe() throws IOException {
+        // 通过Pipe.open()方法打开管道
+        Pipe pipe = Pipe.open();
+        // 要向管道写数据，需要访问sink通道。
+        Pipe.SinkChannel sinkChannel = pipe.sink();
+        // 通过调用SinkChannel的write()方法，将数据写入SinkChannel,
+        String newData = "New String to write to file..." + System.currentTimeMillis();
+        ByteBuffer buf = ByteBuffer.allocate(48);
+        buf.clear();
+        buf.put(newData.getBytes());
+
+        buf.flip();
+
+        while (buf.hasRemaining()) {
+            sinkChannel.write(buf);
+        }
+        // 从读取管道的数据，需要访问source通道，
+        Pipe.SourceChannel sourceChannel = pipe.source();
+        // 调用source通道的read()方法来读取数据,read()方法返回的int值会告诉我们多少字节被读进了缓冲区。
+        int bytesRead = sourceChannel.read(buf);
+    }
+
+    /**
+     * Java NIO中的DatagramChannel是一个能收发UDP包的通道。因为UDP是无连接的网络协议，所以不能像其它通道那样读取和写入。它发送和接收的是数据包。
+     * 
+     */
+    static void DatagramChannel() throws IOException {
+        DatagramChannel datagramChannel = DatagramChannel.open();
+        datagramChannel.socket().bind(new InetSocketAddress(9999));
+        // 接收数据
+        ByteBuffer buf = ByteBuffer.allocate(48);
+        buf.clear();
+        // receive()方法会将接收到的数据包内容复制到指定的Buffer. 如果Buffer容不下收到的数据，多出的数据将被丢弃。
+        datagramChannel.receive(buf);
+
+        String newData = "New String to write to file..." + System.currentTimeMillis();
+        // 通过send()方法从DatagramChannel发送数据
+        buf.clear();
+        buf.put(newData.getBytes());
+        buf.flip();
+        // 一串字符到”jenkov.com”服务器的UDP端口80。 因为服务端并没有监控这个端口，所以什么也不会发生。也不会通知你发出的数据包是否已收到，因为UDP在数据传送方面没有任何保证。
+        int bytesSent = datagramChannel.send(buf, new InetSocketAddress("jenkov.com", 80));
+
+        /**
+         * 连接到特定的地址:可以将DatagramChannel“连接”到网络中的特定地址的。由于UDP是无连接的，连接到特定地址并不会像TCP通道那样创建一个真正的连接。而是锁住DatagramChannel
+         * ，让其只能从特定地址收发数据。当连接后，也可以使用read()和write()方法，就像在用传统的通道一样。只是在数据传送方面没有任何保证。
+         */
+        datagramChannel.connect(new InetSocketAddress("jenkov.com", 80));
+    }
+
+    /**
+     * Java NIO中的 ServerSocketChannel 是一个可以监听新进来的TCP连接的通道, 就像标准IO中的ServerSocket一样
+     */
+    static void demoServerSocketChannel() throws IOException {
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        serverSocketChannel.socket().bind(new InetSocketAddress(9999));
+        while (true) {
+            // accept()方法会一直阻塞到有新连接到达。
+            SocketChannel socketChannel = serverSocketChannel.accept();
+
+            // do something with socketChannel...
+        }
+    }
+
+    /**
+     * 非阻塞模式:
+     * 
+     * ServerSocketChannel可以设置成非阻塞模式。在非阻塞模式下，accept() 方法会立刻返回，如果还没有新进来的连接,返回的将是null。 因此，需要检查返回的SocketChannel是否是null.
+     * 
+     * @throws IOException
+     */
+    static void nonBlockingServerSocketChannel() throws IOException {
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+
+        serverSocketChannel.socket().bind(new InetSocketAddress(9999));
+        serverSocketChannel.configureBlocking(false);
+
+        while (true) {
+            SocketChannel socketChannel = serverSocketChannel.accept();
+
+            if (socketChannel != null) {
+                // do something with socketChannel...
+            }
+        }
+    }
+
+    /**
+     * 非阻塞模式:可以设置 SocketChannel 为非阻塞模式（non-blocking mode）.设置之后，就可以在异步模式下调用connect(), read() 和write()了。
+     * 
+     * <li>如果SocketChannel在非阻塞模式下，此时调用connect()，该方法可能在连接建立之前就返回了。为了确定连接是否建立，可以调用finishConnect()的方法。
+     * <li>非阻塞模式下，write()方法在尚未写出任何内容时可能就返回了。所以需要在循环中调用write()。
+     * <li>非阻塞模式下,read()方法在尚未读取到任何数据时可能就返回了。所以需要关注它的int返回值，它会告诉你读取了多少字节。
+     * <li>非阻塞模式与选择器搭配会工作的更好，通过将一或多个SocketChannel注册到Selector，可以询问选择器哪个通道已经准备好了读取，写入等。
+     */
+    static void nonBlockingSocketChannelDemo() throws IOException {
+        SocketChannel socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(false);
+        socketChannel.connect(new InetSocketAddress("http://jenkov.com", 80));
+        while (!socketChannel.finishConnect()) {
+            // wait, or do something else...
+        }
     }
 
     /**
@@ -64,12 +195,24 @@ public class NIODemo {
         // 打开 SocketChannel
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.connect(new InetSocketAddress("http://jenkov.com", 80));
-        
+
         ByteBuffer buf = ByteBuffer.allocate(48);
         int bytesRead = socketChannel.read(buf);
-        
+
         // 关闭 SocketChannel
         socketChannel.close();
+
+        // 写入 SocketChannel
+        String newData = "New String to write to file..." + System.currentTimeMillis();
+
+        buf.clear();
+        buf.put(newData.getBytes());
+
+        buf.flip();
+
+        while (buf.hasRemaining()) {
+            socketChannel.write(buf);
+        }
 
     }
 
@@ -86,31 +229,33 @@ public class NIODemo {
         ByteBuffer buf = ByteBuffer.allocate(48);
         /** 然后，调用FileChannel.read()方法。该方法将数据从FileChannel读取到Buffer中。read()方法返回的int值表示了有多少字节被读到了Buffer中。如果返回-1，表示到了文件末尾 */
         int bytesRead = channel.read(buf);
-        // 向FileChannel写数据.使用FileChannel.write()方法向FileChannel写数据，该方法的参数是一个Buffer。
+        /** 向FileChannel写数据.使用FileChannel.write()方法向FileChannel写数据，该方法的参数是一个Buffer。 */
         String newData = "New String to write to file..." + System.currentTimeMillis();
 
         buf.clear();
         buf.put(newData.getBytes());
 
         buf.flip();
-        // 注意FileChannel.write()是在while循环中调用的。因为无法保证write()方法一次能向FileChannel写入多少字节，因此需要重复调用write()方法，直到Buffer中已经没有尚未写入通道的字节。
+        /**
+         * 注意FileChannel.write()是在while循环中调用的。因为无法保证write()方法一次能向FileChannel写入多少字节，因此需要重复调用write()方法，直到Buffer中已经没有尚未写入通道的字节。
+         */
         while (buf.hasRemaining()) {
             channel.write(buf);
         }
-        // 关闭FileChannel. 用完FileChannel后必须将其关闭。
+        /** 关闭FileChannel. 用完FileChannel后必须将其关闭。 */
         channel.close();
-        /*
+        /**
          * 有时可能需要在FileChannel的某个特定位置进行数据的读/写操作。可以通过调用position()方法获取FileChannel的当前位置。 也可以通过调用position(long
          * pos)方法设置FileChannel的当前位置。如果将位置设置在文件结束符之后，然后试图从文件通道中读取数据，读方法将返回-1 —— 文件结束标志。
          * 如果将位置设置在文件结束符之后，然后向通道中写数据，文件将撑大到当前位置并写入数据。这可能导致“文件空洞”，磁盘上物理文件中写入的数据间有空隙。
          */
         long pos = channel.position();
         channel.position(pos + 123);
-        // FileChannel实例的size()方法将返回该实例所关联文件的大小
+        /** FileChannel实例的size()方法将返回该实例所关联文件的大小 */
         long fileSize = channel.size();
-        // 可以使用FileChannel.truncate()方法截取一个文件。截取文件时，文件将中指定长度后面的部分将被删除。
+        /** 可以使用FileChannel.truncate()方法截取一个文件。截取文件时，文件将中指定长度后面的部分将被删除。 */
         channel.truncate(1024);
-        /*
+        /**
          * FileChannel.force()方法将通道里尚未写入磁盘的数据强制写到磁盘上。出于性能方面的考虑，操作系统会将数据缓存在内存中，所以无法保证写入到FileChannel里的数据一定会即时写到磁盘上。要保证这一点，
          * 需要调用force()方法。force()方法有一个boolean类型的参数，指明是否同时将文件元数据（权限信息等）写到磁盘上。
          */

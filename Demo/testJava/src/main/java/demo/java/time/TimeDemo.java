@@ -1,5 +1,6 @@
 package demo.java.time;
 
+import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
@@ -33,7 +34,9 @@ public class TimeDemo {
     private LocalTime time;
 
     public static void main(String[] args) throws Exception {
-      testLocalDateTime();
+//      testLocalDateTime();
+      Timestamp t = new Timestamp(100, 0, 1, 15, 45, 29, 987245732);
+      System.out.println(t);
     }
 
     static void testDateTimeFormatter() {

@@ -1,18 +1,18 @@
 package demo.quartz;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.quartz.CronExpression;
-import org.quartz.Job;
+import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
@@ -31,7 +31,7 @@ import org.quartz.impl.triggers.SimpleTriggerImpl;
 public class QuartzDemo {
 
     public static void main(String[] args) {
-
+        testScheduler();
     }
 
     /**
@@ -90,7 +90,7 @@ public class QuartzDemo {
      * <li>"0 15 10 ? * 6#3" 每月的第三个星期五上午10:15触发
      * 
      */
-    static void test() throws ParseException, SchedulerException {
+    static void testCron() throws ParseException, SchedulerException {
         JobDetail job = new JobDetailImpl();
 
         Trigger trigger = new CronTriggerImpl();
@@ -132,21 +132,84 @@ public class QuartzDemo {
         trigger.setRepeatCount(-1);
     }
 
-}
-
-class HelloWorldJob implements Job {
-    @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
-        // 执行定时器任务
-        Trigger trigger = context.getTrigger();
-        Scheduler scheduler = context.getScheduler();
-        System.out.println(String.format("hello world at %s, trigger[%s - %s]", date(), trigger.getCalendarName(),
-                context.getJobDetail().getDescription()));
-
+    /**
+     * trigger通用属性:
+     * <ul>
+     * <li>name trigger名称
+     * <li>group trigger所属的组名
+     * <li>description trigger描述
+     * <li>calendarName 日历名称，指定使用哪个Calendar类，经常用来从trigger的调度计划中排除某些时间段
+     * <li>misfireInstruction 错过job（未在指定时间执行的job）的处理策略，默认为MISFIRE_INSTRUCTION_SMART_POLICY
+     * <li>priority 优先级，默认为5。当多个trigger同时触发job时，线程池可能不够用，此时根据优先级来决定谁先触发
+     * <li>jobDataMap 同job的jobDataMap。假如job和trigger的jobDataMap有同名key，通过getMergedJobDataMap()获取的jobDataMap，将以trigger的为准
+     * <li>startTime 触发开始时间，默认为当前时间。决定什么时间开始触发job
+     * <li>endTime 触发结束时间。决定什么时间停止触发job
+     * </ul>
+     * SimpleTrigger私有属性：
+     * <ul>
+     * <li>nextFireTime 下一次触发job的时间
+     * <li>previousFireTime 上一次触发job的时间
+     * <li>repeatCount 需触发的总次数
+     * <li>timesTriggered 已经触发过的次数
+     * <li>repeatInterval 触发间隔时间
+     * </ul>
+     */
+    static void demoTrigger() {
+        Trigger simpleTrigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "triggerGroup")
+                .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(1).withRepeatCount(8)).startNow().build();
     }
 
-    private String date() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(new Date());
+    /**
+     * 属性名 说明
+     * <li>class 必须是job实现类（比如JobImpl），用来绑定一个具体job
+     * <li>name job名称。如果未指定，会自动分配一个唯一名称。所有job都必须拥有一个唯一name，如果两个job的name重复，则只有最前面的job能被调度
+     * <li>group job所属的组名
+     * <li>description job描述
+     * <li>durability 是否持久化。如果job设置为非持久，当没有活跃的trigger与之关联的时候，job会自动从scheduler中删除。也就是说，非持久job的生命期是由trigger的存在与否决定的
+     * <li>shouldRecover 是否可恢复。如果job设置为可恢复，一旦job执行时scheduler发生hard shutdown（比如进程崩溃或关机），当scheduler重启后，该job会被重新执行
+     * <li>jobDataMap
+     * 除了上面常规属性外，用户可以把任意kv数据存入jobDataMap，实现job属性的无限制扩展，执行job时可以使用这些属性数据。此属性的类型是JobDataMap，实现了Serializable接口，可做跨平台的序列化传输
+     */
+    static void demoJobDetail() {
+        JobDetail job = JobBuilder.newJob(JobDemo.class).withIdentity("job1", "group1").build();
     }
+
+    /**
+     * 创建任务调度，并执行
+     */
+    static void testScheduler() {
+        // 通过schedulerFactory获取一个调度器
+        SchedulerFactory schedulerfactory = new StdSchedulerFactory();
+        Scheduler scheduler = null;
+        try {
+            // 通过schedulerFactory获取一个调度器
+            scheduler = schedulerfactory.getScheduler();
+            // 创建jobDetail实例，绑定Job实现类,指明job的名称，所在组的名称，以及绑定job类。
+            JobDetail job = JobBuilder.newJob(JobDemo.class).withIdentity("job1", "group1").build();
+
+            // 定义调度触发规则
+            Trigger simpleTrigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "triggerGroup")
+                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(1).withRepeatCount(8)).startNow().build();
+
+            // 使用cornTrigger规则 每天10点42分
+            Trigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("cronTrigger", "triggerGroup")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 42 10 * * ? *")).startNow().build();
+
+            // 把作业和触发器注册到任务调度中
+            // scheduler.scheduleJob(job, cronTrigger);
+            scheduler.scheduleJob(job, simpleTrigger);
+
+            // 启动调度
+            scheduler.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                scheduler.shutdown();
+            } catch (SchedulerException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
 }
