@@ -6,9 +6,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
 
-public class DemoWebRequestInterceptor implements WebRequestInterceptor {
+public class WebRequestInterceptorDemo implements WebRequestInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(DemoWebRequestInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebRequestInterceptorDemo.class);
     
     @Override
     public void preHandle(WebRequest request) throws Exception {

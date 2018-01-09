@@ -34,9 +34,27 @@ import demo.vo.Person;
 public class StreamDemo {
 
     public static void main(String[] args) {
-        testForCircle();
+        testGroupingByNull();
     }
 
+    
+    /**
+     * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
+     */
+    static void testGroupingByNull() {
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya",null);
+
+        Map<String, Long> result = items.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(result);
+        String[] array = { "a", "b", "a", null, null };
+        Map<String, List<String>> map = Stream.of(array).collect(Collectors.groupingBy(e -> e));
+        System.out.println(map);
+    }
+    
+    /**
+     * 测试FOR循环的替代方法
+     */
     static void testForCircle() {
         for (int i = 1; i < 4; i++) {
             System.out.print(i + "...");
@@ -88,10 +106,9 @@ public class StreamDemo {
         IntStream.iterate(1, e -> e + 3)
                 // .takeWhile(i -> i <= 100) //available in Java 9
                 .sum();
-        
-//        使用 iterate 的逆向迭代
-        IntStream.iterate(7, e -> e - 1)
-             .limit(7);
+
+        // 使用 iterate 的逆向迭代
+        IntStream.iterate(7, e -> e - 1).limit(7);
     }
 
     static void demoStream() {

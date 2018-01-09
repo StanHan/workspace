@@ -6,7 +6,9 @@ import java.util.List;
 public class PrimitiveDataTest {
 
     public static void main(String[] args) {
-        unboxing();
+        Integer a = 1;
+        Integer b = null;
+        System.out.println(a.compareTo(b));
     }
 
     /**

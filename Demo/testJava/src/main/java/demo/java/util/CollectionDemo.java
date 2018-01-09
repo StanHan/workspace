@@ -49,7 +49,9 @@ public class CollectionDemo {
         // java7Demo();
         // listDemo();
         // testList();
-        testRemove();
+        List<Integer> list = Arrays.asList(1,2,1);
+        Set<Integer> set = new HashSet<>(list);
+        System.out.println(set);
     }
 
     static void testRemove() {
@@ -185,6 +187,9 @@ public class CollectionDemo {
          */
     }
 
+    /**
+     * 测试集合交集、并集、差集等操作
+     */
     static void testSet() {
         Set<Integer> result = new HashSet<Integer>();
         Set<Integer> set1 = new HashSet<Integer>() {

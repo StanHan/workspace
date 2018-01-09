@@ -251,9 +251,6 @@
       <version>9.0.0.M26</version>
     </dependency>
 
-
-
-
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
@@ -546,6 +543,14 @@
       <artifactId>protobuf-java</artifactId>
       <version>3.5.0</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.23</version>
+    </dependency>
+
 
   </dependencies>
 </project>

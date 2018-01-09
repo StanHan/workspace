@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-public class DemoHandlerInterceptor implements HandlerInterceptor {
+public class HandlerInterceptorDemo implements HandlerInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(DemoHandlerInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(HandlerInterceptorDemo.class);
 
     private final AtomicLong count = new AtomicLong(0);
 

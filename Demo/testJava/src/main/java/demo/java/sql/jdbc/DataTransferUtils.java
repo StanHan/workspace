@@ -131,6 +131,36 @@ public class DataTransferUtils {
             log.error(e.getMessage(), e);
         }
     }
+    
+    public static void download(DataSource srcDataSource,String selectSql,String path,final int batch) {
+        try (Connection srcConnection = srcDataSource.getConnection();
+                PreparedStatement srcStatement = srcConnection.prepareStatement(selectSql);) {
+
+            String sqlLog = selectSql.replaceAll("\\?", "{}");
+
+            int startId = 0;
+            List<Object[]> list = null;
+            do {
+                srcStatement.setInt(1, startId);
+                srcStatement.setInt(2, batch);
+                log.info(sqlLog, startId, batch);
+                long t1 = clock.millis();
+                ResultSet srcRS = srcStatement.executeQuery();
+                long t2 = clock.millis();
+                log.info("executeQuery 耗时(ms): " + (t2 - t1));
+                list = ResultSetUtils.buildResultSet(srcRS, batch);
+                long end2 = clock.millis();
+                log.info("ResultSet 转  List 耗时(ms): " + (end2 - t2));
+                srcRS.close();
+                startId += batch;
+//                batchInsert(insertSql, list);
+                long end3 = clock.millis();
+                log.info("batchInsert 耗时(ms): " + (end3 - end2));
+            } while (list.size() == batch);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
 
     /**
      * 批量插入
