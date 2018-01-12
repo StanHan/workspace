@@ -7,33 +7,25 @@ package demo.vo.common;
  */
 public class ApiResult<T> {
     
-    public ApiResult() {
-        super();
-    }
-
     private T result;
 
-    private ErrorMsg errorMsg;
+    private ErrorCode errorMsg;
 
-    public ApiResult(T result) {
-        super();
+    public ApiResult() {
+    }
+
+    public ApiResult(T result, ErrorMsg errorMsg) {
         this.result = result;
+        if (errorMsg != null) {
+            this.errorMsg = new ErrorCode(errorMsg.getErrCode(), errorMsg.getMessage());
+        }
     }
-
-    public ApiResult(ErrorCode errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-    
-    public ApiResult(BusinessError businessError) {
-        this.errorMsg = new ErrorCode(businessError.getErrCode(), businessError.getMessage()) ;
-    }
-    
 
     public ErrorMsg getErrorMsg() {
         return errorMsg;
     }
 
-    public void setErrorMsg(ErrorMsg errorMsg) {
+    public void setErrorMsg(ErrorCode errorMsg) {
         this.errorMsg = errorMsg;
     }
 
@@ -44,6 +36,4 @@ public class ApiResult<T> {
     public void setResult(T result) {
         this.result = result;
     }
-
-
 }

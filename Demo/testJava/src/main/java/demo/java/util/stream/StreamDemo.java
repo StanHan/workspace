@@ -5,19 +5,28 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import demo.vo.City;
 import demo.vo.Person;
 
 /**
+ * Stream定义:A sequence of elements supporting sequential and parallel aggregate operations. 支持顺序和并行聚合操作的一系列元素。
+ * 
+ * Java 8的Stream API充分利用Lambda表达式的特性，极大的提高编程效率和程序可读性。
+ * 同时它提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势，使用fork/join并行方式来拆分任务和加速处理过程。
  * 流底层核心其实是Spliterator接口的一个实现，而这个Spliterator接口其实本身就是Fork/Join并行框架的一个实现，所以归根结底要明白流的工作方式，就要明白一下Fork/Join框架的基本思想，
  * 即：以递归的方式将可以并行的任务拆分成更小的子任务，然后将每个子任务的结果合并起来生成整体的最后结果，
  *
@@ -25,41 +34,115 @@ import demo.vo.Person;
 public class StreamDemo {
 
     public static void main(String[] args) {
-//        testCollect();
-        // reduceDemo();
-        testPrintDistinctVersion();
-//        testCollectors2Map();
-//        testToArray();
+        testGroupingByNull();
+    }
+
+    
+    /**
+     * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
+     */
+    static void testGroupingByNull() {
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya",null);
+
+        Map<String, Long> result = items.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(result);
+        String[] array = { "a", "b", "a", null, null };
+        Map<String, List<String>> map = Stream.of(array).collect(Collectors.groupingBy(e -> e));
+        System.out.println(map);
     }
     
-    static void testToArray() {
-        String a = "1,2,3,4,5,6";
-        Integer[] array = Stream.of(a.split(",")).map(Integer::valueOf).toArray(Integer[]::new);
-        System.out.println(Arrays.toString(array));
-    }
-
     /**
-     * 打印不同的version版本
+     * 测试FOR循环的替代方法
      */
-    static void testPrintDistinctVersion() {
-        String[] andoidVersion = { "5.7.1", "5.7.0", "5.6.2", "5.6.0", "5.5.0", "5.4.3", "5.4.2", "5.4.1", "5.4.0",
-                "5.3.2", "5.3.1", "5.2.1", "5.2.0", "5.1.2", "5.1.1", "5.1.0", "5.0.2", "5.0.1", "4.4.0", "4.3.0",
-                "4.2.0", "4.1.0", "4.0.0" };
+    static void testForCircle() {
+        for (int i = 1; i < 4; i++) {
+            System.out.print(i + "...");
+        }
+        System.out.println("");
+        IntStream.range(1, 4).forEach(i -> System.out.print(i + "..."));
 
-        String[] iosVersion = { "5.7.0", "5.6.2", "5.6.0", "5.5.0", "5.4.0", "5.3.2", "5.3.0", "5.2.1", "5.1.0",
-                "5.0.1", "5.0.0", "4.4.0", "4.3.1", "4.3.0", "4.2.1", "4.2.0", "4.1.0", "4.0.2", "4.0.1", "4.0.0",
-                "3.4.3", "3.4.2", "3.4.1", "3.4.0", "3.3.0"};
-        
-        List<String> list = new ArrayList<String>();
-        List<String> list1 = Arrays.asList(andoidVersion);
-        List<String> list2 = Arrays.asList(iosVersion);
-        list.addAll(list1);
-        list.addAll(list2);
-        list.stream().distinct().sorted().peek(e-> System.out.println(e)).collect(Collectors.toList());
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        for (int i = 0; i < 5; i++) {
+            int temp = i;
+
+            executorService.submit(new Runnable() {
+                public void run() {
+                    // If uncommented the next line will result in an error
+                    // System.out.println("Running task " + i);
+                    // local variables referenced from an inner class must be final or effectively final
+
+                    System.out.println("Running task " + temp);
+                }
+            });
+        }
+
+        IntStream.range(0, 5).forEach(i -> executorService.submit(new Runnable() {
+            public void run() {
+                System.out.println("Running task " + i);
+            }
+        }));
+        System.out.println("将内部类替换为拉姆达表达式");
+        IntStream.range(0, 5).forEach(i -> executorService.submit(() -> System.out.println("Running task " + i)));
+
+        executorService.shutdown();
+
+        IntStream.rangeClosed(0, 5).forEach(e -> System.out.println("封闭范围" + e));
+
+        System.out.println("跳过值");
+        int total = 0;
+        for (int i = 1; i <= 100; i = i + 3) {
+            total += i;
+        }
+
+        IntStream.iterate(1, e -> e + 3).limit(34).sum();
+
+        // 有条件的迭代
+        /**
+         * 与 takeWhile 方法相反的是 dropWhile，它跳过满足给定条件前的值，这两个方法都是 JDK 中非常需要的补充方法。takeWhile 方法类似于 break，而 dropWhile 则类似于
+         * continue。从 Java 9 开始，它们将可用于任何类型的 Stream。
+         */
+        IntStream.iterate(1, e -> e + 3)
+                // .takeWhile(i -> i <= 100) //available in Java 9
+                .sum();
+
+        // 使用 iterate 的逆向迭代
+        IntStream.iterate(7, e -> e - 1).limit(7);
+    }
+
+    static void demoStream() {
+        // 计算列表中的元素数
+        IntStream.range(0, 10).forEach(value -> System.out.println(value));
+
+        List<Integer> list = IntStream.range(1, 100).boxed().collect(Collectors.toList());
+        // 计算列表中的元素数
+        System.out.println(list.stream().count());
+        // 计算列表中元素的平均数
+        Double avarage = list.stream().collect(Collectors.averagingInt(item -> item));
+        System.out.println(avarage);
+        // 对列表元素进行统计
+        IntSummaryStatistics iss = list.stream().collect(Collectors.summarizingInt(value -> value));
+        System.out.println(iss);
+        // 根据List创建Map
+        Map<Integer, Integer> map = list.stream().collect(Collectors.toMap(p -> p, q -> q * 3));
+        System.out.println(map);
+        // 求列表元素的最大数
+        Optional<Integer> max = list.stream().reduce(Math::max);
+        max.ifPresent(value -> System.out.println(value));
+        // 从一堆姓名列表中找出以字母“C”开头的姓名
+        String[] names = { "Fred Edwards", "Anna Cox", "Deborah Patterson", "Ruth Torres", "Shawn Powell",
+                "Rose Thompson", "Rachel Barnes", "Eugene Ramirez", "Earl Flores", "Janice Reed", "Sarah Miller",
+                "Patricia Kelly", "Carl Hall", "Craig Wright", "Martha Phillips", "Thomas Howard", "Steve Martinez",
+                "Diana Bailey", "Kathleen Hughes", "Russell Anderson", "Theresa Perry" };
+        List<String> ls = Arrays.asList(names).stream().filter(s -> s.startsWith("C")).collect(Collectors.toList());
+        System.out.println(ls.toString());
+        // 把所有的姓名大写、排序，再输出
+        Arrays.asList(names).stream().map(String::toUpperCase).sorted().forEach(System.out::println);
     }
 
     /**
-     * JDK 中的流来源:
+     * 流的元素可以是对象引用 (Stream<String>)，也可以是原始整数 (IntStream)、长整型 (LongStream) 或双精度 (DoubleStream)。 JDK 中的流来源:
      * <li>Collection.stream() 使用一个集合的元素创建一个流。
      * <li>Stream.of(T...) 使用传递给工厂方法的参数创建一个流。
      * <li>Stream.of(T[]) 使用一个数组的元素创建一个流。
@@ -115,16 +198,53 @@ public class StreamDemo {
 
     /**
      * 把输入的元素们累积到一个可变的容器中，比如Collection或者StringBuilder；可变汇聚对应的只有一个方法：collect，正如其名字显示的，它可以把Stream中的要有元素收集到一个结果容器中。
+     * 缩减的构建块是一个身份值和一种将两个值组合成新值的途径；可变缩减的类似方法包括：
+     * <ol>
+     * <li>一种生成空结果容器的途径
+     * <li>一种将新元素合并到结果容器中的途径
+     * <li>一种合并两个结果容器的途径
+     * </ol>
+     * 收集器: 传递给 collect() 的 3 个函数（创建、填充和合并结果容器）之间的关系非常重要，所以有必要提供它自己的抽象 Collector 和 collect() 的相应简化版本。 Collectors
+     * 类包含许多常见聚合操作的因素，比如累加到集合中、字符串串联、缩减和其他汇总计算，以及创建汇总表（通过 groupingBy()）。
+     * <h5>内置收集器：</h5>
+     * <li>toList() 将元素收集到一个 List 中。
+     * <li>toSet() 将元素收集到一个 Set 中。
+     * <li>toCollection(Supplier<Collection>) 将元素收集到一个特定类型的 Collection 中。
+     * <li>toMap(Function<T, K>, Function<T, V>) 将元素收集到一个 Map 中，依据提供的映射函数将元素转换为键值。
+     * <li>summingInt(ToIntFunction<T>) 计算将提供的 int 值映射函数应用于每个元素（以及 long 和 double 版本）的结果的总和。
+     * <li>summarizingInt(ToIntFunction<T>) 计算将提供的 int 值映射函数应用于每个元素（以及 long 和 double 版本）的结果的 sum、min、max、count 和
+     * average。
+     * <li>reducing() 向元素应用缩减（通常用作下游收集器，比如用于 groupingBy）（各种版本）。
+     * <li>partitioningBy(Predicate<T>) 将元素分为两组：为其保留了提供的预期的组和未保留预期的组。
+     * <li>partitioningBy(Predicate<T>, Collector) 将元素分区，使用指定的下游收集器处理每个分区。
+     * <li>groupingBy(Function<T,U>) 将元素分组到一个 Map 中，其中的键是所提供的应用于流元素的函数，值是共享该键的元素列表。
+     * <li>groupingBy(Function<T,U>, Collector) 将元素分组，使用指定的下游收集器来处理与每个组有关联的值。
+     * <li>minBy(BinaryOperator<T>) 计算元素的最小值（与 maxBy() 相同）。
+     * <li>mapping(Function<T,U>, Collector) 将提供的映射函数应用于每个元素，并使用指定的下游收集器（通常用作下游收集器本身，比如用于 groupingBy）进行处理。
+     * <li>joining() 假设元素为 String 类型，将这些元素联结到一个字符串中（或许使用分隔符、前缀和后缀）。
+     * <li>counting() 计算元素数量。（通常用作下游收集器。）
      */
-    static void 可变汇聚() {
+    static void collectDemo(Collection<String> strings) {
+        // 此方法使用 StringBuilder 作为结果容器。传递给 collect() 的 3 个函数使用默认构造函数创建了一个空容器，append(String)
+        // 方法将一个元素添加到容器中，append(StringBuilder) 方法将一个容器合并到另一个容器中。
+        StringBuilder concat = strings.stream().collect(() -> new StringBuilder(), (sb, s) -> sb.append(s),
+                (sb, sb2) -> sb.append(sb2));
+        // 使用方法引用可能可以比拉姆达表达式更好地表达此代码：
+        StringBuilder concat2 = strings.stream().collect(StringBuilder::new, StringBuilder::append,
+                StringBuilder::append);
+        // 类似地，要将一个流收集到一个 HashSet 中
+        Set<String> uniqueStrings = strings.stream().collect(HashSet::new, HashSet::add, HashSet::addAll);
+        String concat3 = strings.stream().collect(Collectors.joining());
+        Set<String> uniqueStrings2 = strings.stream().collect(Collectors.toSet());
+
     }
-    
+
     /**
      * List 转MAP
      */
     static void testCollectors2Map() {
-        String[] array = {"a","b","c"};
-        Map<String,String> map = Arrays.stream(array).collect(Collectors.toMap(e ->e, e -> e+" hehe!"));
+        String[] array = { "a", "b", "c" };
+        Map<String, String> map = Arrays.stream(array).collect(Collectors.toMap(e -> e, e -> e + " hehe!"));
         System.out.println(map);
     }
 
@@ -219,113 +339,4 @@ public class StreamDemo {
         // 过滤，字符串连接，concat = "ace"
         concat = Stream.of("a", "B", "c", "D", "e", "F").filter(x -> x.compareTo("Z") > 0).reduce("", String::concat);
     }
-
-    static void demoSupplier() {
-        Supplier<A> supplierA = new Supplier<A>() {
-            Random random = new Random();
-
-            @Override
-            public A get() {
-                int i = random.nextInt(1000);
-                A a = new A();
-                a.setA("A" + i);
-                a.setB("B" + i);
-                return a;
-            }
-        };
-
-        Function<A, B> function = new Function<A, B>() {
-
-            @Override
-            public B apply(A a) {
-                B b = new B();
-                b.setA(a.getA());
-                b.setB(a.getB());
-                return b;
-            }
-        };
-        // peek: 生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例），新Stream每个元素被消费的时候都会执行给定的消费函数；
-        List<B> list = Stream.generate(supplierA).limit(10).map(function).peek(e -> System.out.println(e.getA()))
-                .collect(Collectors.toList());
-        for (B b : list) {
-            System.out.println(b);
-        }
-    }
-
-}
-
-class SupplierB implements Supplier<B> {
-
-    private A a;
-
-    public SupplierB(A a) {
-        super();
-        this.a = a;
-    }
-
-    @Override
-    public B get() {
-        B b = new B();
-        b.setA(a.getA());
-        b.setB(a.getB());
-        return b;
-    }
-
-}
-
-class A {
-    private String a;
-    private String b;
-
-    public String getA() {
-        return a;
-    }
-
-    public void setA(String a) {
-        this.a = a;
-    }
-
-    public String getB() {
-        return b;
-    }
-
-    public void setB(String b) {
-        this.b = b;
-    }
-}
-
-class B {
-    private String a;
-    private String b;
-    private int c;
-
-    public int getC() {
-        return c;
-    }
-
-    public void setC(int c) {
-        this.c = c;
-    }
-
-    public String getA() {
-        return a;
-    }
-
-    public void setA(String a) {
-        this.a = a;
-    }
-
-    public String getB() {
-        return b;
-    }
-
-    public void setB(String b) {
-        this.b = b;
-    }
-
-    @Override
-    public String toString() {
-        return "B [a=" + a + ", b=" + b + ", c=" + c + "]";
-    }
-
 }

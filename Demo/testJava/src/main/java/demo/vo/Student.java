@@ -1,6 +1,6 @@
 package demo.vo;
 
-public class Student {
+public class Student extends Person {
 
     private String studentName;
     private Integer studentAge;

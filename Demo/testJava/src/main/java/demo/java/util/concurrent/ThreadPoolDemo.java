@@ -11,6 +11,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -33,10 +34,12 @@ public class ThreadPoolDemo {
 
     public static void main(String[] args) {
         // demoShutDownThreadPool();
-//        testThreadException();
+        // testThreadException();
         testScheduledThreadPool();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 2, 5, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(6));
     }
-    
+
     /**
      * 如果抛出异常，则线程WAITING (parking)，该定时任务不会再被调度
      */
@@ -79,7 +82,6 @@ public class ThreadPoolDemo {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -226,18 +228,6 @@ class CustomThreadPoolExecutor extends ThreadPoolExecutor {
 
 }
 
-class DirectExecutor implements Executor {
-    public void execute(Runnable r) {
-        r.run();
-    }
-}
-
-class ThreadPerTaskExecutor implements Executor {
-    public void execute(Runnable r) {
-        new Thread(r).start();
-    }
-}
-
 class SerialExecutor implements Executor {
     final Queue<Runnable> tasks = new ArrayDeque<Runnable>();
     final Executor executor;
@@ -371,6 +361,10 @@ class WorkerRunnable implements Runnable {
     }
 }
 
+/**
+ * 可暂停的线程池
+ *
+ */
 class PausableThreadPoolExecutor extends ThreadPoolExecutor {
     private boolean isPaused;
     private ReentrantLock pauseLock = new ReentrantLock();// ['rɪː'entrənt]

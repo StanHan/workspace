@@ -36,8 +36,8 @@ public class CallableDemo {
         Future<String> future = executorService.submit(callable);
 
         try {
-            Thread.sleep(500);// 可能做一些事情
             System.out.println(future.get());
+            System.out.println(Thread.currentThread().getName() +" over.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

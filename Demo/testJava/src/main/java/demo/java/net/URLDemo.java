@@ -1,16 +1,32 @@
 package demo.java.net;
 
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
 /**
- * URL访问过程：
+ * URL: Uniform Resource Locator
+ * 
+ * 为什么要进行url encode？
+ * 
+ * 因为一些历史的原因URL设计者使用US-ASCII字符集表示URL。（原因比如ASCII比较简单；所有的系统都支持ASCII）。
+ * 为了满足URL的以上特性，设计者就将转义序列移植了进去，来实现通过ASCII字符集的有限子集对任意字符或数据进行编码。 现在URL转义表示法比较常用的有两个：
+ * <li>RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax
+ * <li>RFC 3986 - Uniform Resource Identifier (URI): Generic Syntax
+ * 
+ * 
+ * .URL访问过程：
  * <p>
  * <ol>
  * <li>第一步：客户机提出域名解析请求,并将该请求发送给本地的域名服务器。
@@ -86,8 +102,71 @@ import java.net.URLConnection;
 public class URLDemo {
 
     public static void main(String[] args) throws Exception {
-        demo2();
+        urlEncodeDemo();
         // demo1();
+    }
+
+    /**
+     * web 开发中通过问号（？）方式在浏览器地址栏中传值时。浏览器是通过“&”来区分问号后的参数个数的。
+     * 如果出现传值参数中带有“&”时，在接受页面就会出现错误，类似如下请求路径：/next.jsp?param1=hendhs89&furej & param2=sss 参数param1中含有转义字符“&”
+     * ，这样会导致被请求页的参数接收错误。 在传值前 通过 java.net.URLEncoder.encode(param1) 编码处理后，可将转义字符转为16进制;
+     * 
+     * <li>1. + URL 中+号表示空格 %2B
+     * <li>2. 空格 URL中的空格可以用+号或者编码 %20
+     * <li>3. / 分隔目录和子目录 %2F
+     * <li>4. ? 分隔实际的 URL 和参数 %3F
+     * <li>5. % 指定特殊字符 %25
+     * <li>6. # 表示书签 %23
+     * <li>7. & URL中指定的参数间的分隔符%26
+     * <li>8. = URL中指定参数的值 %3D
+     * <li>9. ! URL中指定参数的值 %21
+     */
+    static void urlEncodeDemo() throws UnsupportedEncodingException {
+        String message = "aX92rOy5T06FkRP03I3lV1RjCTLndx1XfVZjXxgK65ECACT482pWTidyJmQuSLnGWYNM8PyU96lg86gWWX/y/g9pjJKbj5BxkkRx1wbtYUdq3M3W+ciRcEcduSxM3zeeAqwhrx2x3CIV3uxwkgbVJamApLVkjgMRAvXThLetFnq3pjF58QGByIrbMuwkVt5n";
+        
+        String r = URLEncoder.encode(message,"UTF8");
+        System.out.println(r);
+        
+    }
+
+    static void demo3() {
+        String result = "";
+        BufferedReader in = null;
+        try {
+            String urlNameString = "http://www.baidu.com";
+            URL realUrl = new URL(urlNameString);
+            // 打开和URL之间的连接
+            URLConnection connection = realUrl.openConnection();
+            // 设置通用的请求属性
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent", "Mozilla/4.0(compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // 建立实际的连接
+            connection.connect();
+            // 获取所有响应头字段
+            Map<String, List<String>> map = connection.getHeaderFields();
+            // 遍历所有的响应头字段
+            for (String key : map.keySet()) {
+                System.out.println(key + "--->" + map.get(key));
+            }
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally { // 使用finally块来关闭输入流
+            // 关闭流
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     static void demo2() throws MalformedURLException, URISyntaxException {

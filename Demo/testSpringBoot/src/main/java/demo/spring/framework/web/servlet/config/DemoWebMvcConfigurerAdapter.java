@@ -12,8 +12,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import demo.spring.framework.web.context.DemoWebRequestInterceptor;
-import demo.spring.framework.web.servlet.DemoHandlerInterceptor;
+import demo.spring.framework.web.context.WebRequestInterceptorDemo;
+import demo.spring.framework.web.servlet.HandlerInterceptorDemo;
 
 @Configuration // 标注此文件为一个配置项，spring boot才会扫描到该配置。该注解类似于之前使用xml进行配置
 public class DemoWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
@@ -29,10 +29,10 @@ public class DemoWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         
         
-        registry.addWebRequestInterceptor(new DemoWebRequestInterceptor()).addPathPatterns("/demo/**");
+        registry.addWebRequestInterceptor(new WebRequestInterceptorDemo()).addPathPatterns("/demo/**");
 
         // addPathPatterns("/**")对所有请求都拦截，但是排除了/toLogin和/login请求的拦截。
-        registry.addInterceptor(new DemoHandlerInterceptor()).addPathPatterns("/**")// 添加拦截规则
+        registry.addInterceptor(new HandlerInterceptorDemo()).addPathPatterns("/**")// 添加拦截规则
                 .excludePathPatterns("/toLogin", "/login"); // 排除的拦截规则
         super.addInterceptors(registry);
     }

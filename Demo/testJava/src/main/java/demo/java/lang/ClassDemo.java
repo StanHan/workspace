@@ -3,20 +3,42 @@ package demo.java.lang;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassDemo {
+import demo.vo.Person;
+import demo.vo.Student;
 
+public class ClassDemo {
     public static void main(String[] args) {
-        testPrintFilePath();
+        String a = null;
+        System.out.println(a.getClass().isInstance(a));
     }
 
-    static void testPrintFilePath() {
-        // 下面三种方法都可以获取相对路径
+    /**
+     * 正确的强转
+     */
+    static void testRightCase() {
+        Person person = new Student();
+        person.setLastName("HAN");
+        Student student = (Student) person;
+        System.out.println(student.getLastName());
+    }
+
+    /**
+     * 错误的强转
+     */
+    static void testWrongCase() {
+        Person person = new Person();
+        person.setLastName("HAN");
+        Student student = (Student) person;
+        System.out.println(student.getLastName());
+    }
+
+    /**
+     * 获取相对路径
+     */
+    static void printFilePath() {
         System.out.println(ClassDemo.class.getResource("/").getPath());
-
         System.out.println(ClassDemo.class.getResource("").getPath());
-
         System.out.println(ClassDemo.class.getClassLoader().getResource("").getPath());
-
     }
 
     /**
@@ -25,7 +47,7 @@ public class ClassDemo {
      * @param ids
      */
     static void testComponentType(int... ids) {
-        Class cls = ids.getClass().getComponentType();
+        Class<?> cls = ids.getClass().getComponentType();
         System.out.println(cls);
         cls = String.class.getComponentType();
         System.out.println(cls);

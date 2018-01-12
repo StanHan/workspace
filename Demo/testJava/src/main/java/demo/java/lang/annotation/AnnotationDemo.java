@@ -6,11 +6,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import demo.java.lang.annotation.Annotations.Holder;
+import demo.java.lang.annotation.Annotations.NonEmpty;
 
 /**
  * J2SE5.0版本在 java.lang.annotation提供了四种元注解，专门注解其他的注解：
  * <p>
- * .@Documented –表示是否将注解信息添加在java文档中。 
+ * .@Documented –表示是否将注解信息添加在java文档中。
  * <p>
  * .@Retention –定义该注解的生命周期。
  * <ul>
@@ -107,4 +112,28 @@ public class AnnotationDemo {
 @Retention(RetentionPolicy.RUNTIME)
 @interface Author {
     String value();
+}
+
+/**
+ * Java 8 新增加了两个注解的程序元素类型ElementType.TYPE_USE 和ElementType.TYPE_PARAMETER ，这两个新类型描述了可以使用注解的新场合。
+ *
+ */
+class Annotations {
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ ElementType.TYPE_USE, ElementType.TYPE_PARAMETER })
+    public @interface NonEmpty {
+    }
+
+    public static class Holder<@NonEmpty T> extends @NonEmpty Object {
+        public void method() throws @NonEmpty Exception {
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static void main(String[] args) {
+        final Holder<String> holder = new @NonEmpty Holder<String>();
+        @NonEmpty
+        Collection<@NonEmpty String> strings = new ArrayList<>();
+    }
 }

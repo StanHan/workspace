@@ -29,27 +29,32 @@ import demo.vo.common.ErrorCode;
 public class FastJsonDemo {
 
     public static void main(String[] args) {
-//        testJSONStrToJavaBeanObj();
+        // testJSONStrToJavaBeanObj();
         // testComplexJSONStrToJSONObject();
         // testJSONStrToJSONArray();
         // testJSONStrToJSONObject();
         testToJSONString();
 
     }
-    
+
     static void testToJSONString() {
-//        System.out.println("ok.");
+        // System.out.println("ok.");
         String json = JSON.toJSONString(new Student(), SerializerFeature.WriteNonStringKeyAsString);
         System.err.println(json);
         json = JSON.toJSONString(new Student());
         System.err.println(json);
-        json = JSON.toJSONString(new ApiResult(BusinessError.NOT_LOGIN), SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        json = JSON.toJSONString(new ApiResult(null, BusinessError.NOT_LOGIN), SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat);
         System.err.println(json);
-        json = JSON.toJSONString(new ApiResult(new ErrorCode("not_login","用户未登录")), SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+        ApiResult<String> apiResult = JSON.parseObject(json, ApiResult.class);
+        System.out.println(apiResult.getResult());
+        System.out.println(apiResult.getErrorMsg().getMessage());
+        json = JSON.toJSONString(new ApiResult(null, new ErrorCode("not_login", "用户未登录")),
+                SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
         System.err.println(json);
-        json = JSON.toJSONString(new ApiResult(BusinessError.NOT_LOGIN));
+        json = JSON.toJSONString(new ApiResult(null, BusinessError.NOT_LOGIN));
         System.err.println(json);
-    } 
+    }
 
     /**
      * 复杂json格式字符串与JavaBean_obj之间的转换
@@ -88,7 +93,7 @@ public class FastJsonDemo {
 
         Student student = JSON.parseObject(JSON_OBJ_STR, new TypeReference<Student>() {
         });
-        
+
         Student student2 = JSON.parseObject(JSON_OBJ_STR, Student.class);
         // Student student1 = JSONObject.parseObject(JSON_OBJ_STR, new TypeReference<Student>()
         // {});//因为JSONObject继承了JSON，所以这样也是可以的
