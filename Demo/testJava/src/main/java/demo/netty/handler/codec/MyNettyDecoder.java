@@ -2,7 +2,7 @@ package demo.netty.handler.codec;
 
 import java.util.List;
 
-import demo.java.lang.PrimitiveDataTest;
+import demo.java.lang.PrimitiveData;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -21,7 +21,7 @@ public class MyNettyDecoder extends ByteToMessageDecoder {
             byte[] bytes = new byte[4];
             in.readBytes(bytes); // 读取4字节的Header
 
-            int bodyLength = PrimitiveDataTest.getLittleEndianInt(bytes); // header按小字节序转int
+            int bodyLength = PrimitiveData.getLittleEndianInt(bytes); // header按小字节序转int
 
             // 如果body没有接收完整
             if (in.readableBytes() < bodyLength) {

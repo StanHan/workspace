@@ -1,6 +1,6 @@
 package demo.netty.handler.codec;
 
-import demo.java.lang.PrimitiveDataTest;
+import demo.java.lang.PrimitiveData;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -12,7 +12,7 @@ public class MyNettyEncoder extends MessageToByteEncoder<String> {
 
         byte[] bytes = msg.getBytes("UTF-8");
         int length = bytes.length;
-        byte[] header = PrimitiveDataTest.toLittleEndian(length); // int按小字节序转字节数组
+        byte[] header = PrimitiveData.toLittleEndian(length); // int按小字节序转字节数组
         out.writeBytes(header); // write header
         out.writeBytes(bytes); // write body
     }

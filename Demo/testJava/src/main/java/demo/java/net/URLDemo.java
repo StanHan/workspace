@@ -5,11 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -100,8 +102,31 @@ import java.util.Map;
 public class URLDemo {
 
     public static void main(String[] args) throws Exception {
-        demo2();
+        urlEncodeDemo();
         // demo1();
+    }
+
+    /**
+     * web 开发中通过问号（？）方式在浏览器地址栏中传值时。浏览器是通过“&”来区分问号后的参数个数的。
+     * 如果出现传值参数中带有“&”时，在接受页面就会出现错误，类似如下请求路径：/next.jsp?param1=hendhs89&furej & param2=sss 参数param1中含有转义字符“&”
+     * ，这样会导致被请求页的参数接收错误。 在传值前 通过 java.net.URLEncoder.encode(param1) 编码处理后，可将转义字符转为16进制;
+     * 
+     * <li>1. + URL 中+号表示空格 %2B
+     * <li>2. 空格 URL中的空格可以用+号或者编码 %20
+     * <li>3. / 分隔目录和子目录 %2F
+     * <li>4. ? 分隔实际的 URL 和参数 %3F
+     * <li>5. % 指定特殊字符 %25
+     * <li>6. # 表示书签 %23
+     * <li>7. & URL中指定的参数间的分隔符%26
+     * <li>8. = URL中指定参数的值 %3D
+     * <li>9. ! URL中指定参数的值 %21
+     */
+    static void urlEncodeDemo() throws UnsupportedEncodingException {
+        String message = "aX92rOy5T06FkRP03I3lV1RjCTLndx1XfVZjXxgK65ECACT482pWTidyJmQuSLnGWYNM8PyU96lg86gWWX/y/g9pjJKbj5BxkkRx1wbtYUdq3M3W+ciRcEcduSxM3zeeAqwhrx2x3CIV3uxwkgbVJamApLVkjgMRAvXThLetFnq3pjF58QGByIrbMuwkVt5n";
+        
+        String r = URLEncoder.encode(message,"UTF8");
+        System.out.println(r);
+        
     }
 
     static void demo3() {

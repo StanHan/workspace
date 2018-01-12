@@ -35,6 +35,8 @@ public class DateDemo {
     public static void main(String[] args) throws ParseException {
         // testCalendar();
         // demoDateUtils();
+        System.out.println(new Date(Long.MAX_VALUE));
+        System.out.println(new Date(Long.MIN_VALUE));
     }
 
     static void demoDateUtils() {

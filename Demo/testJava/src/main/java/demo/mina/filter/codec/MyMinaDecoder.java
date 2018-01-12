@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
-import demo.java.lang.PrimitiveDataTest;
+import demo.java.lang.PrimitiveData;
 
 /**
  * 用固定字节数的Header来指定Body字节数的消息分割方案，其中Header部分是常规的大字节序（Big-Endian）的4字节整数。
@@ -26,7 +26,7 @@ public class MyMinaDecoder extends CumulativeProtocolDecoder {
             byte[] bytes = new byte[4];
             in.get(bytes); // 读取4字节的Header
 
-            int bodyLength = PrimitiveDataTest.getLittleEndianInt(bytes); // 按小字节序转int
+            int bodyLength = PrimitiveData.getLittleEndianInt(bytes); // 按小字节序转int
 
             // 如果body没有接收完整，直接返回false
             if (in.remaining() < bodyLength) {

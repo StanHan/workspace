@@ -13,6 +13,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import demo.java.lang.HexDemo;
+
 public class AESHelper {
     /**
      * @method main
@@ -55,9 +57,9 @@ public class AESHelper {
 
         /* 然后，我们再修订以上测试代码 */
         System.out.println("***********************************************");
-        String encryptResultStr = parseByte2HexStr(encryptResult);
+        String encryptResultStr = HexDemo.parseByte2HexStr(encryptResult);
         System.out.println("加密后：" + encryptResultStr);
-        byte[] decryptFrom = parseHexStr2Byte(encryptResultStr);
+        byte[] decryptFrom = HexDemo.parseHexStr2Byte(encryptResultStr);
         decryptResult = decrypt(decryptFrom, password);// 解码
         System.out.println("解密后：" + new String(decryptResult));
     }
@@ -138,48 +140,6 @@ public class AESHelper {
         }
 
         return null;
-    }
-
-    /**
-     * 将二进制转换成16进制
-     * 
-     * @method parseByte2HexStr
-     * @param buf
-     * @return
-     * @throws @since
-     *             v1.0
-     */
-    public static String parseByte2HexStr(byte buf[]) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < buf.length; i++) {
-            String hex = Integer.toHexString(buf[i] & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
-            }
-            sb.append(hex.toUpperCase());
-        }
-        return sb.toString();
-    }
-
-    /**
-     * 将16进制转换为二进制
-     * 
-     * @method parseHexStr2Byte
-     * @param hexStr
-     * @return
-     * @throws @since
-     *             v1.0
-     */
-    public static byte[] parseHexStr2Byte(String hexStr) {
-        if (hexStr.length() < 1)
-            return null;
-        byte[] result = new byte[hexStr.length() / 2];
-        for (int i = 0; i < hexStr.length() / 2; i++) {
-            int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
-            int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2), 16);
-            result[i] = (byte) (high * 16 + low);
-        }
-        return result;
     }
 
     /**

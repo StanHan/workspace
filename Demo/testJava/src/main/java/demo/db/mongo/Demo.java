@@ -35,7 +35,7 @@ public class Demo {
 
     private MongoDBService mongoDBService = new MongoDBService();
     // 测试插入数据
-    public void testInsert() {
+    void testInsert() {
         // 数据一，包括用户名、密码，地址信息（省份、城市），爱好[…]
         BasicDBList dbList1 = new BasicDBList();
         dbList1.add("basketball");
@@ -81,7 +81,7 @@ public class Demo {
     }
 
     // 测试查询数据
-    public void testFind() {
+    void testFind() {
         DBObject dbObject = new BasicDBObject("username", "insert1");
         System.out.println("数量：" + mongoDBService.getCollectionCount());
         System.out.println("username=java的数据数量：" + mongoDBService.getCount(dbObject));
@@ -96,7 +96,7 @@ public class Demo {
     }
 
     // 测试数据更新
-    public void testUpdate() {
+    void testUpdate() {
         BasicDBObject newDocument = new BasicDBObject("$set", new BasicDBObject("age", 11));
 
         BasicDBObject searchQuery = new BasicDBObject().append("username", "insert2");
@@ -108,7 +108,7 @@ public class Demo {
     }
 
     // 测试数据删除
-    public void testDelete() {
+    void testDelete() {
         DBObject dbObject1 = new BasicDBObject("username", "insert1");
         DBObject dbObject2 = new BasicDBObject("username", "insert2");
         DBObject dbObject3 = new BasicDBObject("username", "insert3");

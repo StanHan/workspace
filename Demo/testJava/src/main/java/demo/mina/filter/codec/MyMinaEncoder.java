@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 
-import demo.java.lang.PrimitiveDataTest;
+import demo.java.lang.PrimitiveData;
 
 public class MyMinaEncoder extends ProtocolEncoderAdapter {
 
@@ -15,7 +15,7 @@ public class MyMinaEncoder extends ProtocolEncoderAdapter {
         String msg = (String) message;
         byte[] bytes = msg.getBytes("UTF-8");
         int length = bytes.length;
-        byte[] header = PrimitiveDataTest.toLittleEndian(length); // 按小字节序转成字节数组
+        byte[] header = PrimitiveData.toLittleEndian(length); // 按小字节序转成字节数组
 
         IoBuffer buffer = IoBuffer.allocate(length + 4);
         buffer.put(header); // header

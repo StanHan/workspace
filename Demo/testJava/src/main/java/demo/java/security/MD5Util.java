@@ -4,10 +4,12 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@SuppressWarnings("all")
 public class MD5Util {
 
     public static void main(String[] args) {
+
+        System.err.println(getMd5Str("422828199001243938" + "20160622"));
+
         try {
             System.out.println(new MD5Util().unionPaymd5(new String("112233helloword".getBytes("utf-8"), "utf-8")));
             System.out.println(new MD5Util().md5("112233helloword"));
@@ -17,8 +19,38 @@ public class MD5Util {
         }
     }
 
+    public static String getMd5Str(String targetStr) {
+        String md5Str = new String();
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(targetStr.getBytes());
+            byte[] byteArray = messageDigest.digest();
+            
+            int i;
+
+            StringBuffer buf = new StringBuffer("");
+            for (int offset = 0; offset < byteArray.length; offset++) {
+                i = byteArray[offset];
+                if (i < 0) {
+                    i += 256;
+                }
+                if (i < 16) {
+                    buf.append("0");
+                }
+                buf.append(Integer.toHexString(i));
+            }
+
+            md5Str = buf.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5Str;
+
+    }
+
     // MD5加密之后32位
-    public static synchronized String md5(String str) throws Exception {
+    public static String md5(String str) throws Exception {
         String code = code(code(str, "MD5").substring(6, 28), "MD5");
         return code;
     }
