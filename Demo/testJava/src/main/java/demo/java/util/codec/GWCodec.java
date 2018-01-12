@@ -123,10 +123,11 @@ public class GWCodec {
      * @return
      */
     public static String strEncodBase64(String secretStr, String inputStr){
+    	
         String base64Str = Base64.encodeBase64String(encode(secretStr, inputStr));
         return base64Str;
     }
-
+    
     /**
      * 用 AES 算法加密 inputStr。
      * 使用 secretStr 作为 key，secretStr 的前 16 个字节作为 iv。

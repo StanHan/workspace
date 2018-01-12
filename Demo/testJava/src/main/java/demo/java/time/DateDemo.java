@@ -31,7 +31,9 @@ public class DateDemo {
 	
 	public static void main(String[] args) throws ParseException {
 //	    testCalendar();
-	    demoDateUtils();
+		long a = 1484622855132L;
+		System.out.println(new Date(a));
+//	    demoDateUtils();
 	}
 	
 	static void demoDateUtils() {
