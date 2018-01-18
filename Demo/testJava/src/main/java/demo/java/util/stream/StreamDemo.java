@@ -33,16 +33,17 @@ import demo.vo.Person;
  */
 public class StreamDemo {
 
+    static final Random random = new Random();
+
     public static void main(String[] args) {
-        testGroupingByNull();
+        testSorted();
     }
 
-    
     /**
      * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
      */
     static void testGroupingByNull() {
-        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya",null);
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya", null);
 
         Map<String, Long> result = items.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
@@ -51,7 +52,7 @@ public class StreamDemo {
         Map<String, List<String>> map = Stream.of(array).collect(Collectors.groupingBy(e -> e));
         System.out.println(map);
     }
-    
+
     /**
      * 测试FOR循环的替代方法
      */
@@ -176,6 +177,25 @@ public class StreamDemo {
      * <li>dropWhile(Predicate<T>) （仅限 Java 9）丢弃了所提供的预期为 true 的初始元素分段的流元素
      */
     static void 中间操作() {
+        Comparator<String> byLength = Comparator.comparing(String::length);
+    }
+
+    /**
+     * 排序：
+     * <li>sorted() 默认使用自然序排序， 其中的元素必须实现Comparable 接口
+     * <li>sorted(Comparator<? super T> comparator) ：我们可以使用lambada 来创建一个Comparator 实例。可以按照升序或着降序来排序元素。
+     */
+    static void testSorted() {
+        Collection<String> strings = Stream.generate(new Supplier<Integer>() {
+            public Integer get() {
+                return random.nextInt(5000);
+            }
+        }).limit(10).map(String::valueOf).collect(Collectors.toList());
+        // 自然序排序一个list
+        strings.stream().sorted().forEach(System.out::println);
+        System.out.println("--------------------");
+        // 自然序逆序元素，使用Comparator 提供的reverseOrder() 方法
+        strings.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
     }
 
     /**
@@ -262,8 +282,6 @@ public class StreamDemo {
      */
     static void testCollect() {
         Collection<String> strings = Stream.generate(new Supplier<Integer>() {
-            Random random = new Random();
-
             public Integer get() {
                 return random.nextInt(5000);
             }
@@ -297,16 +315,15 @@ public class StreamDemo {
         Map<City, Set<String>> lastNamesByCity = people.stream().collect(
                 Collectors.groupingBy(Person::getCity, Collectors.mapping(Person::getLastName, Collectors.toSet())));
 
-        Comparator<String> byLength = Comparator.comparing(String::length);
-
     }
 
     /**
      * 其他汇聚操作：
      * <p>
      * reduce方法：reduce方法非常的通用，后面介绍的count，sum等都可以使用其实现。reduce 这个方法的主要作用是把 Stream 元素组合起来。
-     * 它提供一个起始值（种子），然后依照运算规则（BinaryOperator），和前面 Stream 的第一个、第二个、第 n 个元素组合。 从这个意义上说，字符串拼接、数值的 sum、min、max、average 都是特殊的
-     * reduce。
+     * 它提供一个起始值（种子），然后依照运算规则（BinaryOperator），和前面 Stream 的第一个、第二个、第 n 个元素组合。
+     * 
+     * 从这个意义上说，字符串拼接、数值的 sum、min、max、average 都是特殊的 reduce。
      * <p>
      * 搜索相关
      * <li>allMatch：是不是Stream中的所有元素都满足给定的匹配条件

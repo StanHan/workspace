@@ -11,6 +11,8 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
+        double a = 0.6332;
+
     }
 
     static void testStringBuilder() {

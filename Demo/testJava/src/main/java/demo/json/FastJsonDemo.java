@@ -29,11 +29,7 @@ import demo.vo.common.ErrorCode;
 public class FastJsonDemo {
 
     public static void main(String[] args) {
-        // testJSONStrToJavaBeanObj();
-        // testComplexJSONStrToJSONObject();
-        // testJSONStrToJSONArray();
-        // testJSONStrToJSONObject();
-        testToJSONString();
+        testJSONStrToJSONArray();
 
     }
 
