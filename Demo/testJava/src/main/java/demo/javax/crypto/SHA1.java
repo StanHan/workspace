@@ -1,19 +1,103 @@
 package demo.javax.crypto;
 
+import java.security.MessageDigest;
+
 import demo.java.lang.HexDemo;
 
-/* 安全散列算法SHA (Secure Hash Algorithm，SHA) */
+/**
+ * <h1>安全散列算法SHA (Secure Hash Algorithm，SHA)</h1>
+ * <p>
+ * 主要适用于数字签名标准（Digital Signature Standard DSS）里面定义的数字签名算法（Digital Signature Algorithm DSA）。 对于长度小于 2^64 位的消息，SHA1 会产生一个
+ * 160 位的消息摘要。
+ * 
+ * SHA 也是一个系列，它包括 SHA-1，SHA-224，SHA-256，SHA-384，和 SHA-512 等几种算法。 其中，SHA-1，SHA-224 和 SHA-256 适用于长度不超过 2^64 二进制位的消息。
+ * SHA-384 和 SHA-512 适用于长度不超过 2^128 二进制位的消息。
+ * <p>
+ * <b>散列</b>，是信息的提炼，通常其长度要比信息小得多，且为一个固定长度。加密性强的散列一定是不可逆的，这就意味着通过散列结果，无法推出任何部分的原始信息。
+ * <p>
+ * 单向散列函数的安全性在于其产生散列值的操作过程具有较强的单向性。如果在输入序列中嵌入密码，那么任何人在不知道密码的情况下都不能产生正确的散列值，从而保证了其安全性。
+ * 
+ * SHA 将输入流按照每块 512 位（64 个字节）进行分块，并产生 20 个字节的被称为信息认证代码或信息摘要的输出。
+ * 
+ * 通过散列算法可实现数字签名实现，数字签名的原理是将要传送的明文通过一种函数运算（Hash）转换成报文摘要（不同的明文对应不同的报文摘要），报文摘要加密后与明文一起传送给接受方，
+ * 接受方将接受的明文产生新的报文摘要与发送方的发来报文摘要解密比较，比较结果一致表示明文未被改动，如果不一致表示明文已被篡改。
+ * 
+ * <h2>SHA-1 与 MD5 的比较</h2>
+ * <li>对强行攻击的安全性:最显著和最重要的区别是 SHA-1 摘要比 MD5 摘要长 32 位。使用强行技术，产生任何一个报文使其摘要等于给定报摘要的难度对 MD5 是 2^128 数量级的操作，而对 SHA-1 则是 2^160
+ * 数量级的操作。这样，SHA-1 对强行攻击有更大的强度。
+ * <li>对密码分析的安全性:由于 MD5 的设计，易受密码分析的攻击，SHA-1 显得不易受这样的攻击。
+ * <li>速度:在相同的硬件上，SHA-1 的运行速度比 MD5 慢。
+ */
 public class SHA1 {
-    
- // 测试
 
-    public static void main(String[] args) {
+    // 测试
+
+    public static void main(String[] args) throws Exception {
         String param = "StanHan";
         System.out.println("加密前：" + param);
         String digest = new SHA1().getDigestOfString(param.getBytes());
         System.out.println("加密后：" + digest);
+
+        demo();
     }
-    
+
+    /**
+     * 测试方法
+     * 
+     * @param args
+     */
+    static void demo() throws Exception {
+        String key = "StanHan";
+        System.out.println(encryptSHA(key));
+    }
+
+    /**
+     * 定义加密方式
+     */
+    private final static String KEY_SHA = "SHA";
+    private final static String KEY_SHA1 = "SHA-1";
+
+    /**
+     * SHA 加密
+     * 
+     * @param data
+     *            需要加密的字节数组
+     * @return 加密之后的字节数组
+     * @throws Exception
+     */
+    public static byte[] encryptSHA(byte[] data) throws Exception {
+        // 创建具有指定算法名称的信息摘要
+        // MessageDigest sha = MessageDigest.getInstance(KEY_SHA);
+        MessageDigest sha = MessageDigest.getInstance(KEY_SHA1);
+        // 使用指定的字节数组对摘要进行最后更新
+        sha.update(data);
+        // 完成摘要计算并返回
+        return sha.digest();
+    }
+
+    /**
+     * SHA 加密
+     * 
+     * @param data
+     *            需要加密的字符串
+     * @return 加密之后的字符串
+     * @throws Exception
+     */
+    public static String encryptSHA(String data) throws Exception {
+        // 验证传入的字符串
+        if (data == null || data.isEmpty()) {
+            return "";
+        }
+        // 创建具有指定算法名称的信息摘要
+        MessageDigest sha = MessageDigest.getInstance(KEY_SHA);
+        // 使用指定的字节数组对摘要进行最后更新
+        sha.update(data.getBytes());
+        // 完成摘要计算
+        byte[] bytes = sha.digest();
+        // 将得到的字节数组变成字符串返回
+        return HexDemo.byteArrayToHexString(bytes);
+    }
+
     private final int[] abcde = { 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0 };
     // 摘要数据存储数组
     private int[] digestInt = new int[5];
@@ -193,5 +277,5 @@ public class SHA1 {
     public String getDigestOfString(byte[] byteData) {
         return HexDemo.byteArrayToHexString(getDigestOfBytes(byteData));
     }
-    
+
 }

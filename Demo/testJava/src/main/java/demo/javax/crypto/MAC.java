@@ -33,7 +33,7 @@ import demo.java.security.MessageDigestDemo;
  * 这么做有什么好处呢？ 如果我们在登录的过程中，黑客截获了我们发送的数据，他也只能得到 hmac 加密过后的结果，由于不知道密钥，根本不可能获取到用户密码，从而保证了安全性。
  * 
  */
-public class MacDemo {
+public class MAC {
 
     public static void main(String[] args) throws Exception {
         demoMacDigestStr("");
