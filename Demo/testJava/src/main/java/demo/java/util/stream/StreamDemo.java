@@ -36,16 +36,16 @@ public class StreamDemo {
     static final Random random = new Random();
 
     public static void main(String[] args) {
-        testSorted();
+        testGroupingByNull();
     }
 
     /**
      * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
      */
     static void testGroupingByNull() {
-        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya", null);
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya");
 
-        Map<String, Long> result = items.stream()
+        Map<String, Long> result = items.stream().limit(1000L)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(result);
         String[] array = { "a", "b", "a", null, null };

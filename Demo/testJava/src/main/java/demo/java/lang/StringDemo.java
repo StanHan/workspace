@@ -11,8 +11,9 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
-        double a = 0.6332;
-
+        double d = 0.6332;
+        String a = "18217".substring(0, 7);
+        System.out.println(a);
     }
 
     static void testStringBuilder() {

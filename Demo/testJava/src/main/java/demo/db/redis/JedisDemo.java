@@ -47,6 +47,7 @@ public class JedisDemo {
             System.out.println("------------------------------");
             Set<String> set2 = jedis.keys("ma_*");
             set2.forEach(System.out::println);
+            
         }
     }
 

@@ -26,7 +26,7 @@ public class MongoDataTransfer {
     private static final Logger logger = LoggerFactory.getLogger(MongoDataTransfer.class);
 
     public static void main(String[] args) throws UnknownHostException {
-        transfer("mx_carrier_report_notify", 20);
+        transfer("mx_carrier_bills_notify", 200);
     }
 
     /**

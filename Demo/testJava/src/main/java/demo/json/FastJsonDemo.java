@@ -1,7 +1,9 @@
 package demo.json;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -29,8 +31,17 @@ import demo.vo.common.ErrorCode;
 public class FastJsonDemo {
 
     public static void main(String[] args) {
-        testJSONStrToJSONArray();
+        demoMap();
+    }
 
+    static void demoMap() {
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("mobile", "15030101798");
+        map.put("carrier_name", "赵**");
+        map.put("carrier_idcard", "132302************");
+        map.put("available_balance", "810");
+        
+        System.out.println(JSON.toJSONString(map));
     }
 
     static void testToJSONString() {

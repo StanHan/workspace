@@ -5,23 +5,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 在JDK的API文档中ThreadLocal的定义第一句道出：This class provides thread-local variables. 好，这个类提供了线程本地的变量。
  * 对比synchronized和ThreadLocal首先要清楚，两者的使用目的不同，关键点就在是否需要共享变量。就是说，ThreadLocal根本不是同步。
- * 再说啰嗦一点：ThreadLocal和Synchonized都用于解决多线程并发访问。
- * 但是ThreadLocal与synchronized有本质的区别，synchronized是利用锁的机制，使变量或代码块在某一时该只能被一个线程访问。
+ * 
+ * ThreadLocal和Synchonized都用于解决多线程并发访问。 但是ThreadLocal与synchronized有本质的区别，synchronized是利用锁的机制，使变量或代码块在某一时该只能被一个线程访问。
  * 而ThreadLocal为每一个线程都提供了变量的副本，使得每个线程在某一时间访问到的并不是同一个对象，这样就隔离了多个线程对数据的数据共享。
+ * 
  * Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的数据隔离。两者处于不同的问题域。
  */
 public class ThreadLocalDemo {
 
     public static void main(String[] args) {
-        "aaaa".toCharArray();
-
         demo1();
 
     }
-    
-    static void demo1(){
-        
+
+    static void demo1() {
+
         ThreadLocalTester tester = new ThreadLocalTester();
+
         for (int i = 0; i < 9; i++) {
             Thread t = new Thread(tester);
             t.start();
@@ -42,10 +42,11 @@ class ThreadLocalTester implements Runnable {
 }
 
 /**
- * @author hanjy
+ * 唯一线程ID生成器
  *
  */
 class UniqueThreadIdGenerator {
+
     private static final AtomicInteger uniqueId = new AtomicInteger(0);
 
     private static final ThreadLocal<Integer> uniqueNum = new ThreadLocal<Integer>() {
