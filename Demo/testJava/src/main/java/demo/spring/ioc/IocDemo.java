@@ -14,10 +14,25 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import demo.spring.framework.beans.factory.StudentBean;
 
 /**
+ * IoC容器主要作用就是创建并管理Bean对象以及Bean属性注入。通过读取Bean配置文件生成相应对象。
+ * 这些配置文件格式可能多种多样，xml、properties等格式，所以需要将其转换（ResourceLoader/Resolver）成统一资源对象（Resource）。
+ * 这些配置文件存储的位置也不一样，可能是ClassPath，可能是FileSystem，也可能是URL路径，路径的不一样，说明的是应用环境可能不一样。
+ * 获得Resource对象，还要将其转换成（BeanDefinitionReader）Spring内部对Bean的描述对象（BeanDefinition）。
+ * 然后，将其注册（BeanRegister）到容器中（BeanFactory），供以后转换成Bean对象使用。
+ * 
+ * 所以，IoC容器包括了很多东西，但主要有以下六个组件：
+ * <li>1.资源组件：Resource，对资源文件的描述，不同资源文件如xml、properties文件等，格式不同，最终都将被ResourceLoader加载获得相应的Resource对象；
+ * <li>2.资源加载组件：ResourceLoader：加载xml、properties等各类格式文件，解析文件，并生成Resource对象。
+ * <li>3.Bean容器组件：BeanFactory体系：IoC容器的核心，其他组件都是为它工作的（但不是仅仅为其服务）.
+ * <li>4.Bean注册组件：SingletonBeanRegister/AliasRegister：将BeanDefinition对象注册到BeanFactory（BeanDefinition Map）中去。
+ * <li>5.Bean描述组件：BeanDefinition体系，Spring内部对Bean描述的基本数据结构
+ * <li>6.Bean构造组件：BeanDefinitionReader体系，读取Resource并将其数据转换成一个个BeanDefinition对象。
+ * 
  * 生命周期执行的过程如下:
  * 
  * <li>1)spring对bean进行实例化,默认bean是单例
@@ -46,24 +61,45 @@ import demo.spring.framework.beans.factory.StudentBean;
 public class IocDemo {
 
     public static void main(String[] args) {
+
         testCyclelife();
     }
-    
-    static void testCyclelife(){
+
+    static void testCyclelife() {
         System.out.println("--------------【初始化容器】---------------");
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/beans1.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring/beansDemo.xml");
         System.out.println("-------------------【容器初始化成功】------------------");
-        //得到studentBean，并显示其信息
-        StudentBean studentBean = context.getBean("studentBean",StudentBean.class);
+        // 得到studentBean，并显示其信息
+        StudentBean studentBean = context.getBean("studentBean", StudentBean.class);
         System.out.println(studentBean);
 
         System.out.println("--------------------【销毁容器】----------------------");
-        ((ClassPathXmlApplicationContext)context).registerShutdownHook();
+        ((ClassPathXmlApplicationContext) context).registerShutdownHook();
     }
 
     /**
      * Spring bean 生命周期。 若容器实现了如下涉及的接口，程序将按照流程进行。需要我们注意的是，这些接口并不是必须实现的，可根据自己开发中的需要灵活地进行选择，没有实现相关接口时，将略去流程图中的相关步骤。
+     * 
+     * <li>1. 容器启动，实例化所有实现了BeanFactoyPostProcessor接口的类。他会在任何普通Bean实例化之前加载.
+     * <li>2. 实例化剩下的Bean，对这些Bean进行依赖注入。
+     * <li>3. 如果Bean有实现BeanNameAware的接口那么对这些Bean进行调用
+     * <li>4. 如果Bean有实现BeanFactoryAware接口的那么对这些Bean进行调用
+     * <li>5. 如果Bean有实现ApplicationContextAware接口的那么对这些Bean进行调用
+     * <li>6. 如果配置有实现BeanPostProcessor的Bean，那么调用它的postProcessBeforeInitialization方法
+     * <li>7. 如果Bean有实现InitializingBean接口那么对这些Bean进行调用
+     * <li>8. 如果Bean配置有init属性，那么调用它属性中设置的方法
+     * <li>9. 如果配置有实现BeanPostProcessor的Bean，那么调用它的postProcessAfterInitialization方法
+     * <li>10. Bean正常是使用
+     * <li>11. 调用DisposableBean接口的destory方法
+     * <li>12. 调用Bean定义的destory方法
+     * <p>
+     * 如果从大体上区分值分只为四个阶段
+     * <li>1. BeanFactoryPostProcessor实例化
+     * <li>2. Bean实例化，然后通过某些BeanFactoyPostProcessor来进行依赖注入
+     * <li>3. BeanPostProcessor的调用.Spring内置的BeanPostProcessor负责调用Bean实现的接口: BeanNameAware, BeanFactoryAware,
+     * ApplicationContextAware等等，等这些内置的BeanPostProcessor调用完后才会调用自己配置的BeanPostProcessor
+     * <li>4. Bean销毁阶段
      * <p>
      * 接口方法的分类:
      * <li>分类类型 所包含方法：Bean自身的方法 配置文件中的init-method和destroy-method配置的方法、Bean对象自己调用的方法
@@ -72,7 +108,7 @@ public class IocDemo {
      */
     static void demoSpringBean() throws Exception {
         ConfigurableListableBeanFactory configurableListableBeanFactory = null;
-        // 1.实例化beanFactoryPostProcessor实现类
+        // 1.容器启动，实例化所有实现了BeanFactoryPostProcessor接口的类。他会在任何普通Bean实例化之前加载.
         BeanFactoryPostProcessor beanFactoryPostProcessor = null;
         // 2.执行beanFactoryPostProcessor.postProcessBeanFactory方法
         beanFactoryPostProcessor.postProcessBeanFactory(configurableListableBeanFactory);

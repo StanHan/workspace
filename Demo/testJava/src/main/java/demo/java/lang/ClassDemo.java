@@ -8,8 +8,7 @@ import demo.vo.Student;
 
 public class ClassDemo {
     public static void main(String[] args) {
-        String a = null;
-        System.out.println(a.getClass().isInstance(a));
+        printFilePath();
     }
 
     /**
