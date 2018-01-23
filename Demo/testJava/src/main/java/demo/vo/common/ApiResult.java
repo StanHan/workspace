@@ -7,15 +7,15 @@ package demo.vo.common;
  */
 public class ApiResult<T> {
     
-    private T result;
+    private T data;
 
     private ErrorCode errorMsg;
 
     public ApiResult() {
     }
 
-    public ApiResult(T result, ErrorMsg errorMsg) {
-        this.result = result;
+    public ApiResult(T data, ErrorMsg errorMsg) {
+        this.data = data;
         if (errorMsg != null) {
             this.errorMsg = new ErrorCode(errorMsg.getErrCode(), errorMsg.getMessage());
         }
@@ -30,10 +30,10 @@ public class ApiResult<T> {
     }
 
     public T getResult() {
-        return result;
+        return data;
     }
 
     public void setResult(T result) {
-        this.result = result;
+        this.data = result;
     }
 }

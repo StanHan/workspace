@@ -1,6 +1,6 @@
 package demo.vo;
 
-public class User {
+public class User2 {
     /**
      * 身份证号
      */
@@ -11,7 +11,7 @@ public class User {
     String name;
     protected String address;
 
-    public User() {
+    public User2() {
         System.out.println(" 实例化 ");
     }
 

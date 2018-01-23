@@ -22,7 +22,7 @@ import demo.spring.service.IActions;
 public class AOPDemo {
 
     public static void main(String[] args) {
-        ApplicationContext cxt = new ClassPathXmlApplicationContext("spring/bean.xml");
+        ApplicationContext cxt = new ClassPathXmlApplicationContext("spring/beans.xml");
 
         IActions personService = (IActions) cxt.getBean("personService");
 

@@ -6,19 +6,18 @@
 <generatorConfiguration>
 
   <context id="ma" targetRuntime="MyBatis3">
-    <!-- <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
-    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" /> -->
+    <!-- <plugin type="org.mybatis.generator.plugins.ToStringPlugin" /> <plugin type="org.mybatis.generator.plugins.SerializablePlugin" /> -->
     <!-- <commentGenerator> 是否去除自动生成的注释 true：是 ： false:否 <property name="suppressAllComments" value="true" /> </commentGenerator> -->
 
     <commentGenerator type="demo.db.mabatis.generator.MyCommentGenerator"></commentGenerator>
 
     <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
     <!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mybatis" userId="root" password="mysql"> </jdbcConnection> -->
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://172.16.0.140:3306/skynet" userId="test_dkw"
+    <!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://172.16.0.140:3306/skynet" userId="test_dkw"
       password="test_dkw">
-    </jdbcConnection>
+    </jdbcConnection> -->
 
-    <!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ma" userId="root" password="root"> </jdbcConnection> -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ma" userId="root" password="root"> </jdbcConnection>
 
     <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal -->
     <javaTypeResolver>
@@ -55,17 +54,8 @@
       enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
 
 
-    <table schema="skynet" tableName="s_admin" enableCountByExample="false" enableUpdateByExample="false"
-      enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" domainObjectName="Admin">
-    </table>
-     <table schema="skynet" tableName="s_resource" enableCountByExample="false" enableUpdateByExample="false"
-      enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" domainObjectName="Resource">
-    </table>
-     <table schema="skynet" tableName="s_role" enableCountByExample="false" enableUpdateByExample="false"
-      enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" domainObjectName="Role">
-    </table>
-     <table schema="skynet" tableName="s_role_resource" enableCountByExample="false" enableUpdateByExample="false"
-      enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" domainObjectName="RoleResource">
+    <table schema="ma" tableName="t_user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+      enableSelectByExample="false" selectByExampleQueryId="false" domainObjectName="User">
     </table>
 
   </context>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.db.mabatis.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="demo.vo.pojo.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, status, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    <where>
+      <include refid="where_conditions" />
+    </where>
+    <if test="offset != null and rows != null">
+      limit #{offset,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from t_user
+    <where>
+      <include refid="where_conditions" />
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="demo.vo.pojo.User">
+    insert into t_user (id, name, status,
+    update_at)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+    #{status,jdbcType=TINYINT},
+    #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="demo.vo.pojo.User">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="demo.vo.pojo.User">
+    update t_user
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="demo.vo.pojo.User">
+    update t_user
+    set name = #{name,jdbcType=VARCHAR},
+    status = #{status,jdbcType=TINYINT},
+    update_at
+    = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 公用的查询条件 -->
+  <sql id="where_conditions">
+    <if test="id != null">
+      AND id = #{id,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      AND status = #{status,jdbcType=TINYINT}
+    </if>
+    <if test="statusArray != null and statusArray.length!=0">
+      AND status in
+      <foreach collection="statusArray" item="item" index="index" open="(" separator="," close=")">
+        #{item,jdbcType=TINYINT}
+      </foreach>
+    </if>
+    <if test="name != null">
+      AND name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="userName != null">
+      and LOCATE(#{name,jdbcType=VARCHAR}, userName) > 0
+    </if>
+    <if test="minUpdateAt != null">
+      <![CDATA[ AND update_at > #{minUpdateAt,jdbcType=TIMESTAMP} ]]>
+    </if>
+    <if test="maxUpdateAt != null">
+      <![CDATA[ AND update_at <= #{maxUpdateAt,jdbcType=TIMESTAMP} ]]>
+    </if>
+  </sql>
+</mapper>

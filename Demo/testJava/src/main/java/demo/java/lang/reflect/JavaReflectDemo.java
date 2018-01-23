@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import demo.vo.People;
-import demo.vo.User;
+import demo.vo.User2;
 
 /**
  * 要让Java程序能够运行，就得让Java类被JVM加载。Java类如果不被JVM加载就不能正常运行。正常情况下，我们运行的所有的程序在编译期时候就已经把那个类被加载了。
@@ -186,11 +186,11 @@ public class JavaReflectDemo {
      * @throws Exception
      */
     static void testField() throws Exception {
-        System.out.println("User.class.getName() = " + User.class.getName());
+        System.out.println("User.class.getName() = " + User2.class.getName());
 
-        User user = User.class.newInstance();
+        User2 user = User2.class.newInstance();
 
-        Field[] fields = User.class.getDeclaredFields();
+        Field[] fields = User2.class.getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
 
             Field field = fields[i];
@@ -255,12 +255,12 @@ public class JavaReflectDemo {
         /*
          * 实列化类 方法 2
          */
-        User user = new User();
+        User2 user = new User2();
         user.setId(100);
         user.setAddress(" 武汉 ");
 
         // 得到类对象
-        Class<? extends User> class_user = user.getClass();
+        Class<? extends User2> class_user = user.getClass();
 
         /*
          * 得到类中的所有属性集合

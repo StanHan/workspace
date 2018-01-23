@@ -10,8 +10,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import demo.db.mabatis.service.ServiceA;
-import demo.vo.AdminOperationLog;
+import demo.db.mabatis.service.UserService;
+import demo.vo.pojo.User;
 
 public class MyBatisDemo {
 
@@ -24,8 +24,7 @@ public class MyBatisDemo {
         // 使用"spring.xml"和"spring-mybatis.xml"这两个配置文件创建Spring上下文
         ApplicationContext ac = new ClassPathXmlApplicationContext(new String[] { "spring/beans.xml", "spring/spring-mybatis.xml" });
         // 从Spring容器中根据bean的id取出我们要使用的userService对象
-        ServiceA serviceA = ac.getBean(ServiceA.class);
-        serviceA.selectAdminOperationLog();
+        UserService serviceA = ac.getBean(UserService.class);
     }
 
     static void demoMybatis() {
@@ -48,7 +47,7 @@ public class MyBatisDemo {
         String statement = "selectByPrimaryKey";// 映射sql的标识字符串
         Map<String, Object> map = new HashMap<>();
         // 执行查询返回一个唯一user对象的sql
-        AdminOperationLog user = session.selectOne(statement, 1L);
+        User user = session.selectOne(statement, 1L);
         System.out.println(user);
     }
 

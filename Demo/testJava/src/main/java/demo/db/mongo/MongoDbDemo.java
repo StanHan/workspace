@@ -7,9 +7,6 @@ import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
@@ -59,7 +56,7 @@ public class MongoDbDemo {
     /**
      * 连接数据库: 连接数据库，你需要指定数据库名称，如果指定的数据库不存在，mongo会自动创建数据库。
      */
-    public static void connect2() {
+    static void connectWithoutPassword() {
         try {
             // 连接到 mongodb 服务
             MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -76,7 +73,7 @@ public class MongoDbDemo {
     /**
      * 本实例中 Mongo 数据库无需用户名密码验证。如果你的 Mongo 需要验证用户名及密码，可以使用以下代码：
      */
-    public static void connect() {
+    static void connect() {
         try {
             // 连接到MongoDB服务 如果是远程连接可以替换“localhost”为服务器所在IP地址
             // ServerAddress()两个参数分别为 服务器地址 和 端口
@@ -104,7 +101,7 @@ public class MongoDbDemo {
     /**
      * 创建集合:我们可以使用 com.mongodb.client.MongoDatabase 类中的createCollection()来创建集合
      */
-    public static void createCollection() {
+    static void createCollection() {
         try {
             // 连接到 mongodb 服务
             MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -123,7 +120,7 @@ public class MongoDbDemo {
     /**
      * 获取集合 ,我们可以使用com.mongodb.client.MongoDatabase类的 getCollection() 方法来获取一个集合
      */
-    public static void getCollection() {
+    static void getCollection() {
         try {
             // 连接到 mongodb 服务
             MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -147,7 +144,7 @@ public class MongoDbDemo {
      * <li>mongoCollection.insertMany(List<Document>)
      * <li>插入单个文档可以用 mongoCollection.insertOne(Document)
      */
-    public static void insert() {
+    static void insert() {
         try {
             // 连接到 mongodb 服务
             MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -173,7 +170,7 @@ public class MongoDbDemo {
     /**
      * 删除第一个文档: 要删除集合中的第一个文档，首先你需要使用com.mongodb.DBCollection类中的 findOne()方法来获取第一个文档，然后使用remove 方法删除。
      */
-    public static void delete() {
+    static void delete() {
         try {
             // 连接到 mongodb 服务
             MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -204,7 +201,7 @@ public class MongoDbDemo {
     /**
      * 可以使用 com.mongodb.client.MongoCollection 类中的 updateMany() 方法来更新集合中的文档。
      */
-    public static void update() {
+    static void update() {
         try {
             // 连接到 mongodb 服务
             MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -259,7 +256,6 @@ public class MongoDbDemo {
         }
     }
 
-
     /**
      * ObjectId 是一个12字节 BSON 类型数据，有以下格式：
      * <li>前4个字节表示时间戳
@@ -284,100 +280,4 @@ public class MongoDbDemo {
         mongoClient.getConnectPoint();
     }
 
-    private MongoDBService mongoDBService = new MongoDBService();
-
-    // 测试插入数据
-    void testInsert() {
-        // 数据一，包括用户名、密码，地址信息（省份、城市），爱好[…]
-        BasicDBList dbList1 = new BasicDBList();
-        dbList1.add("basketball");
-        dbList1.add("music");
-        dbList1.add("web");
-        DBObject dbObject1 = new BasicDBObject("username", "insert1").append("age", 18)
-                .append("address", new BasicDBObject("province", "广东").append("city", "广州"))
-                .append("favourite", dbList1);
-        // 数据二
-        BasicDBList dbList2 = new BasicDBList();
-        dbList2.add("football");
-        dbList2.add("music");
-        DBObject dbObject2 = new BasicDBObject("username", "insert2").append("age", 18)
-                .append("address", new BasicDBObject("province", "陕西").append("city", "西安"))
-                .append("favourite", dbList2);
-        // 数据三
-        BasicDBList dbList3 = new BasicDBList();
-        dbList3.add("Linux");
-        DBObject dbObject3 = new BasicDBObject("username", "insert3").append("age", 18)
-                .append("address", new BasicDBObject("province", "河北").append("city", "保定"))
-                .append("favourite", dbList3);
-        // 数据四
-        BasicDBList dbList4 = new BasicDBList();
-        dbList4.add("swim");
-        dbList4.add("android");
-        DBObject dbObject4 = new BasicDBObject("username", "insert4").append("age", 18)
-                .append("address", new BasicDBObject("province", "四川").append("city", "成都"))
-                .append("favourite", dbList4);
-        // 数据五
-        DBObject dbObject5 = new BasicDBObject("username", "insert5").append("age", 28).append("address",
-                new BasicDBObject("city", "杭州"));
-        mongoDBService.printListDBObj(mongoDBService.findAll());
-        System.out.println("——————————————————insert collection——————————————————");
-        List<DBObject> list = new ArrayList<DBObject>();
-        list.add(dbObject1);
-        list.add(dbObject2);
-        list.add(dbObject3);
-        list.add(dbObject5);
-        mongoDBService.insertBatch(list);
-        System.out.println("——————————————————insert one——————————————————");
-        mongoDBService.insert(dbObject4);
-        mongoDBService.printListDBObj(mongoDBService.findAll());
-    }
-
-    // 测试查询数据
-    void testFind() {
-        DBObject dbObject = new BasicDBObject("username", "insert1");
-        System.out.println("数量：" + mongoDBService.getCollectionCount());
-        System.out.println("username=java的数据数量：" + mongoDBService.getCount(dbObject));
-        System.out.println("——————————————————find all——————————————————");
-        mongoDBService.printListDBObj(mongoDBService.findAll());
-        System.out.println("——————————————————find obj——————————————————");
-        mongoDBService.printListDBObj(mongoDBService.find(dbObject));
-        System.out.println("——————————————————find sort——————————————————");
-        mongoDBService.printListDBObj(mongoDBService.find(new BasicDBObject(), new BasicDBObject("age", 1)));
-        System.out.println("——————————————————find sort limit——————————————————");
-        mongoDBService.printListDBObj(mongoDBService.find(new BasicDBObject(), new BasicDBObject("age", 1), 1, 2));
-    }
-
-    // 测试数据更新
-    void testUpdate() {
-        BasicDBObject newDocument = new BasicDBObject("$set", new BasicDBObject("age", 11));
-
-        BasicDBObject searchQuery = new BasicDBObject().append("username", "insert2");
-
-        mongoDBService.printListDBObj(mongoDBService.find(searchQuery));
-        System.out.println("——————————————————update——————————————————");
-        mongoDBService.update(newDocument, searchQuery);
-        mongoDBService.printListDBObj(mongoDBService.find(searchQuery));
-    }
-
-    // 测试数据删除
-    void testDelete() {
-        DBObject dbObject1 = new BasicDBObject("username", "insert1");
-        DBObject dbObject2 = new BasicDBObject("username", "insert2");
-        DBObject dbObject3 = new BasicDBObject("username", "insert3");
-        DBObject dbObject4 = new BasicDBObject("username", "insert4");
-        DBObject dbObject5 = new BasicDBObject("username", "insert5");
-        List<DBObject> list = new ArrayList<DBObject>();
-        list.add(dbObject1);
-        list.add(dbObject2);
-        list.add(dbObject3);
-        list.add(dbObject4);
-        mongoDBService.printListDBObj(mongoDBService.findAll());
-        System.out.println("——————————————————delete list——————————————————");
-        mongoDBService.deleteBatch(list);
-        System.out.println("——————————————————delete one——————————————————");
-        mongoDBService.delete(dbObject5);
-        // System.out.println("——————————————————delete all——————————————————");
-        // mongoDBService1.delete(new BasicDBObject());
-        mongoDBService.printListDBObj(mongoDBService.findAll());
-    }
 }
