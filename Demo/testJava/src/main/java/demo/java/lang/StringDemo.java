@@ -11,7 +11,26 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
-        double d = 0.6332;
+        
+    }
+    
+    /**
+     * String有个常量池，
+     */
+    static void testString() {
+        String a = "hello";
+        String b = "hello world";
+        String c = " world";
+        String d = "hello";
+        System.out.println((a + c));
+        System.out.println(b == (a + c));
+        System.out.println(a == d);
+    }
+
+    /**
+     * StringIndexOutOfBoundsException异常
+     */
+    static void testSubstr() {
         String a = "18217".substring(0, 7);
         System.out.println(a);
     }

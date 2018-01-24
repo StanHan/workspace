@@ -263,7 +263,7 @@ public class StreamDemo {
      * List 转MAP
      */
     static void testCollectors2Map() {
-        String[] array = { "a", "b", "c" };
+        String[] array = { "a", "b", "c",null };
         Map<String, String> map = Arrays.stream(array).collect(Collectors.toMap(e -> e, e -> e + " hehe!"));
         System.out.println(map);
     }
