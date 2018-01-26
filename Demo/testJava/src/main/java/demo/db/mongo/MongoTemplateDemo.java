@@ -5,15 +5,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
+
+import demo.vo.Person;
 
 /**
  * MongoTemplate是线程安全的。
@@ -49,12 +56,31 @@ public class MongoTemplateDemo {
     }
 
     /**
+     * spring-mongodb-data 返回指定字段
+     */
+    void testFields() {
+        // 查询条件
+        DBObject queryObject = new BasicDBObject();
+        queryObject.put("name", "zhangsan");
+
+        BasicDBObject fieldsObject = new BasicDBObject();
+        // 指定返回的字段
+        fieldsObject.put("name", true);
+        fieldsObject.put("age", true);
+        fieldsObject.put("sex", true);
+
+        Query query = new BasicQuery(queryObject, fieldsObject);
+        query.with(new Sort(Direction.DESC, "timestamp"));
+        List<Person> user = mongoTemplate.find(query, Person.class);
+    }
+
+    /**
      * 查询一条数据:(多用于保存时判断db中是否已有当前数据,这里 is 精确匹配,模糊匹配 使用 regex...)
      * 
      * @param url
      * @return
      */
-    public Object getByUrl(String url) {
+    public Object findOneBy(String url) {
         return mongoTemplate.findOne(new Query(Criteria.where("url").is(url)), Object.class);
     }
 
@@ -66,7 +92,7 @@ public class MongoTemplateDemo {
      * @param linkUrlid
      * @return
      */
-    public List<Object> getPageUrlsByUrl(int begin, int end, String linkUrlid) {
+    public List<Object> pageBy(int begin, int end, String linkUrlid) {
         Query query = new Query();
         query.addCriteria(Criteria.where("linkUrl.id").is(linkUrlid));
         return mongoTemplate.find(query.limit(end - begin).skip(begin), Object.class);

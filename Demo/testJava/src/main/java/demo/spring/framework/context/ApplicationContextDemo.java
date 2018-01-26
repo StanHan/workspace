@@ -4,6 +4,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
+ * ApplicationContext是Spring提供的一个高级的IoC容器，它除了能够提供IoC容器的基本功能外，还为用户提供了以下的附加服务。从ApplicationContext接口的实现，我们看出其特点：
+ * <li>1. 支持信息源，可以实现国际化。（实现MessageSource接口）
+ * <li>2. 访问资源。(实现ResourcePatternResolver接口，这个后面要讲)
+ * <li>3. 支持应用事件。(实现ApplicationEventPublisher接口)
+ * 
  * 不管以怎样的方式创建 ApplicationContext 实例，都需要为 ApplicationContext 指定配置文件，Spring 允许使用一份或多份 XML 配置文件。 当程序创建 ApplicationContext
  * 实例化时，通常也是以 Resource 的方式来访问配置文件的，所以 ApplicationContext 完全支持 ClassPathResource，FileSystemResource，ServletContextResouce
  * 等资源访问方式。ApplicationContext 确定资源访问策略通常有两个方法：

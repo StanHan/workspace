@@ -108,6 +108,7 @@ public class IocDemo {
      * <p>
      * 初始化过程中，一般不包含Bean依赖注入，IOC设计中，Bean载入和依赖注入是两个独立的过程。
      * 依赖注入一般发生在应用第一次通过getBean向容器索取Bean的时候，当然，如果你使用了lazyinit属性，那么依赖注入在IOC初始化时就完成了，否则都要等到第一次使用getBean才注入。
+     * 注入的过程是通过JVM的反射或者CGLIB来对象Bean进行实例化。
      */
     static void demoInitIoc() {
         Resource resource = new ClassPathResource("bean.xml");

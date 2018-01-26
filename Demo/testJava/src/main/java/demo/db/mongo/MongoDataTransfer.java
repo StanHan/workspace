@@ -26,8 +26,12 @@ public class MongoDataTransfer {
     private static final Logger logger = LoggerFactory.getLogger(MongoDataTransfer.class);
 
     public static void main(String[] args) throws UnknownHostException {
-        transfer("mx_carrier_bills_notify", 200);
+        transfer("dkw_user_loan_info", 200);
     }
+
+    public static final String T1 = "mongodb://fk-galaxy:ZmstZ2FsYXh5QDIzNDUu@172.16.0.140:27017/fk-galaxy";
+    public static final String T2 = "mongodb://fk-galaxy:ZmstZ2FsYXh5QDIzNDUu@172.16.0.142:27017/fk-galaxy";
+    public static final String PRO = "mongodb://fk-galaxy:ZmstZ2FsYXh5QDIzNDUu@180.101.195.217:5043/fk-galaxy";
 
     /**
      * 数据迁移
@@ -36,10 +40,8 @@ public class MongoDataTransfer {
      * @param limit
      */
     static void transfer(String collectionName, int limit) {
-        MongoClientURI srcUri = new MongoClientURI(
-                "mongodb://fk-galaxy:ZmstZ2FsYXh5QDIzNDUu@180.101.195.217:5043/fk-galaxy");
-        MongoClientURI tergetUri = new MongoClientURI(
-                "mongodb://fk-galaxy:ZmstZ2FsYXh5QDIzNDUu@172.16.0.140:27017/fk-galaxy");
+        MongoClientURI srcUri = new MongoClientURI(PRO);
+        MongoClientURI tergetUri = new MongoClientURI(T1);
 
         try (MongoClient srcClient = new MongoClient(srcUri); MongoClient tarClient = new MongoClient(tergetUri);) {
             MongoDatabase srcDB = srcClient.getDatabase("fk-galaxy");

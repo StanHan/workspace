@@ -11,16 +11,10 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
                            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-  <aop:aspectj-autoproxy />
+  <!-- 注解扫描器 -->
+  <context:component-scan base-package="demo.spring.service" />
 
-  <bean id="myInterceptor" class="demo.spring.aop.MyInterceptor" />
-
-  <bean id="personService" class="demo.spring.service.impl.Actions"></bean>
-
-  <!-- 引入dbconfig.properties属性文件 -->
-  <context:property-placeholder location="classpath:db/db.properties" />
-  
-  <!-- 注解扫描器 -->  
-  <context:component-scan base-package="demo.db.mabatis.service" />
+  <!-- 开启aop注解方式,默认为false -->
+  <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 </beans>

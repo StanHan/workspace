@@ -9,13 +9,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import demo.java.lang.annotation.Annotations.Holder;
-import demo.java.lang.annotation.Annotations.NonEmpty;
-
 /**
  * J2SE5.0版本在 java.lang.annotation提供了四种元注解，专门注解其他的注解：
  * <p>
- * .@Documented –表示是否将注解信息添加在java文档中。
+ * .@Documented –在默认的情况下javadoc命令不会将我们的annotation生成在doc中去的，所以使用该标记就是告诉jdk让它也将annotation生成到doc中去
  * <p>
  * .@Retention –定义该注解的生命周期。
  * <ul>
@@ -25,17 +22,23 @@ import demo.java.lang.annotation.Annotations.NonEmpty;
  * </ul>
  * .@Target –表示该注解用于什么地方。如果不明确指出，该注解可以放在任何地方。
  * <ul>
- * <li>ElementType.TYPE:用于描述类、接口或enum声明
- * <li>ElementType.FIELD:用于描述实例变量
- * <li>ElementType.METHOD
- * <li>ElementType.PARAMETER
- * <li>ElementType.CONSTRUCTOR
- * <li>ElementType.LOCAL_VARIABLE
- * <li>ElementType.ANNOTATION_TYPE 另一个注释
- * <li>ElementType.PACKAGE 用于记录java文件的package信息
+ * <li>ElementType.TYPE：用于描述类、接口或enum声明
+ * <li>ElementType.FIELD：用于描述实例变量
+ * <li>ElementType.METHOD：用于描述方法。
+ * <li>ElementType.PARAMETER：用于描述参数。
+ * <li>ElementType.CONSTRUCTOR：用于描述构造器
+ * <li>ElementType.LOCAL_VARIABLE：用于描述局部变量
+ * <li>ElementType.ANNOTATION_TYPE： 另一个注释
+ * <li>ElementType.PACKAGE： 用于记录java文件的package信息
  * </ul>
- * .@Inherited – 定义该注释和子类的关系
+ * .@Inherited – 定义该注释和子类的关系。比如有一个类A，在他上面有一个标记annotation，那么A的子类B是否不用再次标记annotation就可以继承得到呢，答案是肯定的
  * <p>
+ * 
+ * 注意:
+ * <p>
+ * <li>Annotation是不可以继承其他接口的，这一点是需要进行注意，这也是annotation的一个规定吧。
+ * <li>Annotation也是存在包结构的，在使用的时候直接进行导入即可。
+ * <li>Annotation类型的类型只支持原声数据类型，枚举类型和Class类型的一维数组，其他的类型或者用户自定义的类都是不可以作为annotation的类型，
  */
 
 @Author("Stan")
