@@ -8,8 +8,12 @@ import java.util.Map;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.IndexOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.index.Index;
+import org.springframework.data.mongodb.core.index.IndexDefinition;
+import org.springframework.data.mongodb.core.index.IndexInfo;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -33,12 +37,43 @@ import demo.vo.Person;
  */
 public class MongoTemplateDemo {
 
-    public static final String t1 = "mongodb://fk-galaxy:ZmstZ2FsYXh5QDIzNDUu@172.16.0.140:27017/fk-galaxy";
-
     private static MongoTemplate mongoTemplate = null;
 
     public static void main(String[] args) throws Exception {
-        mongoTemplate = buildMongoTemplate(t1);
+        mongoTemplate = buildMongoTemplate(MongoDataTransfer.T1);
+        listIndex("mx_carrier_calls");
+
+        listIndex("mx_carrier_report_notify");
+    }
+
+    /**
+     * 查询索引信息
+     * 
+     * @param collectionName
+     */
+    static void listIndex(String collectionName) {
+        IndexOperations indexOperations = mongoTemplate.indexOps(collectionName);
+        // 查询索引
+        List<IndexInfo> indexInfos = indexOperations.getIndexInfo();
+        if (indexInfos != null && !indexInfos.isEmpty()) {
+            indexInfos.forEach(e -> {
+                System.err.println(e.toString());
+            });
+        }
+        System.err.println("================");
+    }
+
+    /**
+     * 索引
+     */
+    static void indexDemo() {
+        IndexOperations indexOperations = mongoTemplate.indexOps("dkw_user_loan_info");
+        // 创建索引
+        Index index = new Index("idcard", Direction.ASC);
+        index.named("idx_idcard");
+        index.background();
+        indexOperations.ensureIndex(index);
+
     }
 
     /**
@@ -73,6 +108,9 @@ public class MongoTemplateDemo {
         query.with(new Sort(Direction.DESC, "timestamp"));
         List<Person> user = mongoTemplate.find(query, Person.class);
     }
+
+    // @Query(value = "{'status':?0 }", fields = "{ '_id' : 1, 'catalogName': 1}")
+    // List<Object> findAllForeCatalogIdAndName(String status);
 
     /**
      * 查询一条数据:(多用于保存时判断db中是否已有当前数据,这里 is 精确匹配,模糊匹配 使用 regex...)

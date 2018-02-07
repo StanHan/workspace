@@ -33,10 +33,40 @@ import org.apache.commons.lang3.time.DateUtils;
 public class DateDemo {
 
     public static void main(String[] args) throws ParseException {
-        // testCalendar();
-        // demoDateUtils();
-        System.out.println(new Date(Long.MAX_VALUE));
-        System.out.println(new Date(Long.MIN_VALUE));
+        Date date = parseDate(0000, 00, 01, 00, 00, 00);
+        System.out.println(formatDate(date, G_Y_M_D_HMS));
+        try {
+            Date d2 = parseStr2Date("0000-00-00", Y_M_D);
+            System.out.println(formatDate(d2, G_Y_M_D_HMS));
+            Date d3 = parseStr2Date("0001-01-01", Y_M_D);
+            System.out.println(formatDate(d3, G_Y_M_D_HMS));
+            System.out.println(d3.getTime());
+            Date d4 = new Date(-62135798400000L);
+            System.out.println(formatDate(d4, G_Y_M_D_HMS));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public final static long DAY_MS_RATE = 1000 * 60 * 60 * 24L;
+    public final static String Y_M_D = "yyyy-MM-dd";
+    public final static String G_Y_M_D_HMS = "G yyyy-MM-dd HH:mm:ss";
+    public final static String Y_M_D_HMS = "yyyy-MM-dd HH:mm:ss";
+    public final static String TZ = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
+    /**
+     * 时间戳的边界
+     */
+    static void boundaryTimestamp() {
+        System.out.println(formatDate(new Date(Long.MAX_VALUE), G_Y_M_D_HMS));
+        System.out.println(formatDate(new Date(Long.MIN_VALUE), G_Y_M_D_HMS));
+    }
+
+    public static int howManyDaysFromNow(Date date) {
+        long now = System.currentTimeMillis();
+        long start = date.getTime();
+        long days = (now - start) / DAY_MS_RATE;
+        return (int) days;
     }
 
     static void demoDateUtils() {
@@ -47,11 +77,10 @@ public class DateDemo {
         System.out.println(DateUtils.truncate(now, Calendar.HOUR));
         System.out.println(removeHmsS2(new Date()));
         System.out.println(removeHmsS(new Date()));
-        Date lastDate = new Date(Long.MAX_VALUE);
-        System.out.println(getDate(lastDate) + " " + getTime(lastDate));
         Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
         Date tomorrow = DateUtils.addDays(today, 1);
         System.out.println(today + "    " + tomorrow);
+
     }
 
     static void testCalendar() {
@@ -73,25 +102,6 @@ public class DateDemo {
         System.out.println(date2);
     }
 
-    public final static long DAY_MS_RATE = 1000 * 60 * 60 * 24L;
-
-    public final static String YM = "yyyyMM";
-    public final static String YMD = "yyyyMMdd";
-    public final static String Y_M = "yyyy-MM";
-    public final static String Y_M_D = "yyyy-MM-dd";
-    public final static String Y_M_D_HMS = "yyyy-MM-dd HH:mm:ss";
-    public final static String TZ = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-
-    public static String getDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        return formatter.format(date);
-    }
-
-    public static String getTime(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        return formatter.format(date);
-    }
-
     /**
      * Date字符串转换为Date
      * 
@@ -100,65 +110,26 @@ public class DateDemo {
      * @param format
      *            时间格式
      * @return Date
+     * @throws ParseException
      * @throws Exception
      */
-    public static Date toDate(String dateStr, String format) {
-        Date date = null;
-        if (_isEmpty(dateStr)) {
-            return date;
-        }
-
-        try {
-            date = new SimpleDateFormat(format).parse(dateStr);
-        } catch (Exception e) {
-            System.err.println("[parseToDateFormat Exception] dateStr=" + dateStr + ",format=" + format + ",e=" + e);
-        }
+    public static Date parseStr2Date(String dateStr, String format) throws ParseException {
+        Date date = new SimpleDateFormat(format).parse(dateStr);
         return date;
-    }
-
-    /**
-     * Date(年月日)字符串转换为Date
-     * 
-     * @param dateStr
-     *            Date字符串
-     * @return Date
-     */
-    public static Date toDate(String dateStr) {
-        return toDate(dateStr, Y_M_D);
-    }
-
-    /**
-     * Date(年月日,时分秒)字符串转换为Date
-     * 
-     * @param dateStr
-     *            Date字符串
-     * @return Date
-     */
-    public static Date toDateTime(String dateStr) {
-        return toDate(dateStr, Y_M_D_HMS);
     }
 
     /**
      * Date转换为字符串(年月日)
      * 
-     * @param obj
+     * @param date
      *            Object
      * @param format
      *            时间格式
      * @return String
      */
-    public static String dateToStr(Object obj, String format) {
-        String dateStr = "";
-        if (obj == null) {
-            return dateStr;
-        }
-
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-            dateStr = simpleDateFormat.format(obj);
-        } catch (Exception e) {
-            System.err.println("[dateToString Exception] obj=" + obj + ",format=" + format + ",e=" + e);
-        }
+    public static String formatDate(Date date, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        String dateStr = simpleDateFormat.format(date);
         return dateStr;
     }
 
@@ -172,40 +143,7 @@ public class DateDemo {
      * @return Integer
      */
     public static int subtractDays(Date startDate, Date endDate) {
-        Calendar calendar1 = Calendar.getInstance();
-        Calendar calendar2 = Calendar.getInstance();
-        calendar1.setTime(startDate);
-        calendar2.setTime(endDate);
-        long increaseDate = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / DAY_MS_RATE;
-        if (((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) % DAY_MS_RATE) > 0) {
-            increaseDate = increaseDate + 1;
-        }
-        return (int) increaseDate;
-    }
-
-    /**
-     * 计算两个日期之间相差多少天(endDate-startDate)
-     * 
-     * @param startDate
-     *            小的日期
-     * @param endDate
-     *            大的日期
-     * @return Integer
-     */
-    public static int howLong(Date startDate, Date endDate) {
-
-        Calendar calendar1 = Calendar.getInstance();
-        Calendar calendar2 = Calendar.getInstance();
-        calendar1.setTime(startDate);
-        calendar2.setTime(endDate);
-        int distanceHour = calendar2.get(Calendar.HOUR_OF_DAY) - calendar1.get(Calendar.HOUR_OF_DAY);
-
-        int distanceMin = calendar2.get(Calendar.MINUTE) - calendar1.get(Calendar.MINUTE);
-
-        long increaseDate = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / DAY_MS_RATE;
-        if (((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) % DAY_MS_RATE) > 0) {
-            increaseDate = increaseDate + 1;
-        }
+        long increaseDate = (endDate.getTime() - startDate.getTime()) / DAY_MS_RATE;
         return (int) increaseDate;
     }
 
@@ -311,15 +249,6 @@ public class DateDemo {
         return outDate;
     }
 
-    /************************ private method ********************************/
-    private static boolean _isEmpty(String str) {
-        boolean flg = false;
-        if (str == null || "".equals(str)) {
-            flg = true;
-        }
-        return flg;
-    }
-
     public static String addMDate(String date, String inDateFormat, int m) {
         try {
             SimpleDateFormat format = new SimpleDateFormat(inDateFormat);
@@ -368,10 +297,11 @@ public class DateDemo {
      * @param dateString
      * @param format
      * @return
+     * @throws ParseException
      */
-    public static double processMonthsFromNow(String dateString, String format) {
+    public static double processMonthsFromNow(String dateString, String format) throws ParseException {
         Date now = new Date();
-        Date date = DateDemo.toDate(dateString, format);
+        Date date = DateDemo.parseStr2Date(dateString, format);
         long howlong = now.getTime() - date.getTime();// 毫秒
         return howlong / (1000 * 60 * 60 * 24 * 30);
     }
@@ -382,10 +312,11 @@ public class DateDemo {
      * @param dateString
      * @param format
      * @return
+     * @throws ParseException
      */
-    public static double processMonths(String startDate, String endDate, String format) {
-        Date start_date = DateDemo.toDate(startDate, format);
-        Date end_date = DateDemo.toDate(endDate, format);
+    public static double processMonths(String startDate, String endDate, String format) throws ParseException {
+        Date start_date = parseStr2Date(startDate, format);
+        Date end_date = parseStr2Date(endDate, format);
         long howlong = end_date.getTime() - start_date.getTime();// 毫秒
         return howlong / (1000 * 60 * 60 * 24 * 30);
     }
@@ -414,20 +345,6 @@ public class DateDemo {
         return maxDate;
     }
 
-    public static String getPreviousMonth() {
-        String res = "";
-        Calendar a = Calendar.getInstance();
-        int month = a.get(Calendar.MONTH);
-        if (month == 0) {
-            res = a.get(Calendar.YEAR) - 1 + "" + 12;
-        } else if (month >= 10) {
-            res = a.get(Calendar.YEAR) + "" + month;
-        } else {
-            res = a.get(Calendar.YEAR) + "0" + month;
-        }
-        return res;
-    }
-
     /**
      * 去除时分秒
      * 
@@ -454,5 +371,4 @@ public class DateDemo {
         return DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
     }
 
-    public static final int oneDayInMilliseconds = 24 * 60 * 60 * 1000;
 }

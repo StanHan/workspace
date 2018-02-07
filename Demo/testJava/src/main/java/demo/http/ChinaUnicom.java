@@ -264,7 +264,7 @@ public class ChinaUnicom {
 		String create = sdf.format(date);
 		System.out.println("create:" + create);
 
-		String datetime = DateDemo.dateToStr(date, DateDemo.TZ);// 创建时间
+		String datetime = DateDemo.formatDate(date, DateDemo.TZ);// 创建时间
 		System.out.println("CreatedTime :" + datetime);
 
 		System.out.println(create.equals(datetime));

@@ -11,8 +11,10 @@ import javax.crypto.spec.DESKeySpec;
 import demo.java.lang.HexDemo;
 
 /**
- * 数据加密算法（Data Encryption Algorithm，DEA）是一种对称加密算法，很可能是使用最广泛的密钥系统，特别是在保护金融数据的安全中，最初开发的DEA是嵌入硬件中的。 通常，自动取款机（Automated
- * Teller Machine，ATM）都使用DEA。 它出自IBM的研究工作，IBM也曾对它拥有几年的专利权，但是在1983年已到期后，处于公有范围中，允许在特定条件下可以免除专利使用费而使用。1977年被美国政府正式采纳。
+ * <h1>DEA （Data Encryption Algorithm，）数据加密算法</h1>
+ * <p>
+ * 是一种对称加密算法，很可能是使用最广泛的密钥系统，特别是在保护金融数据的安全中，最初开发的DEA是嵌入硬件中的。 通常，自动取款机（Automated Teller Machine，ATM）都使用DEA。
+ * 它出自IBM的研究工作，IBM也曾对它拥有几年的专利权，但是在1983年已到期后，处于公有范围中，允许在特定条件下可以免除专利使用费而使用。1977年被美国政府正式采纳。
  * 
  * 1998年后实用化DES破译机的出现彻底宣告DES算法已不具备安全性，1999年NIST颁布新标准，规定DES算法只能用于遗留加密系统，但不限制使用DESede算法。当今DES算法正是推出历史舞台，AES算法称为他的替代者。
  * 

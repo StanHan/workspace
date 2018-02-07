@@ -27,7 +27,9 @@ import java.util.Vector;
  * <p>
  * 结果出现了两个等号。很显然，当原文的二进制码长度不足24位，最终转换为十进制时也不足4项，这时就需要用等号补位。 将Base64编码后的字符串最多会有2个等号，这时因为： 余数 = 原文字节数 MOD 3。
  * 
- * <h2>字符表映射码</h2> <b>索引0到25对应字符A到Z，索引26到51对应字符a到z,索引52到61对应字符0到9，索引62对应字符 +，索引63对应字符/</b>
+ * <h2>字符表映射码</h2>
+ * <p>
+ * <b>索引0到25对应字符A到Z，索引26到51对应字符a到z,索引52到61对应字符0到9，索引62对应字符 +，索引63对应字符/</b>
  * 
  */
 public class Base64Demo {
@@ -50,6 +52,31 @@ public class Base64Demo {
         System.out.println(encode);
         String decode = base64.backEncode("YQ==".getBytes(StandardCharsets.UTF_8));
         System.out.println(decode);
+    }
+
+    /**
+     * 将字节数组编码成BASE64字符串
+     * 
+     * @param data
+     * @return
+     */
+    public static String encode(byte[] data) {
+        Encoder encoder = Base64.getEncoder();
+        byte[] encode = encoder.encode(data);
+        return new String(encode, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 将BASE64字符串解码成相应的字节数组
+     * 
+     * @param data
+     * @return
+     * @throws Exception
+     */
+    public static byte[] decode(String data) throws Exception {
+        Decoder decoder = Base64.getDecoder();
+        byte[] buffer = decoder.decode(data.getBytes(StandardCharsets.UTF_8));
+        return buffer;
     }
 }
 

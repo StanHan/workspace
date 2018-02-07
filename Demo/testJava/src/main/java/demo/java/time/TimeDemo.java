@@ -18,6 +18,7 @@ import java.time.chrono.Chronology;
 import java.time.chrono.HijrahChronology;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.IsoFields;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,9 +35,20 @@ public class TimeDemo {
     private LocalTime time;
 
     public static void main(String[] args) throws Exception {
-//      testLocalDateTime();
-      Timestamp t = new Timestamp(100, 0, 1, 15, 45, 29, 987245732);
-      System.out.println(t);
+        Date date = new Date(0);
+        System.out.println(date);
+    }
+
+    /**
+     * 时间戳
+     */
+    static void testTimestamp() {
+        // 方法 一
+        System.currentTimeMillis();
+        // 方法 二
+        Calendar.getInstance().getTimeInMillis();
+        // 方法 三
+        new Date().getTime();
     }
 
     static void testDateTimeFormatter() {

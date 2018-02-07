@@ -54,7 +54,7 @@ public class XMLSchema2JavaClass {
 					String javaContent = parseElement2JavaFile(element,"package com.pactera.nppc.vo;",classComment);
 					String javaFileName = fileSavePath + name + ".java";
 
-					demo.java.io.IOUtil.writeFile(javaFileName, javaContent, "UTF-8");
+					demo.java.io.IoDemo.writeFile(javaFileName, javaContent, "UTF-8");
 				}
 			}
 		} catch (Exception e) {

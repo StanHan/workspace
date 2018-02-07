@@ -41,17 +41,7 @@ import java.util.Vector;
 public class CollectionDemo {
 
     public static void main(String[] args) {
-        // demoSearch(19);
-        Collection collection = null;
-        // testTreeSet();
-        // testSet();
-        // testArray(1, 2, 3);
-        // java7Demo();
-        // listDemo();
-        // testList();
-        List<Integer> list = Arrays.asList(1,2,1);
-        Set<Integer> set = new HashSet<>(list);
-        System.out.println(set);
+        testSet();
     }
 
     static void testRemove() {
@@ -192,43 +182,35 @@ public class CollectionDemo {
      */
     static void testSet() {
         Set<Integer> result = new HashSet<Integer>();
-        Set<Integer> set1 = new HashSet<Integer>() {
-            {
-                add(1);
-                add(2);
-            }
-        };
 
-        Set<Integer> set2 = new HashSet<Integer>() {
-            {
-                add(1);
-                add(3);
-            }
-        };
-
-        Set<Integer> set3 = new HashSet<Integer>();
         System.out.println("set1=" + set1);
         System.out.println("set2=" + set2);
-        System.out.println("set3=" + set3);
+        System.out.println("emptySet=" + emptySet);
+        System.out.println("nullSet=" + nullSet);
 
         result.clear();
         System.out.println(result.addAll(set1));
         System.out.println(result.retainAll(set2));
-        System.out.println("交集：" + result);
+        System.out.println("set1 与 set2 交集：" + result);
 
         result.clear();
         System.out.println(result.addAll(set1));
         System.out.println(result.removeAll(set2));
-        System.out.println("差集：" + result);
+        System.out.println("set1 与 set2 差集：" + result);
 
         result.clear();
         System.out.println(result.addAll(set1));
         System.out.println(result.addAll(set2));
-        System.out.println("并集：" + result);
+        System.out.println("set1 与 set2 并集：" + result);
 
-        System.out.println(set1.removeAll(set3));
+        System.out.println(set1.removeAll(emptySet));
         System.out.println("set1=" + set1);
-        System.out.println("set3=" + set3);
+        System.out.println("emptySet=" + emptySet);
+        
+        result.clear();
+        System.out.println(result.addAll(set1));
+        System.out.println(result.addAll(nullSet));
+        System.out.println("set1 与 nullSet 并集：" + result);
     }
 
     static void testHashSet() {
@@ -373,5 +355,22 @@ public class CollectionDemo {
         char[] copyTo2 = java.util.Arrays.copyOfRange(copyFrom, 2, 9);
         System.out.println(new String(copyTo2));
     }
+
+    static Set<Integer> set1 = new HashSet<Integer>() {
+        {
+            add(1);
+            add(2);
+        }
+    };
+
+    static Set<Integer> set2 = new HashSet<Integer>() {
+        {
+            add(1);
+            add(3);
+        }
+    };
+
+    static Set<Integer> emptySet = new HashSet<Integer>();
+    static Set<Integer> nullSet = null;
 
 }

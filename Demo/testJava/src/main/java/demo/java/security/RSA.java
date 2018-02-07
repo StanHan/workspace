@@ -9,13 +9,12 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
-import java.util.Base64.Decoder;
-import java.util.Base64.Encoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
+
+import demo.java.util.Base64Demo;
 
 /**
  * RSA公钥加密算法是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。
@@ -45,22 +44,11 @@ public class RSA {
 
     }
 
-    static Encoder encoder = Base64.getEncoder();
-    static Decoder decoder = Base64.getDecoder();
     public static final String KEY_ALGORITHM = "RSA";
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
     private static final String PUBLIC_KEY = "RSAPublicKey";
     private static final String PRIVATE_KEY = "RSAPrivateKey";
-
-    public static byte[] decryptBASE64(String key) {
-        return decoder.decode(key);
-    }
-
-    public static String encryptBASE64(byte[] bytes) {
-        byte[] array = encoder.encode(bytes);
-        return new String(array);
-    }
 
     /**
      * 用私钥对信息生成数字签名
@@ -74,7 +62,7 @@ public class RSA {
      */
     public static String sign(byte[] data, String privateKey) throws Exception {
         // 解密由base64编码的私钥
-        byte[] keyBytes = decryptBASE64(privateKey);
+        byte[] keyBytes = Base64Demo.decode(privateKey);
         // 构造PKCS8EncodedKeySpec对象
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         // KEY_ALGORITHM 指定的加密算法
@@ -85,7 +73,7 @@ public class RSA {
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
         signature.initSign(priKey);
         signature.update(data);
-        return encryptBASE64(signature.sign());
+        return Base64Demo.encode(signature.sign());
     }
 
     /**
@@ -102,7 +90,7 @@ public class RSA {
      */
     public static boolean verify(byte[] data, String publicKey, String sign) throws Exception {
         // 解密由base64编码的公钥
-        byte[] keyBytes = decryptBASE64(publicKey);
+        byte[] keyBytes = Base64Demo.decode(publicKey);
         // 构造X509EncodedKeySpec对象
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         // KEY_ALGORITHM 指定的加密算法
@@ -113,12 +101,12 @@ public class RSA {
         signature.initVerify(pubKey);
         signature.update(data);
         // 验证签名是否正常
-        return signature.verify(decryptBASE64(sign));
+        return signature.verify(Base64Demo.decode(sign));
     }
 
     public static byte[] decryptByPrivateKey(byte[] data, String key) throws Exception {
         // 对密钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = Base64Demo.decode(key);
         // 取得私钥
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -139,7 +127,7 @@ public class RSA {
      * @throws Exception
      */
     public static byte[] decryptByPrivateKey(String data, String key) throws Exception {
-        return decryptByPrivateKey(decryptBASE64(data), key);
+        return decryptByPrivateKey(Base64Demo.decode(data), key);
     }
 
     /**
@@ -153,7 +141,7 @@ public class RSA {
      */
     public static byte[] decryptByPublicKey(byte[] data, String key) throws Exception {
         // 对密钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = Base64Demo.decode(key);
         // 取得公钥
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -175,7 +163,7 @@ public class RSA {
      */
     public static byte[] encryptByPublicKey(String data, String key) throws Exception {
         // 对公钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = Base64Demo.decode(key);
         // 取得公钥
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -197,7 +185,7 @@ public class RSA {
      */
     public static byte[] encryptByPrivateKey(byte[] data, String key) throws Exception {
         // 对密钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = Base64Demo.decode(key);
         // 取得私钥
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -217,7 +205,7 @@ public class RSA {
      */
     public static String getPrivateKey(Map<String, Key> keyMap) throws Exception {
         Key key = (Key) keyMap.get(PRIVATE_KEY);
-        return encryptBASE64(key.getEncoded());
+        return Base64Demo.encode(key.getEncoded());
     }
 
     /**
@@ -229,7 +217,7 @@ public class RSA {
      */
     public static String getPublicKey(Map<String, Key> keyMap) throws Exception {
         Key key = keyMap.get(PUBLIC_KEY);
-        return encryptBASE64(key.getEncoded());
+        return Base64Demo.encode(key.getEncoded());
     }
 
     /**

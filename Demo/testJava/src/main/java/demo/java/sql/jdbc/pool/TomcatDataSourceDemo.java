@@ -3,7 +3,7 @@ package demo.java.sql.jdbc.pool;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
-public class TomcatDataSource {
+public class TomcatDataSourceDemo {
     
     /**
      * 获取MySQL 数据源

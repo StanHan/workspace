@@ -52,7 +52,14 @@ public class MongoDbDemo {
     public static void main(String[] args) {
         demoObjectId();
     }
-    
+
+    /**
+     * 索引
+     */
+    static void indexDemo() {
+
+    }
+
     /**
      * 连接数据库: 连接数据库，你需要指定数据库名称，如果指定的数据库不存在，mongo会自动创建数据库。
      */

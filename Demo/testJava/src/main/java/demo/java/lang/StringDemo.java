@@ -11,9 +11,9 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
-        
+        replaceDemo();
     }
-    
+
     /**
      * String有个常量池，
      */
@@ -54,7 +54,12 @@ public class StringDemo {
      * 另外，如果replaceAll()和replaceFirst()所用的参数据不是基于规则表达式的，则与replace()替换字符串的效果是一样的，即这两者也支持字符串的操作；
      * 还有一点注意:：执行了替换操作后,源字符串的内容是没有发生改变的。
      */
-    static void replace() {
+    static void replaceDemo() {
+        String name = "韩**";
+        String tmp = name.replace("*", "");
+        System.out.println(tmp);
+        String tmp2 = name.replaceAll("*", "");
+        System.out.println(tmp2);
         String s = "{用户姓名}你好！{银行开户行}，借款金额{借款金额}，{逾期天数}，{平台服务费}，{平台服务费}，{到期日},{到期日}";
         s = s.replace("{到期日}", "2017-09-08");
         s = s.replaceAll("{平台服务费}", "{002}");

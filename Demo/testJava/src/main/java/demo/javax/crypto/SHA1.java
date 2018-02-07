@@ -72,7 +72,10 @@ public class SHA1 {
         // 使用指定的字节数组对摘要进行最后更新
         sha.update(data);
         // 完成摘要计算并返回
-        return sha.digest();
+        byte[] result = sha.digest();
+        // 复位
+        sha.reset();
+        return result;
     }
 
     /**

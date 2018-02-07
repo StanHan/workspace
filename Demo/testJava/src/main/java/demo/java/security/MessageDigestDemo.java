@@ -3,12 +3,13 @@ package demo.java.security;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.stream.IntStream;
 
 import demo.java.lang.HexDemo;
 
 /**
- * 
- * 消息摘要（Message Digest）又称为数字摘要(Digital Digest)。它是一个唯一对应一个消息或文本的固定长度的值，它由一个单向Hash加密函数对消息进行作用而产生。
+ * <h1>消息摘要（Message Digest）</h1><br>
+ * 又称为数字摘要(Digital Digest)。它是一个唯一对应一个消息或文本的固定长度的值，它由一个单向Hash加密函数对消息进行作用而产生。
  * HASH函数的抗冲突性使得如果一段明文稍有变化，哪怕只更改该段落的一个字母，通过哈希算法作用后都将产生不同的值。而HASH算法的单向性使得要找到到哈希值相同的两个不 同的输入消息，在计算上是不可能的。
  * 消息摘要算法的主要特征是加密过程不需要密钥，并且经过加密的数据无法被解密，只有输入相同的明文数据经过相同的消息摘要算法才能得到相同的密文。消息摘要算法不存在 密钥的管理与分发问题，适合于分布式网络相同上使用。
  * <p>
@@ -18,7 +19,27 @@ import demo.java.lang.HexDemo;
 public class MessageDigestDemo {
 
     public static void main(String[] args) {
-        System.err.println(getMd5DigestHexStr("422828199001243938" + "20160622"));
+        MessageDigest md5 = getMd5Digest();
+        IntStream.range(1, 4).forEach(e -> {
+            System.out.println(HexDemo.bytes2Hex(md5.digest(Integer.valueOf(e).toString().getBytes())));
+        });
+    }
+
+    static void demo() {
+        MessageDigest messageDigest = getMd5Digest();
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest("Stan".getBytes(StandardCharsets.UTF_8))));
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest("Stan".getBytes(StandardCharsets.UTF_8))));
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest("Stan".getBytes(StandardCharsets.UTF_8))));
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest("Stan".getBytes(StandardCharsets.UTF_8))));
+        messageDigest.update("Stan".getBytes(StandardCharsets.UTF_8));
+        messageDigest.reset();
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest()));
+        messageDigest.update("Stan".getBytes(StandardCharsets.UTF_8));
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest()));
+        messageDigest.update("".getBytes(StandardCharsets.UTF_8));
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest()));
+        messageDigest.reset();
+        System.out.println(HexDemo.byteArrayToHexString(messageDigest.digest()));
     }
 
     /**

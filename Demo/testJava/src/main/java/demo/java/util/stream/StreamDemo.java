@@ -40,14 +40,38 @@ public class StreamDemo {
     }
 
     /**
-     * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
+     * 执行终止操作时，会终止流管道，如果您想再次遍历同一个数据集，可以设置一个新的流管道。
      */
-    static void testGroupingByNull() {
+    static void testSteam() {
         List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya");
+        Stream<String> stream = items.stream();
+        long count = stream.collect(Collectors.counting());
+        System.out.println("个数：" + count);
+        // Stream已经关闭，不能再次计算
+        count = stream.collect(Collectors.counting());
+        System.out.println("再次计算个数：" + count);
+    }
 
+    /**
+     * 
+     */
+    static void testGroup() {
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya");
         Map<String, Long> result = items.stream().limit(1000L)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(result);
+
+        // 会返回一个空的结果集，而不是null.
+        result = items.stream().limit(1000L).filter(e -> {
+            return "Stan".equals(e);
+        }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(result);
+    }
+
+    /**
+     * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
+     */
+    static void testGroupingByNull() {
         String[] array = { "a", "b", "a", null, null };
         Map<String, List<String>> map = Stream.of(array).collect(Collectors.groupingBy(e -> e));
         System.out.println(map);
@@ -263,7 +287,7 @@ public class StreamDemo {
      * List 转MAP
      */
     static void testCollectors2Map() {
-        String[] array = { "a", "b", "c",null };
+        String[] array = { "a", "b", "c", null };
         Map<String, String> map = Arrays.stream(array).collect(Collectors.toMap(e -> e, e -> e + " hehe!"));
         System.out.println(map);
     }
