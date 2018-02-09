@@ -1,4 +1,4 @@
-package demo.util;
+package demo.javax.xml.soap;
 
 import java.util.ArrayList;  
 import java.util.List;  
@@ -31,10 +31,10 @@ import org.xml.sax.InputSource;
  * Date 2010-3-30下午02:51:30 
  * (c)CopyRight seahigh 2010 
  */  
-public class SoapUtil {  
+public class SoapDemo {  
 	
 	public static void main(String[] args) throws Exception {  
-        SoapUtil util = new SoapUtil();  
+        SoapDemo util = new SoapDemo();  
         SOAPPart part = util.initSoapPart();  
         Source inform = util.getParameterValues(part, util.getTestnames());  
         util.soap2String(inform);  

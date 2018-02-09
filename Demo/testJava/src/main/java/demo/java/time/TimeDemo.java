@@ -25,6 +25,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class TimeDemo {
 
+    public static void main(String[] args) throws Exception {
+        Date date = new Date(0);
+        System.out.println(date);
+    }
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTime;
 
@@ -34,12 +39,9 @@ public class TimeDemo {
     @DateTimeFormat(pattern = "HH:mm:ss")
     private LocalTime time;
 
-    public static void main(String[] args) throws Exception {
-        Date date = new Date(0);
-        System.out.println(date);
-    }
-
     /**
+     * Epoch指的是一个特定的时间：1970-01-01 00:00:00 UTC。
+     * 
      * 时间戳
      */
     static void testTimestamp() {
@@ -262,4 +264,53 @@ public class TimeDemo {
         Period period2 = Period.of(3, 5, 0);
         System.out.println(period2);
     }
+
+    /**
+     * Hours per day.
+     */
+    public static final int HOURS_PER_DAY = 24;
+    /**
+     * Minutes per hour.
+     */
+    public static final int MINUTES_PER_HOUR = 60;
+    /**
+     * Minutes per day.
+     */
+    public static final int MINUTES_PER_DAY = MINUTES_PER_HOUR * HOURS_PER_DAY;
+    /**
+     * Seconds per minute.
+     */
+    public static final int SECONDS_PER_MINUTE = 60;
+    /**
+     * Seconds per hour.
+     */
+    public static final int SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
+    /**
+     * Seconds per day.
+     */
+    public static final int SECONDS_PER_DAY = SECONDS_PER_HOUR * HOURS_PER_DAY;
+    /**
+     * Milliseconds per day.
+     */
+    public static final long MILLIS_PER_DAY = SECONDS_PER_DAY * 1000L;
+    /**
+     * Microseconds per day.
+     */
+    public static final long MICROS_PER_DAY = SECONDS_PER_DAY * 1000_000L;
+    /**
+     * Nanos per second.
+     */
+    public static final long NANOS_PER_SECOND = 1000_000_000L;
+    /**
+     * Nanos per minute.
+     */
+    public static final long NANOS_PER_MINUTE = NANOS_PER_SECOND * SECONDS_PER_MINUTE;
+    /**
+     * Nanos per hour.
+     */
+    public static final long NANOS_PER_HOUR = NANOS_PER_MINUTE * MINUTES_PER_HOUR;
+    /**
+     * Nanos per day.
+     */
+    public static final long NANOS_PER_DAY = NANOS_PER_HOUR * HOURS_PER_DAY;
 }

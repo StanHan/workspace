@@ -2,6 +2,9 @@ package demo.spring.ioc;
 
 import java.beans.PropertyDescriptor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -109,12 +112,72 @@ public class IocDemo {
      * 初始化过程中，一般不包含Bean依赖注入，IOC设计中，Bean载入和依赖注入是两个独立的过程。
      * 依赖注入一般发生在应用第一次通过getBean向容器索取Bean的时候，当然，如果你使用了lazyinit属性，那么依赖注入在IOC初始化时就完成了，否则都要等到第一次使用getBean才注入。
      * 注入的过程是通过JVM的反射或者CGLIB来对象Bean进行实例化。
+     * <p>
+     * 总结一下IOC容器初始化的基本步骤：
+     * <li>初始化的入口在容器实现中的 refresh()调用来完成
+     * <li>对 bean 定义载入 IOC 容器使用的方法是 loadBeanDefinition,其中的大致过程如下：通过 ResourceLoader 来完成资源文件位置的定位，DefaultResourceLoader
+     * 是默认的实现，同时上下文本身就给出了 ResourceLoader 的实现，可以从类路径，文件系统, URL 等方式来定为资源位置。如果是 XmlBeanFactory作为 IOC 容器，那么需要为它指定 bean
+     * 定义的资源，也就是说 bean 定义文件时通过抽象成 Resource 来被 IOC 容器处理的，容器通过 BeanDefinitionReader来完成定义信息的解析和 Bean
+     * 信息的注册,往往使用的是XmlBeanDefinitionReader 来解析 bean 的 xml 定义文件 - 实际的处理过程是委托给 BeanDefinitionParserDelegate 来完成的，从而得到 bean
+     * 的定义信息，这些信息在 Spring 中使用 BeanDefinition 对象来表示 - 这个名字可以让我们想到loadBeanDefinition,RegisterBeanDefinition 这些相关的方法 -
+     * 他们都是为处理 BeanDefinitin 服务的， 容器解析得到 BeanDefinitionIoC 以后，需要把它在 IOC 容器中注册，这由 IOC 实现 BeanDefinitionRegistry
+     * 接口来实现。注册过程就是在 IOC 容器内部维护的一个HashMap 来保存得到的 BeanDefinition 的过程。这个 HashMap 是 IoC 容器持有 bean 信息的场所，以后对 bean
+     * 的操作都是围绕这个HashMap 来实现的.
+     * <li>然后我们就可以通过 BeanFactory 和 ApplicationContext 来享受到 Spring IOC 的服务了,在使用 IOC 容器的时候，我们注意到除了少量粘合代码，绝大多数以正确 IoC
+     * 风格编写的应用程序代码完全不用关心如何到达工厂，因为容器将把这些对象与容器管理的其他对象钩在一起。基本的策略是把工厂放到已知的地方，最好是放在对预期使用的上下文有意义的地方，以及代码将实际需要访问工厂的地方。
+     * Spring本身提供了对声明式载入 web 应用程序用法的应用程序上下文,并将其存储在ServletContext 中的框架实现。具体可以参见以后的文章
+     * <p>
+     * 在使用 Spring IOC 容器的时候我们还需要区别两个概念: Beanfactory 和 Factory bean，其中 BeanFactory 指的是 IOC 容器的编程抽象，比如 ApplicationContext，
+     * XmlBeanFactory 等，这些都是 IOC 容器的具体表现，需要使用什么样的容器由客户决定,但 Spring 为我们提供了丰富的选择。 FactoryBean 只是一个可以在 IOC 容器中被管理的一个
+     * bean,是对各种处理过程和资源使用的抽象, Factory bean 在需要时产生另一个对象，而不返回 FactoryBean本身,我们可以把它看成是一个抽象工厂，对它的调用返回的是工厂生产的产品。所有的 Factory
+     * bean 都实现特殊的org.springframework.beans.factory.FactoryBean 接口，当使用容器中 factory bean 的时候，该容器不会返回 factory bean
+     * 本身,而是返回其生成的对象。Spring 包括了大部分的通用资源和服务访问抽象的 Factory bean 的实现，其中包括:对 JNDI 查询的处理，对代理对象的处理，对事务性代理的处理，对 RMI
+     * 代理的处理等，这些我们都可以看成是具体的工厂,看成是SPRING 为我们建立好的工厂。也就是说 Spring 通过使用抽象工厂模式为我们准备了一系列工厂来生产一些特定的对象,免除我们手工重复的工作， 我们要使用时只需要在
+     * IOC容器里配置好就能很方便的使用了
      */
-    static void demoInitIoc() {
+    static void demoInitIOC() {
         Resource resource = new ClassPathResource("bean.xml");
         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
         XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
         xmlBeanDefinitionReader.loadBeanDefinitions(resource);
+    }
+
+    /**
+     * <h2>IOC容器的依赖注入</h2>
+     * <p>
+     * <h3>依赖注入发生的时间</h3>
+     * <p>
+     * 当Spring IoC容器完成了Bean定义资源的定位、载入和解析注册以后，IoC容器中已经管理类Bean定义的相关数据，但是此时IoC容器还没有对所管理的Bean进行依赖注入，依赖注入在以下两种情况发生：
+     * <li>用户第一次通过getBean方法向IoC容索要Bean时，IoC容器触发依赖注入。
+     * <li>当用户在Bean定义资源中为<Bean>元素配置了lazy-init属性，即让容器在解析注册Bean定义时进行预实例化，触发依赖注入。
+     * <p>
+     * BeanFactory接口定义了Spring IoC容器的基本功能规范，是Spring IoC容器所应遵守的最底层和最基本的编程规范。
+     * BeanFactory接口中定义了几个getBean方法，就是用户向IoC容器索取管理的Bean的方法。
+     * 
+     * 如果Bean定义的单态模式(Singleton)，则容器在创建之前先从缓存中查找，以确保整个容器中只存在一个实例对象。
+     * 如果Bean定义的是原型模式(Prototype)，则容器每次都会创建一个新的实例对象。除此之外，Bean定义还可以扩展为指定其生命周期范围。
+     * <p>
+     * Spring IoC容器是如何将属性的值注入到Bean实例对象中去的：
+     * 
+     * <li>(1).对于集合类型的属性，将其属性值解析为目标类型的集合后直接赋值给属性。
+     * 
+     * <li>(2).对于非集合类型的属性，大量使用了JDK的反射和内省机制，通过属性的getter方法(reader method)获取指定属性注入以前的值，同时调用属性的setter方法(writer
+     * method)为属性设置注入后的值。看到这里相信很多人都明白了Spring的setter注入原理。
+     * 
+     * 至此Spring IoC容器对Bean定义资源文件的定位，载入、解析和依赖注入已经全部分析完毕，现在Spring IoC容器中管理了一系列靠依赖关系联系起来的Bean，程序不需要应用自己手动创建所需的对象，Spring
+     * IoC容器会在我们使用的时候自动为我们创建，并且为我们注入好相关的依赖，这就是Spring核心功能的控制反转和依赖注入的相关功能。
+     */
+    static void demoDependenceInjection(BeanFactory beanFactory) {
+        // 获取IoC容器中指定名称的Bean
+        beanFactory.getBean("bean");
+        // 获取IoC容器中指定名称和类型的Bean
+        beanFactory.getBean("bean", Object.class);
+        // 获取IoC容器中指定名称和参数的Bean
+        beanFactory.getBean("bean", "argument1", "argument1");
+        // 获取IoC容器中指定名称、类型和参数的Bean
+        beanFactory.getBean(Object.class, "argument1", "argument1");
+        // 获取IoC容器中指定类型的Bean
+        beanFactory.getBean(Object.class);
     }
 
     /**
@@ -225,5 +288,7 @@ public class IocDemo {
         // 18.调用<bean> destroy-method属性指定的方法
 
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(IocDemo.class);
 
 }

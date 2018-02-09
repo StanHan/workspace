@@ -146,6 +146,7 @@ public class RSA {
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key publicKey = keyFactory.generatePublic(x509KeySpec);
+        
         // 对数据解密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, publicKey);

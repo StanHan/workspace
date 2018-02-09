@@ -3,11 +3,15 @@ package demo.javax.crypto;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.zip.CRC32;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import demo.java.lang.HexDemo;
 import demo.java.security.MessageDigestDemo;
@@ -40,6 +44,48 @@ public class MAC {
         System.out.println(MessageDigestDemo.getMd5DigestHexStr(""));
     }
 
+    /**
+     * 返回的字母全小写
+     * 
+     * @param input
+     * @return
+     */
+    public static String md5(String input) {
+        if (input != null && !input.isEmpty()) {
+            return DigestUtils.md5Hex(input);
+        } else {
+            return null;
+        }
+    }
+
+    public static Long crc32(String input) {
+        try {
+            CRC32 crc = new CRC32();
+            byte bytes[] = input.getBytes("UTF-8");
+            crc.update(bytes, 0, bytes.length);
+            return crc.getValue();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String sha1(String input) {
+        if (input != null && !input.isEmpty()) {
+            return DigestUtils.sha1Hex(input);
+        } else {
+            return null;
+        }
+    }
+
+    public static String base64Encode(String input) {
+        return Base64.encodeBase64String(input.getBytes());
+    }
+
+    public static String base64Decode(String input) {
+        byte[] bytes = Base64.decodeBase64(input);
+        return new String(bytes);
+    }
+    
     /**
      * 打印不同算法获取的摘要信息
      * 

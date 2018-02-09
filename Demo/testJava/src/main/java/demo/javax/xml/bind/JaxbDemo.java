@@ -1,4 +1,4 @@
-package demo.util;
+package demo.javax.xml.bind;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -11,7 +11,7 @@ import javax.xml.bind.Unmarshaller;
  * jaxb 对象xml互相转换工具
  *
  */
-public class JaxbUtil {
+public class JaxbDemo {
 
 	/***
 	 * �?obj对象转换成xml字符�?

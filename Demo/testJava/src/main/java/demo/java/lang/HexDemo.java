@@ -1,6 +1,9 @@
 package demo.java.lang;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+
+import demo.java.security.MD5Demo;
 
 /**
  * <h2>16进制</h2>
@@ -16,12 +19,14 @@ import java.math.BigInteger;
 public class HexDemo {
 
     public static void main(String[] args) {
-        String srcStr = "待转换字符串";
+        String srcStr = "43052219801025001413873994440刘波/td/getTdInfoqazwsx";
         String encodeStr = encodeHexStr(srcStr.getBytes());
         String decodeStr = new String(decodeHex(encodeStr.toCharArray()));
         System.out.println("转换前：" + srcStr);
         System.out.println("转换后：" + encodeStr);
         System.out.println("还原后：" + decodeStr);
+        System.out.println();
+        System.out.println(bytes2Hex(srcStr.getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
@@ -312,11 +317,12 @@ public class HexDemo {
     }
 
     /**
-     * 字节数组转16进制字符串
+     * 字节数组转16进制字符串，为什么前面的0会省略掉
      * 
      * @param bytes
      * @return
      */
+    @Deprecated
     public static String bytes2Hex(byte[] bytes) {
         BigInteger bigInteger = new BigInteger(1, bytes);
         return bigInteger.toString(16);

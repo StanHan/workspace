@@ -19,10 +19,10 @@ import demo.java.lang.HexDemo;
 public class MessageDigestDemo {
 
     public static void main(String[] args) {
+        String srcStr = "43052219801025001413873994440刘波/td/getTdInfoqazwsx";
         MessageDigest md5 = getMd5Digest();
-        IntStream.range(1, 4).forEach(e -> {
-            System.out.println(HexDemo.bytes2Hex(md5.digest(Integer.valueOf(e).toString().getBytes())));
-        });
+            System.out.println(HexDemo.bytes2Hex(md5.digest(srcStr.getBytes(StandardCharsets.UTF_8))));
+            System.out.println(HexDemo.bytes2hex02(md5.digest(srcStr.getBytes(StandardCharsets.UTF_8))));
     }
 
     static void demo() {

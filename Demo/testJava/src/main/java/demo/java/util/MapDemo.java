@@ -2,10 +2,10 @@ package demo.java.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -15,7 +15,35 @@ import java.util.WeakHashMap;
 public class MapDemo {
 
     public static void main(String[] args) {
-        testCanKeyNull();
+        unmodifiableMap();
+    }
+
+    public static final Map<String, String> CLIENTS;
+    static {
+        Map<String, String> map = new HashMap<>();
+        map.put("CDW", "qazwsx");
+        CLIENTS = Collections.unmodifiableMap(map);
+    }
+
+    /**
+     * 不可变的Map（原理：使用内部静态类）
+     */
+    static void unmodifiableMap() {
+        Map<Integer, StringBuilder> map = new HashMap<>();
+        map.put(1, new StringBuilder("aa"));
+        map.put(2, new StringBuilder("bb"));
+        System.out.println(map);
+        Map<Integer, StringBuilder> unmodifiableMap = Collections.unmodifiableMap(map);
+        try {
+            // 抛出 java.lang.UnsupportedOperationException
+            unmodifiableMap.put(3, new StringBuilder("cc"));
+            System.out.println(unmodifiableMap);
+        } catch (UnsupportedOperationException e) {
+            e.printStackTrace();
+        }
+        StringBuilder key2 = unmodifiableMap.get(2);
+        key2.append("222222");
+        System.out.println(unmodifiableMap.get(2));
     }
 
     /**

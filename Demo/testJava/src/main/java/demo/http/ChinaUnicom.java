@@ -16,7 +16,8 @@ import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 
-import demo.java.time.DateDemo;
+import demo.java.text.DateFormatDemo;
+import demo.java.util.DateDemo;
 
 import java.util.Date;
 import java.util.List;
@@ -264,7 +265,7 @@ public class ChinaUnicom {
 		String create = sdf.format(date);
 		System.out.println("create:" + create);
 
-		String datetime = DateDemo.formatDate(date, DateDemo.TZ);// 创建时间
+		String datetime = DateFormatDemo.formatDate(date, DateFormatDemo.TZ);// 创建时间
 		System.out.println("CreatedTime :" + datetime);
 
 		System.out.println(create.equals(datetime));

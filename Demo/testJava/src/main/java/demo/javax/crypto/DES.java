@@ -1,12 +1,15 @@
 package demo.javax.crypto;
 
 import java.security.Key;
+import java.security.Security;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+
+import com.sun.crypto.provider.SunJCE;
 
 import demo.java.lang.HexDemo;
 
@@ -45,6 +48,37 @@ public class DES {
         System.out.println("解密后数据: byte[]:" + showByteArray(decryptData));
         System.out.println("解密后数据: string:" + new String(decryptData));
 
+    }
+
+    static void demo() {
+        // 添加新安全算法 , 如果用 JCE 就要把它添加进去
+        Security.addProvider(new SunJCE());
+        String Algorithm = "DES"; // 定义 加密算法 , 可用 DES,DESede,Blowfish
+        String myinfo = "要加密的信息";
+        try {
+            // 生成密钥
+            KeyGenerator keygen = KeyGenerator.getInstance(Algorithm);
+            SecretKey deskey = keygen.generateKey();
+            // 加密
+            System.out.println("加密前的二进串 :" + HexDemo.bytes2Hex(myinfo.getBytes()));
+            System.out.println("加密前的信息 :" + myinfo);
+            Cipher c1 = Cipher.getInstance(Algorithm);
+            c1.init(Cipher.ENCRYPT_MODE, deskey);
+            byte[] cipherByte = c1.doFinal(myinfo.getBytes());
+            System.out.println("加密后的二进串 :" + HexDemo.bytes2Hex(cipherByte));
+            // 解密
+            c1 = Cipher.getInstance(Algorithm);
+            c1.init(Cipher.DECRYPT_MODE, deskey);
+            byte[] clearByte = c1.doFinal(cipherByte);
+            System.out.println("解密后的二进串 :" + HexDemo.bytes2Hex(clearByte));
+            System.out.println("解密后的信息 :" + (new String(clearByte)));
+        } catch (java.security.NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        } catch (javax.crypto.NoSuchPaddingException e2) {
+            e2.printStackTrace();
+        } catch (java.lang.Exception e3) {
+            e3.printStackTrace();
+        }
     }
 
     private static final String DEFAULT_CIPHER_ALGORITHM = "DES/ECB/PKCS5Padding";

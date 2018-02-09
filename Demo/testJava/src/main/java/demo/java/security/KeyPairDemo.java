@@ -95,9 +95,10 @@ public class KeyPairDemo {
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
-    public static PublicKey buildPublicKey(byte[] keys) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static PublicKey buildPublicKey(String algorithm, byte[] keys)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
         X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(keys);
-        KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
         PublicKey bobPubKey = keyFactory.generatePublic(bobPubKeySpec);
         printPublicKey(bobPubKey);
         return bobPubKey;
@@ -111,9 +112,10 @@ public class KeyPairDemo {
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
-    public static PrivateKey buildPrivateKey(byte[] keys) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static PrivateKey buildPrivateKey(String algorithm, byte[] keys)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
         PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(keys);
-        KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
         PrivateKey privateKey = keyFactory.generatePrivate(priPKCS8);
         printPrivateKey(privateKey);
         return privateKey;
