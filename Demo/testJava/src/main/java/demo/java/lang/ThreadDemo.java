@@ -1,4 +1,4 @@
-package demo.java.lang.thread;
+package demo.java.lang;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Timer;
@@ -79,6 +79,7 @@ import java.util.concurrent.Executors;
 public class ThreadDemo {
 
     public static void main(String[] args) throws InterruptedException {
+        Thread t = null;
         // testJoin();
         // testWaitNotify();
         // testInterrupte();
