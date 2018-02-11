@@ -1,5 +1,6 @@
 package demo.java.text;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,18 +34,27 @@ public class DateFormatDemo {
     public final static String Y_M_D_HMS = "yyyy-MM-dd HH:mm:ss";
     public final static String TZ = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-    public static void main(String[] args) {
-        SimpleDateFormat simpleDateFormat = null;
+    public static void main(String[] args) throws ParseException {
+        demo();
 
     }
 
     /**
      * <h2>SimpleDateFormat的线程安全问题与解决方案</h2>
-     * 
      * SimpleDateFormat类内部有一个Calendar对象引用,它用来储存和这个SimpleDateFormat相关的日期信息。相关参数都是交友Calendar引用来储存的。
-     * 这样就会导致一个问题,如果你的SimpleDateFormat是个static的, 那么多个thread 之间就会共享这个SimpleDateFormat, 同时也是共享这个Calendar引用,
+     * 这样就会导致一个问题,如果你的SimpleDateFormat是个static的, 那么多个thread 之间就会共享这个SimpleDateFormat, 同时也是共享这个Calendar引用。
+     * 
+     * <h3>解决方案</h3>
+     * <li>最简单的解决方案我们可以把static去掉,这样每个新的线程都会有一个自己的sdf实例,从而避免线程安全的问题。 然而,使用这种方法,在高并发的情况下会大量的new sdf以及销毁sdf,这样是非常耗费资源的。
+     * <li>将SimpleDateFormat进行同步使用，在每次执行时都对其加锁，这样也会影响性能，想要调用此方法的线程就需要block，当多线程并发量比较大时会对性能产生一定影响；
+     * <li>使用ThreadLocal变量，用空间换时间，这样每个线程就会独立享有一个本地的SimpleDateFormat变量；
      */
-    static void demoSimpleDateFormat() {
+    static void demo() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Y_M_D_HMS);
+        String now = simpleDateFormat.format(new Date());
+        System.out.println(now);
+        Date date = simpleDateFormat.parse(now);
+        System.out.println(date);
     }
 
     static void demo1() throws ParseException {
@@ -52,6 +62,17 @@ public class DateFormatDemo {
         sdf.applyPattern("yyyy年MM月dd日_HH时mm分ss秒");
         Date date = sdf.parse("2006年07月01日_14时00分00秒");
         System.out.println(date);
+    }
+
+    private static ThreadLocal<DateFormat> threadLocal = new ThreadLocal<DateFormat>() {
+        @Override
+        protected DateFormat initialValue() {
+            return new SimpleDateFormat(Y_M_D_HMS);
+        }
+    };
+
+    public static Date parse(String dateStr) throws ParseException {
+        return threadLocal.get().parse(dateStr);
     }
 
     /**

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -36,7 +38,7 @@ public class StreamDemo {
     static final Random random = new Random();
 
     public static void main(String[] args) {
-        testGroupingByNull();
+        testGroup();
     }
 
     /**
@@ -56,10 +58,19 @@ public class StreamDemo {
      * 
      */
     static void testGroup() {
-        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya");
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya","banana");
         Map<String, Long> result = items.stream().limit(1000L)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(result);
+        String maxCountCity = result.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get()
+                .getKey();
+        System.out.println(maxCountCity);
+        Map<Long, String> unitMap = result.entrySet().stream().map(e->{
+            Map<Long, String> m = new HashMap<>();
+            m.put(e.getValue(), e.getKey());
+            return m;
+        }).reduce(binaryOperator).orElse(null);
+        System.out.println(unitMap);
 
         // 会返回一个空的结果集，而不是null.
         result = items.stream().limit(1000L).filter(e -> {
@@ -67,6 +78,21 @@ public class StreamDemo {
         }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(result);
     }
+    
+    static BinaryOperator<Map<Long, String>> binaryOperator = new BinaryOperator<Map<Long, String>>() {
+        public Map<Long,String> apply(Map<Long,String> t, Map<Long,String> u) {
+            u.forEach((k,v)->{
+                if(t.containsKey(k)) {
+                    String tmp = t.get(k);
+                    tmp = tmp +","+v;
+                    t.put(k, tmp);
+                }else {
+                    t.put(k, v);
+                }
+            });
+            return t;
+        };
+    };
 
     /**
      * 测试分组时key值能否为空，结果：element cannot be mapped to a null key

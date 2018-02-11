@@ -15,10 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
-
-import demo.java.text.DateFormatDemo;
-import demo.java.util.DateDemo;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +22,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import demo.java.text.DateFormatDemo;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.util.MimeTypes;
