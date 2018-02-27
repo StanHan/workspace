@@ -11,7 +11,8 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
-        replaceDemo();
+        String tmp = "^((86)|(086)|(\\+86)|(\\(\\+86\\)))?";
+        System.out.println("+8618217006685".replaceAll(tmp, ""));
     }
 
     /**

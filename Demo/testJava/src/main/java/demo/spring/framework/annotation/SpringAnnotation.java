@@ -39,8 +39,6 @@ import demo.vo.Person;
  * 如果某个类的头上带有特定的注解【@Component/@Repository/@Service/@Controller】，就会将这个对象作为Bean注册进Spring容器。 也可以在<context:component-scan
  * base-package=” ”/>中指定多个包
  * 
- * @author hanjy
- *
  */
 
 public class SpringAnnotation {
@@ -52,7 +50,7 @@ public class SpringAnnotation {
      * 
      * 如果容器中有一个以上匹配的Bean，则可以通过@Qualifier注解限定Bean的名称，
      */
-    @Autowired(required = false)
+    @Autowired(required = true)
     @Qualifier("bmwCar")
     private IActions actions;
 

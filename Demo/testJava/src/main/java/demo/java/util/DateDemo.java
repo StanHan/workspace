@@ -12,6 +12,7 @@ import demo.java.time.TimeDemo;
 public class DateDemo {
 
     public static void main(String[] args) throws ParseException {
+        System.out.println(new Date(-9999999));
         Date date = CalendarDemo.parseDate(0000, 00, 01, 00, 00, 00);
         System.out.println(DateFormatDemo.formatDate(date, DateFormatDemo.G_Y_M_D_HMS));
         try {

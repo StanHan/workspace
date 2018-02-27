@@ -115,20 +115,6 @@ public class TimeDemo {
     }
 
     /**
-     * 在java8之前，时间日期的格式化非常麻烦，经常使用SimpleDateFormat来进行格式化，但是SimpleDateFormat并不是线程安全的。
-     * 在java8中，引入了一个全新的线程安全的日期与时间格式器。并且预定义好了格式。在DateTimeFormatter中还有很多定义好的格式。
-     */
-    static void demoDateTimeFormatter() {
-        String formatNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        System.out.println(formatNow);
-        LocalDate localDate = LocalDate.parse("20180101", DateTimeFormatter.ofPattern("yyyyMMdd"));
-        System.out.println(localDate);
-        LocalDate localDate2 = LocalDate.parse("20180101", DateTimeFormatter.BASIC_ISO_DATE);
-        System.out.println(localDate2);
-        ;
-    }
-
-    /**
      * LocalDate转Date
      */
     static void test2() {
@@ -216,72 +202,7 @@ public class TimeDemo {
         System.out.println(current.toEpochMilli() + "      " + current);
     }
 
-    /**
-     * LocalDateTime、LocalDate、LocalTime 提供了对java.util.Date的替代，另外还提供了新的DateTimeFormatter用于对格式化/解析的支持
-     */
-    static void demoLocalDateTime() {
-        // 使用默认时区时钟瞬时时间创建 Clock.systemDefaultZone() -->即相对于 ZoneId.systemDefault()默认时区
-        LocalDateTime now = LocalDateTime.now();
-        LocalDate _now = LocalDate.now();
-        System.out.println(now + "是闰年吗？" + _now.isLeapYear());
-
-        // 自定义时区
-        LocalDateTime now2 = LocalDateTime.now(ZoneId.of("Europe/Paris"));
-        System.out.println(now2);// 会以相应的时区显示日期
-
-        // 自定义时钟
-        Clock clock = Clock.system(ZoneId.of("Asia/Dhaka"));
-        LocalDateTime now3 = LocalDateTime.now(clock);
-        System.out.println(now3);// 会以相应的时区显示日期
-
-        // 不需要写什么相对时间 如java.util.Date 年是相对于1900 月是从0开始
-        // 2013-12-31 23:59
-        LocalDateTime d1 = LocalDateTime.of(2013, 12, 31, 23, 59);
-        System.out.println(d1);
-
-        // 年月日 时分秒 纳秒
-        LocalDateTime d2 = LocalDateTime.of(2013, 12, 31, 23, 59, 59, 11);
-        System.out.println(d2);
-
-        // 使用瞬时时间 + 时区
-        Instant instant = Instant.now();
-        LocalDateTime d3 = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());
-        System.out.println(d3);
-
-        // 解析String--->LocalDateTime
-        LocalDateTime d4 = LocalDateTime.parse("2013-12-31T23:59");
-        System.out.println(d4);
-
-        LocalDateTime d5 = LocalDateTime.parse("2013-12-31T23:59:59.999");// 999毫秒 等价于999000000纳秒
-        System.out.println(d5);
-
-        // 使用DateTimeFormatter API 解析 和 格式化
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime d6 = LocalDateTime.parse("2013/12/31 23:59:59", formatter);
-        System.out.println(formatter.format(d6));
-
-        // 时间获取
-        System.out.println(d6.getYear());
-        System.out.println(d6.getMonth());
-        System.out.println(d6.getDayOfYear());
-        System.out.println(d6.getDayOfMonth());
-        System.out.println(d6.getDayOfWeek());
-        System.out.println(d6.getHour());
-        System.out.println(d6.getMinute());
-        System.out.println(d6.getSecond());
-        System.out.println(d6.getNano());
-        // 时间增减
-        LocalDateTime d7 = d6.minusDays(1);
-        LocalDateTime d8 = d7.plus(1, IsoFields.QUARTER_YEARS);
-
-        // LocalDate 即年月日 无时分秒
-        LocalDate today = LocalDate.now();
-        System.out.println(today);// yyyy-MM-dd
-        LocalDate yesterday = LocalDate.now().minusDays(1);
-        System.out.println(yesterday);// yyyy-MM-dd
-        // LocalTime即时分秒 无年月日
-        // API和LocalDateTime类似就不演示了
-    }
+    
 
     /**
      * ZonedDateTime 带有时区的date-time 存储纳秒、时区和时差（避免与本地date-time歧义）；

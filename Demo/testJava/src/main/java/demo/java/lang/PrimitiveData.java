@@ -34,9 +34,23 @@ import java.util.List;
 public class PrimitiveData {
 
     public static void main(String[] args) {
-        Integer a = 1;
-        Integer b = null;
-        System.out.println(a.compareTo(b));
+        demoDouble();
+        
+    }
+    
+    static void demoDouble() {
+        double a = Double.parseDouble("1255");
+        System.out.println(a);
+        double b = a/100;
+        System.out.println(b);
+        System.out.println(Math.round(b));
+    }
+
+    static void demoInteger() {
+        int a = Integer.parseInt("8", 10);
+        System.out.println(a);
+        int b = Integer.parseInt("8");
+        System.out.println(b);
     }
 
     /**

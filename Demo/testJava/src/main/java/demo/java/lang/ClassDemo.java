@@ -8,7 +8,34 @@ import demo.vo.Student;
 
 public class ClassDemo {
     public static void main(String[] args) {
-        printFilePath();
+        demoGetResource();
+    }
+
+    /**
+     * 
+     */
+    static void printFilePath() {
+
+        System.out.println(ClassDemo.class.getClassLoader().getResource("").getPath());
+    }
+
+    /**
+     * 获取资源的路径
+     * <p>
+     * Class.getResource(String path): path 不以’/'开头时，默认是从此类所在的包下取资源；path 以’/'开头时，则是从ClassPath根下获取；
+     * <p>
+     * Class.getResource和Class.getResourceAsStream在使用时，路径选择上是一样的。
+     * <p>
+     * Class.getClassLoader().getResource(String path):path不能以’/'开头时；path是从ClassPath根下获取；
+     * <p>
+     * Class.getClassLoader().getResource和Class.getClassLoader().getResourceAsStream在使用时，路径选择上也是一样的。
+     */
+    public static void demoGetResource() {
+        System.out.println("path 以’/'开头时，则是从ClassPath根下获取:" + ClassDemo.class.getResource("/").getPath());
+        System.out.println("path 不以’/'开头时，默认是从此类所在的包下取资源:" + ClassDemo.class.getResource("").getPath());
+
+        System.out.println("path不能以’/'开头时:" + ClassDemo.class.getClassLoader().getResource("/"));
+        System.out.println("path是从ClassPath根下获取:" + ClassDemo.class.getClassLoader().getResource("").getPath());
     }
 
     /**
@@ -29,15 +56,6 @@ public class ClassDemo {
         person.setLastName("HAN");
         Student student = (Student) person;
         System.out.println(student.getLastName());
-    }
-
-    /**
-     * 获取相对路径
-     */
-    static void printFilePath() {
-        System.out.println(ClassDemo.class.getResource("/").getPath());
-        System.out.println(ClassDemo.class.getResource("").getPath());
-        System.out.println(ClassDemo.class.getClassLoader().getResource("").getPath());
     }
 
     /**
