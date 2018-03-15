@@ -11,8 +11,8 @@ import java.util.Locale;
 public class StringDemo {
 
     public static void main(String[] args) throws IOException {
-        String tmp = "^((86)|(086)|(\\+86)|(\\(\\+86\\)))?";
-        System.out.println("+8618217006685".replaceAll(tmp, ""));
+        System.out.println(String.format("%08d", 1));
+        System.out.println(String.format("%08s", "a"));
     }
 
     /**
@@ -75,14 +75,24 @@ public class StringDemo {
     }
 
     /**
-     * 
+     * <li>%s 字符串类型
+     * <li>%c 字符类型
+     * <li>%b 布尔类型
+     * <li>%d 整数类型（十进制）
+     * <li>%x 整数类型（十六进制）
+     * <li>%o 整数类型（八进制）
+     * <li>%f 浮点类型
+     * <li>%a 十六进制浮点类型
+     * <li>%e 指数类型
+     * <li>%g 通用浮点类型（f和e类型中较短的）
+     * <li>%h 散列码
+     * <li>%% 百分比类型
+     * <li>%n 换行符
+     * <li>%tx 日期与时间类型（x代表不同的日期与时间转换符
      */
     static void testFormat() {
-        String str = null;
-        str = String.format("Hi,%s", "王力");
-        System.out.println(str);
-        str = String.format("Hi,%s:%s.%s", "王南", "王力", "王张");
-        System.out.println(str);
+        System.out.println(String.format("Hi,%s", "王力"));
+        System.out.println(String.format("Hi,%s:%s.%s", "王南", "王力", "王张"));
         System.out.printf("字母a的大写是：%c %n", 'A');
         System.out.printf("3>7的结果是：%b %n", 3 > 7);
         System.out.printf("100的一半是：%d %n", 100 / 2);
@@ -96,8 +106,7 @@ public class StringDemo {
         System.out.printf("字母A的散列码是：%h %n", 'A');
 
         // $使用
-        str = String.format("格式参数$的使用：%1$d,%2$s", 99, "abc");
-        System.out.println(str);
+        System.out.println(String.format("格式参数$的使用：%1$d,%2$s", 99, "abc"));
         // +使用
         System.out.printf("显示正负数的符号：%+d与%d%n", 99, -99);
         // 补O使用
@@ -124,16 +133,13 @@ public class StringDemo {
         System.out.printf("HH:MM格式（24时制）：%tR", date);
 
         // b的使用，月份简称
-        str = String.format(Locale.US, "英文月份简称：%tb", date);
-        System.out.println(str);
+        System.out.println(String.format(Locale.US, "英文月份简称：%tb", date));
         System.out.printf("本地月份简称：%tb%n", date);
         // B的使用，月份全称
-        str = String.format(Locale.US, "英文月份全称：%tB", date);
-        System.out.println(str);
+        System.out.println(String.format(Locale.US, "英文月份全称：%tB", date));
         System.out.printf("本地月份全称：%tB%n", date);
         // a的使用，星期简称
-        str = String.format(Locale.US, "英文星期的简称：%ta", date);
-        System.out.println(str);
+        System.out.println(String.format(Locale.US, "英文星期的简称：%ta", date));
         // A的使用，星期全称
         System.out.printf("本地星期的简称：%tA%n", date);
         // C的使用，年前两位
@@ -166,8 +172,7 @@ public class StringDemo {
         // N的使用
         System.out.printf("9位数字的毫秒数（不足9位前面补0）:%tN%n", date);
         // p的使用
-        str = String.format(Locale.US, "小写字母的上午或下午标记(英)：%tp", date);
-        System.out.println(str);
+        System.out.println(String.format(Locale.US, "小写字母的上午或下午标记(英)：%tp", date));
         System.out.printf("小写字母的上午或下午标记（中）：%tp%n", date);
         // z的使用
         System.out.printf("相对于GMT的RFC822时区的偏移量:%tz%n", date);
@@ -251,7 +256,7 @@ public class StringDemo {
         System.out.printf("The min of of %d " + "and %d is %d%n", c, d, Math.min(c, d));
     }
 
-    static public void customFormat(String pattern, double value) {
+    public static void customFormat(String pattern, double value) {
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         String output = myFormatter.format(value);
         System.out.println(value + "  " + pattern + "  " + output);

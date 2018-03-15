@@ -1,5 +1,6 @@
 package demo.java.lang;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -57,10 +58,39 @@ import java.util.stream.IntStream;
  */
 public class ThreadLocalDemo {
 
-    public static void main(String[] args) {
-        ThreadLocal a = null;
-        demo2();
+    private static Random random = new Random();
 
+    public static void main(String[] args) {
+        demo3();
+
+    }
+
+    /**
+     * 通过ThreadLocal变量来统计线程的耗时
+     */
+    static void demo3() {
+        System.out.println("通过ThreadLocal变量来统计线程的耗时");
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        ThreadLocal<Long> startAt = new ThreadLocal<>();
+        IntStream.range(0, 100).forEach(e -> {
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    startAt.set(System.currentTimeMillis());
+                    String threadName = Thread.currentThread().getName();
+                    try {
+                        Thread.sleep(e);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.printf("Thread name: %s 耗时%d %n", threadName,
+                            System.currentTimeMillis() - startAt.get());
+                    startAt.remove();
+                }
+            };
+            executorService.submit(runnable);
+        });
+        executorService.shutdown();
     }
 
     static void demo1() {

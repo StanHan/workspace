@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+  <!-- 提供方应用信息，用于计算依赖关系 -->
+  <dubbo:application name="dubbo-provider" />
+
+  <context:component-scan base-package="com.loanking.*" />
+
+  <!-- 这里使用的注册中心是zookeeper -->
+  <!--  -->
+  <dubbo:registry address="zookeeper://172.17.16.13:2181" client="zkclient" />
+
+  <!-- 协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。用dubbo协议在3019端口暴露服务 -->
+  <dubbo:protocol name="dubbo" port="3019" dispatcher="all" threadpool="fixed" threads="200" accepts="50" />
+
+
+  <bean id="welcomeFacade" class="com.loanking.dubbo.facade.service.impl.WelcomeServicesImpl" />
+
+  <!-- 服务配置，用于暴露一个服务，定义服务的元信息，一个服务可以用多个协议暴露，一个服务也可以注册到多个注册中心。 -->
+  <dubbo:service interface="com.loanking.dubbo.facade.WelcomeFacade" ref="welcomeFacade" timeout="25000" />
+
+  <!-- 监控中心配置，用于配置连接监控中心相关信息，可选。 -->
+  <dubbo:monitor />
+
+
+  <!-- 提供方的缺省值，当ProtocolConfig和ServiceConfig某属性没有配置时，采用此缺省值，可选。 -->
+  <dubbo:provider timeout="6000" />
+
+
+  <!-- 方法配置，用于ServiceConfig和ReferenceConfig指定方法级的配置信息。 -->
+  <dubbo:method />
+
+
+  <!-- 用于指定方法参数配置。 -->
+  <dubbo:argument />
+</beans>

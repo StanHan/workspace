@@ -1,7 +1,10 @@
 package demo.java.util.stream;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -17,9 +20,12 @@ import java.util.concurrent.Executors;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import org.junit.Test;
 
 import demo.vo.City;
 import demo.vo.Person;
@@ -38,7 +44,53 @@ public class StreamDemo {
     static final Random random = new Random();
 
     public static void main(String[] args) {
-        testGroup();
+    }
+
+    /**
+     * 从结果来看，串行能保证输出的顺序性，并行不行。从内存利用率来看，并发内存占用高。如果你都CPU核更多，将会有更多的线程参与运算，进一步加快计算，符合现代的多核计算思想。 看看cpu使用率，并发情况下cpu使用率比较均匀。
+     */
+    @Test
+    public void parallel() throws InterruptedException {
+        long t1 = System.currentTimeMillis();
+        IntStream.range(0, 100).forEach(i -> {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + ":" + i);
+        });
+        System.err.println("串行执行耗时：" + (System.currentTimeMillis() - t1));
+        Thread.sleep(1000);
+        long t2 = System.currentTimeMillis();
+        IntStream.range(0, 100).parallel().forEach(i -> {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + ":" + i);
+        });
+        System.err.println("并行执行耗时：" + (System.currentTimeMillis() - t2));
+    }
+
+    /**
+     * peek方法生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例）， 新Stream每个元素被消费的时候都会执行给定的消费函数，并且消费函数优先执行
+     */
+    @Test
+    public void demoPeek() {
+        Stream.of(1, 2, 3, 4, 5).peek(integer -> System.out.println("accept:" + integer)).filter(e -> e > 2)
+                .forEach(System.out::println);
+    }
+
+    /**
+     * concat方法将两个Stream连接在一起，合成一个Stream。
+     * <li>若两个输入的Stream都时排序的，则新Stream也是排序的；
+     * <li>若输入的Stream中任何一个是并行的，则新的Stream也是并行的；
+     * <li>若关闭新的Stream时，原两个输入的Stream都将执行关闭处理。
+     */
+    static void demoConcat() {
+        Stream.concat(Stream.of(1, 2, 3), Stream.of(4, 5)).forEach(integer -> System.out.print(integer + "  "));
     }
 
     /**
@@ -58,18 +110,28 @@ public class StreamDemo {
      * 
      */
     static void testGroup() {
-        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya","banana");
+        List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya", "banana");
         Map<String, Long> result = items.stream().limit(1000L)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(result);
-        String maxCountCity = result.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get()
-                .getKey();
+        String maxCountCity = result.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get().getKey();
         System.out.println(maxCountCity);
-        Map<Long, String> unitMap = result.entrySet().stream().map(e->{
+        Map<Long, String> unitMap = result.entrySet().stream().map(e -> {
             Map<Long, String> m = new HashMap<>();
             m.put(e.getValue(), e.getKey());
             return m;
-        }).reduce(binaryOperator).orElse(null);
+        }).reduce((m1, m2) -> {
+            m2.forEach((k, v) -> {
+                if (m2.containsKey(k)) {
+                    String tmp = m2.get(k);
+                    tmp = tmp + "," + v;
+                    m2.put(k, tmp);
+                } else {
+                    m2.put(k, v);
+                }
+            });
+            return m2;
+        }).orElse(null);
         System.out.println(unitMap);
 
         // 会返回一个空的结果集，而不是null.
@@ -78,21 +140,6 @@ public class StreamDemo {
         }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(result);
     }
-    
-    static BinaryOperator<Map<Long, String>> binaryOperator = new BinaryOperator<Map<Long, String>>() {
-        public Map<Long,String> apply(Map<Long,String> t, Map<Long,String> u) {
-            u.forEach((k,v)->{
-                if(t.containsKey(k)) {
-                    String tmp = t.get(k);
-                    tmp = tmp +","+v;
-                    t.put(k, tmp);
-                }else {
-                    t.put(k, v);
-                }
-            });
-            return t;
-        };
-    };
 
     /**
      * 测试分组时key值能否为空，结果：element cannot be mapped to a null key
@@ -209,25 +256,57 @@ public class StreamDemo {
      * <li>Stream.chars() 创建一个与 String 中的字符对应的 IntStream。
      */
     static void 流的来源() {
+        IntStream intStream = random.ints(98);
+
+        BitSet bitSet = new BitSet();
+        intStream = bitSet.stream();
+
+        try {
+            JarFile jarFile = new JarFile(new File(""));
+            jarFile.stream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
-     * 中间操作负责将一个流转换为另一个流，中间操作包括 filter()（选择与条件匹配的元素）、map()（根据函数来转换元素）、distinct()（删除重复）、limit()（在特定大小处截断流）和
-     * sorted()。一些操作（比如 mapToInt()）获取一种类型的流并返回一种不同类型的流；中间操作始终是惰性的：调用中间操作只会设置流管道的下一个阶段，不会启动任何操作。重建操作可进一步划分为无状态 和有状态
-     * 操作。无状态操作（比如 filter() 或 map()）可独立处理每个元素，而有状态操作（比如 sorted() 或 distinct()）可合并以前看到的影响其他元素处理的元素状态。
+     * <h2>中间操作</h2>
+     * <p>
+     * Intermediate主要是用来对Stream做出相应转换及限制流，实际上是将源Stream转换为一个新的Stream，以达到需求效果。
+     * <p>
+     * 一些操作（比如 mapToInt()）获取一种类型的流并返回一种不同类型的流；<br>
+     * 中间操作始终是惰性的：调用中间操作只会设置流管道的下一个阶段，不会启动任何操作。 <br>
+     * 中间操作可进一步划分为无状态 和有状态 操作。无状态操作（比如filter() 或 map()）可独立处理每个元素， 而有状态操作（比如 sorted() 或 distinct()）可合并以前看到的影响其他元素处理的元素状态。
      * <li>filter(Predicate<T>) 与预期匹配的流的元素
-     * <li>map(Function<T, U>) 将提供的函数应用于流的元素的结果
-     * <li>flatMap(Function<T, Stream<U>> 将提供的流处理函数应用于流元素后获得的流元素
+     * 
+     * <li>map(Function<T, U>) map方法将对于Stream中包含的元素使用给定的转换函数进行转换操作，新生成的Stream只包含转换生成的元素。
+     * 为了提高处理效率，官方已封装好了，三种变形：mapToDouble，mapToInt，mapToLong。
+     * map传入的Lambda表达式必须是Function实例，参数可以为任意类型，而其返回值也是任性类型，javac会根据实际情景自行推断。
+     * 
+     * <li>flatMap(Function<T, Stream<U>>，将提供的流处理函数应用于流元素后获得的流元素。
+     * 与map不同的是，该换转函数的对象是一个Stream，也不会再创建一个新的Stream，而是将原Stream的元素取代为转换的Stream。
+     * flatMap有三个对于原始类型的变种方法，分别是：flatMapToInt，flatMapToLong和flatMapToDouble。
+     * flatMap传入的Lambda表达式必须是Function实例，参数可以为任意类型，而其返回值类型必须是一个Stream。 flatMap 把 Stream 中的层级结构扁平化，就是将最底层元素抽出来放到一起，
+     * 
      * <li>distinct() 已删除了重复的流元素
-     * <li>sorted() 按自然顺序排序的流元素
+     * 
+     * <li>sorted() sorted方法将对原Stream进行排序，返回一个有序列的新Stream。 sorterd有两种变体sorted()，sorted(Comparator)，
+     * 前者将默认使用Object.equals(Object)进行排序，而后者接受一个自定义排序规则函数(Comparator)，可按照意愿排序。
      * <li>Sorted(Comparator<T>) 按提供的比较符排序的流元素
+     * 
      * <li>limit(long) 截断至所提供长度的流元素
-     * <li>skip(long) 丢弃了前 N 个元素的流元素
+     * 
+     * <li>skip(long) skip方法将过滤掉原Stream中的前N个元素，返回剩下的元素所组成的新Stream。
+     * 如果原Stream的元素个数大于N，将返回原Stream的后（原Stream长度-N）个元素所组成的新Stream； 如果原Stream的元素个数小于或等于N，将返回一个空Stream。
+     * 
      * <li>takeWhile(Predicate<T>) （仅限 Java 9）在第一个提供的预期不是 true 的元素处阶段的流元素
      * <li>dropWhile(Predicate<T>) （仅限 Java 9）丢弃了所提供的预期为 true 的初始元素分段的流元素
      */
-    static void 中间操作() {
+    static void intermediate() {
         Comparator<String> byLength = Comparator.comparing(String::length);
+        Stream.of(1, 2, 3).flatMap(integer -> Stream.of(integer * 10)).forEach(System.out::println);
+        Stream.of(1, 2, 3).map(item -> item * 10).forEach(System.out::println);
     }
 
     /**
@@ -249,21 +328,32 @@ public class StreamDemo {
     }
 
     /**
+     * <h2>终止操作</h2>
+     * <p>
      * 数据集的处理在执行终止操作时开始，比如缩减（sum() 或 max()）、应用 (forEach()) 或搜索 (findFirst())
      * 操作。终止操作会生成一个结果或副作用。执行终止操作时，会终止流管道，如果您想再次遍历同一个数据集，可以设置一个新的流管道。
      * 
-     * <li>forEach(Consumer<T> action) 将提供的操作应用于流的每个元素。
+     * <li>forEach(Consumer<T> action) 用于遍历Stream中的所元素，避免了使用for循环，让代码更简洁，逻辑更清晰。
+     * <li>forEachOrdered方法与forEach类似，都是遍历Stream中的所有元素，不同的是，如果该Stream预先设定了顺序，会按照预先设定的顺序执行（Stream是无序的），默认为元素插入的顺序。
      * <li>toArray() 使用流的元素创建一个数组。
      * <li>reduce(...) 将流的元素聚合为一个汇总值。
      * <li>collect(...) 将流的元素聚合到一个汇总结果容器中。
      * <li>min(Comparator<T>) 通过比较符返回流的最小元素。
      * <li>max(Comparator<T>) 通过比较符返回流的最大元素。
-     * <li>count() 返回流的大小。
+     * <li>count() 返回Stream中元素的个数。
+     * 
+     * <h3>Short-circuiting</h3>
+     * <li>allMatch操作用于判断Stream中的元素是否全部满足指定条件。如果全部满足条件返回true，否则返回false。
+     * <li>anyMatch操作用于判断Stream中的是否有满足指定条件的元素。如果最少有一个满足条件返回true，否则返回false。
+     * <li>noneMatch方法将判断Stream中的所有元素是否满足指定的条件，如果所有元素都不满足条件，返回true；否则，返回false.
      * <li>{any,all,none}Match(Predicate<T>) 返回流的任何/所有元素是否与提供的预期相匹配。
      * <li>findFirst() 返回流的第一个元素（如果有）。
      * <li>findAny() 返回流的任何元素（如果有）。
      */
-    static void 终止操作() {
+    @Test
+    public void terminal() {
+        Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 0).forEach(System.out::println);
+        Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 0).forEachOrdered(System.out::println);
     }
 
     /**
@@ -319,18 +409,19 @@ public class StreamDemo {
     }
 
     /**
-     * <code>
+     * 收集器，一种通用的、从流生成复杂值的结构。 <code>
      * <R> collect(Supplier<R> resultSupplier,
             BiConsumer<R, T> accumulator, 
             BiConsumer<R, R> combiner)
      * </code>
-     * <li>一种生成空结果容器的途径
-     * <li>一种将新元素合并到结果容器中的途径
+     * <li>Supplier<T>接口是一个函数接口，该接口声明了一个get方法，主要用来创建返回一个指定数据类型的对象。一种生成空结果容器的途径
+     * <li>BiConsumer<T, U>接口是一个函数接口，该接口声明了accept方法，并无返回值，该函数接口主要用来声明一些预期操作。一种将新元素合并到结果容器中的途径
      * <li>一种合并两个结果容器的途径
      * 
      * 
      */
-    static void testCollect() {
+    @Test
+    public void collect() {
         Collection<String> strings = Stream.generate(new Supplier<Integer>() {
             public Integer get() {
                 return random.nextInt(5000);

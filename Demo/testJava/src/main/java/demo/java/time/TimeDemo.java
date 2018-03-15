@@ -1,12 +1,10 @@
 package demo.java.time;
 
-import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 import java.time.MonthDay;
 import java.time.OffsetDateTime;
@@ -19,37 +17,14 @@ import java.time.ZonedDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.time.chrono.Chronology;
 import java.time.chrono.HijrahChronology;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.IsoFields;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * java8引入了一套全新的时间日期API，java。time包中的是类是不可变且线程安全的。 这与之前的Date与Calendar
- * API中的恰好相反，那里面像java.util.Date以及SimpleDateFormat这些关键的类都不是线程安全的。
- * <li>Instant——它代表的是时间戳
- * <li>LocalDate——不包含具体时间的日期，比如2014-01-14。它可以用来存储生日，周年纪念日，入职日期等。
- * <li>LocalTime——它代表的是不含日期的时间
- * <li>LocalDateTime——它包含了日期及时间，不过还是没有偏移信息或者说时区。
- * <li>ZonedDateTime——这是一个包含时区的完整的日期时间，偏移量是以UTC/格林威治时间为基准的。
- * <li>javax.time.ZoneId用来处理时区。
- * <li>新的时间与日期API中很重要的一点是它定义清楚了基本的时间与日期的概念，比方说，瞬时时间，持续时间，日期，时间，时区以及时间段。它们都是基于ISO日历体系的。
- * <li>时区指的是地球上共享同一标准时间的地区。每个时区都有一个唯一标识符，同时还有一个地区/城市(Asia/Tokyo)的格式以及从格林威治时间开始的一个偏移时间。比如说，东京的偏移时间就是+09:00。
- * <li>OffsetDateTime类实际上包含了LocalDateTime与ZoneOffset。它用来表示一个包含格林威治时间偏移量（+/-小时：分，比如+06:00或者
- * -08：00）的完整的日期（年月日）及时间（时分秒，纳秒）。
- * <li>DateTimeFormatter类用于在Java中进行日期的格式化与解析。与SimpleDateFormat不同，它是不可变且线程安全的，如果需要的话，可以赋值给一个静态变量。
- * <p>
- * 最新JDBC映射将把数据库的日期类型和Java 8的新类型关联起来
- * <li>SQL -> Java
- * <li>--------------------------
- * <li>date -> LocalDate
- * <li>time -> LocalTime
- * <li>timestamp -> LocalDateTime
- */
+import org.junit.Test;
+
 public class TimeDemo {
 
     public static void main(String[] args) throws Exception {
-        demoInstance();
 
     }
 
@@ -89,64 +64,57 @@ public class TimeDemo {
     /**
      * Epoch指的是一个特定的时间：1970-01-01 00:00:00 UTC。
      * 
-     * 时间戳。 java8获取时间戳特别简单。Instant类由一个静态的工厂方法now()可以返回当前时间戳。 当前时间戳是包含日期和时间的，与java.util.Date很类似，事实上Instant就是java8以前的Date，
+     * <h2>UTC</h2>
+     * <p>
+     * 协调世界时，UTC即Universal Time Coordinated的缩写。 在国际无线电通信场合，为了统一起见，使用一个统一的时间，称为UCT。 UCT与格林尼治平均时(GMT, Greenwich Mean
+     * Time)一样，都与英国伦敦的本地时相同。整个地球分为二十四时区，每个时区都有自己的本地时间。
+     * 时区差东为正，西为负。北京时区是东八区，领先UCT八个小时，即北京时间是UCT时间加上8小时。华盛顿处于西五区，华盛顿时间就是UCT时间减去5小时。
+     * <h2>时间戳</h2>
+     * <p>
+     * java8获取时间戳特别简单。Instant类由一个静态的工厂方法now()可以返回当前时间戳。 当前时间戳是包含日期和时间的，与java.util.Date很类似，事实上Instant就是java8以前的Date，
      * 可以使用这个两个类中的方法在这两个类型之间进行转换，比如Date.from(Instant)就是用来把Instant转换成java.util.date的，而Date。 toInstant()就是将Date转换成Instant的
      * 
-     * @throws InterruptedException
      */
-    static void demoInstant() throws InterruptedException {
-        // 方法 一
-        long timestamp = System.currentTimeMillis();
-        Instant t1 = Instant.ofEpochMilli(timestamp);
+    @Test
+    public void demoInstant() throws InterruptedException {
+        System.out.println(Instant.now().toEpochMilli());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(Calendar.getInstance().getTimeInMillis());
+        System.out.println(new Date().getTime());
+
+        Instant t1 = Instant.ofEpochMilli(System.currentTimeMillis());
         System.out.println(t1);
-        // 方法 二
-        Calendar.getInstance().getTimeInMillis();
-        // 方法 三
-        new Date().getTime();
 
         System.out.println(Instant.now());
         Thread.sleep(500);
         System.out.println(Instant.now());
+
         Date now = Date.from(Instant.now());
         System.out.println(now);
+
         Instant instant = now.toInstant();
         System.out.println(instant);
 
+        // 瞬时时间 相当于以前的System.currentTimeMillis()
+        System.out.println(Instant.now().getEpochSecond());// 精确到秒
+        System.out.println(Instant.now().toEpochMilli()); // 精确到毫秒
+
+        Clock clock = Clock.systemUTC(); // 获取系统UTC默认时钟
+        Instant instant2 = Instant.now(clock);// 得到时钟的瞬时时间
+        System.out.println(instant2.toEpochMilli());
+
+        // 固定瞬时时间时钟
+        Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+        Instant instant3 = Instant.now(fixedClock);// 得到时钟的瞬时时间
+        System.out.println(instant3.toEpochMilli());// equals instant1
+
+        Instant current = Clock.system(ZoneId.of("Asia/Shanghai")).instant();
+        System.out.println(current.toEpochMilli() + "      " + current);
     }
 
     /**
-     * LocalDate转Date
-     */
-    static void test2() {
-        ZoneId zoneId = ZoneId.systemDefault();
-        LocalDate localDate = LocalDate.now();
-        ZonedDateTime zdt = localDate.atStartOfDay(zoneId);
-
-        Date date = Date.from(zdt.toInstant());
-
-        System.out.println("LocalDate = " + localDate);
-        System.out.println("Date = " + date);
-
-    }
-
-    /**
-     * Date转LocalDate
-     */
-    static void test1() {
-        Date date = new Date();
-        Instant instant = date.toInstant();
-        ZoneId zoneId = ZoneId.systemDefault();
-
-        // atZone()方法返回在指定时区从此Instant生成的ZonedDateTime。
-        LocalDate localDate = instant.atZone(zoneId).toLocalDate();
-        System.out.println("Date = " + date);
-        System.out.println("LocalDate = " + localDate);
-    }
-
-    /**
-     * Clock 时钟，类似于钟表的概念，提供了如系统时钟、固定时钟、特定时区的时钟。
-     * 可以用来获取某个时区下（所以对时区是敏感的）当前的瞬时时间、日期。用来代替System.currentTimelnMillis()与TimeZone.getDefault()方法 时钟提供给我们用于访问某个特定 时区的
-     * 瞬时时间、日期 和 时间的。
+     * Clock 时钟，类似于钟表的概念，提供了如系统时钟、固定时钟、特定时区的时钟。 可以用来获取某个时区下（所以对时区是敏感的）当前的瞬时时间、日期。
+     * 用来代替System.currentTimelnMillis()与TimeZone.getDefault()方法。 时钟提供给我们用于访问某个特定 时区的 瞬时时间、日期 和 时间的。
      */
     static void demoClock() throws InterruptedException {
         // 系统默认UTC时钟（当前瞬时时间 System.currentTimeMillis()）
@@ -182,27 +150,33 @@ public class TimeDemo {
     }
 
     /**
-     * Instant 瞬时时间，等价于以前的System.currentTimeMillis()
+     * LocalDate转Date
      */
-    static void demoInstance() {
-        // 瞬时时间 相当于以前的System.currentTimeMillis()
-        Instant instant1 = Instant.now();
-        System.out.println(instant1.getEpochSecond());// 精确到秒 得到相对于1970-01-01 00:00:00 UTC的一个时间
-        System.out.println(instant1.toEpochMilli()); // 精确到毫秒
+    static void test2() {
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+        ZonedDateTime zdt = localDate.atStartOfDay(zoneId);
 
-        Clock clock1 = Clock.systemUTC(); // 获取系统UTC默认时钟
-        Instant instant2 = Instant.now(clock1);// 得到时钟的瞬时时间
-        System.out.println(instant2.toEpochMilli());
+        Date date = Date.from(zdt.toInstant());
 
-        Clock clock2 = Clock.fixed(instant1, ZoneId.systemDefault()); // 固定瞬时时间时钟
-        Instant instant3 = Instant.now(clock2);// 得到时钟的瞬时时间
-        System.out.println(instant3.toEpochMilli());// equals instant1
+        System.out.println("LocalDate = " + localDate);
+        System.out.println("Date = " + date);
 
-        Instant current = Clock.system(ZoneId.of("Asia/Shanghai")).instant();
-        System.out.println(current.toEpochMilli() + "      " + current);
     }
 
-    
+    /**
+     * Date转LocalDate
+     */
+    static void test1() {
+        Date date = new Date();
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+
+        // atZone()方法返回在指定时区从此Instant生成的ZonedDateTime。
+        LocalDate localDate = instant.atZone(zoneId).toLocalDate();
+        System.out.println("Date = " + date);
+        System.out.println("LocalDate = " + localDate);
+    }
 
     /**
      * ZonedDateTime 带有时区的date-time 存储纳秒、时区和时差（避免与本地date-time歧义）；

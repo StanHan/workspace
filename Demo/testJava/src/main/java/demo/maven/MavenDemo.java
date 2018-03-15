@@ -148,7 +148,71 @@ package demo.maven;
  */
 public class MavenDemo {
 
-    public static void main(String[] args) {
+    /**
+     * <h2>Maven 的仓库</h2>
+     * 
+     * <h3>Maven的本地库</h3>找到 {M2_HOME}\conf\setting.xml, 更新 localRepository 到其它路径。
+     * <h3>Maven中央存储库</h3>当你建立一个 Maven 的项目，Maven 会检查你的 pom.xml 文件，以确定哪些依赖下载。
+     * 首先，Maven将从本地资源库获得Maven的本地资源库依赖资源，如果没有找到，然后把它会从默认的 Maven 中央存储库(http://repo1.maven.org/maven/)查找下载。
+     * <h3>远程存储库</h3>在Maven中，当你声明的库不存在于本地存储库中，也没有不存在于Maven中心储存库，该过程将停止并将错误消息输出到 Maven 控制台。 你需要声明远程仓库在 pom.xml 文件
+     * <repositories> <repository> <id>java.net</id> <url>https://maven.java.net/content/repositories/public/</url>
+     * </repository> </repositories>
+     * <p>
+     * 现在，Maven的依赖库查询顺序更改为：
+     * <ol>
+     * <li>在 Maven 本地资源库中搜索，如果没有找到，进入第 2 步，否则退出。
+     * <li>在 Maven 中央存储库搜索，如果没有找到，进入第 3 步，否则退出。
+     * <li>在java.net Maven的远程存储库搜索，如果没有找到，提示错误信息，否则退出。
+     * <ol>
+     * <p>
+     * <h3>添加远程仓库</h3> 添加Java.net远程仓库的详细信息在“pom.xml”文件。 <repositories> <repository> <id>java.net</id>
+     * <url>https://maven.java.net/content/repositories/public/</url> </repository> </repositories>
+     * <p>
+     * 添加JBoss远程仓库的详细信息在 “pom.xml” 文件中 <repositories> <repository> <id>JBoss repository</id>
+     * <url>http://repository.jboss.org/nexus/content/groups/public/</url> </repository> </repositories>
+     * <h3>定制库到Maven本地资源库</h3>这里有2个案例，需要手动发出Maven命令包括一个 jar 到 Maven 的本地资源库。
+     * <li>要使用的 jar 不存在于 Maven 的中心储存库中。
+     * <li>您创建了一个自定义的 jar ，而另一个 Maven 项目需要使用。
+     * <p>
+     * 例如，kaptcha，它是一个流行的第三方Java库，它被用来生成 “验证码” 的图片，以阻止垃圾邮件，但它不在 Maven 的中央仓库中。
+     * <code>mvn install:install-file -Dfile=c:\kaptcha-2.3.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3 -Dpackaging=jar</code>
+     * 
+     */
+    static void repository() {
+
+    }
+
+    /**
+     * <h2>Maven 的插件</h2>
+     * <p>
+     * Maven 是一个执行插件的框架，每一个任务实际上是由插件完成的。 Maven 插件通常用于：创建 jar 文件、创建 war 文件 、编译代码文件、进行代码单元测试、创建项目文档、创建项目报告。
+     * 一个插件通常提供了一组目标，可使用以下语法来执行：
+     * <li>mvn [plugin-name]:[goal-name]
+     * <p>
+     * 例如，一个 Java 项目可以使用 Maven 编译器插件来编译目标，通过运行以下命令编译: mvn compiler:compile
+     * <p>
+     * Maven 提供以下两种类型插件：
+     * <li>构建插件： 在生成过程中执行，并在 pom.xml 中的<build/> 元素进行配置
+     * <li>报告插件：在网站生成期间执行，在 pom.xml 中的 <reporting/> 元素进行配置
+     * <p>
+     * 常见的插件列表：
+     * <li>clean 编译后的清理目标，删除目标目录
+     * <li>compiler 编译 Java 源文件
+     * <li>surefile 运行JUnit单元测试，创建测试报告
+     * <li>jar 从当前项目构建 JAR 文件
+     * <li>war 从当前项目构建 WAR 文件
+     * <li>javadoc 产生用于该项目的 Javadoc
+     * <li>antrun 从构建所述的任何阶段运行一组 Ant 任务
+     * 
+     * <h3>关键概念：</h3>
+     * <p>
+     * <li>插件可在 pom.xml 使用的 plugin 元素来指定；
+     * <li>每个插件可以有多个目标；
+     * <li>从插件应使用它的相位元素开始处理定义阶段。这里已经使用 clean 阶段；
+     * <li>可以通过将它们绑定到插件的目标来执行配置任务。这里已经绑定 echo 任务到 maven-antrun-plugin 的运行目标；
+     * <li>就这样，Maven将处理其余部分。如果没有可用的本地存储库，它会下载这个插件；
+     */
+    static void plugin() {
 
     }
 
@@ -176,13 +240,14 @@ public class MavenDemo {
      * <li>启动jetty mvn jetty:run
      * <li>有效pom。 考虑到pom文件的继承关系，当Maven执行的时候可能很难确定最终的pom文件的内容。 总的pom文件（所有继承关系生效后）被称为有效pom（effective
      * pom）。可以使用以下的命令让Maven打印出当前的有效pom： mvn help:effective-pom。 执行以上命令，Maven会将有效pom输出到命令行。
-     * <li>通过mvn install命令可以将你自己的项目构建并安装到本地仓库中。这样，你的其它项目就可以通过在pom文件将该jar包作为外部依赖来使用。
-     * <li>Maven安装第三方Jar包到本地仓库: mvn install:install-file -Dfile= -DgroupId= -DartifactId= -Dversion= -Dpackaging=。 如：
-     * mvn install:install-file -Dfile=c:/driver/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0
-     * -Dpackaging=jar
-     * 有时在你的构建过程中，需要将第三方jar包添加到本地仓库中，因为它并存在于像Maven中央仓库或其它的公共仓库中。为了让Maven能够正确获取到jar包，第三方jar包必须放置到本地仓库的正确位置上。
+     * 
+     * <li>通过mvn install命令可以将你自己的项目构建并安装到本地仓库中。这样，你的其它项目就可以通过在pom文件将该jar包作为外部依赖来使用。 Maven安装第三方Jar包到本地仓库: mvn
+     * install:install-file -Dfile= -DgroupId= -DartifactId= -Dversion= -Dpackaging=。 如： mvn install:install-file
+     * -Dfile=c:/driver/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0 -Dpackaging=jar
+     * 有时在你的构建过程中，需要将第三方jar包添加到本地仓库中，因为它并不存在于像Maven中央仓库或其它的公共仓库中。为了让Maven能够正确获取到jar包，第三方jar包必须放置到本地仓库的正确位置上。
      * 如果也有pom文件的话，你可以使用下面的命令安装： mvn install:install-file -Dfile= -DpomFile=
      * 如果jar包是通过Maven构建的，它会在目录META-INF的子文件夹下创建一个pom.xml文件，这个Jar包会被默认读取。在这种情况下，你只需要这么做： mvn install:install-file -Dfile=
+     * 
      * <li>多环境打包： 开发环境： filter是在maven的compile阶段执行过虑替换的，所以只要触发了编译动作即可，如果像以前一样正常使用发现没有替换，则手工clean一下工程（eclipse -> Project
      * -> Clean）【这里你应该要安装上maven插件，因为替换是maven做的，不是eclipse做的，所以这里的clean应当是触发了maven的compile】，然后在Tomcat上也右键 ->
      * Clean一下即可，然后你去tomcat目录下会发现你的工程的资源文件里面的${key}被替换为对应的config-xx的值了。 如果上面还不行，那么就使用maven插件或者手工控制台下打maven编译命令吧

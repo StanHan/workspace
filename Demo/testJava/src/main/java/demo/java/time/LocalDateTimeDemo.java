@@ -11,6 +11,29 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.IsoFields;
 
+/**
+ * java8引入了一套全新的时间日期API，java。time包中的是类是不可变且线程安全的。 这与之前的Date与Calendar
+ * API中的恰好相反，那里面像java.util.Date以及SimpleDateFormat这些关键的类都不是线程安全的。
+ * <li>Instant——它代表的是时间戳
+ * <li>LocalDate——不包含具体时间的日期，比如2014-01-14。它可以用来存储生日，周年纪念日，入职日期等。
+ * <li>LocalTime——它代表的是不含日期的时间
+ * <li>LocalDateTime——它包含了日期及时间，不过还是没有偏移信息或者说时区。
+ * <li>ZonedDateTime——这是一个包含时区的完整的日期时间，偏移量是以UTC/格林威治时间为基准的。
+ * <li>javax.time.ZoneId用来处理时区。
+ * <li>新的时间与日期API中很重要的一点是它定义清楚了基本的时间与日期的概念，比方说，瞬时时间，持续时间，日期，时间，时区以及时间段。它们都是基于ISO日历体系的。
+ * <li>时区指的是地球上共享同一标准时间的地区。每个时区都有一个唯一标识符，同时还有一个地区/城市(Asia/Tokyo)的格式以及从格林威治时间开始的一个偏移时间。比如说，东京的偏移时间就是+09:00。
+ * <li>OffsetDateTime类实际上包含了LocalDateTime与ZoneOffset。它用来表示一个包含格林威治时间偏移量（+/-小时：分，比如+06:00或者
+ * -08：00）的完整的日期（年月日）及时间（时分秒，纳秒）。
+ * <li>DateTimeFormatter类用于在Java中进行日期的格式化与解析。与SimpleDateFormat不同，它是不可变且线程安全的，如果需要的话，可以赋值给一个静态变量。
+ * <p>
+ * 最新JDBC映射将把数据库的日期类型和Java 8的新类型关联起来
+ * <li>SQL -> Java
+ * <li>--------------------------
+ * <li>date -> LocalDate
+ * <li>time -> LocalTime
+ * <li>timestamp -> LocalDateTime
+ * 
+ */
 public class LocalDateTimeDemo {
 
     public static void main(String[] args) {

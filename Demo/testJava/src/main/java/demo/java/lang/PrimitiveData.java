@@ -2,6 +2,7 @@ package demo.java.lang;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * 原始数据
@@ -34,14 +35,14 @@ import java.util.List;
 public class PrimitiveData {
 
     public static void main(String[] args) {
-        demoDouble();
-        
+        IntStream.range(0, 99)
+                .forEach(e -> System.out.println("7 & " + e + "=" + (7 & e) + "   ;" + e + "%8=" + (e % 8)));
     }
-    
+
     static void demoDouble() {
         double a = Double.parseDouble("1255");
         System.out.println(a);
-        double b = a/100;
+        double b = a / 100;
         System.out.println(b);
         System.out.println(Math.round(b));
     }
