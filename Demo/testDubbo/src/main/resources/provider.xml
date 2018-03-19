@@ -13,7 +13,7 @@
   <context:component-scan base-package="com.loanking.*" />
 
   <!-- 这里使用的注册中心是zookeeper -->
-  <!--  -->
+  <!-- -->
   <dubbo:registry address="zookeeper://172.17.16.13:2181" client="zkclient" />
 
   <!-- 协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。用dubbo协议在3019端口暴露服务 -->
@@ -35,6 +35,9 @@
 
   <!-- 方法配置，用于ServiceConfig和ReferenceConfig指定方法级的配置信息。 -->
   <dubbo:method />
+
+  <!-- 模块配置，用于配置当前模块信息，可选。 -->
+  <dubbo:module />
 
 
   <!-- 用于指定方法参数配置。 -->

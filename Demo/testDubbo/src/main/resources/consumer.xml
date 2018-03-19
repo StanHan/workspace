@@ -6,15 +6,12 @@
   <dubbo:application name="demo-consumer" />
 
   <!-- 注册中心配置，用于配置连接注册中心相关信息。 check=false：关闭注册中心启动时检查：(注册订阅失败时报错) -->
-  <dubbo:registry address="multicast://224.5.6.7:1234" check="false" />
+  <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false" />
 
   <!-- 引用服务配置，用于创建一个远程服务代理，一个引用可以指向多个注册中心。 check=false：关闭某个服务的启动时检查(没有提供者时报错) -->
   <!-- 引用缺省是延迟初始化的，只有引用被注入到其它Bean，或被getBean()获取，才会初始化。如果需要饥饿加载，即没有人引用也立即生成动态代理，可以配置：init=true -->
-  <dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.DemoService" check="false" init="true" />
-
-  <!-- 模块配置，用于配置当前模块信息，可选。 -->
-  <dubbo:module />
+  <dubbo:reference id="miGuanFacade" interface="com.loanking.galaxy.facade.MiGuanFacade" check="false" init="true" />
 
   <!-- 消费方缺省配置，当ReferenceConfig某属性没有配置时，采用此缺省值，可选。 check=false：关闭所有服务的启动时检查 -->
-  <dubbo:consumer timeout="6000" check="false" />
+  <dubbo:consumer timeout="60000" check="false" />
 </beans>

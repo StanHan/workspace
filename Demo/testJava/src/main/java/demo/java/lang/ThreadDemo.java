@@ -5,6 +5,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import org.junit.Test;
 
 /**
  * 
@@ -85,6 +88,21 @@ public class ThreadDemo {
         // testInterrupte();
         // testUncaughtExceptionHandler();
         testThreadPool();
+    }
+
+    /**
+     * 创建线程以及线程池时候要指定与业务相关的名字，以便于追溯问题
+     */
+    @Test
+    public static void demoThreadName() {
+        Thread threadOne = new Thread(new Runnable() {
+            public void run() {
+                System.out.println("保存订单的线程");
+                throw new NullPointerException();
+            }
+        }, "订单线程");
+        
+        ThreadPoolExecutor a;
     }
 
     static ExecutorService executorService = Executors.newFixedThreadPool(3);

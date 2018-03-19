@@ -1,4 +1,4 @@
-package demo.java.util.concurrent;
+package demo.java.util.concurrent.atomic;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;

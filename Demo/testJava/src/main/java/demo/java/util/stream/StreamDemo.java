@@ -106,6 +106,14 @@ public class StreamDemo {
         System.out.println("再次计算个数：" + count);
     }
 
+    @Test
+    public void demoOptional() {
+        String text = null;
+        Optional.ofNullable(text).ifPresent(System.out::println);
+        int length = Optional.ofNullable(text).map(String::length).orElse(-1);
+        System.out.println(length);
+    }
+
     /**
      * 
      */
@@ -153,7 +161,8 @@ public class StreamDemo {
     /**
      * 测试FOR循环的替代方法
      */
-    static void testForCircle() {
+    @Test
+    public void testForCircle() {
         for (int i = 1; i < 4; i++) {
             System.out.print(i + "...");
         }
@@ -209,7 +218,9 @@ public class StreamDemo {
         IntStream.iterate(7, e -> e - 1).limit(7);
     }
 
-    static void demoStream() {
+    @Test
+    public void demoIntStream() {
+        IntStream intStream = random.ints(98);
         // 计算列表中的元素数
         IntStream.range(0, 10).forEach(value -> System.out.println(value));
 
@@ -240,7 +251,9 @@ public class StreamDemo {
     }
 
     /**
-     * 流的元素可以是对象引用 (Stream<String>)，也可以是原始整数 (IntStream)、长整型 (LongStream) 或双精度 (DoubleStream)。 JDK 中的流来源:
+     * 流的元素可以是对象引用 (Stream<String>)，也可以是原始整数 (IntStream)、长整型 (LongStream) 或双精度 (DoubleStream)。 当然我们也可以用
+     * Stream<Integer>、Stream<Long> >、Stream<Double>，但是 boxing 和 unboxing 会很耗时，所以特别为这三种基本数值型提供了对应的 Stream。
+     * <h2>JDK 中的流来源:</h2>
      * <li>Collection.stream() 使用一个集合的元素创建一个流。
      * <li>Stream.of(T...) 使用传递给工厂方法的参数创建一个流。
      * <li>Stream.of(T[]) 使用一个数组的元素创建一个流。
@@ -354,6 +367,10 @@ public class StreamDemo {
     public void terminal() {
         Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 0).forEach(System.out::println);
         Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 0).forEachOrdered(System.out::println);
+    }
+
+    public void shortCircuiting() {
+
     }
 
     /**

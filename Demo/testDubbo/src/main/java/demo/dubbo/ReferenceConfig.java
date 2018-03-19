@@ -4,8 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.dubbo.config.spring.ReferenceBean;
-
-import demo.vo.Person;
+import com.loanking.galaxy.facade.MiGuanFacade;
 
 /**
  * Dubbo消费者配置
@@ -17,10 +16,10 @@ import demo.vo.Person;
 public class ReferenceConfig extends DubboBaseConfig {
 
     @Bean
-    public ReferenceBean<Person> person() {
-        ReferenceBean<Person> ref = new ReferenceBean<>();
+    public ReferenceBean<MiGuanFacade> person() {
+        ReferenceBean<MiGuanFacade> ref = new ReferenceBean<>();
         ref.setVersion("myversion");
-        ref.setInterface(Person.class);
+        ref.setInterface(MiGuanFacade.class);
         ref.setTimeout(5000);
         ref.setRetries(3);
         ref.setCheck(false);
