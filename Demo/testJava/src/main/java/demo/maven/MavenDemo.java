@@ -75,7 +75,7 @@ package demo.maven;
  * <li>deploy 将最终的包复制到远程仓库，与其它开发者和项目共享。
  * 
  * <p>
- * Maven有一个标准的目录结构。如果你在项目中遵循Maven的目录结构，就无需在pom文件中指定源代码、测试代码等目录。 <code>
+ * Maven有一个标准的目录结构。如果你在项目中遵循Maven的目录结构，就无需在pom文件中指定源代码、测试代码等目录。 <pre>
 - src
   - main
     - java
@@ -85,11 +85,11 @@ package demo.maven;
     - java
     - resources
 - target
-</code> src目录是源代码和测试代码的根目录。main目录是应用的源代码目录。test目录是测试代码的目录。main和test下的java目录，分别表示应用的java源代码和测试代码。
+</pre> src目录是源代码和测试代码的根目录。main目录是应用的源代码目录。test目录是测试代码的目录。main和test下的java目录，分别表示应用的java源代码和测试代码。
  * resources目录包含项目的资源文件，比如应用的国际化配置的属性文件等。 如果是一个web项目，则webapp目录为web项目的根目录，其中包含如WEB-INF等子目录。
  * target目录是由Maven创建的，其中包含编译后的类文件、jar文件等。当执行maven的clean目标后，target目录会被清空。
  * <p>
- * 配置外部依赖的示例如下： <code>
+ * 配置外部依赖的示例如下： <pre>
 <dependency>
   <groupId>mydependency</groupId>
   <artifactId>mydependency</artifactId>
@@ -97,7 +97,7 @@ package demo.maven;
   <version>1.0</version>
   <systemPath>${basedir}\war\WEB-INF\lib\mydependency.jar</systemPath>
 </dependency> 
-</code> groupId和artifactId为依赖的名称，即API的名称。scope属性为system。systemPath属性为jar文件的路径。${basedir}为pom文件所在的目录，路径中的其它部分是相对于该目录而言的。
+</pre> groupId和artifactId为依赖的名称，即API的名称。scope属性为system。systemPath属性为jar文件的路径。${basedir}为pom文件所在的目录，路径中的其它部分是相对于该目录而言的。
  * 依赖范围控制哪些依赖在哪些classpath 中可用，哪些依赖包含在一个应用中。让我们详细看一下每一种范围：
  * <li>compile （编译范围） compile是默认的范围；如果没有提供一个范围，那该依赖的范围就是编译范围。编译范围依赖在所有的classpath 中可用，同时它们也会被打包。
  * <li>provided （已提供范围） provided 依赖只有在当JDK 或者一个容器已提供该依赖之后才使用。 例如， 如果你开发了一个web 应用，你可能在编译 classpath 中需要可用的Servlet API
@@ -114,13 +114,13 @@ package demo.maven;
  * 快照依赖指的是那些还在开发中的依赖（jar包）。与其经常地更新版本号来获取最新版本，不如你直接依赖项目的快照版本。
  * 快照版本的每一个build版本都会被下载到本地仓库，即使该快照版本已经在本地仓库了。总是下载快照依赖可以确保本地仓库中的每一个build版本都是最新的。
  * 在pom文件的最开头（设置groupId和artifactId的地方），在版本号后追加-SNAPSHOT，则告诉Maven你的项目是一个快照版本。如： <version>1.0-SNAPSHOT</version>
- * 可以看到加到版本号后的-SNAPSHOT。 在配置依赖时，在版本号后追加-SNAPSHOT表明依赖的是一个快照版本。如： <code>
+ * 可以看到加到版本号后的-SNAPSHOT。 在配置依赖时，在版本号后追加-SNAPSHOT表明依赖的是一个快照版本。如： <pre>
 <dependency>
     <groupId>com.jenkov</groupId>
     <artifactId>java-web-crawler</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
-</code> 追加在version后的-SNAPSHOT告诉Maven这是一个快照版本。
+</pre> 追加在version后的-SNAPSHOT告诉Maven这是一个快照版本。
  * 
  * 
  * <h3>dependencies与dependencyManagement的区别</h3>
@@ -175,7 +175,7 @@ public class MavenDemo {
      * <li>您创建了一个自定义的 jar ，而另一个 Maven 项目需要使用。
      * <p>
      * 例如，kaptcha，它是一个流行的第三方Java库，它被用来生成 “验证码” 的图片，以阻止垃圾邮件，但它不在 Maven 的中央仓库中。
-     * <code>mvn install:install-file -Dfile=c:\kaptcha-2.3.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3 -Dpackaging=jar</code>
+     * <pre>mvn install:install-file -Dfile=c:\kaptcha-2.3.jar -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3 -Dpackaging=jar</pre>
      * 
      */
     static void repository() {

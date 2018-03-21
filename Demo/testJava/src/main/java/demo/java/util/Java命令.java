@@ -7,7 +7,7 @@ public interface Java命令 {
      * [-l] pid 。如果java程序崩溃生成core文件，jstack工具可以用来获得core文件的java stack和native stack的信息，从而可以轻松地知道java程序是如何崩溃和在程序何处发生问题。
      * 另外，jstack工具还可以附属到正在运行的java程序中，看到当时运行的java程序的java stack和native stack的信息,如果现在运行的java程序呈现hung的状态，jstack是非常有用的。
      * 
-     * <code>$ jstack -help
+     * <pre>$ jstack -help
     Usage:
     jstack [-l] <pid>
         (to connect to running process)
@@ -23,7 +23,7 @@ public interface Java命令 {
     -m  to print both java and native frames (mixed mode)
     -l  long listing. Prints additional information about locks
     -h or -help to print this help message
-    </code>
+    </pre>
      * 
      */
     void jstack();

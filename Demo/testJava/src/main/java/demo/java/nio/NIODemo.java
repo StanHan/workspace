@@ -286,27 +286,27 @@ public class NIODemo {
         /**
          * SelectionKey:当向Selector注册Channel时，register()方法会返回一个SelectionKey对象。这个对象包含了一些你感兴趣的属性：
          * 
-         * <li>interest集合: 就像向Selector注册通道一节中所描述的，interest集合是你所选择的感兴趣的事件集合。可以通过SelectionKey读写interest集合，像这样： <code>
+         * <li>interest集合: 就像向Selector注册通道一节中所描述的，interest集合是你所选择的感兴趣的事件集合。可以通过SelectionKey读写interest集合，像这样： <pre>
         int interestSet = selectionKey.interestOps();
         boolean isInterestedInAccept  = (interestSet & SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT；
         boolean isInterestedInConnect = interestSet & SelectionKey.OP_CONNECT;
         boolean isInterestedInRead    = interestSet & SelectionKey.OP_READ;
         boolean isInterestedInWrite   = interestSet & SelectionKey.OP_WRITE;
-        </code> 可以看到，用“位与”操作interest 集合和给定的SelectionKey常量，可以确定某个确定的事件是否在interest 集合中。
+        </pre> 可以看到，用“位与”操作interest 集合和给定的SelectionKey常量，可以确定某个确定的事件是否在interest 集合中。
          * <li>ready集合: ready 集合是通道已经准备就绪的操作的集合。在一次选择(Selection)之后，你会首先访问这个ready set。 int readySet =
-         * selectionKey.readyOps(); 可以用像检测interest集合那样的方法，来检测channel中什么事件或操作已经就绪。但是，也可以使用以下四个方法，它们都会返回一个布尔类型： <code>
+         * selectionKey.readyOps(); 可以用像检测interest集合那样的方法，来检测channel中什么事件或操作已经就绪。但是，也可以使用以下四个方法，它们都会返回一个布尔类型： <pre>
         selectionKey.isAcceptable();
         selectionKey.isConnectable();
         selectionKey.isReadable();
         selectionKey.isWritable();
-        </code>
+        </pre>
          * 
          * <li>Channel:Channel channel = selectionKey.channel();
          * <li>Selector:Selector selector = selectionKey.selector();
          * <li>附加的对象（可选） 可以将一个对象或者更多信息附着到SelectionKey上，这样就能方便的识别某个给定的通道。例如，可以附加 与通道一起使用的Buffer，或是包含聚集数据的某个对象。使用方法如下：
-         * <code>selectionKey.attach(theObject);Object attachedObj = selectionKey.attachment();</code>
+         * <pre>selectionKey.attach(theObject);Object attachedObj = selectionKey.attachment();</pre>
          * 还可以在用register()方法向Selector注册Channel的时候附加对象。如：
-         * <code>SelectionKey key = channel.register(selector,SelectionKey.OP_READ, theObject);</code>
+         * <pre>SelectionKey key = channel.register(selector,SelectionKey.OP_READ, theObject);</pre>
          */
         int interestSet = selectionKey.interestOps();
         int readyOps = selectionKey.readyOps();

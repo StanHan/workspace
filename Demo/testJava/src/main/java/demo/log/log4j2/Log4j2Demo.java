@@ -61,17 +61,17 @@ public class Log4j2Demo {
     /**
      * 注意：log4j2不再支持properties文件了，只支持xml，json或是yaml，不指定位置的情况下默认在src/main/resources下查找。如果需要自定义位置，需要在上面的web.xml中添加以下代码
      * <p>
-     * <code>
+     * <pre>
      * <context-param> 
      * <param-name>log4jConfiguration</param-name>
      * <param-value>/WEB-INF/conf/log4j2.xml</param-value> 
-     * </context-param></code>
+     * </context-param></pre>
      * <p>
-     * web.xml中设置log4j2的监听器和过滤器（servlet3.0及以上版本不需要该步操作） <code>
+     * web.xml中设置log4j2的监听器和过滤器（servlet3.0及以上版本不需要该步操作） <pre>
      * <listener> 
      * <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class> 
      * </listener>
-     * </code>
+     * </pre>
      * <p>
      * 
      */

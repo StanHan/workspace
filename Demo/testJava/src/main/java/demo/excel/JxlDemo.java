@@ -1,4 +1,4 @@
-package demo.java.io.excel;
+package demo.excel;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import jxl.write.WritableWorkbook;
 public class JxlDemo {
 
 	public static void main(String[] args) {
+	    
 	}
 
 	

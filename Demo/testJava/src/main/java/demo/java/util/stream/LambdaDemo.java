@@ -7,30 +7,30 @@ import java.util.List;
  * lambda表达式: a function (or a subroutine) defined, and possibly called, without being bound to an identifier。
  * 简单点说就是：一个不用被绑定到一个标识符上，并且可能被调用的函数。
  * <h5>Lambda语法详解</h5>
- * <li>0. 抽象一下lambda表达式的一般语法： <code>
+ * <li>0. 抽象一下lambda表达式的一般语法： <pre>
  * (Type1 param1, Type2 param2, ..., TypeN paramN) -> {
   statment1;
   statment2;
   //.............
   return statmentM;
 }
- * </code> 下面陆续介绍一下lambda表达式的各种简化版
- * <li>1. 参数类型省略–绝大多数情况，编译器都可以从上下文环境中推断出lambda表达式的参数类型。这样lambda表达式就变成了： <code>
+ * </pre> 下面陆续介绍一下lambda表达式的各种简化版
+ * <li>1. 参数类型省略–绝大多数情况，编译器都可以从上下文环境中推断出lambda表达式的参数类型。这样lambda表达式就变成了： <pre>
  (param1,param2, ..., paramN) -> {
   statment1;
   statment2;
   //.............
   return statmentM;
 }
- *</code>
- * <li>2. 当lambda表达式的参数个数只有一个，可以省略小括号。lambda表达式简写为： <code>
+ *</pre>
+ * <li>2. 当lambda表达式的参数个数只有一个，可以省略小括号。lambda表达式简写为： <pre>
  param1 -> {
   statment1;
   statment2;
   //.............
   return statmentM;
 }
- *</code>
+ *</pre>
  * <li>3. 当lambda表达式只包含一条语句时，可以省略大括号、return和语句结尾的分号。lambda表达式简化为：param1 -> statment
  * <li>4. 使用Method Reference
  *

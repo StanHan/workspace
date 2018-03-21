@@ -135,10 +135,10 @@ public class AopDemo {
      * 
      * 需要告诉JVM在启动main函数之前，需要先执行premain函数。
      * 
-     * <li>首先，需要将premain函数所在的类打成jar包，并修改jar包里的META-INF\MANIFEST.MF文件 <code>
+     * <li>首先，需要将premain函数所在的类打成jar包，并修改jar包里的META-INF\MANIFEST.MF文件 <pre>
     Manifest-Version: 1.0 
     Premain-Class: bci. MyClassFileTransformer
-     </code>
+     </pre>
      * <li>其次，在JVM的启动参数里加上-javaagent:D:\java\projects\opencometProject\Aop\lib\aop.jar
      */
     static void testInstrumentation() {

@@ -2,12 +2,7 @@ package demo.javax.tools;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
-import java.lang.reflect.Method;
 import java.net.URI;
-import java.security.ProtectionDomain;
 import java.util.Arrays;
 
 import javax.tools.JavaCompiler;
@@ -16,15 +11,6 @@ import javax.tools.JavaFileObject;
 import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.LdcInsnNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
 /**
  * 编译器
@@ -112,7 +98,7 @@ public class CompilerTest {
 		fileManager.close();
 	}
 
-	static class MethodEntryTransformer implements ClassFileTransformer {
+	/*static class MethodEntryTransformer implements ClassFileTransformer {
 		@Override
 		public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
 				ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
@@ -128,7 +114,7 @@ public class CompilerTest {
 			}
 		}
 
-	}
+	}*/
 }
 
 /**

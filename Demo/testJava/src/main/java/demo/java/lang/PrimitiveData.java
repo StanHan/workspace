@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.junit.Test;
+
 /**
  * 原始数据
  * <p>
@@ -145,7 +147,11 @@ public class PrimitiveData {
         return (i < 0) ? -i : i;
     }
 
-    static void bitDemo() {
+    /**
+     * 二进制位运算
+     */
+    @Test
+    public void bitDemo() {
         // The number 26, in binary
         int binVal = 0b10000000000000000000000000011010;
         System.out.println("binVal = " + Integer.toBinaryString(binVal));
@@ -163,7 +169,6 @@ public class PrimitiveData {
         System.out.println("按位异或：" + Integer.toBinaryString(bitmask2) + " ^ " + Integer.toBinaryString(bitmask1) + " = "
                 + Integer.toBinaryString(bitmask2 ^ bitmask1));
         System.out.println(Byte.toString((byte) 0b00010001));
-        ;
     }
 
     static void prePostDemo() {

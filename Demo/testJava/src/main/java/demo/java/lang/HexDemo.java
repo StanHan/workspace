@@ -58,7 +58,7 @@ public class HexDemo {
      * @param data
      *            byte[]
      * @param toLowerCase
-     *            <code>true</code> 传换成小写格式 ， <code>false</code> 传换成大写格式
+     *            <pre>true</pre> 传换成小写格式 ， <pre>false</pre> 传换成大写格式
      * @return 十六进制char[]
      */
     public static char[] encodeHex(byte[] data, boolean toLowerCase) {
@@ -102,7 +102,7 @@ public class HexDemo {
      * @param data
      *            byte[]
      * @param toLowerCase
-     *            <code>true</code> 传换成小写格式 ， <code>false</code> 传换成大写格式
+     *            <pre>true</pre> 传换成小写格式 ， <pre>false</pre> 传换成大写格式
      * @return 十六进制String
      */
     public static String encodeHexStr(byte[] data, boolean toLowerCase) {

@@ -1,10 +1,8 @@
 package demo.java.util;
 
-import java.util.AbstractCollection;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Deque;
@@ -16,35 +14,47 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import org.junit.Test;
+
 /**
- * @see Set
- * @see List
- * @see Map
- * @see SortedSet
- * @see SortedMap
- * @see HashSet
- * @see TreeSet
- * @see ArrayList
- * @see LinkedList
- * @see Vector
- * @see Collections
- * @see Arrays
- * @see AbstractCollection
+ * Set下有HashSet,LinkedHashSet,TreeSet。 List下有ArrayList,Vector,LinkedList。
+ * 两个接口都是继承自Collection. 
+
+List (inteface) 
+
+次序是List 的最重要特点,它确保维护元素特定的顺序. 
+－－ArrayList 允许对元素快速随机访问. 
+－－LinkedList 对顺序访问进行优化,向List 中间插入与移除的开销并不大，具有addFrist(),addLast(),getFirst,getLast,removeFirst和removeLast().这些方法使得LinkedList可当作堆栈／队列／双向队列. 
+
+
+Set (inteface) 
+
+存入Set 的每个元素必须唯一，不保证维护元素的次序.加入Set 的Object必须定义equals()方法 
+－－HashSet　为快速查找而设计的Set ，存入HashSet对象必须定义hashCode(). 
+－－TreeSet  保护次序的Set ，使用它可以从Set 中提取有序序列. 
+－－LinkedHashSet　　具有HashSet的查询速度，且内部使用链表维护元素的次序. 
+它们之间的存储方式不一样： 
+TreeSet采用红黑树的树据结构排序元素. 
+HashSet采用散列函数，这是专门为快速查询而设计的. 
+LinkedHashSet内部使用散列以加快查询速度，同时使用链表维护元素的次序. 
+
+使用HashSet/TreeSet时，必须为类定义equals()；而HashCode()是针对HashSet，作为一种编程风格，当覆盖equals()的时候，就应该同时覆盖hashCode().
+ * 
+ * 
+ * <li>ArrayXxx:底层数据结构是数组，查询快，增删慢
+ * <li>LinkedXxx:底层数据结构是链表，查询慢，增删快
+ * <li>HashXxx:底层数据结构是哈希表。依赖两个方法：hashCode()和equals()
+ * <li>TreeXxx:底层数据结构是二叉树。两种方式排序：自然排序和比较器排序
  *
  */
 public class CollectionDemo {
 
-    public static void main(String[] args) {
-        testSet();
-    }
-
-    static void testRemove() {
+    @Test
+    public void testRemove() {
         List<Integer> list = Arrays.asList(1, 2, 3);
 
         for (Integer integer : list) {
@@ -66,7 +76,8 @@ public class CollectionDemo {
         }
     }
 
-    static void listToArray() {
+    @Test
+    public void listToArray() {
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         list.add(2);
@@ -99,7 +110,8 @@ public class CollectionDemo {
         list4.forEach(System.out::println);
     }
 
-    static void testList() {
+    @Test
+    public void testList() {
         List<Integer> list = null;
         try {
             System.out.println("如果list为null,foreach 操作会抛空指针");
@@ -142,13 +154,15 @@ public class CollectionDemo {
 
     }
 
-    static void demoSearch(int a) {
+    @Test
+    public void demoSearch(int a) {
         Integer[] array1 = { 20, 42, 150, 19 };
         int idx = Arrays.binarySearch(array1, a);
         System.out.println(idx);
     }
 
-    static void testCollection() {
+    @Test
+    public void testCollection() {
         ArrayList<String> arrayList = new ArrayList<String>();
         LinkedList<String> linkedList = new LinkedList<String>();
         Vector<String> vector = new Vector<String>();
@@ -158,7 +172,8 @@ public class CollectionDemo {
         Map<String, Date> map = Collections.synchronizedMap(new HashMap<String, Date>());
     }
 
-    static void testTreeSet() {
+    @Test
+    public void testTreeSet() {
         TreeSet<String> treeSet = new TreeSet<String>();
         treeSet.add("han");
         treeSet.add("jun");
@@ -180,7 +195,8 @@ public class CollectionDemo {
     /**
      * 测试集合交集、并集、差集等操作
      */
-    static void testSet() {
+    @Test
+    public void testSet() {
         Set<Integer> result = new HashSet<Integer>();
 
         System.out.println("set1=" + set1);
@@ -206,34 +222,34 @@ public class CollectionDemo {
         System.out.println(set1.removeAll(emptySet));
         System.out.println("set1=" + set1);
         System.out.println("emptySet=" + emptySet);
-        
+
         result.clear();
         System.out.println(result.addAll(set1));
         System.out.println(result.addAll(nullSet));
         System.out.println("set1 与 nullSet 并集：" + result);
     }
 
-    static void testHashSet() {
+    @Test
+    public void testHashSet() {
         HashSet<String> set = new HashSet<>();
-        set.add("han");
-        set.add("jun");
-        set.add("ying");
-        set.add("Stan");
-        set.add("abc");
+        set.add("b20");
+        set.add("c3");
+        set.add("D4");
+        set.add("e5");
+        set.add("a1");
 
         Iterator<String> iterator = set.iterator();
         while (iterator.hasNext()) {
-            String string = (String) iterator.next();
-            System.out.println(string);
+            System.out.print(iterator.next() + " , ");
         }
-        System.out.println("------------------");
-        Object[] array = set.toArray();
-        for (Object string : array) {
-            System.out.println(string);
+        System.out.println();
+        for (String string : set) {
+            System.out.print(string + " , ");
         }
     }
 
-    static void testSort() {
+    @Test
+    public void testSort() {
         List<Double> list = new ArrayList<Double>();
         list.add(7.5);
         list.add(8.5);
@@ -253,7 +269,8 @@ public class CollectionDemo {
         }
     }
 
-    static void testItorator() {
+    @Test
+    public void testItorator() {
         List<String> list = new ArrayList<String>();
         list.add("6");
         list.add("1");
@@ -272,7 +289,8 @@ public class CollectionDemo {
 
     }
 
-    static void testDeque() {
+    @Test
+    public void testDeque() {
         Deque<String> deque = new ArrayDeque<String>();
         deque.addFirst("Fist1");
         deque.addFirst("Fist2");
@@ -290,7 +308,8 @@ public class CollectionDemo {
         Queue<String> queue;
     }
 
-    static void arrayDemo() {
+    @Test
+    public void arrayDemo() {
         byte[] anArrayOfBytes;
         short[] anArrayOfShorts;
         long[] anArrayOfLongs;
@@ -337,7 +356,8 @@ public class CollectionDemo {
         System.out.println(anArray.length);
     }
 
-    static void multiDimArrayDemo() {
+    @Test
+    public void multiDimArrayDemo() {
         String[][] names = { { "Mr. ", "Mrs. ", "Ms. " }, { "Smith", "Jones" } };
         // Mr. Smith
         System.out.println(names[0][0] + names[1][0]);
@@ -345,7 +365,8 @@ public class CollectionDemo {
         System.out.println(names[0][2] + names[1][1]);
     }
 
-    static void arrayCopyDemo() {
+    @Test
+    public void arrayCopyDemo() {
         char[] copyFrom = { 'd', 'e', 'c', 'a', 'f', 'f', 'e', 'i', 'n', 'a', 't', 'e', 'd' };
         char[] copyTo = new char[7];
 

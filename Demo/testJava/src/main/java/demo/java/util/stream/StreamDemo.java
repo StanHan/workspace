@@ -426,11 +426,11 @@ public class StreamDemo {
     }
 
     /**
-     * 收集器，一种通用的、从流生成复杂值的结构。 <code>
+     * 收集器，一种通用的、从流生成复杂值的结构。 <pre>
      * <R> collect(Supplier<R> resultSupplier,
             BiConsumer<R, T> accumulator, 
             BiConsumer<R, R> combiner)
-     * </code>
+     * </pre>
      * <li>Supplier<T>接口是一个函数接口，该接口声明了一个get方法，主要用来创建返回一个指定数据类型的对象。一种生成空结果容器的途径
      * <li>BiConsumer<T, U>接口是一个函数接口，该接口声明了accept方法，并无返回值，该函数接口主要用来声明一些预期操作。一种将新元素合并到结果容器中的途径
      * <li>一种合并两个结果容器的途径

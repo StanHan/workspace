@@ -9,40 +9,24 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>testDubbo</artifactId>
+  <artifactId>testWebService</artifactId>
 
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/com.alibaba/dubbo -->
+
+    <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
     <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>dubbo</artifactId>
-      <version>2.6.0</version>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>3.1.12</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
-    <!-- <dependency> <groupId>org.apache.zookeeper</groupId> <artifactId>zookeeper</artifactId> <version>3.4.11</version> </dependency> -->
-
-    <!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
+    <!-- https://mvnrepository.com/artifact/org.jodd/jodd-http -->
     <dependency>
-      <groupId>com.101tec</groupId>
-      <artifactId>zkclient</artifactId>
-      <version>0.10</version>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-http</artifactId>
+      <version>3.8.6</version>
     </dependency>
 
-
-    <!-- 引用galaxy-domain.jar包 -->
-    <dependency>
-      <groupId>com.loanking.galaxy</groupId>
-      <artifactId>galaxy-domain</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
-    </dependency>
-
-    <!-- 引用galaxy-facade.jar包 -->
-    <dependency>
-      <groupId>com.loanking.galaxy</groupId>
-      <artifactId>galaxy-facade</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
-    </dependency>
 
     <!--slf4j -->
     <dependency>

@@ -56,14 +56,14 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * 字段说明： Content-Disposition为属性名 ；disposition-type是以什么方式下载，如attachment为以附件方式下载 ；disposition-parm为默认保存时的文件名。
  * 
- * 具体的定义如下： <code>
+ * 具体的定义如下： <pre>
    content-disposition = "Content-Disposition" ":" 
    disposition-type *( ";" disposition-parm ) 
    disposition-type = "attachment" | disp-extension-token 
    disposition-parm = filename-parm | disp-extension-parm 
    filename-parm = "filename" "=" quoted-string 
    disp-extension-token = token 
-   disp-extension-parm = token "=" ( token | quoted-string ) </code>
+   disp-extension-parm = token "=" ( token | quoted-string ) </pre>
  * 
  * 服务端向客户端游览器发送文件时，如果是浏览器支持的文件类型，一般会默认使用浏览器打开，比如txt、jpg等，会直接在浏览器中显示，如果需要提示用户保存，就要利用Content-Disposition进行一下处理，
  * 关键在于一定要加上attachment：Content-Disposition: attachment; filename=“filename.xls”;

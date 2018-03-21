@@ -3,7 +3,6 @@ package demo.java.lang;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -442,6 +441,30 @@ public class StringDemo {
     }
 
     /**
+     * 标准的Java命名规范（驼峰形式）
+     * 
+     * @param name
+     * @return
+     */
+    public static String javaNamingConvention(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
+        }
+        String[] array = name.split("_");
+        StringBuilder convention = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+            String tmp = array[i];
+            if (i == 0) {
+                convention.append(lowerCase1stLetter(tmp));
+            } else {
+                convention.append(upperCase1stLetter(tmp));
+            }
+
+        }
+        return convention.toString();
+    }
+
+    /**
      * 
      * @Description: 将日期转换为字符串匹配格式 @Version1.0 2014年7月23日 下午4:50:09 by 张仁华（renhua.zhang@pactera.com）创建
      * @param filePath
@@ -468,9 +491,4 @@ public class StringDemo {
                 .replace("%mm", minute).replace("%ss", second).replace("%S", milltsecond);
     }
 
-    public static String getCurrentTime(String regex) {
-        SimpleDateFormat sp = new SimpleDateFormat(regex);
-        String currentTime = sp.format(new Date());
-        return currentTime;
-    }
 }
