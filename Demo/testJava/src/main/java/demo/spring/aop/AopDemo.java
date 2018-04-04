@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -135,10 +136,13 @@ public class AopDemo {
      * 
      * 需要告诉JVM在启动main函数之前，需要先执行premain函数。
      * 
-     * <li>首先，需要将premain函数所在的类打成jar包，并修改jar包里的META-INF\MANIFEST.MF文件 <pre>
+     * <li>首先，需要将premain函数所在的类打成jar包，并修改jar包里的META-INF\MANIFEST.MF文件
+     * 
+     * <pre>
     Manifest-Version: 1.0 
     Premain-Class: bci. MyClassFileTransformer
-     </pre>
+     * </pre>
+     * 
      * <li>其次，在JVM的启动参数里加上-javaagent:D:\java\projects\opencometProject\Aop\lib\aop.jar
      */
     static void testInstrumentation() {
@@ -231,7 +235,8 @@ public class AopDemo {
     /**
      * 静态代理：由程序员创建或特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了
      */
-    static void testStaticProxy() {
+    @Test
+    public void testStaticProxy() {
         IUserDAO userDAO = new UserDAO();
         IUserDAO staticProxy = new UserDaoStaticProxyDemo(userDAO);
         staticProxy.findUserById("张无忌");

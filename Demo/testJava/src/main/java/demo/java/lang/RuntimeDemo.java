@@ -96,5 +96,7 @@ public class RuntimeDemo {
      */
     static void gc() {
         Runtime.getRuntime().gc();
+
+        int clientCallbackExecutorThreads = Runtime.getRuntime().availableProcessors();
     }
 }

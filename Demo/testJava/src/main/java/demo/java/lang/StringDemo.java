@@ -11,7 +11,9 @@ public class StringDemo {
 
     public static void main(String[] args) throws IOException {
         System.out.println(String.format("%08d", 1));
-        System.out.println(String.format("%08s", "a"));
+        System.out.println(String.format("%s", 1));
+        String key = String.format("mx.migrate:%d.%s", 1,"a");
+        System.out.println(key);
     }
 
     /**

@@ -123,6 +123,19 @@
       <version>1.8.10</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.8.13</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjtools</artifactId>
+      <version>1.8.5</version>
+    </dependency>
+
 
     <!-- quartz -->
     <dependency>
@@ -131,11 +144,7 @@
       <version>${quartz.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjtools</artifactId>
-      <version>1.8.5</version>
-    </dependency>
+
 
     <!--jxl -->
     <dependency>
@@ -523,12 +532,7 @@
       <artifactId>spring-aspects</artifactId>
       <version>5.0.3.RELEASE</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
-      <version>1.8.13</version>
-    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
     <dependency>
       <groupId>org.javassist</groupId>

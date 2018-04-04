@@ -39,7 +39,8 @@ public class ReflectDemo {
         // testField();
         // testDynamicLoadObject();
         // testConstructor();
-        testParameterizedType();
+        Object a = null;
+        System.out.println((String)a);
     }
 
     /**

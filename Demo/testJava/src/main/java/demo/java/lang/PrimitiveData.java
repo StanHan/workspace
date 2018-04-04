@@ -37,8 +37,7 @@ import org.junit.Test;
 public class PrimitiveData {
 
     public static void main(String[] args) {
-        IntStream.range(0, 99)
-                .forEach(e -> System.out.println("7 & " + e + "=" + (7 & e) + "   ;" + e + "%8=" + (e % 8)));
+        System.out.println((Long) null);
     }
 
     static void demoDouble() {

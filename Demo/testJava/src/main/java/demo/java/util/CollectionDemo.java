@@ -53,28 +53,7 @@ LinkedHashSet内部使用散列以加快查询速度，同时使用链表维护�
  */
 public class CollectionDemo {
 
-    @Test
-    public void testRemove() {
-        List<Integer> list = Arrays.asList(1, 2, 3);
-
-        for (Integer integer : list) {
-            System.out.println(integer);
-            /** remove 时报错 */
-            try {
-                list.remove(integer);
-            } catch (UnsupportedOperationException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        System.out.println("------------------------------");
-        Iterator<Integer> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Integer i = iterator.next();
-            System.out.println(i);
-            /** remove 时报错 */
-            iterator.remove();
-        }
-    }
+    
 
     @Test
     public void listToArray() {
@@ -110,49 +89,7 @@ public class CollectionDemo {
         list4.forEach(System.out::println);
     }
 
-    @Test
-    public void testList() {
-        List<Integer> list = null;
-        try {
-            System.out.println("如果list为null,foreach 操作会抛空指针");
-            for (Integer string : list) {
-                System.out.println(string);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        Integer[] array3 = { 1, 2, 3, 4, 5 };
-        list = Arrays.asList(array3);
-
-        Integer[] emptyArray = {};
-        Integer[] arrayNull = null;
-        Integer[] biggerArray = new Integer[10];
-
-        try {
-            System.out.println("List.toArray(...) 方法参数为null,报空指针");
-            emptyArray = list.toArray(arrayNull);
-            System.out.println(Arrays.toString(arrayNull));
-            System.out.println(Arrays.toString(emptyArray));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        {
-            System.out.println("List.toArray(...) 参数长度大于list size，全部填充，其他填充为null.");
-            arrayNull = list.toArray(biggerArray);
-            System.out.println(Arrays.toString(arrayNull));
-            System.out.println(Arrays.toString(biggerArray));
-        }
-
-        {
-            System.out.println("List.toArray(...) 参数长度小于于list size，创建一个新的数组填充，参数数组不变。让人误解的逻辑！！");
-            arrayNull = list.toArray(emptyArray);
-            System.out.println(Arrays.toString(arrayNull));
-            System.out.println(Arrays.toString(emptyArray));
-        }
-
-    }
+    
 
     @Test
     public void demoSearch(int a) {

@@ -124,17 +124,38 @@ public class MapDemo {
     }
 
     /**
-     * LinkedHashMap 在不对HashMap做任何改变的基础上，给HashMap的任意两个节点间加了两条连线(before指针和after指针)，使这些节点形成一个双向链表。
+     * LinkedHashMap = HashMap + 双向链表，也就是说，HashMap和双向链表合二为一即是LinkedHashMap。 LinkedHashMap
+     * 在不对HashMap做任何改变的基础上，给HashMap的任意两个节点间加了两条连线(before指针和after指针)，使这些节点形成一个双向链表。
+     * 在LinkedHashMapMap中，所有put进来的Entry都保存在HashMap中，但由于它又额外定义了一个以head为头结点的空的双向链表，因此对于每次put进来Entry还会将其插入到双向链表的尾部。
+     * <p>
+     * LinkedHashMap相对于HashMap的源码比，是很简单的。因为大树底下好乘凉。它继承了HashMap，仅重写了几个方法，以改变它迭代遍历时的顺序。这也是其与HashMap相比最大的不同。
+     * 在每次插入数据，或者访问、修改数据时，会增加节点、或调整链表的节点顺序。以决定迭代时输出的顺序。
      * 
-     * <pre>
-     *     void foo(Map m) {
-     *         Map copy = new LinkedHashMap(m);
-     *         ...
-     *     }
-     * </pre>
+     * <li>accessOrder ,默认是false，则迭代时输出的顺序是插入节点的顺序。若为true，则输出的顺序是按照访问节点的顺序。为true时，可以在这基础之上构建一个LruCache.
+     * <li>LinkedHashMap并没有重写任何put方法。但是其重写了构建新节点的newNode()方法.在每次构建新节点时，将新节点链接在内部双向链表的尾部
+     * <li>accessOrder=true的模式下,在afterNodeAccess()函数中，会将当前被访问到的节点e，移动至内部的双向链表的尾部。值得注意的是，afterNodeAccess()函数中，会修改modCount,因此当你正在accessOrder=true的模式下,迭代LinkedHashMap时，如果同时查询访问数据，也会导致fail-fast，因为迭代的顺序已经改变。
+     * <li>nextNode() 就是迭代器里的next()方法 。 该方法的实现可以看出，迭代LinkedHashMap，就是从内部维护的双链表的表头开始循环输出。
+     * 而双链表节点的顺序在LinkedHashMap的增、删、改、查时都会更新。以满足按照插入顺序输出，还是访问顺序输出。
+     * <li>它与HashMap比，还有一个小小的优化，重写了containsValue()方法，直接遍历内部链表去比对value值是否相等。
      */
     public void linkedHashMap() {
         LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
+    }
+
+    /**
+     * 
+     */
+    @Test
+    public void demoLRU() {
+
+        LRU<Character, Integer> lru = new LRU<Character, Integer>(16, 0.75f, true);
+        String s = "abcdefghijkl";
+        for (int i = 0; i < s.length(); i++) {
+            lru.put(s.charAt(i), i);
+        }
+        System.out.println("LRU中key为h的Entry的值为： " + lru.get('h'));
+        System.out.println("LRU的大小 ：" + lru.size());
+        System.out.println("LRU ：" + lru);
     }
 
     public static final Map<String, String> CLIENTS;
@@ -206,5 +227,36 @@ public class MapDemo {
         }
 
         properties = System.getProperties();
+    }
+}
+
+/**
+ * 
+ *
+ * @param <K>
+ * @param <V>
+ */
+class LRU<K, V> extends LinkedHashMap<K, V> implements Map<K, V> {
+
+    private static final long serialVersionUID = 1L;
+
+    public LRU(int initialCapacity, float loadFactor, boolean accessOrder) {
+        super(initialCapacity, loadFactor, accessOrder);
+    }
+
+    /**
+     * @description 重写LinkedHashMap中的removeEldestEntry方法，当LRU中元素多余6个时， 删除最不经常使用的元素
+     * @author rico
+     * @created 2017年5月12日 上午11:32:51
+     * @param eldest
+     * @return
+     * @see java.util.LinkedHashMap#removeEldestEntry(java.util.Map.Entry)
+     */
+    @Override
+    protected boolean removeEldestEntry(java.util.Map.Entry<K, V> eldest) {
+        if (size() > 6) {
+            return true;
+        }
+        return false;
     }
 }
