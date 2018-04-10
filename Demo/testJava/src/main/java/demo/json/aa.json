@@ -1,93 +1,269 @@
-/* 正常返回数据 */
 {
-    "code": "200",
-    "data": {
-        "ISPNUM": {
-            "province": "上海",
-            "city": "上海",
-            "isp": "移动"
-        },
-        "RSL": [
-            {
-                "RS": {
-                    "code": "0",
-                    "desc": "三维验证一致"
-                },
-                "IFT": "B7"
-            },
-            {
-                "RS": {
-                    "code": "01",
-                    "desc": "[0,50]"
-                },
-                "IFT": "B1"
-            },
-            {
-                "RS": {
-                    "code": "0",
-                    "desc": "正常在用"
-                },
-                "IFT": "A4"
-            },
-            {
-                "RS": {
-                    "code": "3",
-                    "desc": "(24,+)"
-                },
-                "IFT": "A3"
-            }
-        ],
-        "ECL": []
-    },
-    "msg": "成功"
-}
-/* 另一条正常数据 */
-{
-	"code": "200",
-	"data": {
-		"ISPNUM": {
-			"province": "上海",
-			"city": "上海",
-			"isp": "移动"
-		},
-		"RSL": [
+	"code": 0,
+	"success": "s",
+	"message": "",
+	"seconds": "0.211",
+	"fxmsgnum": 40,
+	"fxpgnum": 4,
+	"fxcontent": {
+		"zhixing": [
 			{
-				"RS": {
-					"code": "0",
-					"desc": "验证一致"
-				},
-				"IFT": "C8"
+				"keyid": 321237321,
+				"typet": 32,
+				"typetname": "最高法执行",
+				"title": "龚来富(最高法执行)",
+				"sslong": "2016-11-17",
+				"name": "龚来富",
+				"id": "33012119621***1414",
+				"casenum": "（2016）浙0109执10694号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "62000.00",
+				"content": "执行标的:62000",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2016-11-29；案件状态：已结案；更新时间：2016-12-01；案件状态：执行中；更新时间：2016-12-04；案件状态：已结案；更新时间：2016-12-05；案件状态：执行中；更新时间：2017-04-17；曝光日期：2017-04-11；执行依据：民事裁定；执行案由：申请支付令；未执行金额：62000.00；标的金额：62000.00；更新时间：2017-04-24；执行状态：执行中；更新时间：2017-08-25；曝光日期：2017-08-21；地址：浙江省杭州市滨江区西兴街道居民二村西兴街326号；更新时间：2017-10-12；性别：男；终本日期：2017年04月21日；执行状态：终结本次执行程序；",
+				"zblong": "2017年04月21日",
+				"wlmoney": "",
+				"apply": ""
 			},
 			{
-				"RS": {
-					"code": "01",
-					"desc": "[0,50]"
-				},
-				"IFT": "B1"
+				"keyid": 308454629,
+				"typet": 32,
+				"typetname": "最高法执行",
+				"title": "龚来富(最高法执行)",
+				"sslong": "2016-08-01",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2016）浙0109执7214号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "160000.00",
+				"content": "未执行金额:160000.00",
+				"state": "原网站已查不到",
+				"remark": "疑是本人；更新时间：2017-04-14；曝光日期：2017-04-11；执行案由：申请支付令；未执行金额：160000.00；标的金额：160000.00；依据文书类型：支付令；更新时间：2017-08-25；曝光日期：2017-08-21；地址：浙江省杭州市滨江区西兴街道居民二村西兴街326号；更新时间：2017-10-12；性别：男；终本日期：2017年01月26日；执行状态：终结本次执行程序；网站状态：原网站已查不到；",
+				"zblong": "2017年01月26日",
+				"wlmoney": "",
+				"apply": ""
 			},
 			{
-				"RS": {
-					"code": "3",
-					"desc": "(24,+)"
-				},
-				"IFT": "A3"
+				"keyid": 187411907,
+				"typet": 32,
+				"typetname": "最高法执行",
+				"title": "龚来富(最高法执行)",
+				"sslong": "2016-06-02",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2016）浙0109执4430号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "110000.00",
+				"content": "未执行金额:110000.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2017-02-18；案件状态：办理中；当事人：申请执行人王贺军,被申请执行人龚来富；更新时间：2017-04-15；曝光日期：2017-04-11；执行案由：申请支付令；未执行金额：110000.00；标的金额：110000.00；依据文书类型：支付令；更新时间：2017-05-29；曝光日期：2017-05-22；更新时间：2017-10-12；性别：男；终本日期：2016年12月01日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2016年12月01日",
+				"wlmoney": "",
+				"apply": ""
 			},
 			{
-				"RS": {
-					"code": "0",
-					"desc": "正常在用"
-				},
-				"IFT": "A4"
+				"keyid": 182576584,
+				"typet": 32,
+				"typetname": "最高法执行",
+				"title": "龚来富(最高法执行)",
+				"sslong": "2016-04-07",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2016）浙0109执2891号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "140000.00",
+				"content": "未执行金额:125083.00标的金额:140000.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2017-04-17；曝光日期：2017-04-11；执行案由：申请支付令；未执行金额：125083.00；标的金额：140000.00；依据文书类型：支付令；更新时间：2017-10-12；性别：男；终本日期：2016年09月30日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2016年09月30日",
+				"wlmoney": "",
+				"apply": ""
 			},
 			{
-				"RS": {
-					"code": "0",
-					"desc": "三维验证一致"
-				},
-				"IFT": "B7"
+				"keyid": 178968112,
+				"typet": 32,
+				"typetname": "最高法执行",
+				"title": "龚来富(最高法执行)",
+				"sslong": "2016-03-01",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2016）浙0109执1924号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "60000.00",
+				"content": "未执行金额:60000.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2016-09-19；案件状态：已结案；更新时间：2016-10-23；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行依据：民事判决；执行案由：申请支付令；执行金额：60000；未执行金额：60000；曝光日期：2016-10-18；更新时间：2017-04-15；曝光日期：2017-04-11；未执行金额：60000.00；标的金额：60000.00；更新时间：2017-10-12；性别：男；终本日期：2016年08月28日；执行状态：终结本次执行程序；",
+				"zblong": "2016年08月28日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 100799561,
+				"typet": 164,
+				"typetname": "执行进度",
+				"title": "龚来富(执行进度)",
+				"sslong": "2015-08-24",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2015）杭萧执民字第9338号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "82693.00",
+				"content": "未执行金额:78771.50标的金额:82693.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2015-09-01；身份证号码/组织机构代码：33012119621***1414；案件状态：执行中；执行标的：82693；更新时间：2017-10-12；被执行人姓名/名称：龚来富；性别：男；终本日期：2015年09月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2015年09月21日",
+				"wlmoney": "",
+				"apply": "朱本起"
+			},
+			{
+				"keyid": 92292838,
+				"typet": 164,
+				"typetname": "执行进度",
+				"title": "龚来富(执行进度)",
+				"sslong": "2015-07-31",
+				"name": "龚来富",
+				"id": "33012119621****1414",
+				"casenum": "（2015）杭滨执民字第1313号",
+				"court": "浙江省杭州市滨江区人民法院",
+				"money": "15650.00",
+				"content": "执行标的:15650",
+				"state": "执行中",
+				"remark": "疑是本人；更新时间：2015-09-07；身份证号码/组织机构代码：33012119621****1414；案件状态：执行中；执行标的：15650；",
+				"zblong": "",
+				"wlmoney": "",
+				"apply": "张华英"
+			},
+			{
+				"keyid": 104187967,
+				"typet": 67,
+				"typetname": "执行曝光",
+				"title": "龚来富(执行曝光)",
+				"sslong": "2015-07-06",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2015）杭上执民字第1020号",
+				"court": "浙江省杭州市上城区人民法院",
+				"money": "223145.85",
+				"content": "金额:223145.85",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2017-10-12；身份证号码/组织机构代码：3301211962****1414；性别：男；立案时间：2015年06月17日；终本日期：2015年07月03日；地址：九堡金雅苑30-1-1002室；执行状态：终结本次执行程序；更新时间：2018-02-14；被执行人：龚来富；曝光日期：2018-02-12；执行依据：法院生效裁判；执行案由：金融借款合同纠纷；未执行金额：223145.85；标的金额：223145.85；",
+				"zblong": "2015年07月03日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 9432816,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2015-06-01",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2015）杭萧执民字第3260号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "33819.00",
+				"content": "未执行金额:33819.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2017-04-15；被执行人：龚来富；曝光日期：2017-04-11；立案日期：2015-02-06；标的金额：33819.00；更新时间：2017-10-12；性别：男；终本日期：2015年02月17日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2015年02月17日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 104240956,
+				"typet": 67,
+				"typetname": "执行曝光",
+				"title": "龚来富(执行曝光)",
+				"sslong": "2015-05-18",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2015）杭萧执民字第5273号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "50000.00",
+				"content": "未执行金额:50000.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2017-05-26；被执行人：龚来富；证件号码：3301211962****1414；曝光日期：2017-05-22；执行依据：法院生效裁判；执行案由：民间借贷纠纷；未执行金额：50000.00；立案日期：2015-04-23；标的金额：50000.00；更新时间：2017-10-12；性别：男；终本日期：2015年05月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2015年05月21日",
+				"wlmoney": "",
+				"apply": ""
 			}
 		],
-		"ECL": []
+		"shixin": [],
+		"xiangao": [],
+		"xianchu": [],
+		"caipan": [],
+		"shenpan": [],
+		"zuifan": [],
+		"weifa": [],
+		"qianshui": [],
+		"feizheng": [],
+		"qiankuan": []
 	},
-	"msg": "成功"
+	"fxpgturn": {
+		"prepage": {
+			
+		},
+		"nexpage": {
+			"pg": 2,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCpfZ7qJx4K%2bA4LJyJqq0pgWCxUQVlCjPF5x0xiUKZRNM%3d",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCpfZ7qJx4K%2bA4LJyJqq0pgWCxUQVlCjPF5x0xiUKZRNM%3d"
+		}
+	},
+	"fxnavigate": {
+		"zhixing": {
+			"num": 40,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlqrGWA%2fzNb9VJn8E8%2fmajGK",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlqrGWA%2fzNb9VJn8E8%2fmajGK"
+		},
+		"shixin": {
+			"num": 10,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlpdeBSIDZc88XJfy8mEbN66",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlpdeBSIDZc88XJfy8mEbN66"
+		},
+		"xiangao": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"xianchu": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"caipan": {
+			"num": 6,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlocX3ne8s7h5VXuX5V4dhqU",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlocX3ne8s7h5VXuX5V4dhqU"
+		},
+		"shenpan": {
+			"num": 7,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlrWaYmdMql%2bqz%2fwdnnfWO2e",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlrWaYmdMql%2bqz%2fwdnnfWO2e"
+		},
+		"zuifan": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"weifa": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"qianshui": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"feizheng": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"qiankuan": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		}
+	}
 }

@@ -3,13 +3,32 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.stan</groupId>
-    <artifactId>demo</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
 
-  <artifactId>javaDemo</artifactId>
+  <groupId>org.stan</groupId>
+  <artifactId>testJava</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <spring.version>4.3.11.RELEASE</spring.version>
+    <spring-data.version>1.8.0.RELEASE</spring-data.version>
+    <shiro.version>1.2.3</shiro.version>
+    <mysql-connector-java.version>5.1.23</mysql-connector-java.version>
+    <gson.version>2.8.0</gson.version>
+    <slf4j.version>1.7.16</slf4j.version>
+    <log4j.version>2.8.2</log4j.version>
+    <jackson.version>1.9.13</jackson.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <commons.version>1.0.3</commons.version>
+    <quartz.version>2.2.1</quartz.version>
+    <axis.version>1.4</axis.version>
+    <spring-data-redis-version>1.6.4.RELEASE</spring-data-redis-version>
+    <mybatis.version>3.2.8</mybatis.version>
+    <mybatis-spring.version>1.2.2</mybatis-spring.version>
+    <httpclient.version>4.3.5</httpclient.version>
+    <logback.version>1.2.3</logback.version>
+  </properties>
 
   <dependencies>
 
@@ -561,6 +580,43 @@
       <version>2.0.0</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
+    <dependency>
+      <groupId>com.netflix.hystrix</groupId>
+      <artifactId>hystrix-core</artifactId>
+      <version>1.5.12</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.netflix.hystrix</groupId>
+      <artifactId>hystrix-metrics-event-stream</artifactId>
+      <version>1.5.12</version>
+    </dependency>
+
+
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20.1</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -21,7 +21,7 @@ import demo.java.lang.annotation.MethodCache;
  */
 @Aspect
 @Component
-public class MethodCacheInterceptor {
+public class MethodCacheAspect {
     private static final Logger logger = LoggerFactory.getLogger("METHOD_CACHE");
 
     @Autowired

@@ -1,5 +1,6 @@
 package demo.java.designPattern.proxy;
 
+import demo.java.lang.reflect.JDKProxyFactory;
 import demo.spring.service.IActions;
 import demo.vo.People;
 

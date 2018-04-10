@@ -14,5 +14,5 @@ public @interface MethodCache {
     /**
      * 缓存过期时间，单位是秒
      */
-    int expire();
+    long expire();
 }

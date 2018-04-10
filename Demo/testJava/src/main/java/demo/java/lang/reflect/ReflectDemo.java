@@ -3,15 +3,18 @@ package demo.java.lang.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 import demo.vo.People;
 import demo.vo.User2;
@@ -39,8 +42,18 @@ public class ReflectDemo {
         // testField();
         // testDynamicLoadObject();
         // testConstructor();
+        testParameterNames(args);
         Object a = null;
-        System.out.println((String)a);
+        System.out.println((String) a);
+    }
+
+    public static Object createProxy(final Object object) {
+        return Proxy.newProxyInstance(object.getClass().getClassLoader(), new Class[] { Set.class },
+                new InvocationHandler() {
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        return method.invoke(object, args);
+                    }
+                });
     }
 
     /**
@@ -50,7 +63,8 @@ public class ReflectDemo {
      * 
      * 对于有经验的Maven使用者，–parameters参数可以添加到maven-compiler-plugin的配置部分：
      */
-    public static void testParameterNames(String[] args) throws Exception {
+
+    static void testParameterNames(String[] args) throws Exception {
         Method method = ReflectDemo.class.getMethod("main", String[].class);
         for (final Parameter parameter : method.getParameters()) {
             System.out.println("Parameter: " + parameter.getName());
