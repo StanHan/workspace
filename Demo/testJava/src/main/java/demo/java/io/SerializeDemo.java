@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Test;
+
 import demo.vo.Bean;
 
 public class SerializeDemo {
@@ -146,7 +148,8 @@ public class SerializeDemo {
     /**
      * 测试 transient关键字
      */
-    static void testTransient() {
+    @Test
+    public void testTransient() {
         Bean user = new Bean();
         user.setName("Alexia");
         user.setPasswd("123456");
@@ -156,7 +159,7 @@ public class SerializeDemo {
         System.err.println("password: " + user.getPasswd());
 
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("D:/cache/user.txt"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("D:/logs/user.txt"));
             os.writeObject(user); // 将User对象写进文件
             os.flush();
             os.close();
@@ -166,7 +169,7 @@ public class SerializeDemo {
             e.printStackTrace();
         }
         try {
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream("D:/cache/user.txt"));
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream("D:/logs/user.txt"));
             user = (Bean) is.readObject(); // 从流中读取User的数据
             is.close();
 

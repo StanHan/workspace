@@ -3,7 +3,11 @@ package demo.db.mysql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+/**
+ * 
+ * @author hanjy
+ *
+ */
 public class MySqlDemo {
 
     static void command() {

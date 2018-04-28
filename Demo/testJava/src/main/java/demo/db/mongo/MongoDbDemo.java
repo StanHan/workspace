@@ -2,11 +2,16 @@ package demo.db.mongo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.junit.Test;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
@@ -46,7 +51,6 @@ import com.mongodb.client.model.Filters;
 public class MongoDbDemo {
 
     public static void main(String[] args) {
-        demoObjectId();
     }
 
     /**
@@ -323,11 +327,23 @@ public class MongoDbDemo {
      * MongoDB中存储的文档必须有一个"_id"键。这个键的值可以是任何类型的，默认是个ObjectId对象。 在一个集合里面，每个文档都有唯一的"_id"值，来确保集合里面每个文档都能被唯一标识。
      * MongoDB采用ObjectId，而不是其他比较常规的做法（比如自动增加的主键）的主要原因，因为在多个 服务器上同步自动增加主键值既费力还费时。
      */
-    static void demoObjectId() {
-        ObjectId objectId = new ObjectId("5a3143004ca8e458b3ef03fa");
+    @Test
+    public void demoObjectId() {
+        ObjectId objectId = new ObjectId("5ae033294ca8e4179661344c");
         System.out.println(objectId.getTimestamp());
         long timestamp = objectId.getTimestamp() * 1000L;
         System.out.println(new Date(timestamp));
+        System.out.println(JSONObject.toJSONString(objectId));
+        Set<ObjectId> set = new HashSet<>(100_000_000);
+        Date now = new Date();
+        IntStream.range(0, 100_000_000).forEach(e -> {
+            ObjectId tmp = new ObjectId(now);
+            boolean notExisted = set.add(tmp);
+            if (!notExisted) {
+                System.out.println(set.size());
+            }
+        });
+        System.out.println("循环 100_000_000 次耗时毫秒：" + (System.currentTimeMillis() - now.getTime()));
     }
 
     static void demo(MongoClient mongoClient) {

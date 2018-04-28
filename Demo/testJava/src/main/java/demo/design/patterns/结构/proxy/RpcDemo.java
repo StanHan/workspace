@@ -1,4 +1,4 @@
-package demo.java.designPattern.proxy;
+package demo.design.patterns.结构.proxy;
 
 /**
  * <h1>RPC(Remote Procedure Call)远程过程调用</h1>

@@ -476,6 +476,9 @@ public class StreamDemo {
 
         List<String> items = Arrays.asList("apple", "apple", "banana", "apple", "orange", "banana", "papaya");
 
+        List<String> emptyList = items.stream().filter(E -> "TAN".equals(E)).collect(Collectors.toList());
+        System.out.println(emptyList == null ? "null":emptyList.size());
+
         Map<String, Long> result = items.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 

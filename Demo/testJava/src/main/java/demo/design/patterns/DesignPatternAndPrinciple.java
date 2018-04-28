@@ -1,4 +1,4 @@
-package demo.java.designPattern;
+package demo.design.patterns;
 
 /**
  * <h1>Java中的24种设计模式</h1>    

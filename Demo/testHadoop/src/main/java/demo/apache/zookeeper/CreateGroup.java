@@ -1,4 +1,4 @@
-package demo.hadoop.zookeeper;
+package demo.apache.zookeeper;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;

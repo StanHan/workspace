@@ -7,6 +7,8 @@ import java.util.Base64.Encoder;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.junit.Test;
+
 /**
  * Base64是网络上最常见的用于传输8Bit字节代码的编码方式之一，大家可以查看RFC2045～RFC2049，上面有MIME的详细规范。
  * <p>
@@ -35,10 +37,10 @@ import java.util.Vector;
 public class Base64Demo {
     public static void main(String[] args) {
         demo1();
-        demoJava8();
     }
 
-    static void demoJava8() {
+    @Test
+    public void demoJava8() {
         Encoder encoder = Base64.getEncoder();
         Decoder decoder = Base64.getDecoder();
         System.out.println(encoder.encodeToString("A".getBytes(StandardCharsets.UTF_8)));

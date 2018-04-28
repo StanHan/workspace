@@ -1,4 +1,4 @@
-package demo.java.designPattern;
+package demo.design.patterns;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

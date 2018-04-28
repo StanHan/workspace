@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -288,13 +290,13 @@ public class IoDemo {
         }
         return stringBuilder.toString();
     }
-    
+
     /**
      * 读取JSON
      *
      * @param file
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     public static String readStringFromFile(File file) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {

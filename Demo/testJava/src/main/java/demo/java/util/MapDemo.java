@@ -1,5 +1,7 @@
 package demo.java.util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -9,11 +11,15 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.WeakHashMap;
 
 import org.junit.Test;
+
+import demo.java.io.IoDemo;
 
 /**
  * Map下有Hashtable,LinkedHashMap,HashMap,TreeMap
@@ -227,6 +233,48 @@ public class MapDemo {
         }
 
         properties = System.getProperties();
+    }
+
+    /**
+     * 该方式只能读取类路径下的配置文件，有局限但是如果配置文件在类路径下比较方便。
+     * 
+     * @throws IOException
+     */
+    public void test1() throws IOException {
+        Properties properties = new Properties();
+        // 使用ClassLoader加载properties配置文件生成对应的输入流
+        InputStream in = IoDemo.class.getClassLoader().getResourceAsStream("config/config.properties");
+        // 使用properties对象加载输入流
+        properties.load(in);
+        // 获取key对应的value值
+        properties.getProperty("key1");
+    }
+
+    /**
+     * 该方式的优点在于可以读取任意路径下的配置文件
+     * 
+     * @throws IOException
+     */
+    public void test2() throws IOException {
+        Properties properties = new Properties();
+        // 使用InPutStream流读取properties文件
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("E:/config.properties"));
+        properties.load(bufferedReader);
+        // 获取key对应的value值
+        properties.getProperty("key1");
+    }
+
+    /**
+     * 通过 java.util.ResourceBundle 类来读取，这种方式比使用 Properties 要方便一些
+     * 
+     * @throws IOException
+     */
+    public void test3(InputStream inStream) throws IOException {
+        // config为属性文件名，放在包com.test.config下，如果是放在src下，直接用config即可
+        ResourceBundle resource = ResourceBundle.getBundle("com/test/config/config");
+        String key = resource.getString("keyWord");
+        // 从 InputStream 中读取，获取 InputStream 的方法和上面一样，不再赘述
+        ResourceBundle resource2 = new PropertyResourceBundle(inStream);
     }
 }
 

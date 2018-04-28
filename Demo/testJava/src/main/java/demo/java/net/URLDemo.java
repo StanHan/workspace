@@ -11,9 +11,12 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.Test;
 
 /**
  * URL: Uniform Resource Locator
@@ -102,8 +105,6 @@ import java.util.Map;
 public class URLDemo {
 
     public static void main(String[] args) throws Exception {
-        urlEncodeDemo();
-        // demo1();
     }
 
     /**
@@ -121,12 +122,17 @@ public class URLDemo {
      * <li>8. = URL中指定参数的值 %3D
      * <li>9. ! URL中指定参数的值 %21
      */
-    static void urlEncodeDemo() throws UnsupportedEncodingException {
+    @Test
+    public void urlEncodeDemo() throws UnsupportedEncodingException {
         String message = "aX92rOy5T06FkRP03I3lV1RjCTLndx1XfVZjXxgK65ECACT482pWTidyJmQuSLnGWYNM8PyU96lg86gWWX/y/g9pjJKbj5BxkkRx1wbtYUdq3M3W+ciRcEcduSxM3zeeAqwhrx2x3CIV3uxwkgbVJamApLVkjgMRAvXThLetFnq3pjF58QGByIrbMuwkVt5n";
-        
-        String r = URLEncoder.encode(message,"UTF8");
+
+        String r = URLEncoder.encode(message, "UTF8");
         System.out.println(r);
+
+        String a = URLDecoder.decode("%E9%BE%9A%E6%9D%A5%E5%AF%8C", "UTF8");
+        System.out.println(a);
         
+        System.out.println(URLEncoder.encode("QQ==", "UTF8"));
     }
 
     static void demo3() {

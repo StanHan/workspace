@@ -1,4 +1,4 @@
-package demo.java.designPattern.proxy;
+package demo.design.patterns.结构.proxy;
 
 import java.lang.reflect.Method;
 

@@ -31,7 +31,10 @@ import demo.vo.common.ErrorCode;
 public class FastJsonDemo {
 
     public static void main(String[] args) {
-        demoMap();
+        String a = "{\"blacklistRule\":-9999999,\"customerId\":\"10000002113-2\",\"freezeListRule\":104,\"inalBlacklistRule\":105,\"serialNo\":\"10000002114-2\",\"userId\":\"10000002112-2\"}";
+        System.out.println(a);
+        JSONObject json = JSONObject.parseObject(a);
+        System.out.println(json.toJSONString());
     }
 
     static void demoMap() {
@@ -40,7 +43,7 @@ public class FastJsonDemo {
         map.put("carrier_name", "赵**");
         map.put("carrier_idcard", "132302************");
         map.put("available_balance", "810");
-        
+
         System.out.println(JSON.toJSONString(map));
     }
 

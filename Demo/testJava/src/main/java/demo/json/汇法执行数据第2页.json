@@ -1,0 +1,271 @@
+{
+	"code": 0,
+	"success": "s",
+	"message": "",
+	"seconds": "0.213",
+	"fxmsgnum": 41,
+	"fxpgnum": 5,
+	"fxcontent": {
+		"zhixing": [
+			{
+				"keyid": 104240956,
+				"typet": 67,
+				"typetname": "执行曝光",
+				"title": "龚来富(执行曝光)",
+				"sslong": "2015-05-18",
+				"name": "龚来富",
+				"id": "3301211962****1414",
+				"casenum": "（2015）杭萧执民字第5273号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "50000.00",
+				"content": "未执行金额:50000.00",
+				"state": "终结本次执行程序",
+				"remark": "疑是本人；更新时间：2017-05-26；被执行人：龚来富；证件号码：3301211962****1414；曝光日期：2017-05-22；执行依据：法院生效裁判；执行案由：民间借贷纠纷；未执行金额：50000.00；立案日期：2015-04-23；标的金额：50000.00；更新时间：2017-10-12；性别：男；终本日期：2015年05月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2015年05月21日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 13537947,
+				"typet": 164,
+				"typetname": "执行进度",
+				"title": "龚来富(执行进度)",
+				"sslong": "2015-04-23",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2015）杭萧执民字第5273号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "50000.00",
+				"content": "未执行金额:50000.00",
+				"state": "执行中",
+				"remark": "更新时间：2015-05-25；案件状态：已经结案；更新时间：2015-05-26；案件状态：已经归档；机构：浙江省杭州市萧山区人民法院；更新时间：2015-08-25；证件号码：330121********1414；曝光日期：2015-05-18；执行依据：法院生效裁判；执行案由：民间借贷纠纷；未执行金额：50000.00；标的金额：50000.00；更新时间：2015-09-01；身份证号码：330121196212241414；案件状态：执行中；执行标的：50000；更新时间：2015-10-09；身份证号：330121****1414；",
+				"zblong": "",
+				"wlmoney": "",
+				"apply": "李萍"
+			},
+			{
+				"keyid": 12496077,
+				"typet": 164,
+				"typetname": "执行进度",
+				"title": "龚来富(执行进度)",
+				"sslong": "2015-02-06",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2015）杭萧执民字第3249号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "15088.00",
+				"content": "执行标的:15088未执行金额:15088.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-19；身份证号码/组织机构代码：33012119621***1414；案件状态：已结案；执行标的：15088；更新时间：2015-08-27；证件号码：330121********1414；曝光日期：2015-02-27；执行依据：法院生效裁判；执行案由：民间借贷纠纷；未执行金额：15088.00；标的金额：15088.00；更新时间：2015-09-01；身份证号码：330121196212241414；更新时间：2015-10-19；身份证号：330121****1414；更新时间：2016-05-27；被执行人姓名/名称：龚来富；案件状态：执行中；更新时间：2016-12-30；案件状态：已结案；更新时间：2017-04-16；曝光日期：2017-04-11；更新时间：2017-10-12；性别：男；终本日期：2015年02月17日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2015年02月17日",
+				"wlmoney": "",
+				"apply": "汤建国"
+			},
+			{
+				"keyid": 12495333,
+				"typet": 164,
+				"typetname": "执行进度",
+				"title": "龚来富(执行进度)",
+				"sslong": "2015-02-06",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2015）杭萧执民字第3264号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "7525.00",
+				"content": "执行标的:7525未执行金额:7525.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-19；身份证号码/组织机构代码：33012119621***1414；案件状态：已结案；执行标的：7525；更新时间：2015-08-27；证件号码：330121********1414；曝光日期：2015-02-27；执行依据：法院生效裁判；执行案由：民间借贷纠纷；未执行金额：7525.00；标的金额：7525.00；更新时间：2015-09-01；身份证号码：330121196212241414；更新时间：2016-05-27；被执行人姓名/名称：龚来富；案件状态：执行中；更新时间：2016-12-30；案件状态：已结案；更新时间：2017-04-15；曝光日期：2017-04-11；更新时间：2017-10-12；性别：男；终本日期：2015年02月16日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2015年02月16日",
+				"wlmoney": "",
+				"apply": "李萍"
+			},
+			{
+				"keyid": 9121233,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2014-11-12",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2014）杭萧执民字第7910号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "60000.00",
+				"content": "金额:60000.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-17；身份证号码/组织机构代码：33012119621****1414；案件状态：已结案；执行标的：60000；更新时间：2015-08-19；身份证号码：330121196212241414；更新时间：2016-03-17；被执行人：龚来富；曝光日期：2017-04-11；更新时间：2017-10-12；性别：男；终本日期：2014年11月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2014年11月21日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 9121229,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2014-11-12",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2014）杭萧执民字第7906号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "10000.00",
+				"content": "金额:10000.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-18；身份证号码/组织机构代码：33012119621****1414；案件状态：已结案；执行标的：10000；更新时间：2015-08-19；身份证号码：330121196212241414；更新时间：2015-09-01；案件状态：执行中；更新时间：2017-04-16；被执行人：龚来富；曝光日期：2017-04-11；更新时间：2017-05-25；曝光日期：2017-05-22；更新时间：2017-10-12；性别：男；终本日期：2014年11月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2014年11月21日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 9121230,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2014-11-12",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2014）杭萧执民字第7907号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "30000.00",
+				"content": "金额:30000.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-18；身份证号码/组织机构代码：33012119621****1414；案件状态：已结案；执行标的：30000；更新时间：2015-08-19；身份证号码：330121196212241414；更新时间：2015-09-01；案件状态：执行中；更新时间：2017-04-17；被执行人：龚来富；曝光日期：2017-04-11；更新时间：2017-10-12；性别：男；终本日期：2014年11月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2014年11月21日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 9121260,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2014-11-12",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2014）杭萧执民字第7909号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "120000.00",
+				"content": "金额:120000.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-17；身份证号码/组织机构代码：33012119621****1414；案件状态：已结案；执行标的：120000；更新时间：2015-08-19；身份证号码：330121196212241414；更新时间：2016-03-17；被执行人：龚来富；曝光日期：2017-04-11；更新时间：2017-10-12；性别：男；终本日期：2014年11月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2014年11月21日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 9121259,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2014-11-12",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2014）杭萧执民字第7908号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "100000.00",
+				"content": "金额:100000.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-18；身份证号码/组织机构代码：33012119621****1414；案件状态：已结案；执行标的：100000；更新时间：2015-08-19；身份证号码：330121196212241414；更新时间：2015-09-01；案件状态：执行中；更新时间：2017-04-18；被执行人：龚来富；曝光日期：2017-04-11；更新时间：2017-05-25；曝光日期：2017-05-22；更新时间：2017-10-12；性别：男；终本日期：2014年11月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2014年11月21日",
+				"wlmoney": "",
+				"apply": ""
+			},
+			{
+				"keyid": 9121261,
+				"typet": 150,
+				"typetname": "其他执行信息",
+				"title": "龚来富(其他执行信息)",
+				"sslong": "2014-11-12",
+				"name": "龚来富",
+				"id": "330121196212241414",
+				"casenum": "（2014）杭萧执民字第7911号",
+				"court": "浙江省杭州市萧山区人民法院",
+				"money": "100000.00",
+				"content": "金额:100000.00",
+				"state": "终结本次执行程序",
+				"remark": "更新时间：2015-08-17；身份证号码/组织机构代码：33012119621****1414；案件状态：已结案；执行标的：100000；更新时间：2015-08-19；身份证号码：330121196212241414；更新时间：2016-03-17；被执行人：龚来富；曝光日期：2017-04-11；更新时间：2017-05-25；曝光日期：2017-05-22；更新时间：2017-10-12；性别：男；终本日期：2014年11月21日；地址：杭州市滨江区西兴街道居民二村西兴街326号；执行状态：终结本次执行程序；",
+				"zblong": "2014年11月21日",
+				"wlmoney": "",
+				"apply": ""
+			}
+		],
+		"shixin": [],
+		"xiangao": [],
+		"xianchu": [],
+		"caipan": [],
+		"shenpan": [],
+		"zuifan": [],
+		"weifa": [],
+		"qianshui": [],
+		"feizheng": [],
+		"qiankuan": []
+	},
+	"fxpgturn": {
+		"prepage": {
+			"pg": 1,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCpfZ7qJx4K%2bBUrAOTZmDC0nU%2bvziym6eqsp8s9Qy7IBM%3d",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCpfZ7qJx4K%2bBUrAOTZmDC0nU%2bvziym6eqsp8s9Qy7IBM%3d"
+		},
+		"nexpage": {
+			"pg": 3,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCpfZ7qJx4K%2bBdDMVj8BzjMD1PkpwY7bDzezc5CNMyet4%3d",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCpfZ7qJx4K%2bBdDMVj8BzjMD1PkpwY7bDzezc5CNMyet4%3d"
+		}
+	},
+	"fxnavigate": {
+		"zhixing": {
+			"num": 41,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlqrGWA%2fzNb9VJn8E8%2fmajGK",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlqrGWA%2fzNb9VJn8E8%2fmajGK"
+		},
+		"shixin": {
+			"num": 10,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlpdeBSIDZc88XJfy8mEbN66",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlpdeBSIDZc88XJfy8mEbN66"
+		},
+		"xiangao": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"xianchu": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"caipan": {
+			"num": 6,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlocX3ne8s7h5VXuX5V4dhqU",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlocX3ne8s7h5VXuX5V4dhqU"
+		},
+		"shenpan": {
+			"num": 7,
+			"url": "http://ss17.lawxp.com/s.aspx?para=Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlrWaYmdMql%2bqz%2fwdnnfWO2e",
+			"para": "Vmt15UVf33dizwSvGGC%2bFm0efgjr8aT3oXLOt8ugi5ETyPdvSC4iMaoSIp2u1oGSVsrczvynROGpyUN2mUxXFfqISMCSpesE3vCyBQI2tDcKVXGkr7XOr1Klg%2fn4o7VCslXufqm9wlrWaYmdMql%2bqz%2fwdnnfWO2e"
+		},
+		"zuifan": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"weifa": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"qianshui": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"feizheng": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		},
+		"qiankuan": {
+			"num": 0,
+			"url": "",
+			"para": ""
+		}
+	}
+}
