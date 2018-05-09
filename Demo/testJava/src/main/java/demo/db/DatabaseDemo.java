@@ -5,6 +5,6 @@ package demo.db;
  * <li>(MVCC)多版本并发控制Multi-Version Concurrency Control .
  *
  */
-public class DataBaseDemo {
+public class DatabaseDemo {
 
 }

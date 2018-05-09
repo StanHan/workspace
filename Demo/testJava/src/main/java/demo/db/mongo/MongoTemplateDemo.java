@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -12,7 +13,6 @@ import org.springframework.data.mongodb.core.IndexOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.index.Index;
-import org.springframework.data.mongodb.core.index.IndexDefinition;
 import org.springframework.data.mongodb.core.index.IndexInfo;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -20,6 +20,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.CommandResult;
+import com.mongodb.DB;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
@@ -44,6 +46,34 @@ public class MongoTemplateDemo {
         listIndex("mx_carrier_calls");
 
         listIndex("mx_carrier_report_notify");
+    }
+
+    @Test
+    public void commands() throws UnknownHostException {
+        MongoTemplate mongoTemplate = buildMongoTemplate(MongoDataTransfer.T1);
+        DB db = mongoTemplate.getDb();
+        // 获取当前数据库的信息，比如Obj总数、数据库总大小、平均Obj大小等
+        CommandResult commandResult = db.getStats();
+        System.err.println(commandResult);
+        CommandResult dbStats = db.command("dbStats");
+        System.err.println(dbStats);
+
+        CommandResult dbStats2 = db.command("listCommands");
+        System.err.println(dbStats2);
+        /*
+         * The ping command is a no-op used to test whether a server is responding to commands. This command will return
+         * immediately even if the server is write-locked:
+         */
+        dbStats2 = db.command("ping");
+        System.err.println(dbStats2);
+        System.out.println(db.getMongo().getAddress());
+        
+        dbStats2 = db.command("shardConnPoolStats");
+        System.err.println(dbStats2);
+        
+        dbStats2 = db.command("top");
+        System.err.println(dbStats2);
+        
     }
 
     /**

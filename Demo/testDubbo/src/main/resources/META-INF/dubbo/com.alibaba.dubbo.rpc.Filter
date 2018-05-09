@@ -1,0 +1,2 @@
+monitorFilter=com.loanking.galaxy.provider.filter.MonitorFilter
+disenableVendorFilter=com.loanking.galaxy.provider.filter.DisenableVendorFilter

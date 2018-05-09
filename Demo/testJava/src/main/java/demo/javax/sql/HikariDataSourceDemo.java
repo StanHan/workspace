@@ -1,10 +1,12 @@
-package demo.java.sql.jdbc.pool;
+package demo.javax.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import demo.db.mysql.MySqlDemo;
 
 /**
  * HikariCP是一个高效的数据库连接池。 HikariCP号称是现在性能最好的JDBC连接池组件。 Hikari来自日文，是“光”，阳光的光。
@@ -27,15 +29,19 @@ import com.zaxxer.hikari.HikariDataSource;
 public class HikariDataSourceDemo {
 
     public static void main(String[] args) throws SQLException {
-        HikariDataSourceDemo ds = new HikariDataSourceDemo();
-        ds.init(10, 50);
+        
+        
+    }
+
+
+    public void demo() throws SQLException {
+        HikariDataSource ds = init("", "", "");
         Connection conn = ds.getConnection();
+        
         // ......
         // 最后关闭链接
         conn.close();
     }
-
-    private HikariDataSource ds;
 
     /**
      * 初始化连接池
@@ -43,23 +49,38 @@ public class HikariDataSourceDemo {
      * @param minimum
      * @param Maximum
      */
-    public HikariDataSource init(int minimum, int Maximum) {
+    public static HikariDataSource init(String jdbcUrl, String username, String password) {
         // 连接池配置
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName("com.mysql.jdbc.Driver");
-        config.setJdbcUrl(
-                "jdbc:mysql://127.0.0.1:3306/testdb?user=root&password=123456&useUnicode=true&characterEncoding=utf8");
+        config.setDriverClassName(MySqlDemo.JDBC_DRIVER);
+        config.setJdbcUrl(jdbcUrl);
+        config.setUsername(username);
+        config.setPassword(password);
         config.addDataSourceProperty("cachePrepStmts", true);
         config.addDataSourceProperty("prepStmtCacheSize", 500);
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
         config.setConnectionTestQuery("SELECT 1");
         config.setAutoCommit(true);
         // 池中最小空闲链接数量
-        config.setMinimumIdle(minimum);
+        config.setMinimumIdle(1);
         // 池中最大链接数量
-        config.setMaximumPoolSize(Maximum);
+        config.setMaximumPoolSize(10);
 
         HikariDataSource ds = new HikariDataSource(config);
+        ds.setJdbcUrl(jdbcUrl);
+        ds.setUsername(username);
+        ds.setPassword(password);
+        /*连接只读数据库时配置为true， 保证安全*/
+        ds.setReadOnly(false);
+        /*等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒*/
+        ds.setConnectionTimeout(30-000);
+        /*一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 */
+        ds.setIdleTimeout(600_000);
+        /*一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，
+         * 参考MySQL wait_timeout参数（show variables like '%timeout%';）*/
+        ds.setMaxLifetime(1_800_000);
+        /*接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)*/
+        ds.setMaximumPoolSize(10);
         return ds;
 
     }
@@ -67,23 +88,8 @@ public class HikariDataSourceDemo {
     /**
      * 销毁连接池
      */
-    public void shutdown() {
+    public void shutdown(HikariDataSource ds) {
         ds.shutdown();
-    }
-
-    /**
-     * 从连接池中获取链接
-     * 
-     * @return
-     */
-    public Connection getConnection() {
-        try {
-            return ds.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ds.resumePool();
-            return null;
-        }
     }
 
 }

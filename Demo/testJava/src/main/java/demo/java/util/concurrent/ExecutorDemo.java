@@ -32,7 +32,7 @@ public class ExecutorDemo {
     public static final Logger logger = LoggerFactory.getLogger(ExecutorDemo.class);
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        demoScheduledThreadPoolExecutor();
 
     }
 
@@ -196,16 +196,22 @@ public class ExecutorDemo {
             @Override
             public void run() {
                 System.out.println("抛异常咯");
+                // try {
+                // throw new RuntimeException();
+                // } catch (Exception e) {
+                // System.out.println("捕获异常,否则该任务不再执行");
+                // }
                 throw new RuntimeException();
+
             }
-        }, 2000, 5000, TimeUnit.MILLISECONDS);
+        }, 1000, 200, TimeUnit.MILLISECONDS);
 
         exec.scheduleAtFixedRate(new Runnable() {// 每隔一段时间打印系统时间，证明两者是互不影响的
             @Override
             public void run() {
                 System.out.println(System.nanoTime());
             }
-        }, 1000, 2000, TimeUnit.MILLISECONDS);
+        }, 20, 1000, TimeUnit.MILLISECONDS);
     }
 
     /**

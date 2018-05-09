@@ -86,4 +86,11 @@ public class User {
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
     }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", status=" + status + ", updateAt=" + updateAt + "]";
+    }
+    
+    
 }

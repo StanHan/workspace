@@ -1,9 +1,16 @@
-package demo.java.sql.jdbc.pool;
+package demo.javax.sql;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
 public class TomcatDataSourceDemo {
+    
+    public void demo() {
+        DataSource ds = initMySqlDataSource("", "", "");
+        ds.getActive();
+        ds.getCreatedCount();
+        ds.getMaxActive();
+    }
     
     /**
      * 获取MySQL 数据源
@@ -13,7 +20,7 @@ public class TomcatDataSourceDemo {
      * @param password
      * @return
      */
-    public static DataSource getMySqlDataSource(String url, String user, String password) {
+    public static DataSource initMySqlDataSource(String url, String user, String password) {
         PoolProperties p = new PoolProperties();
         p.setUrl(url);
         p.setDriverClassName("com.mysql.jdbc.Driver");
@@ -37,8 +44,7 @@ public class TomcatDataSourceDemo {
         p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
                 + "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
         
-        DataSource datasource = new DataSource();
-        datasource.setPoolProperties(p);
+        DataSource datasource = new DataSource(p);
         return datasource;
     }
 

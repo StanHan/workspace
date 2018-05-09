@@ -3,6 +3,7 @@ package demo.db.mysql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 /**
  * 
  * @author hanjy
@@ -13,6 +14,8 @@ public class MySqlDemo {
     static void command() {
 
     }
+
+    public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
     /** 查看当前事务的隔离级别 */
     public static final String tx_isolation = "select @@tx_isolation";

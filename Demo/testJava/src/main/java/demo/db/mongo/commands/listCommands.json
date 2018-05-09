@@ -1,0 +1,803 @@
+{
+	"commands": {
+		"_configsvrAddShard": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Validates and adds a new shard to the cluster.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrAddShardToZone": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Validates and adds a new zone to the shard.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrBalancerStart": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Controls the balancer state.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrBalancerStatus": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Controls the balancer state.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrBalancerStop": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Controls the balancer state.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrCommitChunkMigration": {
+			"help": "should not be calling this directly",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrMoveChunk": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Requests the balancer to move or rebalance a single chunk.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_configsvrRemoveShardFromZone": {
+			"help": "Internal command, which is exported by the sharding config server. Do not call directly. Validates and removes the shard from the zone.",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_getUserCacheGeneration": {
+			"help": "internal\n",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"_isSelf": {
+			"help": "{ _isSelf : 1 } INTERNAL ONLY",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"_mergeAuthzCollections": {
+			"help": "Internal command used by mongorestore for updating user/role data\n",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_migrateClone": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_recvChunkAbort": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_recvChunkCommit": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_recvChunkStart": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_recvChunkStatus": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"_transferMods": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"aggregate": {
+			"help": "{ pipeline: [ { $operator: {...}}, ... ], explain: <bool>, allowDiskUse: <bool>, cursor: {batchSize: <number>} }\nSee http://dochub.mongodb.org/core/aggregation for more details.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"appendOplogNote": {
+			"help": "Adds a no-op entry to the oplog",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"applyOps": {
+			"help": "internal (sharding)\n{ applyOps : [ ] , preCondition : [ { ns : ... , q : ... , res : ... } ] }",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"authSchemaUpgrade": {
+			"help": "Upgrades the auth data storage schema",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"authenticate": {
+			"help": "internal",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"availableQueryOptions": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"buildInfo": {
+			"help": "get version #, etc.\n{ buildinfo:1 }",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"checkShardingIndex": {
+			"help": "Internal command.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"cleanupOrphaned": {
+			"help": "no help defined",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"clone": {
+			"help": "clone this database from an instance of the db on another host\n{clone: \"host13\"[, slaveOk: <bool>]}",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"cloneCollection": {
+			"help": "{ cloneCollection: <collection>, from: <host> [,query: <query_filter>] [,copyIndexes:<bool>] }\nCopies a collection from one server to another. Do not use on a single server as the destination is placed at the same db.collection (namespace) as the source.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"cloneCollectionAsCapped": {
+			"help": "{ cloneCollectionAsCapped:<fromName>, toCollection:<toName>, size:<sizeInBytes> }",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"collMod": {
+			"help": "Sets collection options.\nExample: { collMod: 'foo', usePowerOf2Sizes:true }\nExample: { collMod: 'foo', index: {keyPattern: {a: 1}, expireAfterSeconds: 600} }",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"collStats": {
+			"help": "{ collStats:\"blog.posts\" , scale : 1 } scale divides sizes e.g. for KB use 1024\n    avgObjSize - in bytes",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"compact": {
+			"help": "compact collection\nwarning: this operation locks the database and is slow. you can cancel with killOp()\n{ compact : <collection_name>, [force:<bool>], [validate:<bool>],\n  [paddingFactor:<num>], [paddingBytes:<num>] }\n  force - allows to run on a replica set primary\n  validate - check records are noncorrupt before adding to newly compacting extents. slower but safer (defaults to true in this version)\n",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"connPoolStats": {
+			"help": "stats about connections between servers in a replica set or sharded cluster.",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"connPoolSync": {
+			"help": "internal",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"connectionStatus": {
+			"help": "Returns connection-specific information such as logged-in users and their roles",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"convertToCapped": {
+			"help": "{ convertToCapped:<fromCollectionName>, size:<sizeInBytes> }",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"copydb": {
+			"help": "copy a database from another host to this host\nusage: {copydb: 1, fromhost: <connection string>, fromdb: <db>, todb: <db>[, slaveOk: <bool>, username: <username>, nonce: <nonce>, key: <key>]}",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"copydbgetnonce": {
+			"help": "get a nonce for subsequent copy db request from secure server\nusage: {copydbgetnonce: 1, fromhost: <hostname>}",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"copydbsaslstart": {
+			"help": "Initialize a SASL auth session for subsequent copy db request from secure server\n",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"count": {
+			"help": "count objects in collection",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"create": {
+			"help": "create a collection explicitly\n{ create: <ns>[, capped: <bool>, size: <collSizeInBytes>, max: <nDocs>] }",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"createIndexes": {
+			"help": "no help defined",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"createRole": {
+			"help": "Adds a role to the system\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"createUser": {
+			"help": "Adds a user to the system\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"currentOp": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"currentOpCtx": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"dataSize": {
+			"help": "determine data size for a set of data in a certain range\nexample: { dataSize:\"blog.posts\", keyPattern:{x:1}, min:{x:10}, max:{x:55} }\nmin and max parameters are optional. They must either both be included or both omitted\nkeyPattern is an optional parameter indicating an index pattern that would be usefulfor iterating over the min/max bounds. If keyPattern is omitted, it is inferred from the structure of min. \nnote: This command may take a while to run",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"dbHash": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"dbStats": {
+			"help": "Get stats on a database. Not instantaneous. Slower for databases with large .ns files.\nExample: { dbStats:1, scale:1 }",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"delete": {
+			"help": "delete documents",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"diagLogging": {
+			"help": "http://dochub.mongodb.org/core/monitoring#MonitoringandDiagnostics-DatabaseRecord%2FReplay%28diagLoggingcommand%29",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"distinct": {
+			"help": "{ distinct : 'collection name' , key : 'a.b' , query : {} }",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"driverOIDTest": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"drop": {
+			"help": "drop a collection\n{drop : <collectionName>}",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"dropAllRolesFromDatabase": {
+			"help": "Drops all roles from the given database.  Before deleting the roles completely it must remove them from any users or other roles that reference them.  If any errors occur in the middle of that process it's possible to be left in a state where the roles have been removed from some user/roles but otherwise still exist.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"dropAllUsersFromDatabase": {
+			"help": "Drops all users for a single database.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"dropDatabase": {
+			"help": "drop (delete) this database",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"dropIndexes": {
+			"help": "drop indexes for a collection",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"dropRole": {
+			"help": "Drops a single role.  Before deleting the role completely it must remove it from any users or roles that reference it.  If any errors occur in the middle of that process it's possible to be left in a state where the role has been removed from some user/roles but otherwise still exists.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"dropUser": {
+			"help": "Drops a single user.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"eval": {
+			"help": "DEPRECATED\nEvaluate javascript at the server.\nhttp://dochub.mongodb.org/core/serversidecodeexecution",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"explain": {
+			"help": "explain database reads and writes",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"features": {
+			"help": "return build level feature settings",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"filemd5": {
+			"help": " example: { filemd5 : ObjectId(aaaaaaa) , root : \"fs\" }",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"find": {
+			"help": "query for documents",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"findAndModify": {
+			"help": "{ findAndModify: \"collection\", query: {processed:false}, update: {$set: {processed:true}}, new: true}\n{ findAndModify: \"collection\", query: {processed:false}, remove: true, sort: {priority:-1}}\nEither update or remove is required, all other fields have default values.\nOutput is in the \"value\" field\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"forceerror": {
+			"help": "for testing purposes only.  forces a user assertion exception",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"fsync": {
+			"help": "http://dochub.mongodb.org/core/fsynccommand",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"fsyncUnlock": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"geoNear": {
+			"help": "http://dochub.mongodb.org/core/geo#GeospatialIndexing-geoNearCommand",
+			"slaveOk": true,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"geoSearch": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"getCmdLineOpts": {
+			"help": "get argv",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"getLastError": {
+			"help": "return error status of the last operation on this connection\noptions:\n  { fsync:true } - fsync before returning, or wait for journal commit if running with --journal\n  { j:true } - wait for journal commit if running with --journal\n  { w:n } - await replication to n servers (including self) before returning\n  { w:'majority' } - await replication to majority of set\n  { wtimeout:m} - timeout for w in m milliseconds",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"getLog": {
+			"help": "{ getLog : '*' }  OR { getLog : 'global' }",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"getMore": {
+			"help": "retrieve more results from an existing cursor",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"getParameter": {
+			"help": "get administrative option(s)\nexample:\n{ getParameter:1, notablescan:1 }\nsupported:\n  authSchemaVersion\n  authenticationMechanisms\n  automationServiceDescriptor\n  clientCursorMonitorFrequencySecs\n  clusterAuthMode\n  connPoolMaxConnsPerHost\n  connPoolMaxShardedConnsPerHost\n  cursorTimeoutMillis\n  dataReplicatorInitialSyncInserterThreads\n  diagnosticDataCollectionDirectorySizeMB\n  diagnosticDataCollectionEnabled\n  diagnosticDataCollectionFileSizeMB\n  diagnosticDataCollectionPeriodMillis\n  diagnosticDataCollectionSamplesPerChunk\n  diagnosticDataCollectionSamplesPerInterimUpdate\n  disableJavaScriptJIT\n  enableBSON1_1\n  enableLocalhostAuthBypass\n  enableReplSnapshotThread\n  enableTestCommands\n  enableViews\n  failIndexKeyTooLong\n  initialSyncOplogBuffer\n  internalGeoNearQuery2DMaxCoveringCells\n  internalGeoPredicateQuery2DMaxCoveringCells\n  internalQueryCacheEvictionRatio\n  internalQueryCacheFeedbacksStored\n  internalQueryCacheSize\n  internalQueryEnumerationMaxIntersectPerAnd\n  internalQueryEnumerationMaxOrSolutions\n  internalQueryExecMaxBlockingSortBytes\n  internalQueryExecYieldIterations\n  internalQueryExecYieldPeriodMS\n  internalQueryForceIntersectionPlans\n  internalQueryMaxScansToExplode\n  internalQueryPlanEvaluationCollFraction\n  internalQueryPlanEvaluationMaxResults\n  internalQueryPlanEvaluationWorks\n  internalQueryPlanOrChildrenIndependently\n  internalQueryPlannerEnableHashIntersection\n  internalQueryPlannerEnableIndexIntersection\n  internalQueryPlannerMaxIndexedSolutions\n  internalQueryS2GeoCoarsestLevel\n  internalQueryS2GeoFinestLevel\n  internalQueryS2GeoMaxCells\n  javascriptProtection\n  journalCommitInterval\n  logComponentVerbosity\n  logLevel\n  logUserIds\n  maxSyncSourceLagSecs\n  messagePortImpl\n  newCollectionsUsePowerOf2Sizes\n  notablescan\n  quiet\n  recoverShardingState\n  replApplyBatchSize\n  replElectionTimeoutOffsetLimitFraction\n  replIndexPrefetch\n  replMonitorMaxFailedChecks\n  replSnapshotThreadThrottleMicros\n  replWriterThreadCount\n  saslHostName\n  saslServiceName\n  saslauthdPath\n  scramIterationCount\n  skipCorruptDocumentsWhenCloning\n  sslMode\n  syncdelay\n  taskExecutorPoolSize\n  tcmallocAggressiveMemoryDecommit\n  tcmallocMaxTotalThreadCacheBytes\n  testingSnapshotBehaviorInIsolation\n  traceExceptions\n  traceWriteConflictExceptions\n  ttlMonitorEnabled\n  ttlMonitorSleepSecs\n  use3dot2InitialSync\n  wiredTigerConcurrentReadTransactions\n  wiredTigerConcurrentWriteTransactions\n  wiredTigerEngineRuntimeConfig\n{ getParameter:'*' } to get everything\n",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"getPrevError": {
+			"help": "check for errors since last reseterror commandcal",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"getShardMap": {
+			"help": "lists the set of shards known to this instance",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"getShardVersion": {
+			"help": " example: { getShardVersion : 'alleyinsider.foo'  } ",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"getnonce": {
+			"help": "internal",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"grantPrivilegesToRole": {
+			"help": "Grants privileges to a role\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"grantRolesToRole": {
+			"help": "Grants roles to another role.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"grantRolesToUser": {
+			"help": "Grants roles to a user.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"group": {
+			"help": "http://dochub.mongodb.org/core/aggregation",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"handshake": {
+			"help": "internal",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"hostInfo": {
+			"help": "returns information about the daemon's host",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"insert": {
+			"help": "insert documents",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"invalidateUserCache": {
+			"help": "Invalidates the in-memory cache of user information\n",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"isMaster": {
+			"help": "Check if this server is primary for a replica pair/set; also if it is --master or --slave in simple master/slave setups.\n{ isMaster : 1 }",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"killCursors": {
+			"help": "kill a list of cursor ids",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"killOp": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"listCollections": {
+			"help": "list collections for this db",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"listCommands": {
+			"help": "get a list of all db commands",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"listDatabases": {
+			"help": "list databases on this server",
+			"slaveOk": false,
+			"adminOnly": true,
+			"slaveOverrideOk": true
+		},
+		"listIndexes": {
+			"help": "list indexes for a collection",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"lockInfo": {
+			"help": "show all lock info on the server",
+			"slaveOk": true,
+			"adminOnly": true,
+			"slaveOverrideOk": true
+		},
+		"logRotate": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"logout": {
+			"help": "de-authenticate",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"mapReduce": {
+			"help": "Run a map/reduce operation on the server.\nNote this is used for aggregation, not querying, in MongoDB.\nhttp://dochub.mongodb.org/core/mapreduce",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"mapreduce.shardedfinish": {
+			"help": "internal",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"mergeChunks": {
+			"help": "Merge Chunks command\nusage: { mergeChunks : <ns>, bounds : [ <min key>, <max key> ], (opt) epoch : <epoch>, (opt) config : <configdb string>, (opt) shardName : <shard name> }",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"moveChunk": {
+			"help": "should not be calling this directly",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"parallelCollectionScan": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"ping": {
+			"help": "a way to check that the server is alive. responds immediately even if server is in a db lock.",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"planCacheClear": {
+			"help": "Drops one or all cached queries in a collection.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"planCacheClearFilters": {
+			"help": "Clears index filter for a single query shape or, if the query shape is omitted, all filters for the collection.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"planCacheListFilters": {
+			"help": "Displays index filters for all query shapes in a collection.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"planCacheListPlans": {
+			"help": "Displays the cached plans for a query shape.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"planCacheListQueryShapes": {
+			"help": "Displays all query shapes in a collection.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"planCacheSetFilter": {
+			"help": "Sets index filter for a query shape. Overrides existing filter.",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"profile": {
+			"help": "enable or disable performance profiling\n{ profile : <n> }\n0=off 1=log slow ops 2=log all\n-1 to get current values\nhttp://docs.mongodb.org/manual/reference/command/profile/#dbcmd.profile",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"reIndex": {
+			"help": "re-index a collection",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"renameCollection": {
+			"help": " example: { renameCollection: foo.a, to: bar.b }",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"repairCursor": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"repairDatabase": {
+			"help": "repair database.  also compacts. note: slow.",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"replSetElect": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetFreeze": {
+			"help": "{ replSetFreeze : <seconds> }'freeze' state of member to the extent we can do that.  What this really means is that\nthis node will not attempt to become primary until the time period specified expires.\nYou can call again with {replSetFreeze:0} to unfreeze sooner.\nA process restart unfreezes the member also.\n\nhttp://dochub.mongodb.org/core/replicasetcommands",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetFresh": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetGetConfig": {
+			"help": "Returns the current replica set configuration{ replSetGetConfig : 1 }\nhttp://dochub.mongodb.org/core/replicasetcommands",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetGetRBID": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetGetStatus": {
+			"help": "Report status of a replica set from the POV of this server\n{ replSetGetStatus : 1 }\nhttp://dochub.mongodb.org/core/replicasetcommands",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetHeartbeat": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetInitiate": {
+			"help": "Initiate/christen a replica set.\nhttp://dochub.mongodb.org/core/replicasetcommands",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetMaintenance": {
+			"help": "{ replSetMaintenance : bool }\nEnable or disable maintenance mode.",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetReconfig": {
+			"help": "Adjust configuration of a replica set\n{ replSetReconfig : config_object }\nhttp://dochub.mongodb.org/core/replicasetcommands",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetRequestVotes": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetStepDown": {
+			"help": "{ replSetStepDown : <seconds> }\nStep down as primary.  Will not try to reelect self for the specified time period (1 minute if no numeric secs value specified, or secs is 0).\n(If another member with same priority takes over in the meantime, it will stay primary.)\nhttp://dochub.mongodb.org/core/replicasetcommands",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetStepUp": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetSyncFrom": {
+			"help": "{ replSetSyncFrom : \"host:port\" }\nChange who this member is syncing from.",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"replSetUpdatePosition": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"resetError": {
+			"help": "reset error state (used with getpreverror)",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"resync": {
+			"help": "resync (from scratch) a stale slave or replica set secondary node.\n",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"revokePrivilegesFromRole": {
+			"help": "Revokes privileges from a role\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"revokeRolesFromRole": {
+			"help": "Revokes roles from another role.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"revokeRolesFromUser": {
+			"help": "Revokes roles from a user.\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"rolesInfo": {
+			"help": "Returns information about roles.\n",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"saslContinue": {
+			"help": "Subsequent steps in a SASL authentication conversation.",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"saslStart": {
+			"help": "First step in a SASL authentication conversation.",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"serverStatus": {
+			"help": "returns lots of administrative server statistics",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"setParameter": {
+			"help": "set administrative option(s)\n{ setParameter:1, <param>:<value> }\nsupported:\n  authSchemaVersion\n  authenticationMechanisms\n  automationServiceDescriptor\n  clientCursorMonitorFrequencySecs\n  clusterAuthMode\n  connPoolMaxConnsPerHost\n  connPoolMaxShardedConnsPerHost\n  cursorTimeoutMillis\n  dataReplicatorInitialSyncInserterThreads\n  diagnosticDataCollectionDirectorySizeMB\n  diagnosticDataCollectionEnabled\n  diagnosticDataCollectionFileSizeMB\n  diagnosticDataCollectionPeriodMillis\n  diagnosticDataCollectionSamplesPerChunk\n  diagnosticDataCollectionSamplesPerInterimUpdate\n  disableJavaScriptJIT\n  enableBSON1_1\n  enableLocalhostAuthBypass\n  enableReplSnapshotThread\n  enableTestCommands\n  enableViews\n  failIndexKeyTooLong\n  initialSyncOplogBuffer\n  internalGeoNearQuery2DMaxCoveringCells\n  internalGeoPredicateQuery2DMaxCoveringCells\n  internalQueryCacheEvictionRatio\n  internalQueryCacheFeedbacksStored\n  internalQueryCacheSize\n  internalQueryEnumerationMaxIntersectPerAnd\n  internalQueryEnumerationMaxOrSolutions\n  internalQueryExecMaxBlockingSortBytes\n  internalQueryExecYieldIterations\n  internalQueryExecYieldPeriodMS\n  internalQueryForceIntersectionPlans\n  internalQueryMaxScansToExplode\n  internalQueryPlanEvaluationCollFraction\n  internalQueryPlanEvaluationMaxResults\n  internalQueryPlanEvaluationWorks\n  internalQueryPlanOrChildrenIndependently\n  internalQueryPlannerEnableHashIntersection\n  internalQueryPlannerEnableIndexIntersection\n  internalQueryPlannerMaxIndexedSolutions\n  internalQueryS2GeoCoarsestLevel\n  internalQueryS2GeoFinestLevel\n  internalQueryS2GeoMaxCells\n  javascriptProtection\n  journalCommitInterval\n  logComponentVerbosity\n  logLevel\n  logUserIds\n  maxSyncSourceLagSecs\n  messagePortImpl\n  newCollectionsUsePowerOf2Sizes\n  notablescan\n  quiet\n  recoverShardingState\n  replApplyBatchSize\n  replElectionTimeoutOffsetLimitFraction\n  replIndexPrefetch\n  replMonitorMaxFailedChecks\n  replSnapshotThreadThrottleMicros\n  replWriterThreadCount\n  saslHostName\n  saslServiceName\n  saslauthdPath\n  scramIterationCount\n  skipCorruptDocumentsWhenCloning\n  sslMode\n  syncdelay\n  taskExecutorPoolSize\n  tcmallocAggressiveMemoryDecommit\n  tcmallocMaxTotalThreadCacheBytes\n  testingSnapshotBehaviorInIsolation\n  traceExceptions\n  traceWriteConflictExceptions\n  ttlMonitorEnabled\n  ttlMonitorSleepSecs\n  use3dot2InitialSync\n  wiredTigerConcurrentReadTransactions\n  wiredTigerConcurrentWriteTransactions\n  wiredTigerEngineRuntimeConfig\n",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"setShardVersion": {
+			"help": "internal",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"shardConnPoolStats": {
+			"help": "stats about the shard connection pool",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"shardingState": {
+			"help": "no help defined",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"shutdown": {
+			"help": "shutdown the database.  must be ran against admin db and either (1) ran from localhost or (2) authenticated. If this is a primary in a replica set and there is no member within 10 seconds of its optime, it will not shutdown without force : true.  You can also specify timeoutSecs : N to wait N seconds for other members to catch up.",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"splitChunk": {
+			"help": "internal command usage only\nexample:\n { splitChunk:\"db.foo\" , keyPattern: {a:1} , min : {a:100} , max: {a:200} { splitKeys : [ {a:150} , ... ]}",
+			"slaveOk": false,
+			"adminOnly": true
+		},
+		"splitVector": {
+			"help": "Internal command.\nexamples:\n  { splitVector : \"blog.post\" , keyPattern:{x:1} , min:{x:10} , max:{x:20}, maxChunkSize:200 }\n  maxChunkSize unit in MBs\n  May optionally specify 'maxSplitPoints' and 'maxChunkObjects' to avoid traversing the whole chunk\n  \n  { splitVector : \"blog.post\" , keyPattern:{x:1} , min:{x:10} , max:{x:20}, force: true }\n  'force' will produce one split point even if data is small; defaults to false\nNOTE: This command may take a while to run",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"top": {
+			"help": "usage by collection, in micros ",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"touch": {
+			"help": "touch collection\nPage in all pages of memory containing every extent for the given collection\n{ touch : <collection_name>, [data : true] , [index : true] }\n at least one of data or index must be true; default is both are false\n",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"unsetSharding": {
+			"help": "internal",
+			"slaveOk": true,
+			"adminOnly": true
+		},
+		"update": {
+			"help": "update documents",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"updateRole": {
+			"help": "Used to update a role\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"updateUser": {
+			"help": "Used to update a user, for example to change its password\n",
+			"slaveOk": false,
+			"adminOnly": false
+		},
+		"usersInfo": {
+			"help": "Returns information about users.\n",
+			"slaveOk": false,
+			"adminOnly": false,
+			"slaveOverrideOk": true
+		},
+		"validate": {
+			"help": "Validate contents of a namespace by scanning its data structures for correctness.  Slow.\nAdd full:true option to do a more thorough check",
+			"slaveOk": true,
+			"adminOnly": false
+		},
+		"whatsmyuri": {
+			"help": "{whatsmyuri:1}",
+			"slaveOk": true,
+			"adminOnly": false
+		}
+	},
+	"ok": 1.0
+}

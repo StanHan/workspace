@@ -13,6 +13,8 @@ import java.util.WeakHashMap;
 public class ReferenceDemo {
     public static void main(String[] args) {
         weakReference();
+        ReferenceQueue<Object> queue = new ReferenceQueue<Object>();
+        WeakReference<Object> weakReference;
     }
 
     /**

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <configuration>
+
+  <!-- 配置别名 -->
+  <!-- typeAliases 元素是包含所有typeAlias（别名）的列表，别名用来替换完整类名，这样在需要完整类名的地方就可以用别名来代替。 -->
+  <typeAliases>
+    <typeAlias type="org.iMybatis.abc.dao.UserDao" alias="UserDao" />
+    <typeAlias type="org.iMybatis.abc.dto.UserDto" alias="UserDto" />
+  </typeAliases>
+
+  <!-- 配置环境变量 -->
+  <!-- environment元素体中包含对事务管理和连接池的环境配置。 -->
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC" />
@@ -14,6 +25,8 @@
     </environment>
   </environments>
 
+  <!-- 配置mappers -->
+  <!-- mappers元素是包含所有mapper（映射器）的列表，这些mapper的XML文件包含SQL代码和映射定义信息。 -->
   <mappers>
     <!-- 注册userMapper.xml文件， userMapper.xml位于me.gacl.mapping这个包下，所以resource写成me/gacl/mapping/userMapper.xml -->
     <mapper resource="db/mybatis/mapper/UserMapper.xml" />

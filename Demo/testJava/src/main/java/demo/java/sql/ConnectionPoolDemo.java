@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class ConnectionPool {
+public class ConnectionPoolDemo {
 
 	private String jdbcDriver = ""; // 数据库驱动
 
@@ -44,7 +44,7 @@ public class ConnectionPool {
 	 *            String 连接数据库用户的密码
 	 */
 
-	public ConnectionPool(String jdbcDriver, String dbUrl, String dbUsername, String dbPassword) {
+	public ConnectionPoolDemo(String jdbcDriver, String dbUrl, String dbUsername, String dbPassword) {
 		this.jdbcDriver = jdbcDriver;
 		this.dbUrl = dbUrl;
 		this.dbUsername = dbUsername;

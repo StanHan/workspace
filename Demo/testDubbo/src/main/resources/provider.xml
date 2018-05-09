@@ -1,5 +1,5 @@
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-  xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:context="http://www.springframework.org/schema/context"
   xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -13,8 +13,10 @@
   <context:component-scan base-package="com.loanking.*" />
 
   <!-- 这里使用的注册中心是zookeeper -->
-  <!-- -->
   <dubbo:registry address="zookeeper://172.17.16.13:2181" client="zkclient" />
+
+  <!-- 配置Filter，多个逗号分隔 -->
+  <dubbo:provider filter="monitorFilter,disenableVendorFilter" />
 
   <!-- 协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。用dubbo协议在3019端口暴露服务 -->
   <dubbo:protocol name="dubbo" port="3019" dispatcher="all" threadpool="fixed" threads="200" accepts="50" />

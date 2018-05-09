@@ -1,0 +1,13 @@
+{
+	"db": "galaxy",
+	"collections": 57,
+	"objects": 9384313,
+	"avgObjSize": 345.842372798094,
+	"dataSize": 3.245493075E9,
+	"storageSize": 9.47212288E8,
+	"numExtents": 0,
+	"indexes": 232,
+	"indexSize": 2.25452032E8,
+	"ok": 1.0
+}
+
