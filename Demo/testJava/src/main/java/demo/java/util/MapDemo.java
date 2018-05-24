@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Test;
 
@@ -95,6 +96,31 @@ public class MapDemo {
         map.put("a", "a");
     }
 
+    /**
+     * <h2>HashMap 和 Hashtable 的区别有哪些？</h2>
+     * <li>HashMap 没有考虑同步，是线程不安全的；Hashtable 使用了 synchronized 关键字，是线程安全的；
+     * <li>前者允许 null 作为 Key；后者不允许 null 作为 Key。
+     */
+    @Test
+    public void hashTable() {
+        Hashtable<String, Object> hashTable = new Hashtable<>();
+        hashTable.put(null, "a");
+    }
+
+    /**
+     * <h2>ConcurrentHashMap 和 Hashtable 的区别？</h2>
+     * <p>
+     * ConcurrentHashMap 结合了 HashMap 和 HashTable 二者的优势。 HashMap 没有考虑同步，hashtable 考虑了同步的问题。但是 hashtable 在每次同步执行时都要锁住整个结构。
+     * ConcurrentHashMap 锁的方式是稍微细粒度的。 ConcurrentHashMap 将 hash 表分为 16 个桶（默认值），诸如 get,put,remove 等常用操作只锁当前需要用到的桶。
+     * <p>
+     * <li>该类包含两个静态内部类 HashEntry 和 Segment；前者用来封装映射表的键值对，后者用来充当锁的角色；
+     * <li>Segment 是一种可重入的锁 ReentrantLock，每个 Segment 守护一个 HashEntry 数组里得元素，当对 HashEntry 数组的数据进行修改时，必须首先获得对应的 Segment 锁。
+     */
+    void concurrentHashMap() {
+        ConcurrentHashMap<?, ?> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put(null, null);
+    }
+
     @Test
     public void demoHash() {
         int hashCode = "Stan".hashCode();
@@ -139,7 +165,8 @@ public class MapDemo {
      * 
      * <li>accessOrder ,默认是false，则迭代时输出的顺序是插入节点的顺序。若为true，则输出的顺序是按照访问节点的顺序。为true时，可以在这基础之上构建一个LruCache.
      * <li>LinkedHashMap并没有重写任何put方法。但是其重写了构建新节点的newNode()方法.在每次构建新节点时，将新节点链接在内部双向链表的尾部
-     * <li>accessOrder=true的模式下,在afterNodeAccess()函数中，会将当前被访问到的节点e，移动至内部的双向链表的尾部。值得注意的是，afterNodeAccess()函数中，会修改modCount,因此当你正在accessOrder=true的模式下,迭代LinkedHashMap时，如果同时查询访问数据，也会导致fail-fast，因为迭代的顺序已经改变。
+     * <li>accessOrder=true的模式下,在afterNodeAccess()函数中，会将当前被访问到的节点e，移动至内部的双向链表的尾部。
+     * 值得注意的是，afterNodeAccess()函数中，会修改modCount,因此当你正在accessOrder=true的模式下,迭代LinkedHashMap时，如果同时查询访问数据，也会导致fail-fast，因为迭代的顺序已经改变。
      * <li>nextNode() 就是迭代器里的next()方法 。 该方法的实现可以看出，迭代LinkedHashMap，就是从内部维护的双链表的表头开始循环输出。
      * 而双链表节点的顺序在LinkedHashMap的增、删、改、查时都会更新。以满足按照插入顺序输出，还是访问顺序输出。
      * <li>它与HashMap比，还有一个小小的优化，重写了containsValue()方法，直接遍历内部链表去比对value值是否相等。
@@ -154,7 +181,7 @@ public class MapDemo {
     @Test
     public void demoLRU() {
 
-        LRU<Character, Integer> lru = new LRU<Character, Integer>(16, 0.75f, true);
+        LRUCache<Character, Integer> lru = new LRUCache<Character, Integer>(16, 0.75f, true);
         String s = "abcdefghijkl";
         for (int i = 0; i < s.length(); i++) {
             lru.put(s.charAt(i), i);
@@ -279,16 +306,16 @@ public class MapDemo {
 }
 
 /**
- * 
+ * LRU是Least Recently Used的缩写，即最近最少使用，常用于页面置换算法，是为虚拟页式存储管理服务的。
  *
  * @param <K>
  * @param <V>
  */
-class LRU<K, V> extends LinkedHashMap<K, V> implements Map<K, V> {
+class LRUCache<K, V> extends LinkedHashMap<K, V> implements Map<K, V> {
 
     private static final long serialVersionUID = 1L;
 
-    public LRU(int initialCapacity, float loadFactor, boolean accessOrder) {
+    public LRUCache(int initialCapacity, float loadFactor, boolean accessOrder) {
         super(initialCapacity, loadFactor, accessOrder);
     }
 

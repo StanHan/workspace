@@ -22,6 +22,7 @@ import org.junit.Test;
  * <li>LinkedList 是一个双向链表（顺序表）。LinkedList 随机访问效率低，但随机插入、随机删除效率高，。可以被当作堆栈、队列或双端队列进行操作；
  * <li>Vector 是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但ArrayList是非线程安全的，而Vector是线程安全的；
  * <li>Stack 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out).
+ * <p>
  * <h2>List 特性：</h2>
  * <li>Java 中的 List 是对数组的有效扩展，它是这样一种结构：如果不使用泛型，它可以容纳任何类型的元素，如果使用泛型，那么它只能容纳泛型指定的类型的元素。和数组（数组不支持泛型）相比，List 的容量是可以动态扩展的；
  * <li>List 中的元素是“有序”的。这里的“有序”，并不是排序的意思，而是说我们可以对某个元素在集合中的位置进行指定，包括对列表中每个元素的插入位置进行精确地控制、根据元素的整数索引（在列表中的位置）访问元素和搜索列表中的元素；
@@ -30,16 +31,6 @@ import org.junit.Test;
  * <li>List中是可以包括 null 的，即使使用了泛型；
  * <li>List 接口提供了特殊的迭代器，称为 ListIterator，除了允许 Iterator 接口提供的正常操作外，该迭代器还允许元素插入和替换，以及双向访问。
  *
- * <h2>Fail-Fast机制</h2>
- * <li>动机： 在 Java Collection 中，为了防止在某个线程在对 Collection 进行迭代时，其他线程对该 Collection 进行结构上的修改。换句话说，迭代器的快速失败行为仅用于检测代码的 bug。
- * <li>本质： Fail-Fast 是 Java 集合的一种错误检测机制。
- * <li>作用场景： 在使用迭代器时，Collection 的结构发生变化，抛出 ConcurrentModificationException 。当然，这并不能说明 Collection对象
- * 已经被不同线程并发修改，因为如果单线程违反了规则，同样也有会抛出该异常。
- * <p>
- * 在面对并发的修改时，迭代器很快就会完全失败，而不是冒着在将来某个不确定时间发生任意不确定行为的风险。 我们知道 fail-fast 产生的原因就在于：程序在对 collection 进行迭代时，某个线程对该 collection
- * 在结构上对其做了修改。 要想进一步了解 fail-fast 机制，我们首先要对 ConcurrentModificationException 异常有所了解。 当方法检测到对象的并发修改，但不允许这种修改时就抛出该异常。
- * 同时需要注意的是，该异常不会始终指出对象已经由不同线程并发修改，如果单线程违反了规则，同样也有可能会抛出改异常。 诚然，迭代器的快速失败行为无法得到保证，它不能保证一定会出现该错误，但是快速失败操作会尽最大努力抛出
- * ConcurrentModificationException 异常， 所以，为提高此类操作的正确性而编写一个依赖于此异常的程序是错误的做法
  */
 public class ListDemo {
 
@@ -59,7 +50,7 @@ public class ListDemo {
      * <li>ArrayList 的实现中大量地调用了Arrays.copyof() 和 System.arraycopy()方法 。
      */
     @Test
-    public void demoArrayList() {
+    public void arrayList() {
         ArrayList<Object> arrayList = new ArrayList<>();
         arrayList.clone();
         // 调整数组容量（减少容量）：将底层数组的容量调整为当前列表保存的实际元素的大小
@@ -107,7 +98,7 @@ public class ListDemo {
      * CopyOnWriterArrayList所代表的核心概念就是：任何对array在结构上有所改变的操作（add、remove、clear等），CopyOnWriterArrayList都会copy现有的数据，再在copy的数据上修改，
      * 这样就不会影响COWIterator中的数据了，修改完成之后改变原有数据的引用即可。同时这样造成的代价就是产生大量的对象，同时数组的copy也是相当有损耗的。
      */
-    public void demoCopyOnWriteArrayList() {
+    public void copyOnWriteArrayList() {
         CopyOnWriteArrayList<Object> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
     }
 
@@ -125,7 +116,7 @@ public class ListDemo {
      * LinkedList底层的数据结构是基于双向链表的，且头结点中不存放数据,既然是双向链表，那么必定存在一种数据结构——我们可以称之为节点，节点实例保存业务数据，前一个节点的位置信息和后一个节点位置信息，
      */
     @Test
-    public void demoLinkedList() {
+    public void linkedList() {
         LinkedList<Object> linkedList = new LinkedList<>();
         List<Object> synchronizedList = Collections.synchronizedList(linkedList);
 

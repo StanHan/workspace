@@ -1,0 +1,46 @@
+{
+    "_id" : ObjectId("5afbc9296ba4533354107c29"),
+    "_class" : "com.loanking.galaxy.model.QiChaChaSearchRecord",
+    "request" : {
+        "keyword" : "二三四五",
+        "realName" : "龚来富",
+        "cardId" : "330121196212241414",
+        "phone" : "18217006688",
+        "client" : "Stan"
+    },
+    "rowKey" : "二三四五.null.null.null.null",
+    "response" : {
+        "Status" : "200",
+        "Message" : "查询成功",
+        "Paging" : {
+            "PageSize" : 10,
+            "TotalRecords" : 1,
+            "PageIndex" : 1
+        },
+        "OrderNumber" : null,
+        "Result" : [ 
+            {
+                "KeyNo" : "4659626b1e5e43f1bcad8c268753216e",
+                "StartDate" : "2012-07-10T00:00:00",
+                "Status" : "存续（在营、开业、在册）",
+                "No" : "110108015068911",
+                "CreditCode" : "9111010859963405XW",
+                "OperName" : "程维",
+                "Name" : "北京小桔科技有限公司"
+            }, 
+            {
+                "KeyNo" : "4178fc374c59a79743c59ecaf098d4dd",
+                "StartDate" : "2015-04-22T00:00:00",
+                "Status" : "存续",
+                "No" : "440301112653267",
+                "CreditCode" : "91440300334945450M",
+                "OperName" : "王举",
+                "Name" : "深圳市小桔科技有限公司"
+            }
+        ]
+    },
+    "status" : "200",
+    "cost" : NumberLong(0),
+    "isFromVendor" : false,
+    "createTime" : ISODate("2018-05-16T06:01:13.558Z")
+}

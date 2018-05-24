@@ -1,0 +1,820 @@
+{
+	"Status": "200",
+	"Message": "查询成功",
+	"OrderNumber": null,
+	"Paging": {
+		"PageSize": 10,
+		"PageIndex": 1,
+		"TotalRecords": 1
+	},
+	"Result": [
+		{
+			"KeyNo": "4659626b1e5e43f1bcad8c268753216e",
+			"Name": "北京小桔科技有限公司",
+			"OperName": "程维",
+			"StartDate": "2012-07-10T00:00:00",
+			"Status": "存续（在营、开业、在册）",
+			"No": "110108015068911",
+			"CreditCode": "9111010859963405XW"
+		},
+		{
+			"KeyNo": "4178fc374c59a79743c59ecaf098d4dd",
+			"Name": "深圳市小桔科技有限公司",
+			"OperName": "王举",
+			"StartDate": "2015-04-22T00:00:00",
+			"Status": "存续",
+			"No": "440301112653267",
+			"CreditCode": "91440300334945450M"
+		}
+	]
+}
+
+/**http://i.yjapi.com/ECIV4/Search?key=3f3c66a85d544a1596c1144416e8f42c&keyword=二三四五*/
+{
+    "Status": "200",
+    "Message": "查询成功",
+    "OrderNumber": "ECI2018051516100726452168",
+    "Paging": {
+        "PageSize": 10,
+        "PageIndex": 1,
+        "TotalRecords": 5000
+    },
+    "Result": [
+        {
+            "KeyNo": "6ee32adba818ebaaf05db2d2f99f508d",
+            "Name": "上海二三四五网络控股集团股份有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "1989-04-07T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310000000003153",
+            "CreditCode": "91310000607203699D"
+        },
+        {
+            "KeyNo": "af8731685926e12a4f98495c56691b0f",
+            "Name": "上海二三四五网络科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2012-03-16T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310000000111198",
+            "CreditCode": "91310115591679552Q"
+        },
+        {
+            "KeyNo": "7b61d5013011d77b4dfa97f78565d87a",
+            "Name": "广州二三四五互联网小额贷款有限公司",
+            "OperName": "代小虎",
+            "StartDate": "2017-01-18T00:00:00",
+            "Status": "存续",
+            "No": "440101000489139",
+            "CreditCode": "91440101MA59J30J1J"
+        },
+        {
+            "KeyNo": "007e5b2267673069c509121f97d48c53",
+            "Name": "上海二三四五金融科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2015-03-03T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115002597026",
+            "CreditCode": "91310115332811803P"
+        },
+        {
+            "KeyNo": "3077c4dbfab91f1213dbf377f5fb0dba",
+            "Name": "上海二三四五融资租赁有限公司",
+            "OperName": "代小虎",
+            "StartDate": "2016-01-22T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310000400793313",
+            "CreditCode": "91310000MA1FL1G449"
+        },
+        {
+            "KeyNo": "ba618aa67a60559ea114a123aa5ad21a",
+            "Name": "二三四五(深圳)区块链技术有限公司",
+            "OperName": "何涛峰",
+            "StartDate": "2018-01-17T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440300203498408",
+            "CreditCode": "91440300MA5EYG0AXL"
+        },
+        {
+            "KeyNo": "633fddb447fdfed25fa3a339a136124d",
+            "Name": "上海二三四五商业保理有限公司",
+            "OperName": "代小虎",
+            "StartDate": "2017-04-24T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115003364248",
+            "CreditCode": "91310115MA1H8W0B51"
+        },
+        {
+            "KeyNo": "358887f2314e138b72dddb6f5e13923a",
+            "Name": "上海二三四五大数据科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2016-10-31T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310141000349010",
+            "CreditCode": "91310115MA1K3J267K"
+        },
+        {
+            "KeyNo": "91e39e5639c81df278b786ddfadb4c92",
+            "Name": "深圳一二三四五中央厨房食品制造配送有限公司",
+            "OperName": "张永岁",
+            "StartDate": "2012-04-25T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440301106182668",
+            "CreditCode": "91440300595666150W"
+        },
+        {
+            "KeyNo": "390b88c6ffc071531e420ea6bdf8a5e7",
+            "Name": "上海二三四五移动科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2013-07-01T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115002139301",
+            "CreditCode": "913101150729060470"
+        }
+    ]
+}
+
+
+
+
+
+/**http://i.yjapi.com/ECIV4/Search?key=3f3c66a85d544a1596c1144416e8f42c&keyword=二三四五&pageSize=50*/
+{
+    "Status": "200",
+    "Message": "查询成功",
+    "OrderNumber": "ECI2018051516130714971425",
+    "Paging": {
+        "PageSize": 20,
+        "PageIndex": 1,
+        "TotalRecords": 5000
+    },
+    "Result": [
+        {
+            "KeyNo": "6ee32adba818ebaaf05db2d2f99f508d",
+            "Name": "上海二三四五网络控股集团股份有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "1989-04-07T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310000000003153",
+            "CreditCode": "91310000607203699D"
+        },
+        {
+            "KeyNo": "af8731685926e12a4f98495c56691b0f",
+            "Name": "上海二三四五网络科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2012-03-16T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310000000111198",
+            "CreditCode": "91310115591679552Q"
+        },
+        {
+            "KeyNo": "7b61d5013011d77b4dfa97f78565d87a",
+            "Name": "广州二三四五互联网小额贷款有限公司",
+            "OperName": "代小虎",
+            "StartDate": "2017-01-18T00:00:00",
+            "Status": "存续",
+            "No": "440101000489139",
+            "CreditCode": "91440101MA59J30J1J"
+        },
+        {
+            "KeyNo": "007e5b2267673069c509121f97d48c53",
+            "Name": "上海二三四五金融科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2015-03-03T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115002597026",
+            "CreditCode": "91310115332811803P"
+        },
+        {
+            "KeyNo": "3077c4dbfab91f1213dbf377f5fb0dba",
+            "Name": "上海二三四五融资租赁有限公司",
+            "OperName": "代小虎",
+            "StartDate": "2016-01-22T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310000400793313",
+            "CreditCode": "91310000MA1FL1G449"
+        },
+        {
+            "KeyNo": "ba618aa67a60559ea114a123aa5ad21a",
+            "Name": "二三四五(深圳)区块链技术有限公司",
+            "OperName": "何涛峰",
+            "StartDate": "2018-01-17T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440300203498408",
+            "CreditCode": "91440300MA5EYG0AXL"
+        },
+        {
+            "KeyNo": "633fddb447fdfed25fa3a339a136124d",
+            "Name": "上海二三四五商业保理有限公司",
+            "OperName": "代小虎",
+            "StartDate": "2017-04-24T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115003364248",
+            "CreditCode": "91310115MA1H8W0B51"
+        },
+        {
+            "KeyNo": "358887f2314e138b72dddb6f5e13923a",
+            "Name": "上海二三四五大数据科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2016-10-31T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310141000349010",
+            "CreditCode": "91310115MA1K3J267K"
+        },
+        {
+            "KeyNo": "91e39e5639c81df278b786ddfadb4c92",
+            "Name": "深圳一二三四五中央厨房食品制造配送有限公司",
+            "OperName": "张永岁",
+            "StartDate": "2012-04-25T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440301106182668",
+            "CreditCode": "91440300595666150W"
+        },
+        {
+            "KeyNo": "390b88c6ffc071531e420ea6bdf8a5e7",
+            "Name": "上海二三四五移动科技有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2013-07-01T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115002139301",
+            "CreditCode": "913101150729060470"
+        },
+        {
+            "KeyNo": "630d8e7e14c0607df238f4c6c22f9ac3",
+            "Name": "陕西鼎全房地产开发有限公司",
+            "OperName": "陈国良",
+            "StartDate": "2006-07-21T00:00:00",
+            "Status": "开业",
+            "No": "610000100140647",
+            "CreditCode": "91610000790764303R"
+        },
+        {
+            "KeyNo": "9472f7b85725ec1f3df49c2e26b55522",
+            "Name": "上海二三四五科技投资有限公司",
+            "OperName": "陈于冰",
+            "StartDate": "2014-06-04T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "310115002337243",
+            "CreditCode": "91310115301461767L"
+        },
+        {
+            "KeyNo": "8196ad0b4d83ec1f6232d2187aeb12c6",
+            "Name": "武汉一二三四五六信息技术有限公司",
+            "OperName": "黄稳",
+            "StartDate": "2015-06-19T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "420111000412249",
+            "CreditCode": ""
+        },
+        {
+            "KeyNo": "81b0c4fad83e860e0d8afc3a36f762a8",
+            "Name": "北京正善一二三四五电子商务有限公司",
+            "OperName": "朱占伟",
+            "StartDate": "2015-04-29T00:00:00",
+            "Status": "开业",
+            "No": "110105019016651",
+            "CreditCode": "91110105339777724W"
+        },
+        {
+            "KeyNo": "654453b141b068699210ba22f653b5fd",
+            "Name": "北京一二三四五科技有限公司",
+            "OperName": "李贺",
+            "StartDate": "2013-04-10T00:00:00",
+            "Status": "开业",
+            "No": "110105015773880",
+            "CreditCode": "911101050648544780"
+        },
+        {
+            "KeyNo": "de890bfd1d63c84120d3096a94f79f06",
+            "Name": "天津二三四五文化传播有限公司",
+            "OperName": "高鑫",
+            "StartDate": "2017-07-04T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "120103000319994",
+            "CreditCode": "91120103MA05TBF72E"
+        },
+        {
+            "KeyNo": "1682c461f9272af0f1544c9ceabc920c",
+            "Name": "深圳市前海二三四五科技有限公司",
+            "OperName": "鲁亚娟",
+            "StartDate": "2016-02-23T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440301115134134",
+            "CreditCode": "914403003600834950"
+        },
+        {
+            "KeyNo": "6953bcdbd0da142fc1ea3679ce80db32",
+            "Name": "湖南二三四五网络有限公司",
+            "OperName": "彭文强",
+            "StartDate": "2017-07-28T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "430211000046844",
+            "CreditCode": "91430211MA4LY8YM7A"
+        },
+        {
+            "KeyNo": "caa814e97d66b6448fe725ffbe5a5dec",
+            "Name": "北京一二三四五文化传媒有限公司",
+            "OperName": "王明",
+            "StartDate": "2017-06-02T00:00:00",
+            "Status": "开业",
+            "No": "110105023537694",
+            "CreditCode": "91110105MA00EXQT6J"
+        },
+        {
+            "KeyNo": "95d97e394a336588adb6bffa6957f1aa",
+            "Name": "盐城二三四五网络科技有限公司",
+            "OperName": "杨云燕",
+            "StartDate": "2017-01-13T00:00:00",
+            "Status": "在业",
+            "No": "320981000460550",
+            "CreditCode": "91320981MA1NAQ8M6B"
+        }
+    ]
+}
+
+/**http://i.yjapi.com/ECIV4/Search?key=3f3c66a85d544a1596c1144416e8f42c&keyword=二三四五&pageSize=50&pageIndex=2**/
+{
+    "Status": "200",
+    "Message": "查询成功",
+    "OrderNumber": "ECI2018051516405476001924",
+    "Paging": {
+        "PageSize": 20,
+        "PageIndex": 2,
+        "TotalRecords": 5000
+    },
+    "Result": [
+        {
+            "KeyNo": "7b7e9c2270cbfa80faa0ccada0f9505b",
+            "Name": "厦门二三四五八金融信息服务有限公司",
+            "OperName": "毛惟强",
+            "StartDate": "2017-05-02T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "350299200178032",
+            "CreditCode": "91350200MA2Y79WH71"
+        },
+        {
+            "KeyNo": "b1610467e69bdf057ca80ff98cb912a4",
+            "Name": "二三四五六家政服务江阴有限公司",
+            "OperName": "陈红英",
+            "StartDate": "2017-07-03T00:00:00",
+            "Status": "在业",
+            "No": "320281000664475",
+            "CreditCode": "91320281MA1PB17Y72"
+        },
+        {
+            "KeyNo": "34853a6f4aeb7912e49f3778dfdba141",
+            "Name": "深圳市二三四五科技有限公司",
+            "OperName": "赵雪毅",
+            "StartDate": "2017-02-24T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440300200166913",
+            "CreditCode": "91440300MA5ECTN0X4"
+        },
+        {
+            "KeyNo": "ecfc736921e69bc26ce01a7b5a1cbb66",
+            "Name": "驻马店市王守义十三香调味品集团有限公司",
+            "OperName": "杨书伟",
+            "StartDate": "1998-04-24T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "411700100001710",
+            "CreditCode": "91411700615256002M"
+        },
+        {
+            "KeyNo": "bfed7ea692715f317d34db2730332262",
+            "Name": "武汉二三四五电子商务有限公司",
+            "OperName": "刘柏平",
+            "StartDate": "2017-10-13T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "420106000713262",
+            "CreditCode": "91420106MA4KWQKK91"
+        },
+        {
+            "KeyNo": "84a39614c62109fd24b896b2e215558d",
+            "Name": "苏州二三四五商贸有限公司",
+            "OperName": "王蓉",
+            "StartDate": "2017-11-07T00:00:00",
+            "Status": "在业",
+            "No": "320506000738838",
+            "CreditCode": "91320506MA1T8B5K4N"
+        },
+        {
+            "KeyNo": "f9fcd49746824ffca148c44bffd196c0",
+            "Name": "深圳市二三四五人服饰有限公司",
+            "OperName": "张青云",
+            "StartDate": "2015-04-21T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "440301112630928",
+            "CreditCode": "914403003349921933"
+        },
+        {
+            "KeyNo": "3ec9762f0b22c1498e17086d56932611",
+            "Name": "无锡一二三四五营销策划有限公司",
+            "OperName": "王兰",
+            "StartDate": "2015-08-14T00:00:00",
+            "Status": "在业",
+            "No": "320213000252898",
+            "CreditCode": "9132021434655246XU"
+        },
+        {
+            "KeyNo": "6fc9783191a225172e076a87a865ebf2",
+            "Name": "肇庆端州一二三四五信息技术有限公司",
+            "OperName": "王浩",
+            "StartDate": "2016-07-13T00:00:00",
+            "Status": "存续",
+            "No": "441202000028825",
+            "CreditCode": "91441202MA4URMQ47F"
+        },
+        {
+            "KeyNo": "ed5aca724305703294c94371de047738",
+            "Name": "南漳县一二三四五建筑工程服务有限公司",
+            "OperName": "黄海燕",
+            "StartDate": "2017-01-17T00:00:00",
+            "Status": "存续（在营、开业、在册）",
+            "No": "420624000093123",
+            "CreditCode": "91420624MA48T7TG4B"
+        },
+        {
+            "KeyNo": "3b91efa1257a229211c3668b0bf011b9",
+            "Name": "南京金铭二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "江苏沃德凯斯投资管理有限公司(委派代表:冒榕)",
+            "StartDate": "2016-10-08T00:00:00",
+            "Status": "在业",
+            "No": "320100001495288",
+            "CreditCode": "91320100MA1MWFK79Q"
+        },
+        {
+            "KeyNo": "62c05bb5dc3457865664878b42468625",
+            "Name": "南京得韬二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "江苏紫星云资产管理有限公司(委派代表:吴菲)",
+            "StartDate": "2016-12-21T00:00:00",
+            "Status": "在业",
+            "No": "320100001941581",
+            "CreditCode": "91320100MA1N52RUX0"
+        },
+        {
+            "KeyNo": "4a8fb3d5a918ce91c6170c1c432472d2",
+            "Name": "南京鑫岚二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "南京犇越投资管理有限公司(委派代表:胡文静)",
+            "StartDate": "2016-08-16T00:00:00",
+            "Status": "在业",
+            "No": "320100001271302",
+            "CreditCode": "91320100MA1MRK3T71"
+        },
+        {
+            "KeyNo": "46da34b447b7dcfa0fe68c24661ac22d",
+            "Name": "南京网墨二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "江苏紫星云资产管理有限公司(委派代表:王勇)",
+            "StartDate": "2015-09-16T00:00:00",
+            "Status": "在业",
+            "No": "320100000340414",
+            "CreditCode": ""
+        },
+        {
+            "KeyNo": "0595e1caafff1088e722ef0df33a45a2",
+            "Name": "南京片汐二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "南京犇越投资管理有限公司(委派代表:胡文静)",
+            "StartDate": "2017-05-10T00:00:00",
+            "Status": "在业",
+            "No": "320100002148937",
+            "CreditCode": "91320100MA1NYHR977"
+        },
+        {
+            "KeyNo": "464cb128f7b30c81491c01b52c0a21b7",
+            "Name": "南京源承二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "江苏紫星云资产管理有限公司(委派代表:吴菲)",
+            "StartDate": "2016-12-28T00:00:00",
+            "Status": "在业",
+            "No": "320100002066374",
+            "CreditCode": "91320100MA1N887G07"
+        },
+        {
+            "KeyNo": "63dc53443cb3c041cc86d0e95becb214",
+            "Name": "南京儒笙二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "江苏紫星云资产管理有限公司(委派代表:吴菲)",
+            "StartDate": "2016-12-27T00:00:00",
+            "Status": "在业",
+            "No": "320100002025671",
+            "CreditCode": "91320100MA1N7W9D94"
+        },
+        {
+            "KeyNo": "2631569c19bbe93877475b3e93da75d3",
+            "Name": "南京汐钰二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "南京犇越投资管理有限公司(委派代表:胡文静)",
+            "StartDate": "2016-10-11T00:00:00",
+            "Status": "在业",
+            "No": "320100001553512",
+            "CreditCode": "91320100MA1MWU3556"
+        },
+        {
+            "KeyNo": "100de841e69135c7ba9795dfbf61d1e3",
+            "Name": "南京忈伈二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "南京犇越投资管理有限公司(委派代表:胡文静)",
+            "StartDate": "2016-11-18T00:00:00",
+            "Status": "在业",
+            "No": "320100001809881",
+            "CreditCode": "91320100MA1N0FPG0N"
+        },
+        {
+            "KeyNo": "cb762fb7dc8402172974fdb4d01d6a25",
+            "Name": "南京颖懿二三四五号文化艺术品投资合伙企业(有限合伙)",
+            "OperName": "南京犇越投资管理有限公司(委派代表:胡文静)",
+            "StartDate": "2016-08-18T00:00:00",
+            "Status": "在业",
+            "No": "320100001305518",
+            "CreditCode": "91320100MA1MRRR1XK"
+        }
+    ]
+}
+
+//http://i.yjapi.com/ECIV4/Search?key=3f3c66a85d544a1596c1144416e8f42c&keyword=二三四五&pageSize=50&pageIndex=2000000
+{
+    "Status": "201",
+    "Message": "查询无结果",
+    "OrderNumber": null,
+    "Paging": null,
+    "Result": null
+}
+
+/**http://i.yjapi.com/ECIV4/GetDetailsByName?key=3f3c66a85d544a1596c1144416e8f42c&keyword=上海二三四五网络科技有限公司**/
+{
+    "Status": "200",
+    "Message": "查询成功",
+    "OrderNumber": "ECI2018051516322121402484",
+    "Result": {
+        "Partners": [
+            {
+                "StockName": "上海二三四五网络控股集团股份有限公司",
+                "StockType": "企业法人",
+                "StockPercent": "97.8170%",
+                "ShouldCapi": "146725.510000",
+                "ShoudDate": null,
+                "InvestType": null,
+                "InvestName": null,
+                "RealCapi": null,
+                "CapiDate": null
+            },
+            {
+                "StockName": "拉萨经纪技术开发区恒信创业投资管理有限公司",
+                "StockType": "企业法人",
+                "StockPercent": "1.2667%",
+                "ShouldCapi": "1900.000000",
+                "ShoudDate": null,
+                "InvestType": null,
+                "InvestName": null,
+                "RealCapi": null,
+                "CapiDate": null
+            },
+            {
+                "StockName": "拉萨经济技术开发区联创信息咨询有限公司",
+                "StockType": "企业法人",
+                "StockPercent": "0.9163%",
+                "ShouldCapi": "1374.490000",
+                "ShoudDate": null,
+                "InvestType": null,
+                "InvestName": null,
+                "RealCapi": null,
+                "CapiDate": null
+            }
+        ],
+        "Employees": [
+            {
+                "Name": "罗玉婷",
+                "Job": "监事"
+            },
+            {
+                "Name": "陈于冰",
+                "Job": "执行董事兼总经理"
+            }
+        ],
+        "Branches": [],
+        "ChangeRecords": [
+            {
+                "ProjectName": "章程修正案备案",
+                "BeforeContent": "2017-12-04章程备案",
+                "AfterContent": "2018-04-19章程修正案",
+                "ChangeDate": "2018-05-04T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "住所变更",
+                "BeforeContent": "上海市浦东新区杨高北路528号14幢3A35室",
+                "AfterContent": "上海市浦东新区杨高北路528号14幢1-5层",
+                "ChangeDate": "2018-05-04T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "章程修正案备案",
+                "BeforeContent": "2017-12-04章程备案",
+                "AfterContent": "2018-04-19章程修正案",
+                "ChangeDate": "2018-05-04T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "住所变更",
+                "BeforeContent": "上海市浦东新区杨高北路528号14幢3A35室",
+                "AfterContent": "上海市浦东新区杨高北路528号14幢1-5层",
+                "ChangeDate": "2018-05-04T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "章程修正案备案",
+                "BeforeContent": "2017-07-18章程备案",
+                "AfterContent": "2017-12-04章程修正案",
+                "ChangeDate": "2018-01-30T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "注册资本(金)变更",
+                "BeforeContent": "91000.000000万人民币",
+                "AfterContent": "150000.000000万人民币",
+                "ChangeDate": "2018-01-30T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "章程修正案备案",
+                "BeforeContent": "2014-07-29章程备案",
+                "AfterContent": "2017-07-18章程修正案",
+                "ChangeDate": "2017-08-03T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "投资人(股权)变更",
+                "BeforeContent": "吉隆瑞美信息咨询有限公司;上海二三四五网络控股集团股份有限公司;吉隆瑞信投资有限公司;",
+                "AfterContent": "拉萨经济技术开发区联创信息咨询有限公司;上海二三四五网络控股集团股份有限公司;拉萨经纪技术开发区恒信创业投资管理有限公司;",
+                "ChangeDate": "2017-08-03T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "法定代表人变更",
+                "BeforeContent": "庞升东",
+                "AfterContent": "陈于冰",
+                "ChangeDate": "2016-09-21T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "投资人(股权)变更",
+                "BeforeContent": "上海二三四五网络控股集团股份有限公司;吉隆瑞美信息咨询有限公司;吉隆瑞信投资有限公司;",
+                "AfterContent": "上海二三四五网络控股集团股份有限公司;吉隆瑞信投资有限公司;吉隆瑞美信息咨询有限公司;",
+                "ChangeDate": "2015-12-03T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "注册资本(金)变更",
+                "BeforeContent": "5000.000000万人民币",
+                "AfterContent": "91000.000000万人民币",
+                "ChangeDate": "2014-11-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "投资人(股权)变更",
+                "BeforeContent": "上海海隆软件股份有限公司;吉隆瑞美信息咨询有限公司;吉隆瑞信投资有限公司;",
+                "AfterContent": "吉隆瑞信投资有限公司;吉隆瑞美信息咨询有限公司;上海海隆软件股份有限公司;",
+                "ChangeDate": "2014-11-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "法定代表人变更",
+                "BeforeContent": "庞升东",
+                "AfterContent": "庞升东",
+                "ChangeDate": "2014-10-15T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "监事备案",
+                "BeforeContent": "江伟;庞爱雪;罗玉婷;庞升东;庞海珍;康峰;李伟;何涛峰",
+                "AfterContent": "罗玉婷;庞升东",
+                "ChangeDate": "2014-10-15T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "名称变更",
+                "BeforeContent": "上海二三四五网络科技有限责任公司",
+                "AfterContent": "上海二三四五网络科技有限公司",
+                "ChangeDate": "2014-10-15T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "投资人(股权)变更",
+                "BeforeContent": "威震;康峰;上海瑞度投资有限公司;赵娜;李春志;罗玉婷;秦海丽;谢茜;李伟;寇杰毅;何涛峰;吉隆瑞信投资有限公司;庞升东;张淑霞;吉隆瑞美信息咨询有限公司;吴化清;徐灵甫;吉隆瑞科投资有限公司;",
+                "AfterContent": "吉隆瑞信投资有限公司;吉隆瑞美信息咨询有限公司;上海海隆软件股份有限公司;",
+                "ChangeDate": "2014-09-01T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "企业类型变更",
+                "BeforeContent": "有限责任公司(自然人投资或控股)",
+                "AfterContent": "其他有限责任公司",
+                "ChangeDate": "2014-09-01T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "一般经营项目变更",
+                "BeforeContent": "计算机软硬件及辅助设备的开发、销售，设计、制作、发布、代理各类广告，企业管理，投资咨询，市场信息咨询和调查（不得从事社会调查、社会调研、民意调查、民意测验），百货的销售",
+                "AfterContent": "计算机软硬件及辅助设备的开发、销售，设计、制作、发布、代理各类广告，企业管理，投资咨询，市场信息咨询和调查（不得从事社会调查、社会调研、民意调查、民意测验），百货的销售",
+                "ChangeDate": "2014-08-14T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "经营范围变更",
+                "BeforeContent": "计算机软硬件及辅助设备的开发、销售，设计、制作、发布、代理各类广告，企业管理，投资咨询，市场信息咨询和调查（不得从事社会调查、社会调研、民意调查、民意测验），百货的销售；增值电信业务（详见增值电信业务经营许可证）。【依法须经批准的项目，经相关部门批准后方可开展经营活动】",
+                "AfterContent": "计算机软硬件及辅助设备的开发、销售，设计、制作、发布、代理各类广告，企业管理，投资咨询，市场信息咨询和调查（不得从事社会调查、社会调研、民意调查、民意测验），百货的销售；增值电信业务（详见增值电信业务经营许可证）。【依法须经批准的项目，经相关部门批准后方可开展经营活动】",
+                "ChangeDate": "2014-08-14T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "监事备案",
+                "BeforeContent": "李伟;罗玉婷;江伟;庞爱雪;何涛峰;庞升东;康峰;庞海珍",
+                "AfterContent": "何涛峰;庞海珍;康峰;庞升东;罗玉婷;李伟;庞爱雪;江伟",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "经理备案",
+                "BeforeContent": "李伟;罗玉婷;江伟;庞爱雪;何涛峰;庞升东;康峰;庞海珍",
+                "AfterContent": "何涛峰;庞海珍;康峰;庞升东;罗玉婷;李伟;庞爱雪;江伟",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "企业类型变更",
+                "BeforeContent": "股份有限公司(非上市、自然人投资或控股)",
+                "AfterContent": "有限责任公司(自然人投资或控股)",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "名称变更",
+                "BeforeContent": "上海二三四五网络科技股份有限公司",
+                "AfterContent": "上海二三四五网络科技有限责任公司",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "董事备案",
+                "BeforeContent": "李伟;罗玉婷;江伟;庞爱雪;何涛峰;庞升东;康峰;庞海珍",
+                "AfterContent": "何涛峰;庞海珍;康峰;庞升东;罗玉婷;李伟;庞爱雪;江伟",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "法定代表人变更",
+                "BeforeContent": "庞升东",
+                "AfterContent": "庞升东",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "章程备案",
+                "BeforeContent": "无",
+                "AfterContent": "2014-07-29章程备案",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "经营期限(营业期限)变",
+                "BeforeContent": "2012-03-16~2032-03-15",
+                "AfterContent": "2012-03-16~",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "其他变更",
+                "BeforeContent": "2014-06-12~",
+                "AfterContent": "2014-08-12~",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            },
+            {
+                "ProjectName": "投资人(股权)变更",
+                "BeforeContent": "上海瑞度投资有限公司;谢茜;寇杰毅;陈之皓;沈福全;徐灵甫;钱武星;康峰;其他股东;李伟;梁泰鹤;张淑霞;何涛峰;吴峻;罗玉婷;李春志;庞升东;威震;白巍;赵娜;秦海丽;",
+                "AfterContent": "张淑霞;寇杰毅;康峰;徐灵甫;赵娜;谢茜;李伟;罗玉婷;秦海丽;何涛峰;上海瑞度投资有限公司;庞升东;威震;李春志;吴化清;吉隆瑞美信息咨询有限公司;吉隆瑞科投资有限公司;吉隆瑞信投资有限公司;",
+                "ChangeDate": "2014-08-12T00:00:00+08:00"
+            }
+        ],
+        "ContactInfo": {
+            "WebSite": [
+                {
+                    "Name": null,
+                    "Url": "www.2345.net"
+                }
+            ],
+            "PhoneNumber": "021-60932345",
+            "Email": "fawu@2345.com"
+        },
+        "Industry": {
+            "Industry": "信息传输、软件和信息技术服务业",
+            "SubIndustry": "软件和信息技术服务业"
+        },
+        "KeyNo": "af8731685926e12a4f98495c56691b0f",
+        "Name": "上海二三四五网络科技有限公司",
+        "No": "310000000111198",
+        "BelongOrg": "浦东新区市场监管局",
+        "OperName": "陈于冰",
+        "StartDate": "2012-03-16T00:00:00+08:00",
+        "EndDate": null,
+        "Status": "存续（在营、开业、在册）",
+        "Province": "SH",
+        "UpdatedDate": "2018-05-15T15:16:50.88+08:00",
+        "CreditCode": "91310115591679552Q",
+        "RegistCapi": "150000万人民币",
+        "EconKind": "其他有限责任公司",
+        "Address": "上海市浦东新区杨高北路528号14幢1-5层",
+        "Scope": "计算机软硬件及辅助设备的开发、销售,设计、制作、发布、代理各类广告,企业管理,投资咨询,市场信息咨询和调查(不得从事社会调查、社会调研、民意调查、民意测验),百货的销售;增值电信业务(详见增值电信业务经营许可证)。\r\n【依法须经批准的项目,经相关部门批准后方可开展经营活动】",
+        "TermStart": "2012-03-16T00:00:00+08:00",
+        "TeamEnd": null,
+        "CheckDate": "2012-03-16T00:00:00+08:00",
+        "OrgNo": "59167955-2",
+        "IsOnStock": "0",
+        "StockNumber": null,
+        "StockType": null,
+        "OriginalName": [
+            {
+                "Name": "上海二三四五网络科技有限责任公司",
+                "ChangeDate": "2014-10-15T00:00:00"
+            },
+            {
+                "Name": "上海二三四五网络科技股份有限公司",
+                "ChangeDate": "2014-08-12T00:00:00"
+            }
+        ]
+    }
+}
+
+/**http://i.yjapi.com/ECIV4/GetDetailsByName?key=3f3c66a85d544a1596c1144416e8f42c&keyword=上海二三四五**/
+{
+    "Status": "201",
+    "Message": "查询无结果",
+    "OrderNumber": null,
+    "Result": null
+}

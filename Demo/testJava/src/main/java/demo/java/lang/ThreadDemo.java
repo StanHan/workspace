@@ -1,16 +1,11 @@
 package demo.java.lang;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.IntStream;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -98,7 +93,7 @@ public class ThreadDemo {
         // testWaitNotify();
         // testInterrupte();
         // testUncaughtExceptionHandler();
-        testUncaughtExceptionHandler2();
+        testDaemon();
 
     }
 
@@ -257,7 +252,6 @@ public class ThreadDemo {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             LOGGER.error(e.getMessage(), e);
-            Thread.currentThread().stop();
         }
     }
 
@@ -535,17 +529,36 @@ public class ThreadDemo {
         System.out.format("%s: %s%n", threadName, message);
     }
 
-    public static void testDaemon() {
-        Thread d = new Daemon();
-        System.out.println("d.isDaemon() = " + d.isDaemon());
-        // Allow the daemon threads to finish
-        // their startup processes:
-        BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Waiting for CR");
-        try {
-            stdin.readLine();
-        } catch (IOException e) {
-        }
+    /**
+     * 在Java中有两类线程：User Thread(用户线程)、Daemon Thread(守护线程)。
+     * Java平台把操作系统的底层进行了屏蔽，在JVM虚拟平台里面构造出对自己有利的机制，这就是守护线程的由来。Daemon的作用是为其他线程的运行提供服务，比如说GC线程。
+     * 
+     * User Thread线程和Daemon Thread唯一的区别之处就在虚拟机的离开，如果User Thread全部撤离，那么Daemon Thread也就没啥线程好服务的了，所以虚拟机也就退出了。
+     * 
+     * 注意点：
+     * 
+     * <li>正在运行的常规线程不能设置为守护线程。
+     * <li>thread.setDaemon(true)必须在thread.start()之前设置，否则会跑出一个IllegalThreadStateException异常。
+     * <li>在Daemon线程中产生的新线程也是Daemon的（这里要和linux的区分，linux中守护进程fork()出来的子进程不再是守护进程）
+     * <li>根据自己的场景使用（在应用中，有可能你的Daemon Thread还没来的及进行操作时，虚拟机可能已经退出了）
+     */
+    static void testDaemon() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("thread 线程结束....");
+            }
+        });
+        // 设置为守护线程
+        thread.setDaemon(true);
+        thread.start();
+        System.out.println("main线程 结束....");
+        LOGGER.info("结论：主线程结束，JVM直接退出，守护线程不管是否运行结束都要伴随着JVM的退出而退出");
     }
 
     /**
@@ -562,40 +575,10 @@ public class ThreadDemo {
 
         @Override
         public void uncaughtException(Thread t, Throwable e) {
-            LOGGER.error(name + " catch a exception from " + t.getName() + "。需要怎么处理呢？");
+            LOGGER.info(name + " catch a exception from " + t.getName() + "。需要怎么处理呢？");
+            LOGGER.error(e.getMessage());
         }
 
-    }
-}
-
-class Daemon extends Thread {
-    private static final int SIZE = 10;
-    private Thread[] t = new Thread[SIZE];
-
-    public Daemon() {
-        setDaemon(true);
-        start();
-    }
-
-    public void run() {
-        for (int i = 0; i < SIZE; i++)
-            t[i] = new DaemonSpawn(i);
-        for (int i = 0; i < SIZE; i++)
-            System.out.println("t[" + i + "].isDaemon() = " + t[i].isDaemon());
-        while (true)
-            yield();
-    }
-}
-
-class DaemonSpawn extends Thread {
-    public DaemonSpawn(int i) {
-        System.out.println("DaemonSpawn " + i + " started");
-        start();
-    }
-
-    public void run() {
-        while (true)
-            yield();
     }
 }
 

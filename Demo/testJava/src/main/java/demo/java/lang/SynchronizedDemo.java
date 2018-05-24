@@ -1,4 +1,4 @@
-package demo.java.util.concurrent.locks;
+package demo.java.lang;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,11 +11,17 @@ import java.util.concurrent.Executors;
  * 但是如果开发人员使用了同步，那么运行库将确保某一线程对变量所做的更新先于对现有 synchronized 块所进行的更新，当进入由同一监控器（lock）保护的另一个 synchronized 块时，
  * 将立刻可以看到这些对变量所做的更新。类似的规则也存在于 volatile 变量上。
  * 
+ * <h2>底层实现：</h2>
+ * <ol>
+ * <li>进入时，执行 monitorenter，将计数器 +1，释放锁 monitorexit 时，计数器-1；
+ * <li>当一个线程判断到计数器为 0 时，则当前锁空闲，可以占用；反之，当前线程进入等待状态。
+ * </ol>
+ * 
  * Object 包含某些特殊的方法， wait() 、 notify() 和 notifyAll() ,用来在线程的之间进行通信。
  * 
  * synchronized是针对对象的隐式锁使用的，注意是对象！
  * 
- * synchronized关键字的作用域有二种：
+ * <h2>synchronized关键字的作用域有二种：</h2>
  * <li>某个对象实例内，synchronized aMethod(){}可以防止多个线程同时访问这个对象的synchronized方法
  * （如果一个对象有多个synchronized方法，只要一个线程访问了其中的一个synchronized方法，其它线程不能同时访问这个对象中任何一个synchronized方法）。
  * 这时，不同的对象实例的synchronized方法是不相干扰的。也就是说，其它线程照样可以同时访问相同类的另一个对象实例中的synchronized方法；
