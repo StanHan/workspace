@@ -1,11 +1,15 @@
-package demo.spring.cload.eureka;
+package demo.spring.cloud.eureka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
+ * 在微服务架构中，需要几个基础的服务治理组件，包括服务注册与发现、服务消费、负载均衡、断路器、智能路由、配置管理等，由这几个基础组件相互协作，共同组建了一个简单的微服务系统。
+ * 
+ * 在Spring Cloud微服务系统中，一种常见的负载均衡方式是，客户端的请求首先经过负载均衡（zuul、Ngnix），再到达服务网关（zuul集群），然后再到具体的服务。
+ * 服务统一注册到高可用的服务注册中心集群，服务的所有的配置文件由配置服务管理，配置服务的配置文件放在git仓库，方便开发人员随时改配置。
+ * 
  * <h1>Spring Cloud</h1> <br>
  * Spring Cloud和云计算没有关系，只是一个基于Spring Boot的快速构建分布式系统的工具集。 Spring Cloud特点: # 约定优于配置#
  * 开箱即用，快速启动#适用于各种环境，可以部署在PC、server或者云环境# 轻量级的组件# 组件的支持很丰富，功能齐全# 选型中立
