@@ -3,7 +3,8 @@ package demo.java.lang;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
-import demo.java.security.MD5Demo;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * <h2>16进制</h2>
@@ -19,6 +20,7 @@ import demo.java.security.MD5Demo;
 public class HexDemo {
 
     public static void main(String[] args) {
+        demo();
         String srcStr = "43052219801025001413873994440刘波/td/getTdInfoqazwsx";
         String encodeStr = encodeHexStr(srcStr.getBytes());
         String decodeStr = new String(decodeHex(encodeStr.toCharArray()));
@@ -27,6 +29,23 @@ public class HexDemo {
         System.out.println("还原后：" + decodeStr);
         System.out.println();
         System.out.println(bytes2Hex(srcStr.getBytes(StandardCharsets.UTF_8)));
+
+        Hex.encodeHexString(srcStr.getBytes(StandardCharsets.UTF_8));
+    }
+
+    static void demo() {
+        String srcStr = "43052219801025001413873994440刘波/td/getTdInfoqazwsx";
+        int a = 0;
+        while (true) {
+            System.out.println(a);
+            String tmp = srcStr + a++;
+            byte[] array = tmp.getBytes(StandardCharsets.UTF_8);
+            if (!Hex.encodeHexString(array).equals(bytes2Hex(array))) {
+                System.out.println(tmp);
+                System.out.println(Hex.encodeHexString(array));
+                System.out.println(bytes2Hex(array));
+            }
+        }
     }
 
     /**
@@ -58,7 +77,18 @@ public class HexDemo {
      * @param data
      *            byte[]
      * @param toLowerCase
-     *            <pre>true</pre> 传换成小写格式 ， <pre>false</pre> 传换成大写格式
+     * 
+     *            <pre>
+     *            true
+     *            </pre>
+     * 
+     *            传换成小写格式 ，
+     * 
+     *            <pre>
+     *            false
+     *            </pre>
+     * 
+     *            传换成大写格式
      * @return 十六进制char[]
      */
     public static char[] encodeHex(byte[] data, boolean toLowerCase) {
@@ -102,7 +132,18 @@ public class HexDemo {
      * @param data
      *            byte[]
      * @param toLowerCase
-     *            <pre>true</pre> 传换成小写格式 ， <pre>false</pre> 传换成大写格式
+     * 
+     *            <pre>
+     *            true
+     *            </pre>
+     * 
+     *            传换成小写格式 ，
+     * 
+     *            <pre>
+     *            false
+     *            </pre>
+     * 
+     *            传换成大写格式
      * @return 十六进制String
      */
     public static String encodeHexStr(byte[] data, boolean toLowerCase) {

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
+import org.junit.Test;
+
 import demo.vo.People;
 import demo.vo.User2;
 
@@ -265,7 +267,8 @@ public class ReflectDemo {
         }
     }
 
-    static void test() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    @Test
+    public void test() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         /*
          * 实列化类 方法 2
          */

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.junit.Test;
 
@@ -13,6 +14,14 @@ import org.junit.Test;
  *
  */
 public class SetDemo {
+
+    /**
+     * 
+     */
+    @Test
+    public void testCopyOnWriteArraySet() {
+        CopyOnWriteArraySet<String> tt = new CopyOnWriteArraySet<>();
+    }
 
     @Test
     public void testTreeSet() {

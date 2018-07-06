@@ -10,13 +10,13 @@ import java.time.temporal.ChronoField;
 import java.util.Date;
 
 public class DateTimeFormatterDemo {
-    
+
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static void main(String[] args) {
-        
+        System.out.println(LocalDateTime.now());
     }
-    
+
     static void demo() {
         System.out.println(dateTimeFormatter.toString());
 
@@ -38,7 +38,7 @@ public class DateTimeFormatterDemo {
         System.out.println(tmp);
         System.out.println(new Date(tmp * 1000));
     }
-    
+
     /**
      * 在java8之前，时间日期的格式化非常麻烦，经常使用SimpleDateFormat来进行格式化，但是SimpleDateFormat并不是线程安全的。
      * 在java8中，引入了一个全新的线程安全的日期与时间格式器。并且预定义好了格式。在DateTimeFormatter中还有很多定义好的格式。
@@ -52,5 +52,5 @@ public class DateTimeFormatterDemo {
         System.out.println(localDate2);
         ;
     }
-    
+
 }

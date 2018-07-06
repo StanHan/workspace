@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -27,6 +28,7 @@
     <mybatis-spring.version>1.2.2</mybatis-spring.version>
     <httpclient.version>4.3.5</httpclient.version>
     <logback.version>1.2.3</logback.version>
+    <hystrix.version>1.5.12</hystrix.version>
   </properties>
 
   <dependencies>
@@ -47,19 +49,39 @@
       <version>0.10</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
+    <dependency>
+      <groupId>com.netflix.hystrix</groupId>
+      <artifactId>hystrix-core</artifactId>
+      <version>${hystrix.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.netflix.hystrix</groupId>
+      <artifactId>hystrix-metrics-event-stream</artifactId>
+      <version>${hystrix.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-javanica -->
+    <dependency>
+      <!-- 基于注解的Hystrix 配置 -->
+      <groupId>com.netflix.hystrix</groupId>
+      <artifactId>hystrix-javanica</artifactId>
+      <version>1.5.12</version>
+    </dependency>
 
     <!-- 引用galaxy-domain.jar包 -->
     <dependency>
       <groupId>com.loanking.galaxy</groupId>
       <artifactId>galaxy-domain</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
+      <version>1.3.13-SNAPSHOT</version>
     </dependency>
 
     <!-- 引用galaxy-facade.jar包 -->
     <dependency>
       <groupId>com.loanking.galaxy</groupId>
       <artifactId>galaxy-facade</artifactId>
-      <version>1.2.1-SNAPSHOT</version>
+      <version>1.3.13-SNAPSHOT</version>
     </dependency>
 
     <!--slf4j -->

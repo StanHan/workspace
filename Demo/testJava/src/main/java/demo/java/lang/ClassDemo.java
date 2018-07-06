@@ -3,12 +3,13 @@ package demo.java.lang;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
+
 import demo.vo.Person;
 import demo.vo.Student;
 
 public class ClassDemo {
     public static void main(String[] args) {
-        demoGetResource();
     }
 
     /**
@@ -30,7 +31,8 @@ public class ClassDemo {
      * <p>
      * Class.getClassLoader().getResource和Class.getClassLoader().getResourceAsStream在使用时，路径选择上也是一样的。
      */
-    public static void demoGetResource() {
+    @Test
+    public void demoGetResource() {
         System.out.println("path 以’/'开头时，则是从ClassPath根下获取:" + ClassDemo.class.getResource("/").getPath());
         System.out.println("path 不以’/'开头时，默认是从此类所在的包下取资源:" + ClassDemo.class.getResource("").getPath());
 

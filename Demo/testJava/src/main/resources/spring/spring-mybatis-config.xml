@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <settings>
+    <!-- 开启驼峰匹配 -->
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+    <!-- 打印查询语句 -->
+    <!--<setting name="logImpl" value="STDOUT_LOGGING" /> -->
+  </settings>
+  <typeAliases>
+    <!-- 批量别名定义,指定包名，mybatis自动扫描包下的类，自动定义别名，别名是类名 ，然后mapper.xml的parameterType、resultType就可直接使用别名，无需指定类全路径 -->
+    <package name="com.loanking.skynet.engine.core.bean,com.loanking.skynet.engine.fact.entity.mysql" />
+  </typeAliases>
+  <plugins>
+    <plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">
+      <property name="IDENTITY" value="MYSQL" />
+      <property name="mappers" value="com.github.abel533.mapper.Mapper" />
+    </plugin>
+  </plugins>
+</configuration>

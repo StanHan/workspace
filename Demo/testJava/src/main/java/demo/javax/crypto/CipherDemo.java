@@ -3,18 +3,11 @@ package demo.javax.crypto;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-
-import com.sun.crypto.provider.SunJCE;
-
-import demo.java.lang.HexDemo;
 
 /**
  * 加密器/解密器

@@ -11,8 +11,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface MethodCache {
+
     /**
      * 缓存过期时间，单位是秒
      */
-    long expire();
+    long expire() default 10L;
 }

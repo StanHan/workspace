@@ -23,10 +23,17 @@
       <artifactId>spring-cloud-starter-eureka-server</artifactId>
     </dependency>
 
-    <!-- 如果不想让所有人都能访问到eureka的界面，可以加上权限认证，输入账号密码才能访问。 -->
+
     <dependency>
+      <!-- 如果不想让所有人都能访问到eureka的界面，可以加上权限认证，输入账号密码才能访问。 -->
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+    <dependency>
+      <!-- Spring Boot应用关闭 -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
     <dependency>

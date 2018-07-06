@@ -57,4 +57,8 @@ package demo.dubbo;
  */
 public class DubboDemo {
 
+    
+    void demo1() {
+
+    }
 }

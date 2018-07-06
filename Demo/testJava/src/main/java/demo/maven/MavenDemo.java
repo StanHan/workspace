@@ -308,6 +308,7 @@ public interface MavenDemo {
      * <li>重新部署： mvn tomcat:redeploy
      * <li>部署展开的war文件： mvn war:exploded tomcat:exploded
      * <li>加载缺省依赖包： mvn dependency:tree ,来查看项目实际的依赖
+     * <li>mvn clean package -Dmaven.test.skip=true
      */
     void command();
 

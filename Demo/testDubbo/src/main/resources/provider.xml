@@ -10,13 +10,16 @@
   <!-- 提供方应用信息，用于计算依赖关系 -->
   <dubbo:application name="dubbo-provider" />
 
-  <context:component-scan base-package="com.loanking.*" />
+  <!-- 基于注解的DUBBO配置 -->
+  <dubbo:annotation package="com.loanking.rota.provider" />
 
   <!-- 这里使用的注册中心是zookeeper -->
   <dubbo:registry address="zookeeper://172.17.16.13:2181" client="zkclient" />
 
   <!-- 配置Filter，多个逗号分隔 -->
-  <dubbo:provider filter="monitorFilter,disenableVendorFilter" />
+  <!--spring容器初始化完成后才暴露 -->
+  <!-- 提供方的缺省值，当ProtocolConfig和ServiceConfig某属性没有配置时，采用此缺省值，可选。 -->
+  <dubbo:provider filter="monitorFilter,disenableVendorFilter" delay="-1" timeout="6000" />
 
   <!-- 协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。用dubbo协议在3019端口暴露服务 -->
   <dubbo:protocol name="dubbo" port="3019" dispatcher="all" threadpool="fixed" threads="200" accepts="50" />
@@ -29,10 +32,6 @@
 
   <!-- 监控中心配置，用于配置连接监控中心相关信息，可选。 -->
   <dubbo:monitor />
-
-
-  <!-- 提供方的缺省值，当ProtocolConfig和ServiceConfig某属性没有配置时，采用此缺省值，可选。 -->
-  <dubbo:provider timeout="6000" />
 
 
   <!-- 方法配置，用于ServiceConfig和ReferenceConfig指定方法级的配置信息。 -->

@@ -53,25 +53,6 @@ import javassist.NotFoundException;
  * <li>Introduction（引入）：在不修改类代码的前提下，introduction可以在运行期为类动态的添加一些方法或field
  * <li>AOP代理（AOP Proxy） 在Spring AOP中有两种代理方式，JDK动态代理和CGLIB代理。默认情况下，TargetObject实现了接口时，则采用JDK动态代理；反之，采用CGLIB代理。
  * <p>
- * 切入点表达式，Pointcut的定义包括两个部分：Pointcut表示式(expression)和Pointcut签名(signature)。让我们先看看execution表示式的格式：
- * <li>execution(modifier-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?)
- * <p>
- * pattern分别表示
- * <li>修饰符匹配（modifier-pattern?）、
- * <li>返回值匹配（ret-type-pattern）、
- * <li>类路径匹配（declaring-type-pattern?）、
- * <li>方法名匹配（name-pattern）、
- * <li>参数匹配（(param-pattern)）、
- * <li>异常类型匹配（throws-pattern?）
- * <p>
- * 其中后面跟着“?”的是可选项。在各个pattern中可以使用“*”来表示匹配所有。在(param-pattern)中，可以指定具体的参数类型，多个参数间用“,”隔开，各个也可以用“*”来表示匹配任意类型的参数。
- * 如(String)表示匹配一个String参数的方法；(*,String)表示匹配有两个参数的方法，第一个参数可以是任意类型，而第二个参数是String类型；可以用(..)表示零个或多个任意参数。 现在来看看几个例子：
- * <li>1）execution(* *(..)) 表示匹配所有方法
- * <li>2）execution(public * com. savage.service.UserService.*(..)) 表示匹配com.savage.server.UserService中所有的公有方法
- * <li>3）execution(* com.savage.server..*.*(..)) 表示匹配com.savage.server包及其子包下的所有方法
- * 除了execution表示式外，还有within、this、target、args等Pointcut表示式。一个Pointcut定义由Pointcut表示式和Pointcut签名组成，例如：
- * 
- * <p>
  * 通知（Advice）类型
  * <li>@Before 前置通知（Before advice） ：在某连接点（JoinPoint）之前执行的通知，但这个通知不能阻止连接点前的执行。
  * <li>@After 后通知（After advice） ：当某连接点退出的时候执行的通知（不论是正常返回还是异常退出）。
@@ -79,8 +60,7 @@ import javassist.NotFoundException;
  * <li>@Around 环绕通知（Around advice） ：包围一个连接点的通知，类似Web中Servlet规范中的Filter的doFilter方法。可以在方法的调用前后完成自定义的行为，也可以选择不执行。
  * <li>@AfterThrowing 抛出异常后通知（After throwing advice） ： 在方法抛出异常退出时执行的通知。
  * 
- * <h>AOP功能</h2>
- * 
+ * <h2>AOP功能</h2>
  * <li>性能监控：在方法调用前后记录调用时间，方法执行太长或超时报警
  * <li>缓存代理：缓存某方法的返回值，下次执行该方法时，直接从缓存里获取
  * <li>软件破解：使用AOP修改软件的验证类的判断逻辑
@@ -88,9 +68,7 @@ import javassist.NotFoundException;
  * <li>工作流系统：工作流系统需要将业务代码和流程引擎代码混合在一起执行，那么我们可以使用AOP将其分离，并动态挂接业务
  * <li>权限验证：方法执行前验证是否有权限执行当前方法，没有则抛出没有权限执行异常，由业务代码捕捉
  * 
- * <h2>Spring的AOP</h2>
- * 
- * Spring默认采取动态代理机制实现AOP，当动态代理不可用时（代理类无接口）会使用cglib机制。但Spring的AOP有一定的缺点：
+ * <h2>Spring的AOP</h2> Spring默认采取动态代理机制实现AOP，当动态代理不可用时（代理类无接口）会使用cglib机制。但Spring的AOP有一定的缺点：
  * <li>第一，只能对方法进行切入，不能对接口、字段、静态代码块进行切入（切入接口的某个方法，则该接口下所有实现类的该方法都将被切入）
  * <li>第二，同类中的互相调用方法将不会使用代理类。因为要使用代理类必须从Spring容器中获取Bean
  * <li>第三，性能不是最好的。从前面几节得知，我们自定义的类加载器，性能优于动态代理和cglib

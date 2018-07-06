@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.stream.IntStream;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import demo.java.lang.HexDemo;
 
 /**
@@ -21,8 +23,10 @@ public class MessageDigestDemo {
     public static void main(String[] args) {
         String srcStr = "43052219801025001413873994440刘波/td/getTdInfoqazwsx";
         MessageDigest md5 = getMd5Digest();
-            System.out.println(HexDemo.bytes2Hex(md5.digest(srcStr.getBytes(StandardCharsets.UTF_8))));
-            System.out.println(HexDemo.bytes2hex02(md5.digest(srcStr.getBytes(StandardCharsets.UTF_8))));
+        System.out.println(HexDemo.bytes2Hex(md5.digest(srcStr.getBytes(StandardCharsets.UTF_8))));
+        System.out.println(HexDemo.bytes2hex02(md5.digest(srcStr.getBytes(StandardCharsets.UTF_8))));
+
+        DigestUtils.sha1Hex(srcStr);
     }
 
     static void demo() {

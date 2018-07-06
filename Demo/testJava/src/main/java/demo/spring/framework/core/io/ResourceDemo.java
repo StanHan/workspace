@@ -53,11 +53,13 @@ public class ResourceDemo {
      * <p>
      * ApplicationContext 的实现类都实现 ResourceLoader 接口，因此 ApplicationContext 可用于直接获取 Resource 实例。 此处 Spring 框架的
      * ApplicationContext 不仅是 Spring 容器，而且它还是资源访问策略的“决策者”，也就是策略模式中 Context 对象，它将为客户端代码“智能”地选择策略实现。 当 ApplicationContext
-     * 实例获取Resource 实例时，系统将默认采用与 ApplicationContext 相同的资源访问策略。也就是说： 如果 ApplicationContext 是
-     * FileSystemXmlApplicationContext，res 就是 FileSystemResource 实例； 如果 ApplicationContext 是
-     * ClassPathXmlApplicationContext，res 就是 ClassPathResource 实例； 如果 ApplicationContext 是 XmlWebApplicationContext，res
-     * 是 ServletContextResource 实例。另一方面使用 ApplicationContext 来访问资源时，也可不理会 ApplicationContext 的实现类，强制使用指定的
-     * ClassPathResource、FileSystemResource 等实现类，这可通过不同前缀来指定。
+     * 实例获取Resource 实例时，系统将默认采用与 ApplicationContext 相同的资源访问策略。也就是说：
+     * <li>如果 ApplicationContext 是 FileSystemXmlApplicationContext，res 就是 FileSystemResource 实例；
+     * <li>如果 ApplicationContext 是 ClassPathXmlApplicationContext，res 就是 ClassPathResource 实例；
+     * <li>如果 ApplicationContext 是 XmlWebApplicationContext，res 是 ServletContextResource 实例。
+     * <p>
+     * 另一方面使用 ApplicationContext 来访问资源时，也可不理会 ApplicationContext 的实现类，强制使用指定的 ClassPathResource、FileSystemResource
+     * 等实现类，这可通过不同前缀来指定。
      * <p>
      * ResourceLoaderAware 接口则用于指定该接口的实现类必须持有一个 ResourceLoader 实例。 类似于 Spring 提供的 BeanFactoryAware、BeanNameAware
      * 接口，ResourceLoaderAware 接口也提供了一个 setResourceLoader() 方法，该方法将由 Spring 容器负责调用，Spring 容器会将一个 ResourceLoader

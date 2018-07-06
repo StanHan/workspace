@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -218,6 +219,40 @@ public class MapDemo {
         StringBuilder key2 = unmodifiableMap.get(2);
         key2.append("222222");
         System.out.println(unmodifiableMap.get(2));
+    }
+
+    /**
+     * 
+     */
+    @Test
+    public void testRemove() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "1");
+        map.put(2, "2");
+        System.out.println("==============正确做法1：通过Iterator=============");
+        Iterator<Entry<Integer, String>> iterator = map.entrySet().iterator();
+        for (; iterator.hasNext();) {
+            Entry<Integer, String> entry = iterator.next();
+            System.out.println(entry);
+            iterator.remove();
+        }
+
+        System.out.println("==============错误1=============");
+        Set<Integer> keys = map.keySet();
+        for (Integer key : keys) {
+            System.out.println(key + "=" + map.get(key));
+            if (key % 2 == 1) {
+                map.remove(key);
+            }
+        }
+
+        System.out.println("==============错误2=============");
+        map.forEach((k, v) -> {
+            System.out.println(k + "=" + v);
+            if (k % 2 == 1) {
+                map.remove(k);
+            }
+        });
     }
 
     /**

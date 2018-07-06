@@ -12,6 +12,29 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 /**
  * <h4>SSL</h4>
  * <p>
@@ -103,10 +126,6 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public class SSL_TLS {
 
-    public static void main(String[] args) {
-
-    }
-
     static void demoClint() throws Exception {
 
         // 客户端信任改证书，将用于校验服务器传过来的证书的合法性
@@ -118,12 +137,12 @@ public class SSL_TLS {
             certificate = cf.generateCertificate(inStream);
         }
 
-        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-        ks.load(null, null);
-        ks.setCertificateEntry("cert", certificate);
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keyStore.load(null, null);
+        keyStore.setCertificateEntry("cert", certificate);
 
         TrustManagerFactory tmf = TrustManagerFactory.getInstance("sunx509");
-        tmf.init(ks);
+        tmf.init(keyStore);
 
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(null, tmf.getTrustManagers(), null);
@@ -139,5 +158,348 @@ public class SSL_TLS {
             out.flush();
         }
 
+    }
+
+    /**
+     * <h2>X.509</h2>
+     * <p>
+     * 服务器SSL数字证书和客户端数字证书的格式遵循 X.509标准。 X.509 是由国际电信联盟（ITU-T）制定的数字证书标准。 为了提供公用网络用户目录信息服务， ITU于 1988年制定了X.500系列标准。
+     * 其中X.500 和 X.509 是安全认证系统的核心， X.500定义了一种区别命名规则，以命名树来确保用户名称的唯一性；
+     * X.509则为X.500用户名称提供了通信实体鉴别机制，并规定了实体鉴别过程中广泛适用的证书语法和数据接口， X.509称之为证书。
+     * <p>
+     * X.509 给出的鉴别框架是一种基于公开密钥体制的鉴别业务密钥管理。 一个用户有两把密钥：一把是用户的专用密钥(简称为：私钥)，另一把是其他用户都可得到和利用的公共密钥(简称为：公钥) ，通常称之为密钥对，公钥加密，私钥解密。
+     * 用户可用常规加密算法（如DES）为信息加密，然后再用接收者的公共密钥对 DES进行加密并将之附于信息之上，这样接收者可用对应的专用密钥打开 DES密锁，并对信息解密。
+     * 该鉴别框架允许用户将其公开密钥存放在CA的目录项中。一个用户如果想与另一个用户交换秘密信息，就可以直接从对方的目录项中获得相应的公开密钥，用于各种安全服务。
+     * <p>
+     * 本质上， X.509 证书由用户公共密钥与用户标识符组成，此外还包括版本号、证书序列号、CA 标识符、签名算法标识、签发者名称、证书有效期等。
+     * <p>
+     * 用户可通过安全可靠的方式向 CA 提供其公共密钥以获得证书，这样用户就可公开其证书，而任何需要此用户的公共密钥者都能得到此证书，并通过 CA 检验密钥是否正确。
+     * 这一标准的最新版本--X.509版本3是针对包含扩展信息的数字证书，提供一个扩展字段，以提供更多的灵活性及特殊环境下所需的信息传送。 为了进行身份认证， X.509
+     * 标准及公共密钥加密系统提供了一个称作数字签名的方案。用户可生成一段信息及其摘要（亦称作信息“指纹”）。
+     * 用户用专用密钥对摘要加密以形成签名，接收者用发送者的公共密钥对签名解密，并将之与收到的信息“指纹”进行比较，以确定其真实性。
+     * <p>
+     * 目前， X.509标准已在编排公共密钥格式方面被广泛接受，已用于许多网络安全应用程序，其中包括 IP安全（ Ipsec ）、安全套接层（ SSL ）、安全电子交易（ SET ）、安全多媒体 INTERNET 邮件扩展（
+     * S/MIME ）等。
+     * <p>
+     * 数字证书有多种文件编码格式，主要包含CER编码，DER编码等。 CER(Canonical Encoding Rules, 规范编码格式)，DER(Distinguished Encoding Rules
+     * 卓越编码格式)，两者的区别是前者是变长模式，后者是定长模式。 所有证书都符合公钥基础设施(PKI, Public Key Infrastructure)制定的ITU-T X509国际标准(X.509标准)。
+     * 
+     * <h2>模型分析</h2> 在实际应用中，很多数字证书都属于自签名证书，即证书申请者为自己的证书签名。这类证书通常应用于软件厂商内部发放的产品中，或约定使用该证书的数据交互双方。
+     * 数字证书完全充当加密算法的载体，为必要数据做加密解密和签名验签等操作。在我司的开发过程中，数字证书更多是用来做加密和解密。
+     * 
+     * <h2>CA</h2>
+     * <p>
+     * CA中心又称CA机构，即证书授权中心(Certificate Authority )，或称证书授权机构，作为电子商务交易中受信任的第三方，承担公钥体系中公钥的合法性检验的责任。
+     */
+    void x509() {
+
+    }
+
+    /**
+     * <h2>数字证书简介</h2>
+     * <p>
+     * 数字证书具备常规加密解密必要的信息，包含签名算法，可用于网络数据加密解密交互，标识网络用户（计算机）身份。数字证书为发布公钥提供了一种简便的途径，其数字证书则成为加密算法以及公钥的载体。
+     * 依靠数字证书，我们可以构建一个简单的加密网络应用平台。数字证书类似于个人身份证，由数字证书颁发认证机构（Certificate Authority, CA）签发。
+     * 只有经过CA签发的证书在网络中才具备可认证性。CA颁发给自己的证书叫根证书。 VeriSign,GeoTrust和Thawte是国际权威数字证书颁发认证机构的三巨头。其中应用最广泛的是VeriSign签发的电子商务用数字证书。
+     * 最为常用的非对称加密算法是RSA，与之配套的签名算法是SHA1withRSA，最常用的消息摘要算法是SHA1. 除了RSA，还可以使用DSA算法。只是使用DSA算法无法完成加密解密实现，即这样的证书不包括加密解密功能。
+     * 数字证书有多种文件编码格式，主要包含CER编码，DER编码等。 CER(Canonical Encoding Rules, 规范编码格式)，DER(Distinguished Encoding Rules
+     * 卓越编码格式)，两者的区别是前者是变长模式，后者是定长模式。 所有证书都符合公钥基础设施(PKI, Public Key Infrastructure)制定的ITU-T X509国际标准(X.509标准)。
+     * 
+     * <h2>模型分析</h2>
+     * <p>
+     * 在实际应用中，很多数字证书都属于自签名证书，即证书申请者为自己的证书签名。这类证书通常应用于软件厂商内部发放的产品中，或约定使用该证书的数据交互双方。
+     * 数字证书完全充当加密算法的载体，为必要数据做加密解密和签名验签等操作。在我司的开发过程中，数字证书更多是用来做加密和解密。
+     * <p>
+     * <h3>加密交互</h3> 当客户端获取到服务器下发的数字证书后，就可以进行加密交互了。具体做法是： 客户端使用公钥，加密后发送给服务端，服务端用私钥进行解密验证。 服务端使用私钥进行加密和数字签名。
+     * 
+     * <h2>KeyTool 管理证书</h2>
+     * <p>
+     * KeyTool与本地密钥库相关联，将私钥存于密钥库，公钥则以数字证书输出。KeyTool位于JDK目录下的bin目录中，需要通过命令行进行相应的操作。
+     * 
+     * <h3>1）构建自签名证书</h3> 申请数字证书之前，需要在密钥库中以别名的方式生成本地数字证书，建立相应的加密算法，密钥，有效期等信息。
+     * 
+     * <pre>
+     * keytool -genkeypair -keyalg RSA -keysize 2048 -sigalg SHA1withRSA -validity 3600 -alias myCertificate -keystore myKeystore.keystore
+     * </pre>
+     * <p>
+     * 各参数含义如下：
+     * <li>-genkeypair 表示生成密钥对
+     * <li>-keyalg 指定密钥算法，这里是RSA
+     * <li>-keysize 指定密钥长度，默认1024，这里指定2048
+     * <li>-sigal 指定签名算法，这里是SHA1withRSA
+     * <li>-validity 指定有效期，单位为天
+     * <li>-alias 指定别名
+     * <li>-keystore 指定密钥库存储位置
+     * <p>
+     * 这里我输入参数Changeme123作为密钥库的密码，也可通过参数-storepass指定密码。可以用-dname "CN=xxx...."这样的形式，避免更多交互。
+     * 注意：一个keystore应该是可以存储多套<私钥-数字证书>的信息，通过别名来区分。通过实践，调用上述命令两次（别名不同），生成同一个keystore，用不同别名进行加密解密和签名验签，没有任何问题。
+     * 经过上述操作后，密钥库中已经创建了数字证书。虽然这时的数字证书并没有经过CA认证，但并不影响我们使用。我们仍可将证书导出，发送给合作伙伴进行加密交互。
+     * 
+     * <pre>
+    keytool -exportcert -alias myCertificate -keystore myKeystore.keystore -file myCer.cer -rfc
+     * </pre>
+     * 
+     * 各参数含义如下：
+     * <li>-exportcert 表示证书导出操作
+     * <li>-alias 指定别名
+     * <li>-keystore 指定密钥库文件
+     * <li>-file 指定导出证书的文件路径
+     * <li>-rfc 指定以Base64编码格式输出
+     * <p>
+     * 打印证书
+     * 
+     * <pre>
+    keytool -printcert -file myCer.cer
+     * </pre>
+     * 
+     * <h3>2）构建CA签发证书</h3>
+     * <p>
+     * 如果要获取CA机构谁的数字证书，需要将数字证书签发申请(CSR)导出，经由CA机构认证并颁发，将认证后的证书导入本地密钥库和信息库。
+     * 
+     * <pre>
+    keytool -certreq -alias myCertificate -keystore myKeystore.keystore -file myCsr.csr -v
+     * </pre>
+     * 
+     * 各参数含义如下：
+     * <li>-certreq 表示数字证书申请操作
+     * <li>-alias 指定别名
+     * <li>-keystore 指定密钥库文件路径
+     * <li>-file 指定导出申请的路径
+     * <li>-v 详细信息
+     * <p>
+     * 获得签发的数字证书后，需要将其导入信任库。
+     * 
+     * <pre>
+    keytool -importcert -trustcacerts -alias myCertificate -file myCer.cer -keystore myKeystore.keystore
+     * </pre>
+     * 
+     * 查看证书
+     * 
+     * <pre>
+    keytool -list -alias myCertificate -keystore myKeystore.keystore
+     * </pre>
+     * 
+     * <h2>证书使用</h2>
+     * <p>
+     * 终于到了激动人心的时刻，可以用代码通过keystore进行加解密操作了！ Java 6提供了完善的数字证书管理实现，我们几乎无需关注，仅通过操作密钥库和数字证书就可完成相应的加密解密和签名验签过程。
+     * 密钥库管理私钥，数字证书管理公钥，公钥和私钥分属消息传递双方，进行加密消息传递。
+     */
+    void 数字证书() {
+
+    }
+
+    private static final String STORE_PASS = "Changeme123";
+    private static final String ALIAS = "myCertificate";
+    private static final String KEYSTORE_PATH = "D:\\JavaDemo\\Certifacate\\myKeystore.keystore";
+    private static final String CERT_PATH = "D:\\JavaDemo\\Certifacate\\myCer.cer";
+    private static final String PLAIN_TEXT = "MANUTD is the most greatest club in the world.";
+    /** JDK6只支持X.509标准的证书 */
+    private static final String CERT_TYPE = "X.509";
+
+    public static void main(String[] args) throws IOException {
+        /**
+         * 假设现在有这样一个场景 。A机器上的数据，需要加密导出，然后将导出文件放到B机器上导入。 在这个场景中，A相当于服务器，B相当于客户端
+         */
+
+        /** A */
+        KeyStore keyStore = getKeyStore(STORE_PASS, KEYSTORE_PATH);
+        PrivateKey privateKey = getPrivateKey(keyStore, ALIAS, STORE_PASS);
+        X509Certificate certificate = getCertificateByKeystore(keyStore, ALIAS);
+
+        /** 加密和签名 */
+        byte[] encodedText = encode(PLAIN_TEXT.getBytes(), privateKey);
+        byte[] signature = sign(certificate, privateKey, PLAIN_TEXT.getBytes());
+
+        /** 现在B收到了A的密文和签名，以及A的可信任证书 */
+        X509Certificate receivedCertificate = getCertificateByCertPath(CERT_PATH, CERT_TYPE);
+        PublicKey publicKey = getPublicKey(receivedCertificate);
+        byte[] decodedText = decode(encodedText, publicKey);
+        System.out.println("Decoded Text : " + new String(decodedText));
+        System.out.println("Signature is : " + verify(receivedCertificate, decodedText, signature));
+    }
+
+    /**
+     * 加载密钥库，与Properties文件的加载类似，都是使用load方法
+     * 
+     * @throws IOException
+     */
+    public static KeyStore getKeyStore(String storepass, String keystorePath) throws IOException {
+        InputStream inputStream = null;
+        try {
+            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            inputStream = new FileInputStream(keystorePath);
+            keyStore.load(inputStream, storepass.toCharArray());
+            return keyStore;
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != inputStream) {
+                inputStream.close();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取私钥
+     * 
+     * @param keyStore
+     * @param alias
+     * @param password
+     * @return
+     */
+    public static PrivateKey getPrivateKey(KeyStore keyStore, String alias, String password) {
+        try {
+            return (PrivateKey) keyStore.getKey(alias, password.toCharArray());
+        } catch (UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取公钥
+     * 
+     * @param certificate
+     * @return
+     */
+    public static PublicKey getPublicKey(Certificate certificate) {
+        return certificate.getPublicKey();
+    }
+
+    /**
+     * 通过密钥库获取数字证书，不需要密码，因为获取到Keystore实例
+     * 
+     * @param keyStore
+     * @param alias
+     * @return
+     */
+    public static X509Certificate getCertificateByKeystore(KeyStore keyStore, String alias) {
+        try {
+            return (X509Certificate) keyStore.getCertificate(alias);
+        } catch (KeyStoreException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 通过证书路径生成证书，与加载密钥库差不多，都要用到流。
+     * 
+     * @param path
+     * @param certType
+     * @return
+     * @throws IOException
+     */
+    public static X509Certificate getCertificateByCertPath(String path, String certType) throws IOException {
+        InputStream inputStream = null;
+        try {
+            // 实例化证书工厂
+            CertificateFactory factory = CertificateFactory.getInstance(certType);
+            // 取得证书文件流
+            inputStream = new FileInputStream(path);
+            // 生成证书
+            Certificate certificate = factory.generateCertificate(inputStream);
+
+            return (X509Certificate) certificate;
+        } catch (CertificateException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            if (null != inputStream) {
+                inputStream.close();
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 从证书中获取加密算法，进行签名
+     * 
+     * @param certificate
+     * @param privateKey
+     * @param plainText
+     * @return
+     */
+    public static byte[] sign(X509Certificate certificate, PrivateKey privateKey, byte[] plainText) {
+        /** 如果要从密钥库获取签名算法的名称，只能将其强制转换成X509标准，JDK 6只支持X.509类型的证书 */
+        try {
+            Signature signature = Signature.getInstance(certificate.getSigAlgName());
+            signature.initSign(privateKey);
+            signature.update(plainText);
+            return signature.sign();
+        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 验签，公钥包含在证书里面
+     * 
+     * @param certificate
+     * @param decodedText
+     * @param receivedignature
+     * @return
+     */
+    public static boolean verify(X509Certificate certificate, byte[] decodedText, final byte[] receivedignature) {
+        try {
+            Signature signature = Signature.getInstance(certificate.getSigAlgName());
+            /** 注意这里用到的是证书，实际上用到的也是证书里面的公钥 */
+            signature.initVerify(certificate);
+            signature.update(decodedText);
+            return signature.verify(receivedignature);
+        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 加密。注意密钥是可以获取到它适用的算法的。
+     * 
+     * @param plainText
+     * @param privateKey
+     * @return
+     */
+    public static byte[] encode(byte[] plainText, PrivateKey privateKey) {
+        try {
+            Cipher cipher = Cipher.getInstance(privateKey.getAlgorithm());
+            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+            return cipher.doFinal(plainText);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
+                | BadPaddingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    /**
+     * 解密，注意密钥是可以获取它适用的算法的。
+     * 
+     * @param encodedText
+     * @param publicKey
+     * @return
+     */
+    public static byte[] decode(byte[] encodedText, PublicKey publicKey) {
+        try {
+            Cipher cipher = Cipher.getInstance(publicKey.getAlgorithm());
+            cipher.init(Cipher.DECRYPT_MODE, publicKey);
+            return cipher.doFinal(encodedText);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
+                | BadPaddingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

@@ -1,0 +1,260 @@
+
+{
+	"os": "android",
+	"version": "3.1.5",
+	"packages": "com.ttf.loanrisksample*&5.8.0",
+	"profile_time": 182,
+	"interval_time": 1861,
+	"token_id": "Fn1Yn\/PwqYSaNBf6kLvM7P28dBNTItZWp4kakIdRb+DDJ8WEXeD4ZV9wjJ1CZNMRguRJxxph\/tTVJtJozTvEWw=="
+}
+
+{
+	"os": "android",
+	"version": "3.1.5",
+	"packages": "com.ttf.loanrisksample*&5.8.0",
+	"profile_time": 214,
+	"interval_time": 5089,
+	"token_id": "Fn1Yn\/PwqYSaNBf6kLvM7B7TSlBWqPiNcbVfEa2DPkAvSBt6Vi4tQOZT2mOAtQkwmtsOfmgSfXJ99Jrkdd8VhQ=="
+}
+
+{
+	"os": "Android",
+	"version": "3.1.5",
+	"packages": "com.ttf.loanrisksample*&5.8.0",
+	"error_init": {
+		"error_code": "[000]",
+		"device": "Meizu^^m2 note^^22^^bb33caedcdb3792c8f8e0fe4c4529cb5^^[arm64-v8a, armeabi-v7a, armeabi]^^armeabi-v7a"
+	}
+}
+
+{
+	"attribution": {
+		
+	},
+	"device_info": {
+		"appVersion": "1.0.17",
+		"memory": "2105016320",
+		"geoIp": {
+			"address": "",
+			"area": "",
+			"areaId": "",
+			"city": "深圳市",
+			"cityId": "440300",
+			"country": "中国",
+			"countryId": "CN",
+			"county": "",
+			"countyId": "440300",
+			"desc": "",
+			"extra1": "",
+			"extra2": "",
+			"ip": "61.141.65.194",
+			"isp": "电信",
+			"ispId": "",
+			"latitude": 22.547,
+			"lip": 1032667586,
+			"longitude": 114.085945,
+			"province": "广东省",
+			"provinceId": "440000",
+			"type": ""
+		},
+		"freeSpace": "2141659136",
+		"bssid": "a8:58:40:dd:3d:10",
+		"deviceId": "7269851E-84C0-4267-813A-BA59A730010D",
+		"uuid": "83EADFB2-BAFE-4A05-A5AC-E0E28EEC9510",
+		"ssid": "FJJF",
+		"deviceName": "“富爵”的 iPhone",
+		"mac": "02:00:00:00:00:00",
+		"platform": "iPhone8,1",
+		"osVersion": "11.3.1",
+		"wifiIp": "10.0.11.19",
+		"countryIso": "CN",
+		"wifiNetmask": "255.255.255.0",
+		"jailbreak": "0",
+		"idfv": "4DA00DAF-D79B-4410-AE94-74BBF4ED644D",
+		"networkType": "Wifi",
+		"timeCost": "242883",
+		"batteryLevel": "44%",
+		"gpsAuthStatus": "WHEN_IN_USE",
+		"os": "iOS",
+		"bootTime": "1529368580",
+		"networkNames": "lo0,en0",
+		"languages": "zh-Hans-CN",
+		"tokenId": "ykd-20180619142717-TIH-83b965881a52f6371d56dd9094279fe5",
+		"idfa": "7269851E-84C0-4267-813A-BA59A730010D",
+		"gpsSwitch": "OPEN",
+		"proxyType": "none",
+		"dns": "10.0.18.1",
+		"bundleId": "com.chinacreditech.customer",
+		"timeZone": "Asia/Shanghai",
+		"totalSpace": "15989485568",
+		"version": "3.0.6",
+		"currentTime": "1529389635983733",
+		"upTime": "21055983",
+		"carrier": "中国电信",
+		"gpsLocation": "{\"lat\":22.552600000000002,\"long\":113.938801,\"accuracy\":65,\"time\":1529389636220307}",
+		"brightness": "30%",
+		"batteryStatus": "unplugged",
+		"success": true,
+		"kernelVersion": "Darwin Kernel Version 17.5.0: Tue Mar 13 21:32:11 PDT 2018; root:xnu-4570.52.2~8/RELEASE_ARM64_S8000",
+		"signMd5": "336d57834aa675ce8e71a37a052a9a18",
+		"trueIp": "61.141.65.194"
+	},
+	"final_decision": "Reject",
+	"final_score": 60,
+	"hit_rules": [
+		{
+			"decision": "Accept",
+			"id": "3966147",
+			"name": "登录设备获取异常",
+			"parentUuid": "",
+			"score": 60,
+			"uuid": "d0028f060afc47ada937799954390417"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966161",
+			"name": "_________________________________位置类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "faffe994253c4eaa866b9be89c144470"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966173",
+			"name": "_________________________________时间类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "5a5367f574d740578714337877ac5096"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966179",
+			"name": "_________________________________频度类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "1a249067c1bd465a8ade86d5a4458add"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966205",
+			"name": "_________________________________ip画像类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "1919bad22bcf44e488120bc959e5c2f1"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966233",
+			"name": "_________________________________手机画像类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "fab105235d0748f88164be6de8a6e7f0"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966239",
+			"name": "___________________________________全局类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "c9ec1f7e92464b249697160c92575ef7"
+		}
+	],
+	"policy_name": "登录事件_ios_20180613",
+	"policy_set": [
+		{
+			"hit_rules": [
+				{
+					"decision": "Accept",
+					"id": "3966147",
+					"name": "登录设备获取异常",
+					"parentUuid": "",
+					"score": 60,
+					"uuid": "d0028f060afc47ada937799954390417"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966161",
+					"name": "_________________________________位置类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "faffe994253c4eaa866b9be89c144470"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966173",
+					"name": "_________________________________时间类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "5a5367f574d740578714337877ac5096"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966179",
+					"name": "_________________________________频度类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "1a249067c1bd465a8ade86d5a4458add"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966205",
+					"name": "_________________________________ip画像类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "1919bad22bcf44e488120bc959e5c2f1"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966233",
+					"name": "_________________________________手机画像类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "fab105235d0748f88164be6de8a6e7f0"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966239",
+					"name": "___________________________________全局类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "c9ec1f7e92464b249697160c92575ef7"
+				}
+			],
+			"policy_decision": "Reject",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_异常登录_ios",
+			"policy_score": 60,
+			"policy_uuid": "7dd00e286ce445d698ea4fafc3771c8f",
+			"risk_type": "suspiciousLogin"
+		},
+		{
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_撞库风险_ios",
+			"policy_score": 0,
+			"policy_uuid": "8ee5e71b8f22464c96a293bce4660feb",
+			"risk_type": "hitlib"
+		},
+		{
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_风险登录_ios",
+			"policy_score": 0,
+			"policy_uuid": "e0bde5e462244a4b93baca861cf926f3",
+			"risk_type": "creditRisk"
+		},
+		{
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_暴力破解_ios",
+			"policy_score": 0,
+			"policy_uuid": "e3082537a06c42a5889927e67cebb981",
+			"risk_type": "bruteForce"
+		}
+	],
+	"policy_set_name": "登录事件_ios_20180613",
+	"risk_type": "suspiciousLogin_reject",
+	"seq_id": "1529476567201482T0B551ACC2934806",
+	"spend_time": 49,
+	"success": true
+}

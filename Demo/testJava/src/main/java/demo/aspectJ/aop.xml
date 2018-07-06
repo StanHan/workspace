@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:task="http://www.springframework.org/schema/task"
+
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+  <!-- 注解扫描器 -->
+  <!-- <context:component-scan base-package="demo.spring.service.impl" /> -->
+
+  <!-- 开启aop注解方式 -->
+  <aop:aspectj-autoproxy />
+
+  <!-- XML配置形式 -->
+  <bean id="myAspect" class="demo.aspectJ.LogAspect">
+  </bean>
+
+  <bean id="demoService" class="demo.spring.service.impl.DemoService">
+  </bean>
+
+  <!-- 在多个表达式之间使用 || , or 表示 或 ，使用 && , and 表示 与 ， ！ 表示 非 -->
+  <aop:config>
+    <aop:pointcut expression="execution(* com.travelsky.ccboy.dao..*.find*(..)) ||  
+execution(* com.travelsky.ccboy.dao..*.query*(..))"
+      id="findCachePointcut" />
+    <aop:advisor advice-ref="jdbcInterceptor" pointcut-ref="findCachePointcut" />
+  </aop:config>
+
+</beans>

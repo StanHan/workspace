@@ -25,7 +25,7 @@ import ch.qos.logback.core.util.StatusPrinter;
  * 如果设置级别为INFO，则优先级高于等于INFO级别（如：INFO、WARN、ERROR）的日志信息将可以被输出,小于该级别的如DEBUG将不会被输出。
  * 为确保所有logger都能够最终继承一个级别，根logger总是有级别，默认情况下，这个级别是DEBUG。
  * 
- * 三值逻辑
+ * <h2>三值逻辑</h2>
  * 
  * Logback的过滤器基于三值逻辑（ternary logic），允许把它们组装或成链，从而组成任意的复合过滤策略。
  * 过滤器很大程度上受到Linux的iptables启发。这里的所谓三值逻辑是说，过滤器的返回值只能是ACCEPT、DENY和NEUTRAL的其中一个。
@@ -34,7 +34,7 @@ import ch.qos.logback.core.util.StatusPrinter;
  * <li>如果返回NEUTRAL，那么有序列表里的下一个过滤器会接着处理记录事件；
  * <li>如果返回ACCEPT，那么记录事件被立即处理，不再经过剩余过滤器。
  * 
- * Filter 过滤器
+ * <h2>Filter 过滤器</h2>
  * 
  * Logback-classic提供两种类型的过滤器：常规过滤器和TuroboFilter过滤器。Logback整体流程：Logger
  * 产生日志信息；Layout修饰这条msg的显示格式；Filter过滤显示的内容；Appender具体的显示，即保存这日志信息的地方。

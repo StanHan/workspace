@@ -1,46 +1,168 @@
 {
-    "_id" : ObjectId("5afbc9296ba4533354107c29"),
-    "_class" : "com.loanking.galaxy.model.QiChaChaSearchRecord",
-    "request" : {
-        "keyword" : "二三四五",
-        "realName" : "龚来富",
-        "cardId" : "330121196212241414",
-        "phone" : "18217006688",
-        "client" : "Stan"
-    },
-    "rowKey" : "二三四五.null.null.null.null",
-    "response" : {
-        "Status" : "200",
-        "Message" : "查询成功",
-        "Paging" : {
-            "PageSize" : 10,
-            "TotalRecords" : 1,
-            "PageIndex" : 1
-        },
-        "OrderNumber" : null,
-        "Result" : [ 
-            {
-                "KeyNo" : "4659626b1e5e43f1bcad8c268753216e",
-                "StartDate" : "2012-07-10T00:00:00",
-                "Status" : "存续（在营、开业、在册）",
-                "No" : "110108015068911",
-                "CreditCode" : "9111010859963405XW",
-                "OperName" : "程维",
-                "Name" : "北京小桔科技有限公司"
-            }, 
-            {
-                "KeyNo" : "4178fc374c59a79743c59ecaf098d4dd",
-                "StartDate" : "2015-04-22T00:00:00",
-                "Status" : "存续",
-                "No" : "440301112653267",
-                "CreditCode" : "91440300334945450M",
-                "OperName" : "王举",
-                "Name" : "深圳市小桔科技有限公司"
-            }
-        ]
-    },
-    "status" : "200",
-    "cost" : NumberLong(0),
-    "isFromVendor" : false,
-    "createTime" : ISODate("2018-05-16T06:01:13.558Z")
+	"attribution": {
+		
+	},
+	"device_info": {
+		"code": "411",
+		"success": false,
+		"message": "没有传递设备指纹参数"
+	},
+	"final_decision": "Accept",
+	"final_score": 5,
+	"hit_rules": [
+		{
+			"decision": "Accept",
+			"id": "3966015",
+			"name": "登录设备标识缺失",
+			"parentUuid": "",
+			"score": 5,
+			"uuid": "a4d3f26442094da1b8025e6afbce79b3"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966037",
+			"name": "_________________________________位置类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "af92d77a090643c18a2bd9121c429919"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966049",
+			"name": "_________________________________时间类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "515aba041a13495fad2a9f9242d5755b"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966055",
+			"name": "_________________________________频度类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "2c06ce7edebb45cfbe09b0e3f4b84f4b"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966081",
+			"name": "_________________________________ip画像类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "6d1bbdf732cb46d7b19d7806953db565"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966109",
+			"name": "_________________________________手机画像类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "2555afcb7a044b99bbb476d9d7a9013c"
+		},
+		{
+			"decision": "Accept",
+			"id": "3966115",
+			"name": "___________________________________全局类规则__________________________________",
+			"parentUuid": "",
+			"score": 0,
+			"uuid": "d35febf800b349bd871021523968cbb0"
+		}
+	],
+	"policy_name": "登录事件_安卓_20180613",
+	"policy_set": [
+		{
+			"hit_rules": [
+				{
+					"decision": "Accept",
+					"id": "3966015",
+					"name": "登录设备标识缺失",
+					"parentUuid": "",
+					"score": 5,
+					"uuid": "a4d3f26442094da1b8025e6afbce79b3"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966037",
+					"name": "_________________________________位置类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "af92d77a090643c18a2bd9121c429919"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966049",
+					"name": "_________________________________时间类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "515aba041a13495fad2a9f9242d5755b"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966055",
+					"name": "_________________________________频度类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "2c06ce7edebb45cfbe09b0e3f4b84f4b"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966081",
+					"name": "_________________________________ip画像类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "6d1bbdf732cb46d7b19d7806953db565"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966109",
+					"name": "_________________________________手机画像类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "2555afcb7a044b99bbb476d9d7a9013c"
+				},
+				{
+					"decision": "Accept",
+					"id": "3966115",
+					"name": "___________________________________全局类规则__________________________________",
+					"parentUuid": "",
+					"score": 0,
+					"uuid": "d35febf800b349bd871021523968cbb0"
+				}
+			],
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_异常登录_安卓",
+			"policy_score": 5,
+			"policy_uuid": "cfad00edc2d941e5a0cabec921a5e976",
+			"risk_type": "suspiciousLogin"
+		},
+		{
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_风险登录_安卓",
+			"policy_score": 0,
+			"policy_uuid": "fccb916002764286b24bc71a05856116",
+			"risk_type": "creditRisk"
+		},
+		{
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_撞库风险_安卓",
+			"policy_score": 0,
+			"policy_uuid": "397f88fe548a44f6946f3efe1effaa20",
+			"risk_type": "hitlib"
+		},
+		{
+			"policy_decision": "Accept",
+			"policy_mode": "Weighted",
+			"policy_name": "通用登录_暴力破解_安卓",
+			"policy_score": 0,
+			"policy_uuid": "c1888a9950f64e939d61523ccc898e11",
+			"risk_type": "bruteForce"
+		}
+	],
+	"policy_set_name": "登录事件_安卓_20180613",
+	"risk_type": "",
+	"seq_id": "1529545202482382T0B561BD76437995",
+	"spend_time": 27,
+	"success": true
 }

@@ -33,7 +33,7 @@ public class FileDemo {
         file = new File("");
         System.out.println("获取当前类的所在工程路径：" + file.getAbsolutePath());
 
-        ClassDemo.demoGetResource();
+//        ClassDemo.demoGetResource();
 
         System.out.println("获取当前工程路径 :" + System.getProperty("user.dir"));
 

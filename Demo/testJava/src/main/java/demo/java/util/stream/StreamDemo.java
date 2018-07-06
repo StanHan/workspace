@@ -487,7 +487,12 @@ public class StreamDemo {
         Collection<Person> people = new ArrayList<>();
         Map<City, Set<String>> lastNamesByCity = people.stream().collect(
                 Collectors.groupingBy(Person::getCity, Collectors.mapping(Person::getLastName, Collectors.toSet())));
-
+        
+        List<String> tt = new ArrayList<>();
+        List<Object> list = Stream.of(items).collect(Collectors.mapping(List::stream, Collectors.toList()));
+        
+        List<String> list1 = Stream.of(items).flatMap(List::stream).collect(Collectors.toList());
+        System.err.println(list1);
     }
 
     /**

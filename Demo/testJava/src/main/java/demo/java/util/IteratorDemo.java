@@ -9,11 +9,38 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import org.junit.Test;
+
 public class IteratorDemo {
 
     public static void main(String[] args) {
         // demoScanner();
         demoIterator();
+    }
+
+    /**
+     * Iterator接口中包含一个方法，叫做remove()。该方法可以删除next最新返回的项。虽然Collection接口也包含一个remove方法，但是，使用Iterator的remove可能有更多的优点。”
+     * 
+     * 那么Collection接口中的remove()比Iterator接口中的remove()的差异性到底在哪呢？ Collection接口中的remove方法必须接受一个对象，即要从集合中移除的对像，并且返回boolean值。
+     * 而Iterator接口中的remove方法，它通过迭代器，每次使用next后，让指针往后移一位后，再使用remove方法移除当前指针指向的对象 ，然后他的方法是void的，没有返回值的。
+     * 
+     * 当使用 fail-fast iterator 对 Collection 或 Map 进行迭代操作过程中尝试直接修改 Collection / Map 的内容时，即使是在单线程下运行，
+     * java.util.ConcurrentModificationException 异常也将被抛出。 Iterator 是工作在一个独立的线程中，并且拥有一个 mutex 锁。 Iterator
+     * 被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，所以按照 fail-fast 原则 Iterator 会马上抛出
+     * java.util.ConcurrentModificationException 异常。
+     * 
+     * 所以 Iterator 在工作的时候是不允许被迭代的对象被改变的。 但你可以使用 Iterator 本身的方法 remove() 来删除对象， Iterator.remove()
+     * 方法会在删除当前迭代对象的同时维护索引的一致性。
+     * 
+     * 有意思的是如果你的 Collection / Map 对象实际只有一个元素的时候， ConcurrentModificationException 异常并不会被抛出。这也就是为什么在 javadoc 里面指出： it
+     * would be wrong to write a program that depended on this exception for its correctness:
+     * ConcurrentModificationException should be used only to detect bugs.
+     * 
+     * 
+     */
+    @Test
+    public void testRemove() {
+
     }
 
     static void demoIterator() {

@@ -17,6 +17,8 @@ import javax.crypto.Cipher;
 import demo.java.util.Base64Demo;
 
 /**
+ * 最为常用的非对称加密算法是RSA，与之配套的签名算法是SHA1withRSA，最常用的消息摘要算法是SHA1.
+ * 
  * RSA公钥加密算法是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。
  * 1987年7月首次在美国公布，当时他们三人都在麻省理工学院工作实习。RSA就是他们三人姓氏开头字母拼在一起组成的。
  * 
@@ -146,7 +148,7 @@ public class RSA {
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key publicKey = keyFactory.generatePublic(x509KeySpec);
-        
+
         // 对数据解密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, publicKey);

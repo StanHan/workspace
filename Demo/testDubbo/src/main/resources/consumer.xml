@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
   <!-- 应用配置，用于配置当前应用信息，不管该应用是提供者还是消费者。 -->
   <dubbo:application name="demo-consumer" />
 
   <!-- 注册中心配置，用于配置连接注册中心相关信息。 check=false：关闭注册中心启动时检查：(注册订阅失败时报错) -->
-  <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false" />
+  <dubbo:registry address="zookeeper://172.17.16.13:2181" check="false" />
 
   <!-- 引用服务配置，用于创建一个远程服务代理，一个引用可以指向多个注册中心。 check=false：关闭某个服务的启动时检查(没有提供者时报错) -->
   <!-- 引用缺省是延迟初始化的，只有引用被注入到其它Bean，或被getBean()获取，才会初始化。如果需要饥饿加载，即没有人引用也立即生成动态代理，可以配置：init=true -->
-  <dubbo:reference id="miGuanFacade" interface="com.loanking.galaxy.facade.MiGuanFacade" check="false" init="true" />
+  <dubbo:reference id="miGuanFacade" interface="com.loanking.galaxy.facade.MiGuanFacade" check="false" init="true" acitves=50 />
+
+  <dubbo:reference id="udspFacade" interface="com.loanking.galaxy.facade.UdspFacade" check="false" init="true" />
 
   <!-- 消费方缺省配置，当ReferenceConfig某属性没有配置时，采用此缺省值，可选。 check=false：关闭所有服务的启动时检查 -->
   <dubbo:consumer timeout="60000" check="false" />
+
+  <aspects>
+    <!-- 如果在您的项目中已经使用AspectJ，那么需要在aop.xml中添加hystrix切面 -->
+    <aspect name="com.netflix.hystrix.contrib.javanica.aop.aspectj.HystrixCommandAspect" />
+  </aspects>
+
+  <!-- 如果在项目中使用Spring AOP，则需要使用Spring AOP命名空间添加特定配置，以使Spring能够管理使用AspectJ编写的切面，并将HystrixCommandAspect声明为Spring bean -->
+  <aop:aspectj-autoproxy />
+  <bean id="hystrixAspect" class="com.netflix.hystrix.contrib.javanica.aop.aspectj.HystrixCommandAspect"></bean>
 </beans>
