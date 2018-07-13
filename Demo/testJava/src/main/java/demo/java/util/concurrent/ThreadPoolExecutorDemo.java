@@ -1,12 +1,15 @@
 package demo.java.util.concurrent;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -17,21 +20,192 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ThreadPoolExecutor 类就是一个线程池。客户端调用 ThreadPoolExecutor.submit(Runnable task) 提交任务，线程池内部维护的工作者线程的数量就是该线程池的线程池大小，有 3 种形态：
- * 
  * <li>当前线程池大小 ：表示线程池中实际工作者线程的数量；
  * <li>最大线程池大小 （maxinumPoolSize）：表示线程池中允许存在的工作者线程的数量上限；
  * <li>核心线程大小 （corePoolSize ）：表示一个不大于最大线程池大小的工作者线程数量上限。
+ * <p>
  * <li>如果运行的线程少于 corePoolSize，则 Executor 始终首选添加新的线程，而不进行排队；
  * <li>如果运行的线程等于或者多于 corePoolSize，则 Executor 始终首选将请求加入队列，而不是添加新线程；
  * <li>如果无法将请求加入队列，即队列已经满了，则创建新的线程，除非创建此线程超出 maxinumPoolSize， 在这种情况下，任务将被拒绝。
+ * 
+ * <h2>线程池关闭</h2>A pool that is no longer referenced in a program and has no remaining threads will be shutdown
+ * automatically. 如果程序中不再持有线程池的引用，并且线程池中没有线程时，线程池将会自动关闭。然而我们常用的FixedThreadPool的核心线程没有超时策略，所以并不会自动关闭。
+ * <p>
+ * 思考一下几个问题：
+ * <li>是否可以继续接受新任务？继续提交新任务会怎样？
+ * <li>等待队列里的任务是否还会执行？
+ * <li>正在执行的任务是否会立即中断？
+ * 
  */
 public class ThreadPoolExecutorDemo {
-    
-    private static final Logger LOGGER = LoggerFactory.getLogger(ThreadPoolExecutorDemo.class);
+
+    private static Logger logger = LoggerFactory.getLogger(ThreadPoolExecutorDemo.class);
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
+        System.out.println(102599268 & 3);
+    }
+
+    /**
+     * 
+     * @param corePoolSize
+     *            核心线程池大小
+     * @param maximumPoolSize
+     *            最大线程池大小
+     * @param keepAliveTime
+     *            线程最大空闲时间
+     * @param unit
+     *            时间单位
+     * @param workQueue
+     *            线程等待队列
+     * @param threadFactory
+     *            线程创建工厂
+     * @param handler
+     *            拒绝策略
+     */
+    static void demoThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
+            BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime,
+                unit, workQueue, threadFactory, handler);
+    }
+
+    /**
+     * 只有任务0执行完毕，其他任务都被drop掉了，dropList的size为100。通过dropList我们可以对未处理的任务进行进一步的处理，如log记录，转发等；
+     */
+    static void demoShutdownNow() {
+        BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
+        for (int i = 1; i <= 100; i++) {
+            workQueue.add(new Task(String.valueOf(i)));
+        }
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 10, TimeUnit.SECONDS, workQueue);
+        executor.execute(new Task("0"));
+        // shutdownNow有返回值，返回被抛弃的任务list
+        List<Runnable> dropList = executor.shutdownNow();
+        logger.info("workQueue size = " + workQueue.size() + " after shutdown");
+        logger.info("dropList size = " + dropList.size());
+    }
+
+    /**
+     * 我们用LinkedBlockingQueue构造了一个线程池，在线程池启动前，我们先将工作队列填充100个任务，然后执行task 0 后立即shutdown()线程池，来验证线程池关闭队列的任务运行状态。
+     * 从结果中我们可以看到，线程池虽然关闭，但是队列中的任务任然继续执行，所以用 shutdown()方式关闭线程池时需要考虑是否是你想要的效果。
+     */
+    static void demoWaitqueueTest() {
+        BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
+        for (int i = 1; i <= 100; i++) {
+            workQueue.add(new Task(String.valueOf(i)));
+        }
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 10, TimeUnit.SECONDS, workQueue);
+        executor.execute(new Task("0"));
+        executor.shutdown();
+        logger.info("workQueue size = " + workQueue.size() + " after shutdown");
+    }
+
+    static class Task implements Runnable {
+        String name;
+
+        public Task(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 1; i <= 10; i++) {
+                logger.info("task " + name + " is running");
+            }
+            logger.info("task " + name + " is over");
+        }
+    }
+
+    /**
+     * 为了体现在任务执行中打断，在主线程进行短暂 sleep ， task 中 调用 Thread.yield() ，出让时间片。 从结果中可以看到，线程池被关闭后，正则运行的任务没有被 interrupt。
+     * 说明shutdown()方法不会 interrupt 运行中线程。
+     */
+    static void demoInterrupt1() throws InterruptedException {
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+        executor.execute(new TaskWithInterrupt("0"));
+        Thread.sleep(1);
+        executor.shutdown();
+        logger.info("executor has been shutdown");
+    }
+
+    /**
+     * 修改为shutdownNow() 后，task任务没有执行完，执行到中间的时候就被 interrupt 后没有继续执行了。
+     */
+    static void demoInterrupt2() throws InterruptedException {
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+        executor.execute(new TaskWithInterrupt("0"));
+        Thread.sleep(1);
+        executor.shutdownNow();
+        logger.info("executor has been shutdown");
+    }
+
+    /**
+     * 任务执行时判断了中断标志
+     */
+    static class TaskWithInterrupt implements Runnable {
+        String name;
+
+        public TaskWithInterrupt(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 1; i <= 100 && !Thread.interrupted(); i++) {
+                Thread.yield();
+                logger.info("task " + name + " is running, round " + i);
+            }
+        }
+    }
+
+    /**
+     * 当线程池关闭后，继续提交新任务会抛出异常。这句话也不够准确，不一定是抛出异常，而是执行拒绝策略，默认的拒绝策略是抛出异常。
+     */
+    static void demoShutdown() {
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 4, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+        executor.execute(() -> logger.info("before shutdown"));
+        executor.shutdown();
+        executor.execute(() -> logger.info("after shutdown"));
+    }
+
+    /**
+     * 会爆出：java.lang.OutOfMemoryError。 因为FixedThreadPool的核心线程不会自动超时关闭，使用时必须在适当的时候调用shutdown()方法。
+     * <p>
+     * <li>corePoolSize与maximumPoolSize相等，即其线程全为核心线程，是一个固定大小的线程池，是其优势；
+     * <li>keepAliveTime = 0 该参数默认对核心线程无效，而FixedThreadPool全部为核心线程；
+     * <li>workQueue
+     * 为LinkedBlockingQueue（无界阻塞队列），队列最大值为Integer.MAX_VALUE。如果任务提交速度持续大余任务处理速度，会造成队列大量阻塞。因为队列很大，很有可能在拒绝策略前，内存溢出。是其劣势；
+     * <li>FixedThreadPool的任务执行是无序的；
+     */
+    static void demoFixedThreadPool() {
+        while (true) {
+            ExecutorService executorService = Executors.newFixedThreadPool(8);
+            executorService.execute(() -> logger.info("running"));
+            executorService = null;
+        }
+    }
+
+    /**
+     * CachedThreadPool 的线程 keepAliveTime 默认为 60s ，核心线程数量为 0 ，所以不会有核心线程存活阻止线程池自动关闭。 实际开发中，如果CachedThreadPool
+     * 确实忘记关闭，在一定时间后是可以被回收的。但仍然建议显示关闭。
+     * <p>
+     * <li>corePoolSize = 0，maximumPoolSize = Integer.MAX_VALUE，即线程数量几乎无限制；
+     * <li>keepAliveTime = 60s，线程空闲60s后自动结束。
+     * <li>workQueue 为 SynchronousQueue
+     * 同步队列，这个队列类似于一个接力棒，入队出队必须同时传递，因为CachedThreadPool线程创建无限制，不会有队列等待，所以使用SynchronousQueue；
+     * <p>
+     * 适用场景：快速处理大量耗时较短的任务，如Netty的NIO接受请求时，可使用CachedThreadPool。
+     */
+    static void demoCachedThreadPool() {
+        while (true) {
+            // 默认keepAliveTime为 60s
+            ExecutorService executorService = Executors.newCachedThreadPool();
+            ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executorService;
+            // 为了更好的模拟，动态修改为1纳秒
+            threadPoolExecutor.setKeepAliveTime(1, TimeUnit.NANOSECONDS);
+            threadPoolExecutor.execute(() -> logger.info("running"));
+        }
     }
 
     /**
@@ -64,11 +238,11 @@ public class ThreadPoolExecutorDemo {
         exec.scheduleAtFixedRate(new Runnable() {// 每隔一段时间就触发异常
             @Override
             public void run() {
-                System.out.println("抛异常咯");
+                logger.info("抛异常咯");
                 // try {
                 // throw new RuntimeException();
                 // } catch (Exception e) {
-                // System.out.println("捕获异常,否则该任务不再执行");
+                // logger.info("捕获异常,否则该任务不再执行");
                 // }
                 throw new RuntimeException();
 
@@ -78,11 +252,11 @@ public class ThreadPoolExecutorDemo {
         exec.scheduleAtFixedRate(new Runnable() {// 每隔一段时间打印系统时间，证明两者是互不影响的
             @Override
             public void run() {
-                System.out.println(System.nanoTime());
+                logger.info("" + System.nanoTime());
             }
         }, 20, 1000, TimeUnit.MILLISECONDS);
     }
-    
+
     /**
      * 采用线程池开启多个子线程，主线程等待所有的子线程执行完毕
      */
@@ -94,23 +268,23 @@ public class ThreadPoolExecutorDemo {
                     @Override
                     public void run() {
                         try {
-                            System.out.println(Thread.currentThread().getName());
+                            logger.info(Thread.currentThread().getName());
                             Thread.sleep(random.nextInt(3000));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } finally {
-                            System.out.println(Thread.currentThread().getName() + " 结束");
+                            logger.info(Thread.currentThread().getName() + " 结束");
                         }
                     }
                 });
             }
 
-            System.out.println("已经开启所有的子线程");
+            logger.info("已经开启所有的子线程");
             executorService.shutdown();
-            System.out.println("shutdown()：启动一次顺序关闭，执行以前提交的任务，但不接受新任务。");
+            logger.info("shutdown()：启动一次顺序关闭，执行以前提交的任务，但不接受新任务。");
             while (true) {
                 if (executorService.isTerminated()) {
-                    System.out.println("所有的子线程都结束了！");
+                    logger.info("所有的子线程都结束了！");
                     break;
                 }
                 Thread.sleep(1000);
@@ -118,10 +292,10 @@ public class ThreadPoolExecutorDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("主线程结束");
+            logger.info("主线程结束");
         }
     }
-    
+
     /**
      * 如果抛出异常，则线程WAITING (parking)，该定时任务不会再被调度
      */
@@ -131,7 +305,7 @@ public class ThreadPoolExecutorDemo {
         // 5秒后执行任务
         scheduledService.schedule(new Runnable() {
             public void run() {
-                LOGGER.info("schedulePool.schedule");
+                logger.info("schedulePool.schedule");
             }
         }, 1, TimeUnit.SECONDS);
 
@@ -142,7 +316,7 @@ public class ThreadPoolExecutorDemo {
             @Override
             public void run() {
                 count++;
-                LOGGER.info("schedulePool.scheduleAtFixedRate");
+                logger.info("schedulePool.scheduleAtFixedRate");
                 if (count == 3) {// 抛出异常，线程 WAITING (parking)
                     throw new RuntimeException();
                 }
@@ -159,7 +333,7 @@ public class ThreadPoolExecutorDemo {
             public void run() {
                 int i = 0;
                 while (i < 10) {
-                    System.out.println("hello.");
+                    logger.info("hello.");
                     i++;
                     try {
                         Thread.sleep(500);
@@ -170,7 +344,7 @@ public class ThreadPoolExecutorDemo {
             }
         });
         singleThreadExecutor.shutdown();
-        System.out.println("over.");
+        logger.info("over.");
     }
 
     static void testFixedThreadPool() {
@@ -191,7 +365,7 @@ public class ThreadPoolExecutorDemo {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.println(Thread.currentThread().getName() + "：第" + taskID + "次任务的第" + i + "次执行");
+                        logger.info(Thread.currentThread().getName() + "：第" + taskID + "次任务的第" + i + "次执行");
                     }
                 }
             });
@@ -200,7 +374,7 @@ public class ThreadPoolExecutorDemo {
         threadPool_2.shutdown();// 任务执行完毕，关闭线程池
         threadPool_3.shutdown();// 任务执行完毕，关闭线程池
     }
-    
+
     static Random random = new Random();
 
 }
@@ -252,4 +426,3 @@ class PausableThreadPoolExecutor extends ThreadPoolExecutor {
         }
     }
 }
-

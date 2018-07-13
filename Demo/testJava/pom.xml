@@ -599,6 +599,14 @@
       <version>${hystrix.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-javanica -->
+    <dependency>
+      <!-- 基于注解的Hystrix 配置 -->
+      <groupId>com.netflix.hystrix</groupId>
+      <artifactId>hystrix-javanica</artifactId>
+      <version>${hystrix.version}</version>
+    </dependency>
+
     <!-- 引入elastic-job-lite核心模块 -->
     <dependency>
       <groupId>com.dangdang</groupId>

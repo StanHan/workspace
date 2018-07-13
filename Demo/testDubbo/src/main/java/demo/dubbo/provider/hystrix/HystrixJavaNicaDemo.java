@@ -16,7 +16,7 @@ import rx.Subscriber;
 
 /**
  * 
- * @author hanjy
+ * 
  *
  */
 @DefaultProperties(defaultFallback = "defaultFallback")
@@ -38,6 +38,7 @@ public class HystrixJavaNicaDemo {
      * 值得注意的是，默认情况下，一个调用者总是会得到根本原因异常，例如BadRequestException，而不是HystrixBadRequestException或HystrixRuntimeException（除非有执行代码显式抛出这些异常的情况）。
      * 
      * 可选地，通过使用raiseHystrixExceptions,可以禁用HystrixRuntimeException的拆箱。即所有未被忽略的异常会作为HystrixRuntimeException的cause出现。
+     * 
      */
     @HystrixCommand(groupKey = "HystrixJavaNicaDemo", commandKey = "getUserById", fallbackMethod = "defaultUser", ignoreExceptions = {
             ServiceException.class }, raiseHystrixExceptions = { HystrixException.RUNTIME_EXCEPTION })

@@ -23,8 +23,18 @@ public class User {
      */
     private Date updateAt;
 
+    public User() {
+    }
+
+    public User(Integer id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+    }
+
     /**
      * 主键ID
+     * 
      * @return id 主键ID
      */
     public Integer getId() {
@@ -33,7 +43,9 @@ public class User {
 
     /**
      * 主键ID
-     * @param id 主键ID
+     * 
+     * @param id
+     *            主键ID
      */
     public void setId(Integer id) {
         this.id = id;
@@ -41,6 +53,7 @@ public class User {
 
     /**
      * 姓名
+     * 
      * @return name 姓名
      */
     public String getName() {
@@ -49,7 +62,9 @@ public class User {
 
     /**
      * 姓名
-     * @param name 姓名
+     * 
+     * @param name
+     *            姓名
      */
     public void setName(String name) {
         this.name = name;
@@ -57,6 +72,7 @@ public class User {
 
     /**
      * 状态
+     * 
      * @return status 状态
      */
     public Byte getStatus() {
@@ -65,7 +81,9 @@ public class User {
 
     /**
      * 状态
-     * @param status 状态
+     * 
+     * @param status
+     *            状态
      */
     public void setStatus(Byte status) {
         this.status = status;
@@ -73,6 +91,7 @@ public class User {
 
     /**
      * 更新时间
+     * 
      * @return update_at 更新时间
      */
     public Date getUpdateAt() {
@@ -81,7 +100,9 @@ public class User {
 
     /**
      * 更新时间
-     * @param updateAt 更新时间
+     * 
+     * @param updateAt
+     *            更新时间
      */
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
@@ -91,6 +112,5 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", status=" + status + ", updateAt=" + updateAt + "]";
     }
-    
-    
+
 }

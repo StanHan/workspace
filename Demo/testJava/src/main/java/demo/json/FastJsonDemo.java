@@ -1,5 +1,6 @@
 package demo.json;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -32,9 +33,10 @@ import demo.vo.common.ErrorCode;
 public class FastJsonDemo {
 
     public static void main(String[] args) {
-        Map<String,String> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         map.put("user_id", "123456,123456789");
         map.put("task_id", "123456,123456789");
+        map.put("totalCreditLine", new BigDecimal("5.33"));
         System.err.println(JSONObject.toJSONString(map));
         
         String a = "{\"blacklistRule\":-9999999,\"customerId\":\"10000002113-2\",\"freezeListRule\":104,\"inalBlacklistRule\":105,\"serialNo\":\"10000002114-2\",\"userId\":\"10000002112-2\"}";
