@@ -16,6 +16,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
  * Properties specified using this annotation will be used by default for each hystrix command defined within annotated
  * class unless a command specifies those properties explicitly using corresponding @HystrixCommand parameters.
  *
+ * 参考 https://github.com/Netflix/Hystrix/wiki/Configuration
  */
 @DefaultProperties(groupKey = "DefaultGroupKey")
 @Service
