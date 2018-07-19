@@ -19,7 +19,25 @@ import rx.Observable;
  * <h2>HystrixCommand和HystrixObservableCommand</h2>
  * <li>HystrixObservableCommand只支持异步的调用方式，HystrixCommand同步异步都支持。
  * <li>HystrixObservableCommand支持请求合并功能，HystrixCommand不支持。
- *
+ * 
+ * <h2>什么情况下会触发fallback方法?</h2>
+ * <li>FAILURE: 执行抛出异常
+ * <li>TIMEOUT: 执行开始，但没有在允许的时间内完成
+ * <li>SHORT_CIRCUITED: 断路器打开，不尝试执行
+ * <li>THREAD_POOL_REJECTED: 线程池拒绝，不尝试执行
+ * <li>SEMAPHORE_REJECTED: 信号量拒绝，不尝试执行
+ * 
+ * <h2>什么情况下不会触发fallback方法?</h2>
+ * <li>EMIT: 值传递
+ * <li>SUCCESS: 执行抛出HystrixBadRequestException
+ * <li>BAD_REQUEST: 执行抛出HystrixBadRequestException
+ * 
+ * <h2>fallback方法抛出异常</h2>
+ * <li>FALLBACK_EMIT : Fallback值传递 ，不抛异常
+ * <li>FALLBACK_SUCCESS : Fallback执行完成，没有错误 ，不抛异常
+ * <li>FALLBACK_FAILURE : Fallback执行抛出出错 ，抛异常
+ * <li>FALLBACK_REJECTED : Fallback信号量拒绝，不尝试执行 ，抛异常
+ * <li>FALLBACK_MISSING : 没有Fallback实例 ，抛异常
  */
 public class HystrixDemo {
     public static void main(String[] args) {

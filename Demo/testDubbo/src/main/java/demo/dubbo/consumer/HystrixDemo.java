@@ -19,7 +19,7 @@ public class HystrixDemo {
     @Autowired
     private UdspFacade udsp;
 
-    @HystrixCommand(fallbackMethod = "fallbackMethod" ,commandProperties = [])
+    @HystrixCommand(fallbackMethod = "fallbackMethod")
     public String demoHystrix() {
         UdspRequestVo vo = new UdspRequestVo();
         vo.setClient("789");

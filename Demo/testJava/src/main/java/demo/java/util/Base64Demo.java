@@ -36,7 +36,9 @@ import org.junit.Test;
  */
 public class Base64Demo {
     public static void main(String[] args) {
-        demo1();
+        String a = "cHVzaF9tc2dAMjM0NS5jb20K";
+        byte[] t = Base64.getDecoder().decode(a.getBytes(StandardCharsets.UTF_8));
+        System.out.println(new String(t, StandardCharsets.UTF_8));
     }
 
     @Test

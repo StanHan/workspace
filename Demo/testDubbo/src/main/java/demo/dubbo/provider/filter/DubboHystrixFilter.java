@@ -9,14 +9,13 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcException;
 
-import demo.dubbo.provider.hystrix.DubboHystrixCommand;
+import demo.dubbo.hystrix.DubboHystrixCommand;
 
 public class DubboHystrixFilter implements Filter {
 
     boolean hystrixIsOpen = true;
 
     @Override
-
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
         // 是否启用hystrix

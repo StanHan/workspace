@@ -1,4 +1,4 @@
-package demo.dubbo.provider.hystrix;
+package demo.dubbo.hystrix;
 
 import java.util.HashMap;
 import java.util.Map;

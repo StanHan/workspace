@@ -1,4 +1,4 @@
-package demo.dubbo.provider.hystrix;
+package demo.dubbo.hystrix;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
